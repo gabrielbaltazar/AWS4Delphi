@@ -7,6 +7,8 @@ uses
   System.Generics.Collections;
 
 type
+  EAWS4DHTTPException = AWS4D.Model.Interfaces.EAWS4DHTTPException;
+
   IAWS4DSQSModelListQueuesRequest = interface(IAWS4DModelRequest)
     ['{B6162E16-4F71-4830-91D7-8433E64E1172}']
     function MaxResults      (Value: Integer): IAWS4DSQSModelListQueuesRequest; overload;
@@ -18,13 +20,27 @@ type
     function QueueNamePrefix : string; overload;
   end;
 
-  IAWS4DSQSModelListQueuesResult = interface(IAWS4DModelResponseMetadata)
+  IAWS4DSQSModelListQueuesResponse = interface(IAWS4DModelResponseMetadata)
     ['{3772C8BA-4901-4018-BAFB-37C2C27CB157}']
     function QueuesUrls: TList<String>;
     function NextToken: string;
   end;
 
+  IAWS4DSQSModelFactory = interface
+    ['{764198C1-DD25-4001-8AA7-1732E3CA3C56}']
+    function ListQueuesRequest: IAWS4DSQSModelListQueuesRequest;
+  end;
+
+function SQSModelFactory: IAWS4DSQSModelFactory;
 
 implementation
+
+uses
+  AWS4D.SQS.Model.Factory;
+
+function SQSModelFactory: IAWS4DSQSModelFactory;
+begin
+  result := TAWS4DSQSModelFactory.GetInstance;
+end;
 
 end.

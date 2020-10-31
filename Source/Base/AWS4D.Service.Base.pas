@@ -3,7 +3,10 @@ unit AWS4D.Service.Base;
 interface
 
 uses
-  AWS4D.Service.Interfaces;
+  AWS4D.Service.Interfaces,
+  System.Classes,
+  System.DateUtils,
+  System.SysUtils;
 
 type TAWS4DServiceBase = class(TInterfacedObject, IAWS4DService)
 
