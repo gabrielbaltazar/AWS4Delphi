@@ -26,6 +26,11 @@ type
     function NextToken: string;
   end;
 
+  IAWS4DSQSModelListQueueTagsResponse = interface(IAWS4DModelResponseMetadata)
+    ['{03CA6BFE-4171-4EBC-903A-655E5D5EE3C4}']
+    function Tags: TDictionary<String, String>;
+  end;
+
   IAWS4DSQSModelFactory = interface
     ['{764198C1-DD25-4001-8AA7-1732E3CA3C56}']
     function ListQueuesRequest: IAWS4DSQSModelListQueuesRequest;

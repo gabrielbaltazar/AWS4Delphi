@@ -89,7 +89,7 @@ object Form2: TForm2
     Top = 97
     Width = 697
     Height = 250
-    ActivePage = tsListQueues
+    ActivePage = tsListQueueTags
     Align = alClient
     TabOrder = 2
     object tsListQueues: TTabSheet
@@ -157,6 +157,52 @@ object Form2: TForm2
         end
       end
       object mmoListQueues: TMemo
+        Left = 0
+        Top = 56
+        Width = 689
+        Height = 166
+        Align = alClient
+        ScrollBars = ssBoth
+        TabOrder = 1
+      end
+    end
+    object tsListQueueTags: TTabSheet
+      Caption = 'List Queue Tags'
+      ImageIndex = 1
+      object Panel2: TPanel
+        Left = 0
+        Top = 0
+        Width = 689
+        Height = 56
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitTop = 8
+        object Label7: TLabel
+          Left = 11
+          Top = 9
+          Width = 62
+          Height = 13
+          Caption = 'Queue Name'
+        end
+        object edtListQueueTagsQueueName: TEdit
+          Left = 11
+          Top = 24
+          Width = 222
+          Height = 21
+          TabOrder = 0
+        end
+        object btnListQueueTags: TButton
+          Left = 239
+          Top = 22
+          Width = 94
+          Height = 25
+          Caption = 'List Queues Tags'
+          TabOrder = 1
+          OnClick = btnListQueueTagsClick
+        end
+      end
+      object mmoListQueueTags: TMemo
         Left = 0
         Top = 56
         Width = 689

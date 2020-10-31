@@ -4,11 +4,10 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.Cloud.CloudAPI,
-  Data.Cloud.AmazonAPI,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
   AWS4D.SQS.Model.Interfaces,
   AWS4D.SQS.Service.Interfaces,
-  AWS4D.SQS.Service.Base, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls;
+  Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls;
 
 type
   TForm2 = class(TForm)
@@ -31,8 +30,15 @@ type
     edtListQueuesNextToken: TEdit;
     btnListQueues: TButton;
     mmoListQueues: TMemo;
+    tsListQueueTags: TTabSheet;
+    Panel2: TPanel;
+    Label7: TLabel;
+    edtListQueueTagsQueueName: TEdit;
+    btnListQueueTags: TButton;
+    mmoListQueueTags: TMemo;
     procedure btnListQueuesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure btnListQueueTagsClick(Sender: TObject);
   private
     { Private declarations }
     function CreateSQS: IAWS4DServiceSQS;
@@ -73,9 +79,14 @@ begin
   end;
 end;
 
+procedure TForm2.btnListQueueTagsClick(Sender: TObject);
+begin
+  ShowMessage(CreateSQS.GetQueueUrl(edtListQueueTagsQueueName.Text));
+end;
+
 function TForm2.CreateSQS: IAWS4DServiceSQS;
 begin
-  result := TAWS4DSQSServiceBase.New;
+  result := SQSService;
   result
     .AccessKeyID(edtAccessKey.Text)
     .Region(edtRegion.Text)

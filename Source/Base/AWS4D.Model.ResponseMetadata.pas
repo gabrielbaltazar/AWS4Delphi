@@ -4,6 +4,7 @@ interface
 
 uses
   AWS4D.Model.Interfaces,
+  System.Generics.Collections,
   System.JSON;
 
 type TAWS4DModelResponseMetadata = class(TInterfacedObject, IAWS4DModelResponseMetadata)

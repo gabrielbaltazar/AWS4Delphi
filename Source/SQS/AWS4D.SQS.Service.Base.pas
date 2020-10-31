@@ -9,6 +9,7 @@ uses
   AWS4D.Service.Base,
   AWS4D.HTTP.Interfaces,
   System.Classes,
+  System.DateUtils,
   System.SysUtils;
 
 type TAWS4DSQSServiceBase = class(TAWS4DServiceBase, IAWS4DServiceSQS)
@@ -20,6 +21,8 @@ type TAWS4DSQSServiceBase = class(TAWS4DServiceBase, IAWS4DServiceSQS)
 
   protected
     function ListQueues(ListQueuesRequest: IAWS4DSQSModelListQueuesRequest = nil): IAWS4DSQSModelListQueuesResponse;
+    function ListQueueTags(QueueName: String): string;
+    function GetQueueUrl(QueueName: String): string;
 
   public
     class function New: IAWS4DServiceSQS;
@@ -28,6 +31,19 @@ end;
 implementation
 
 { TAWS4DSQSServiceBase }
+
+function TAWS4DSQSServiceBase.GetQueueUrl(QueueName: String): string;
+begin
+  Result := HTTPRequest(Self)
+              .GET
+              .BaseURL(GetURL)
+              .Action('GetQueueUrl')
+              .AddQuery('QueueName', QueueName)
+              .Execute
+              .Body;
+
+  result := Result + Result;
+end;
 
 function TAWS4DSQSServiceBase.GetURL: string;
 begin
@@ -40,6 +56,24 @@ var
 begin
   json := PrepareRequest(ListQueuesRequest).Execute.Body;
   result := TAWS4DSQSModelListQueuesResponse.New(json);
+end;
+
+function TAWS4DSQSServiceBase.ListQueueTags(QueueName: String): string;
+var
+  url: String;
+begin
+  url := GetURL;
+  if not url.EndsWith('/') then
+    url := url + '/' + QueueName;
+
+  Result := HTTPRequest(Self)
+              .GET
+              .BaseURL(url)
+              .Action('ListQueueTags')
+              .Execute
+              .Body;
+
+  result := Result + Result;
 end;
 
 class function TAWS4DSQSServiceBase.New: IAWS4DServiceSQS;

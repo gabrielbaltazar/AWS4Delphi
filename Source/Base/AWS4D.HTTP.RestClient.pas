@@ -55,6 +55,9 @@ end;
 
 implementation
 
+uses
+  System.NetEncoding;
+
 { TAWS4DHTTPRestClient }
 
 function TAWS4DHTTPRestClient.Action(Value: string): IAWS4DHTTPRequest;
@@ -171,7 +174,7 @@ begin
 
   for i := 0 to Pred(FQueries.Count) do
   begin
-    value := HTTPDecode(FQueries.ValueFromIndex[i]);
+    value := TNetEncoding.URL.Decode(FQueries.ValueFromIndex[i]);
     FRestRequest.AddParameter(FQueries.Names[i], value, pkGETorPOST);
   end;
 end;
