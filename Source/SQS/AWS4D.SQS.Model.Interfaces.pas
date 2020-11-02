@@ -58,6 +58,50 @@ type
     function Messages: TList<IAWS4DSQSModelReceiveMessage>;
   end;
 
+  IAWS4DSQSModelSendMessageRequest = interface
+    ['{4E07F59F-AF1D-41BC-91FD-D007125E0979}']
+    function DelaySeconds         (Value: Integer): IAWS4DSQSModelSendMessageRequest; overload;
+    function MessageBody          (Value: String): IAWS4DSQSModelSendMessageRequest; overload;
+    function MessageDuplicationId (Value: String): IAWS4DSQSModelSendMessageRequest; overload;
+    function MessageGroupId       (Value: String): IAWS4DSQSModelSendMessageRequest; overload;
+    function QueueUrl             (Value: String): IAWS4DSQSModelSendMessageRequest; overload;
+
+    function DelaySeconds         : Integer; overload;
+    function MessageBody          : String; overload;
+    function MessageDuplicationId : String; overload;
+    function MessageGroupId       : String; overload;
+    function QueueUrl             : String; overload;
+
+    function AddMessageAttribute(Name, Value: String): IAWS4DSQSModelSendMessageRequest;
+    function MessageAttribute: TDictionary<String, String>; overload;
+
+    function AddMessageSystemAttribute(Name, Value: String): IAWS4DSQSModelSendMessageRequest;
+    function MessageSystemAttribute: TDictionary<String, String>; overload;
+  end;
+
+  IAWS4DSQSModelSendMessageResponse = interface(IAWS4DModelResponseMetadata)
+    ['{E992340E-3B47-411A-B331-BBD2CF1BD339}']
+    function MD5OfMessageAttributes: string;
+    function MD5OfMessageBody: string;
+    function MD5OfMessageSystemAttributes: string;
+    function MessageId: string;
+    function SequenceNumber: string;
+  end;
+
+  IAWS4DSQSModelDeleteMessageRequest = interface
+    ['{02989BF2-A1FB-4F0B-BF1D-52D77321CFA4}']
+    function QueueUrl: string; overload;
+    function ReceiptHandle: string; overload;
+
+    function ReceiptHandle(Value: String): IAWS4DSQSModelDeleteMessageRequest; overload;
+    function QueueUrl(Value: String): IAWS4DSQSModelDeleteMessageRequest; overload;
+    function Message(Value: IAWS4DSQSModelReceiveMessage): IAWS4DSQSModelDeleteMessageRequest;
+  end;
+
+  IAWS4DSQSModelDeleteMessageResponse = interface(IAWS4DModelResponseMetadata)
+    ['{080D6C3B-71DF-4B44-92B8-01CE7E031F62}']
+  end;
+
   IAWS4DSQSModelListQueueTagsResponse = interface(IAWS4DModelResponseMetadata)
     ['{03CA6BFE-4171-4EBC-903A-655E5D5EE3C4}']
     function Tags: TDictionary<String, String>;
@@ -70,8 +114,10 @@ type
 
   IAWS4DSQSModelFactory = interface
     ['{764198C1-DD25-4001-8AA7-1732E3CA3C56}']
+    function DeleteMessageRequest: IAWS4DSQSModelDeleteMessageRequest;
     function ListQueuesRequest: IAWS4DSQSModelListQueuesRequest;
     function ReceiveMessageRequest: IAWS4DSQSModelReceiveMessageRequest;
+    function SendMessageRequest: IAWS4DSQSModelSendMessageRequest;
   end;
 
 function SQSModelFactory: IAWS4DSQSModelFactory;

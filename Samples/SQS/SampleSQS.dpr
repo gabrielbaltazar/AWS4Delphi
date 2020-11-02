@@ -27,7 +27,11 @@ uses
   AWS4D.SQS.Model.ReceiveMessage in '..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessage.pas',
   AWS4D.SQS.Model.ListQueueTagsResponse in '..\..\Source\SQS\AWS4D.SQS.Model.ListQueueTagsResponse.pas',
   AWS4D.SQS.Model.GetQueueUrlResponse in '..\..\Source\SQS\AWS4D.SQS.Model.GetQueueUrlResponse.pas',
-  AWS4D.SQS.Model.ReceiveMessageResponse in '..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessageResponse.pas';
+  AWS4D.SQS.Model.ReceiveMessageResponse in '..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessageResponse.pas',
+  AWS4D.SQS.Model.SendMessageRequest in '..\..\Source\SQS\AWS4D.SQS.Model.SendMessageRequest.pas',
+  AWS4D.SQS.Model.SendMessageResponse in '..\..\Source\SQS\AWS4D.SQS.Model.SendMessageResponse.pas',
+  AWS4D.SQS.Model.DeleteMessageRequest in '..\..\Source\SQS\AWS4D.SQS.Model.DeleteMessageRequest.pas',
+  AWS4D.SQS.Model.DeleteMessageResponse in '..\..\Source\SQS\AWS4D.SQS.Model.DeleteMessageResponse.pas';
 
 {$R *.res}
 

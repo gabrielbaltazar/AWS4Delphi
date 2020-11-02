@@ -38,11 +38,10 @@ begin
   if not Assigned(FJSON) then
     Exit;
 
-  LJSONArray := FJSON.GetValue('ReceiveMessageResponse')
-                     .GetValue<TJSONObject>('ReceiveMessageResult')
-                     .GetValue<TJSONArray>('messages');
+  LJSON := FJSON.GetValue('ReceiveMessageResponse')
+                .GetValue<TJSONObject>('ReceiveMessageResult');
 
-  if not Assigned(LJSONArray) then
+  if not LJSON.TryGetValue<TJSONArray>('messages', LJSONArray) then
     Exit;
 
   for i := 0 to Pred(LJSONArray.Count) do

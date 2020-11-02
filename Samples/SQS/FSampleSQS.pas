@@ -52,11 +52,29 @@ type
     Label11: TLabel;
     edtReceiveMessageVisibilityTimeout: TEdit;
     mmoReceiveMessageResponse: TMemo;
+    tsSendMessage: TTabSheet;
+    Panel5: TPanel;
+    Label12: TLabel;
+    Label13: TLabel;
+    edtSendMessageQueueName: TEdit;
+    btnSendMessage: TButton;
+    edtSendMessageMessageBody: TEdit;
+    mmoSendMessage: TMemo;
+    tsDeleteMessage: TTabSheet;
+    Panel6: TPanel;
+    Label14: TLabel;
+    Label15: TLabel;
+    edtDeleteMessageQueueName: TEdit;
+    btnDeleteMessage: TButton;
+    edtDeleteMessageReceiptHandle: TEdit;
+    mmoDeleteMessage: TMemo;
     procedure btnListQueuesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnListQueueTagsClick(Sender: TObject);
     procedure btnQueueURLClick(Sender: TObject);
     procedure btnReceiveMessageClick(Sender: TObject);
+    procedure btnSendMessageClick(Sender: TObject);
+    procedure btnDeleteMessageClick(Sender: TObject);
   private
     { Private declarations }
     function CreateSQS: IAWS4DServiceSQS;
@@ -65,6 +83,8 @@ type
     procedure writeListQueueTagsResponse(Response: IAWS4DSQSModelListQueueTagsResponse);
     procedure writeGetQueueUrlResponse(Response: IAWS4DSQSModelGetQueueUrlResponse);
     procedure writeReceiveMessageResponse(Response: IAWS4DSQSModelReceiveMessageResponse);
+    procedure writeSendMessageResponse(Response: IAWS4DSQSModelSendMessageResponse);
+    procedure writeDeleteMessageResponse(Response: IAWS4DSQSModelDeleteMessageResponse);
 
     procedure writeHTTPException(AException: EAWS4DHTTPException);
   public
@@ -77,6 +97,20 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TForm2.btnDeleteMessageClick(Sender: TObject);
+var
+  request: IAWS4DSQSModelDeleteMessageRequest;
+  response : IAWS4DSQSModelDeleteMessageResponse;
+begin
+  request := SQSModelFactory.DeleteMessageRequest;
+  request
+    .QueueUrl(edtDeleteMessageQueueName.Text)
+    .ReceiptHandle(edtDeleteMessageReceiptHandle.Text);
+
+  response := CreateSQS.DeleteMessage(request);
+  writeDeleteMessageResponse(response);
+end;
 
 procedure TForm2.btnListQueuesClick(Sender: TObject);
 var
@@ -132,6 +166,20 @@ begin
   writeReceiveMessageResponse(response);
 end;
 
+procedure TForm2.btnSendMessageClick(Sender: TObject);
+var
+  request: IAWS4DSQSModelSendMessageRequest;
+  response: IAWS4DSQSModelSendMessageResponse;
+begin
+  request := SQSModelFactory.SendMessageRequest;
+  request
+    .QueueUrl(edtSendMessageQueueName.Text)
+    .MessageBody(edtSendMessageMessageBody.Text);
+
+  response := CreateSQS.SendMessage(request);
+  writeSendMessageResponse(response);
+end;
+
 function TForm2.CreateSQS: IAWS4DServiceSQS;
 begin
   result := SQSService;
@@ -144,6 +192,13 @@ end;
 procedure TForm2.FormCreate(Sender: TObject);
 begin
   ReportMemoryLeaksOnShutdown := True;
+  edtSendMessageMessageBody.Text := Format('Message Test %s', [FormatDateTime('dd/MM/yyyy hh:mm:ss', Now)]);
+end;
+
+procedure TForm2.writeDeleteMessageResponse(Response: IAWS4DSQSModelDeleteMessageResponse);
+begin
+  mmoDeleteMessage.Lines.Clear;
+  mmoDeleteMessage.Lines.Add('RequestID: ' + Response.RequestId);
 end;
 
 procedure TForm2.writeGetQueueUrlResponse(Response: IAWS4DSQSModelGetQueueUrlResponse);
@@ -208,10 +263,21 @@ begin
     mmoReceiveMessageResponse.Lines.Add('Body: ' + receiveMessage.Body);
     mmoReceiveMessageResponse.Lines.Add('ReceiptHandle: ' + receiveMessage.ReceiptHandle);
 
+    edtDeleteMessageReceiptHandle.Text := receiveMessage.ReceiptHandle;
+
     mmoReceiveMessageResponse.Lines.Add('Attributes -----');
     for key in receiveMessage.Attributes.Keys do
       mmoReceiveMessageResponse.Lines.Add(key + ' = ' + receiveMessage.Attributes.Items[key]);
   end;
+end;
+
+procedure TForm2.writeSendMessageResponse(Response: IAWS4DSQSModelSendMessageResponse);
+begin
+  mmoSendMessage.Clear;
+  mmoSendMessage.Lines.Add('RequestID: ' + Response.RequestId);
+  mmoSendMessage.Lines.Add('MessageId: ' + Response.MessageId);
+  mmoSendMessage.Lines.Add('MD5OfMessageBody: ' + Response.MD5OfMessageBody);
+  mmoSendMessage.Lines.Add('SequenceNumber: ' + Response.SequenceNumber);
 end;
 
 end.

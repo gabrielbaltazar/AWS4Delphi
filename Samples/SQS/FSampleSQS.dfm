@@ -333,5 +333,128 @@ object Form2: TForm2
         TabOrder = 1
       end
     end
+    object tsSendMessage: TTabSheet
+      Caption = 'Send Message'
+      ImageIndex = 4
+      object Panel5: TPanel
+        Left = 0
+        Top = 0
+        Width = 689
+        Height = 56
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitTop = 8
+        object Label12: TLabel
+          Left = 11
+          Top = 9
+          Width = 62
+          Height = 13
+          Caption = 'Queue Name'
+        end
+        object Label13: TLabel
+          Left = 239
+          Top = 9
+          Width = 69
+          Height = 13
+          Caption = 'Message Body'
+        end
+        object edtSendMessageQueueName: TEdit
+          Left = 11
+          Top = 24
+          Width = 222
+          Height = 21
+          TabOrder = 0
+          Text = '159521004132/Send-to-Email-Docfiscal-dev'
+        end
+        object btnSendMessage: TButton
+          Left = 562
+          Top = 22
+          Width = 94
+          Height = 25
+          Caption = 'Send Message'
+          TabOrder = 1
+          OnClick = btnSendMessageClick
+        end
+        object edtSendMessageMessageBody: TEdit
+          Left = 239
+          Top = 24
+          Width = 302
+          Height = 21
+          TabOrder = 2
+          Text = '0'
+        end
+      end
+      object mmoSendMessage: TMemo
+        Left = 0
+        Top = 56
+        Width = 689
+        Height = 166
+        Align = alClient
+        ScrollBars = ssBoth
+        TabOrder = 1
+      end
+    end
+    object tsDeleteMessage: TTabSheet
+      Caption = 'Delete Message'
+      ImageIndex = 5
+      object Panel6: TPanel
+        Left = 0
+        Top = 0
+        Width = 689
+        Height = 56
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitTop = 8
+        object Label14: TLabel
+          Left = 11
+          Top = 9
+          Width = 62
+          Height = 13
+          Caption = 'Queue Name'
+        end
+        object Label15: TLabel
+          Left = 239
+          Top = 9
+          Width = 72
+          Height = 13
+          Caption = 'Receipt Handle'
+        end
+        object edtDeleteMessageQueueName: TEdit
+          Left = 11
+          Top = 24
+          Width = 222
+          Height = 21
+          TabOrder = 0
+          Text = '159521004132/Send-to-Email-Docfiscal-dev'
+        end
+        object btnDeleteMessage: TButton
+          Left = 562
+          Top = 22
+          Width = 94
+          Height = 25
+          Caption = 'Delete Message'
+          TabOrder = 1
+          OnClick = btnDeleteMessageClick
+        end
+        object edtDeleteMessageReceiptHandle: TEdit
+          Left = 239
+          Top = 24
+          Width = 302
+          Height = 21
+          TabOrder = 2
+        end
+      end
+      object mmoDeleteMessage: TMemo
+        Left = 0
+        Top = 56
+        Width = 689
+        Height = 166
+        Align = alClient
+        ScrollBars = ssBoth
+        TabOrder = 1
+      end
+    end
   end
 end
