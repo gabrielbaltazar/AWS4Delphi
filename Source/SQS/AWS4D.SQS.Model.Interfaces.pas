@@ -109,12 +109,37 @@ type
     function NextToken: string;
   end;
 
+  IAWS4DSQSModelListQueueTagsResponse = interface(IAWS4DModelResponseMetadata)
+    ['{03CA6BFE-4171-4EBC-903A-655E5D5EE3C4}']
+    /// <summary>The following element is returned by the service.</summary>
+    /// <remarks>The list of all tags added to the specified queue.</remarks>
+    function Tags: TDictionary<String, String>;
+  end;
+
   IAWS4DSQSModelReceiveMessageRequest = interface(IAWS4DModelRequest)
     ['{B54C8256-86AE-4619-B7C2-21A44472EEC4}']
-    function queueUrl                (Value: String) : IAWS4DSQSModelReceiveMessageRequest; overload;
-    function maxNumberOfMessages     (Value: Integer): IAWS4DSQSModelReceiveMessageRequest; overload;
-    function visibilityTimeout       (Value: Integer): IAWS4DSQSModelReceiveMessageRequest; overload;
-    function waitTimeSeconds         (Value: Integer): IAWS4DSQSModelReceiveMessageRequest; overload;
+    /// <summary>The URL of the Amazon SQS queue from which messages are received.</summary>
+    /// <remarks>Queue URLs and names are case-sensitive.</remarks>
+    function queueUrl(Value: String): IAWS4DSQSModelReceiveMessageRequest; overload;
+
+    /// <summary>The maximum number of messages to return. Amazon SQS never returns more messages than this value (however, fewer messages might be returned).</summary>
+    /// <remarks>Valid values: 1 to 10. Default: 1.</remarks>
+    function maxNumberOfMessages(Value: Integer): IAWS4DSQSModelReceiveMessageRequest; overload;
+
+    /// <summary>The duration (in seconds) that the received messages are hidden from subsequent retrieve requests after being retrieved by a ReceiveMessage request.</summary>
+    function visibilityTimeout(Value: Integer): IAWS4DSQSModelReceiveMessageRequest; overload;
+
+    /// <summary>The duration (in seconds) for which the call waits for a message to arrive in the queue before returning.</summary>
+    /// <remarks>If a message is available, the call returns sooner than WaitTimeSeconds. If no messages are available and the wait time expires, the call returns successfully with an empty list of messages.</remarks>
+    function waitTimeSeconds(Value: Integer): IAWS4DSQSModelReceiveMessageRequest; overload;
+
+    /// <summary>This parameter applies only to FIFO (first-in-first-out) queues.</summary>
+    /// <remarks>
+    ///   The token used for deduplication of ReceiveMessage calls. If a networking issue
+    ///   occurs after a ReceiveMessage action, and instead of a response you receive a generic error,
+    ///   it is possible to retry the same action with an identical ReceiveRequestAttemptId to retrieve
+    ///   the same set of messages, even if their visibility timeout has not yet expired.
+    /// </remarks>
     function receiveRequestAttemptId (Value: Integer): IAWS4DSQSModelReceiveMessageRequest; overload;
 
     function queueUrl: string; overload;
@@ -129,51 +154,92 @@ type
 
   IAWS4DSQSModelReceiveMessage = interface
     ['{9EA58D01-46E0-4B81-96A4-A01361C20EC9}']
+    /// <summary>The MessageId you received when you sent the message to the queue.</summary>
     function MessageId: String;
+
+    /// <summary>The receipt handle is the identifier you must provide when deleting the message.</summary>
     function ReceiptHandle: string;
+
+    /// <summary>An MD5 digest of the message body.</summary>
     function MD5OfBody: string;
+
+    /// <summary>The message body.</summary>
     function Body: string;
+
     function Attributes: TDictionary<String, String>;
   end;
 
   IAWS4DSQSModelReceiveMessageResponse = interface(IAWS4DModelResponseMetadata)
     ['{8484C39F-5D49-49CB-B39B-62E927DFC120}']
+    /// <summary>Retrieves one or more messages (up to 10), from the specified queue.</summary>
     function Messages: TList<IAWS4DSQSModelReceiveMessage>;
   end;
 
   IAWS4DSQSModelSendMessageRequest = interface
     ['{4E07F59F-AF1D-41BC-91FD-D007125E0979}']
-    function DelaySeconds         (Value: Integer): IAWS4DSQSModelSendMessageRequest; overload;
-    function MessageBody          (Value: String): IAWS4DSQSModelSendMessageRequest; overload;
-    function MessageDuplicationId (Value: String): IAWS4DSQSModelSendMessageRequest; overload;
-    function MessageGroupId       (Value: String): IAWS4DSQSModelSendMessageRequest; overload;
-    function QueueUrl             (Value: String): IAWS4DSQSModelSendMessageRequest; overload;
+    /// <summary>The length of time, in seconds, for which to delay a specific message.</summary>
+    /// <remarks>Valid values: 0 to 900. Maximum: 15 minutes. Messages with a positive DelaySeconds
+    ///   value become available for processing after the delay period is finished.
+    ///   If you don't specify a value, the default value for the queue applies.
+    /// </remarks>
+    function DelaySeconds(Value: Integer): IAWS4DSQSModelSendMessageRequest; overload;
+
+    /// <summary>The message to send. The minimum size is one character.</summary>
+    /// <remarks>The maximum size is 256 KB.</remarks>
+    function MessageBody(Value: String): IAWS4DSQSModelSendMessageRequest; overload;
+
+    /// <summary>This parameter applies only to FIFO (first-in-first-out) queues.</summary>
+    /// <remarks>The token used for deduplication of sent messages. If a message with a particular
+    ///   MessageDeduplicationId is sent successfully, any messages sent with the same
+    ///   MessageDeduplicationId are accepted successfully but aren't delivered during the 5-minute
+    ///   deduplication interval.
+    /// </remarks>
+    function MessageDeduplicationId(Value: String): IAWS4DSQSModelSendMessageRequest; overload;
+
+    /// <summary>This parameter applies only to FIFO (first-in-first-out) queues.</summary>
+    /// <remarks>The tag that specifies that a message belongs to a specific message group.</remarks>
+    function MessageGroupId(Value: String): IAWS4DSQSModelSendMessageRequest; overload;
+
+    /// <summary>The URL of the Amazon SQS queue to which a message is sent.</summary>
+    /// <remarks>Queue URLs and names are case-sensitive.</remarks>
+    function QueueUrl(Value: String): IAWS4DSQSModelSendMessageRequest; overload;
 
     function DelaySeconds         : Integer; overload;
     function MessageBody          : String; overload;
-    function MessageDuplicationId : String; overload;
+    function MessageDeduplicationId : String; overload;
     function MessageGroupId       : String; overload;
     function QueueUrl             : String; overload;
 
+    /// <summary>Each message attribute consists of a Name, Type, and Value.</summary>
+    /// <remarks>For more information, see Amazon SQS Message Attributes in the
+    ///   Amazon Simple Queue Service Developer Guide.
+    ///   https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-metadata.html#sqs-message-attributes
+    /// </remarks>
     function AddMessageAttribute(Name, Value: String): IAWS4DSQSModelSendMessageRequest;
     function MessageAttribute: TDictionary<String, String>; overload;
 
+    /// <summary>The message system attribute to send.</summary>
+    /// <remarks>Each message system attribute consists of a Name, Type, and Value.</remarks>
     function AddMessageSystemAttribute(Name, Value: String): IAWS4DSQSModelSendMessageRequest;
     function MessageSystemAttribute: TDictionary<String, String>; overload;
   end;
 
   IAWS4DSQSModelSendMessageResponse = interface(IAWS4DModelResponseMetadata)
     ['{E992340E-3B47-411A-B331-BBD2CF1BD339}']
+    /// <summary>An MD5 digest of the non-URL-encoded message attribute string.</summary>
     function MD5OfMessageAttributes: string;
-    function MD5OfMessageBody: string;
-    function MD5OfMessageSystemAttributes: string;
-    function MessageId: string;
-    function SequenceNumber: string;
-  end;
 
-  IAWS4DSQSModelListQueueTagsResponse = interface(IAWS4DModelResponseMetadata)
-    ['{03CA6BFE-4171-4EBC-903A-655E5D5EE3C4}']
-    function Tags: TDictionary<String, String>;
+    /// <summary>An MD5 digest of the non-URL-encoded message attribute string.</summary>
+    function MD5OfMessageBody: string;
+
+    /// <summary>An MD5 digest of the non-URL-encoded message system attribute string.</summary>
+    function MD5OfMessageSystemAttributes: string;
+
+    /// <summary>An attribute containing the MessageId of the message sent to the queue.</summary>
+    function MessageId: string;
+
+    /// <summary>This parameter applies only to FIFO (first-in-first-out) queues.</summary>
+    function SequenceNumber: string;
   end;
 
   IAWS4DSQSModelFactory = interface

@@ -33,8 +33,20 @@ type
     ///   https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ListQueues.html
     /// </remarks>
     function ListQueues(ListQueuesRequest: IAWS4DSQSModelListQueuesRequest = nil): IAWS4DSQSModelListQueuesResponse;
+
+    /// <summary>List all cost allocation tags added to the specified Amazon SQS queue.</summary>
+    /// <remarks>
+    ///   For an overview, see Tagging Your Amazon SQS Queues in the Amazon Simple Queue Service Developer Guide.
+    ///   https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-queue-tags.html
+    /// </remarks>
     function ListQueueTags(QueueName: String): IAWS4DSQSModelListQueueTagsResponse;
+
+    /// <summary>Retrieves one or more messages (up to 10), from the specified queue.</summary>
+    /// <remarks>Using the WaitTimeSeconds parameter enables long-poll support. For more information, see Amazon SQS Long Polling in the Amazon Simple Queue Service Developer Guide.</remarks>
     function ReceiveMessage(Request: IAWS4DSQSModelReceiveMessageRequest): IAWS4DSQSModelReceiveMessageResponse;
+
+    /// <summary>Delivers a message to the specified queue.</summary>
+    /// <remarks>https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessage.html</remarks>
     function SendMessage(Request: IAWS4DSQSModelSendMessageRequest): IAWS4DSQSModelSendMessageResponse;
   end;
 
