@@ -9,12 +9,36 @@ uses
 type
   EAWS4DHTTPException = AWS4D.Model.Interfaces.EAWS4DHTTPException;
 
+  IAWS4DSQSModelReceiveMessage = interface;
+
   IAWS4DSQSModelCreateQueueRequest = interface(IAWS4DModelRequest)
     ['{128E904C-9FDC-41CF-A57C-2DB099FB331A}']
+    /// <summary>The name of the new queue. The following limits apply to this name.</summary>
+    /// <remarks>
+    ///   Queue URLs and names are case-sensitive.
+    ///   A queue name can have up to 80 characters.
+    ///   Valid values: alphanumeric characters, hyphens (-), and underscores (_).
+    ///   A FIFO queue name must end with the .fifo suffix.
+    /// </remarks>
     function QueueName(Value: String): IAWS4DSQSModelCreateQueueRequest; overload;
     function QueueName: string; overload;
 
+    /// <summary>Add cost allocation tags to the specified Amazon SQS queue.</summary>
+    /// <remarks>
+    ///   When you use queue tags, keep the following guidelines in mind:
+    ///   Adding more than 50 tags to a queue isn't recommended.
+    ///   Tags don't have any semantic meaning. Amazon SQS interprets tags as character strings.
+    ///   Tags are case-sensitive.
+    ///   A new tag with a key identical to that of an existing tag overwrites the existing tag.
+    ///   For a full list of tag restrictions, see https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-quotas.html#limits-queues.
+    /// </remarks>
     function AddTag(Key, Value: String): IAWS4DSQSModelCreateQueueRequest;
+
+    /// <summary>A map of attributes with their corresponding values.</summary>
+    /// <remarks>
+    ///   The following lists the names, descriptions, and values of the special request parameters that the CreateQueue action uses:
+    ///   https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_CreateQueue.html
+    /// </remarks>
     function AddAttribute(Key, Value: String): IAWS4DSQSModelCreateQueueRequest;
 
     function Tags: TDictionary<String, String>;
@@ -23,7 +47,24 @@ type
 
   IAWS4DSQSModelCreateQueueResponse = interface(IAWS4DModelResponseMetadata)
     ['{4CB34A5D-C279-4113-A7D9-F470F6277DA0}']
+    /// <summary>
+    ///   The URL of the created Amazon SQS queue.
+    /// </summary>
     function QueueUrl: string;
+  end;
+
+  IAWS4DSQSModelDeleteMessageRequest = interface
+    ['{02989BF2-A1FB-4F0B-BF1D-52D77321CFA4}']
+    function QueueUrl: string; overload;
+    function ReceiptHandle: string; overload;
+
+    function ReceiptHandle(Value: String): IAWS4DSQSModelDeleteMessageRequest; overload;
+    function QueueUrl(Value: String): IAWS4DSQSModelDeleteMessageRequest; overload;
+    function Message(Value: IAWS4DSQSModelReceiveMessage): IAWS4DSQSModelDeleteMessageRequest;
+  end;
+
+  IAWS4DSQSModelDeleteMessageResponse = interface(IAWS4DModelResponseMetadata)
+    ['{080D6C3B-71DF-4B44-92B8-01CE7E031F62}']
   end;
 
   IAWS4DSQSModelListQueuesRequest = interface(IAWS4DModelRequest)
@@ -103,20 +144,6 @@ type
     function MD5OfMessageSystemAttributes: string;
     function MessageId: string;
     function SequenceNumber: string;
-  end;
-
-  IAWS4DSQSModelDeleteMessageRequest = interface
-    ['{02989BF2-A1FB-4F0B-BF1D-52D77321CFA4}']
-    function QueueUrl: string; overload;
-    function ReceiptHandle: string; overload;
-
-    function ReceiptHandle(Value: String): IAWS4DSQSModelDeleteMessageRequest; overload;
-    function QueueUrl(Value: String): IAWS4DSQSModelDeleteMessageRequest; overload;
-    function Message(Value: IAWS4DSQSModelReceiveMessage): IAWS4DSQSModelDeleteMessageRequest;
-  end;
-
-  IAWS4DSQSModelDeleteMessageResponse = interface(IAWS4DModelResponseMetadata)
-    ['{080D6C3B-71DF-4B44-92B8-01CE7E031F62}']
   end;
 
   IAWS4DSQSModelListQueueTagsResponse = interface(IAWS4DModelResponseMetadata)
