@@ -23,7 +23,7 @@ type TAWS4DSQSServiceBase = class(TAWS4DServiceBase, IAWS4DServiceSQS)
   protected
     function ListQueues(ListQueuesRequest: IAWS4DSQSModelListQueuesRequest = nil): IAWS4DSQSModelListQueuesResponse;
     function ListQueueTags(QueueName: String): IAWS4DSQSModelListQueueTagsResponse;
-    function GetQueueUrl(QueueName: String): string;
+    function GetQueueUrl(QueueName: String): IAWS4DSQSModelGetQueueUrlResponse;
     function ReceiveMessage(Request: IAWS4DSQSModelReceiveMessageRequest): IAWS4DSQSModelReceiveMessageResponse;
 
   public
@@ -34,9 +34,11 @@ implementation
 
 { TAWS4DSQSServiceBase }
 
-function TAWS4DSQSServiceBase.GetQueueUrl(QueueName: String): string;
+function TAWS4DSQSServiceBase.GetQueueUrl(QueueName: String): IAWS4DSQSModelGetQueueUrlResponse;
+var
+  json : string;
 begin
-  Result := HTTPRequest(Self)
+  json := HTTPRequest(Self)
               .GET
               .BaseURL(GetURL)
               .Action('GetQueueUrl')
@@ -44,7 +46,7 @@ begin
               .Execute
               .Body;
 
-  result := Result + Result;
+  result := TAWS4DSQSModelGetQueueUrlResponse.New(json);
 end;
 
 function TAWS4DSQSServiceBase.GetURL: string;

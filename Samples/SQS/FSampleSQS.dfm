@@ -85,7 +85,7 @@ object Form2: TForm2
     Top = 97
     Width = 697
     Height = 250
-    ActivePage = tsListQueueTags
+    ActivePage = tsGetQueueUrl
     Align = alClient
     TabOrder = 2
     object tsListQueues: TTabSheet
@@ -205,6 +205,90 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
+      end
+    end
+    object tsGetQueueUrl: TTabSheet
+      Caption = 'Get Queue Url'
+      ImageIndex = 2
+      object Panel4: TPanel
+        Left = 0
+        Top = 0
+        Width = 689
+        Height = 56
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitTop = 8
+        object Label9: TLabel
+          Left = 11
+          Top = 9
+          Width = 62
+          Height = 13
+          Caption = 'Queue Name'
+        end
+        object edtGetQueueUrlQueueName: TEdit
+          Left = 11
+          Top = 24
+          Width = 222
+          Height = 21
+          TabOrder = 0
+          Text = 'Send-to-Email-Docfiscal-dev'
+        end
+        object btnGetQueueUrl: TButton
+          Left = 239
+          Top = 22
+          Width = 94
+          Height = 25
+          Caption = 'Get Queue URL'
+          TabOrder = 1
+          OnClick = btnQueueURLClick
+        end
+      end
+      object mmoGetQueueUrl: TMemo
+        Left = 0
+        Top = 56
+        Width = 689
+        Height = 166
+        Align = alClient
+        ScrollBars = ssBoth
+        TabOrder = 1
+      end
+    end
+    object tsReceiveMessage: TTabSheet
+      Caption = 'Receive Message'
+      ImageIndex = 2
+      object Panel3: TPanel
+        Left = 0
+        Top = 0
+        Width = 689
+        Height = 56
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitTop = 8
+        object Label8: TLabel
+          Left = 11
+          Top = 9
+          Width = 62
+          Height = 13
+          Caption = 'Queue Name'
+        end
+        object Edit1: TEdit
+          Left = 11
+          Top = 24
+          Width = 222
+          Height = 21
+          TabOrder = 0
+          Text = '159521004132/Send-to-Email-Docfiscal-dev'
+        end
+        object Button1: TButton
+          Left = 583
+          Top = 22
+          Width = 94
+          Height = 25
+          Caption = 'Receive Message'
+          TabOrder = 1
+        end
       end
     end
   end

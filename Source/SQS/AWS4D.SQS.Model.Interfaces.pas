@@ -58,6 +58,11 @@ type
     function Tags: TDictionary<String, String>;
   end;
 
+  IAWS4DSQSModelGetQueueUrlResponse = interface(IAWS4DModelResponseMetadata)
+    ['{33764771-FA8E-4472-885D-38E1085AFDC3}']
+    function QueueUrl: string;
+  end;
+
   IAWS4DSQSModelFactory = interface
     ['{764198C1-DD25-4001-8AA7-1732E3CA3C56}']
     function ListQueuesRequest: IAWS4DSQSModelListQueuesRequest;

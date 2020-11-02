@@ -36,15 +36,29 @@ type
     edtListQueueTagsQueueName: TEdit;
     btnListQueueTags: TButton;
     mmoListQueueTags: TMemo;
+    tsReceiveMessage: TTabSheet;
+    Panel3: TPanel;
+    Label8: TLabel;
+    Edit1: TEdit;
+    Button1: TButton;
+    tsGetQueueUrl: TTabSheet;
+    Panel4: TPanel;
+    Label9: TLabel;
+    edtGetQueueUrlQueueName: TEdit;
+    btnGetQueueUrl: TButton;
+    mmoGetQueueUrl: TMemo;
     procedure btnListQueuesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnListQueueTagsClick(Sender: TObject);
+    procedure btnQueueURLClick(Sender: TObject);
   private
     { Private declarations }
     function CreateSQS: IAWS4DServiceSQS;
 
     procedure writeListQueuesResponse(Response: IAWS4DSQSModelListQueuesResponse);
     procedure writeListQueueTagsResponse(Response: IAWS4DSQSModelListQueueTagsResponse);
+    procedure writeGetQueueUrlResponse(Response: IAWS4DSQSModelGetQueueUrlResponse);
+
     procedure writeHTTPException(AException: EAWS4DHTTPException);
   public
     { Public declarations }
@@ -88,6 +102,14 @@ begin
   writeListQueueTagsResponse(response);
 end;
 
+procedure TForm2.btnQueueURLClick(Sender: TObject);
+var
+  response : IAWS4DSQSModelGetQueueUrlResponse;
+begin
+  response := CreateSQS.GetQueueUrl('Send-to-Email-Docfiscal-dev');
+  writeGetQueueUrlResponse(response);
+end;
+
 function TForm2.CreateSQS: IAWS4DServiceSQS;
 begin
   result := SQSService;
@@ -100,6 +122,14 @@ end;
 procedure TForm2.FormCreate(Sender: TObject);
 begin
   ReportMemoryLeaksOnShutdown := True;
+end;
+
+procedure TForm2.writeGetQueueUrlResponse(Response: IAWS4DSQSModelGetQueueUrlResponse);
+begin
+  mmoGetQueueUrl.Lines.Clear;
+  mmoGetQueueUrl.Lines.Add('RequestID: ' + Response.RequestId);
+
+  mmoGetQueueUrl.Lines.Add('Url = ' + Response.QueueUrl);
 end;
 
 procedure TForm2.writeHTTPException(AException: EAWS4DHTTPException);
