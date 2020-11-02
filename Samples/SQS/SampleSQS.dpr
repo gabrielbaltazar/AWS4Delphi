@@ -24,9 +24,10 @@ uses
   AWS4D.SQS.Model.ListQueuesRequest in '..\..\Source\SQS\AWS4D.SQS.Model.ListQueuesRequest.pas',
   AWS4D.Model.Exceptions in '..\..\Source\Base\AWS4D.Model.Exceptions.pas',
   AWS4D.SQS.Model.ReceiveMessageRequest in '..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessageRequest.pas',
-  AWS4D.SQS.Model.ReceiveMessageResponse in '..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessageResponse.pas',
+  AWS4D.SQS.Model.ReceiveMessage in '..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessage.pas',
   AWS4D.SQS.Model.ListQueueTagsResponse in '..\..\Source\SQS\AWS4D.SQS.Model.ListQueueTagsResponse.pas',
-  AWS4D.SQS.Model.GetQueueUrlResponse in '..\..\Source\SQS\AWS4D.SQS.Model.GetQueueUrlResponse.pas';
+  AWS4D.SQS.Model.GetQueueUrlResponse in '..\..\Source\SQS\AWS4D.SQS.Model.GetQueueUrlResponse.pas',
+  AWS4D.SQS.Model.ReceiveMessageResponse in '..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessageResponse.pas';
 
 {$R *.res}
 

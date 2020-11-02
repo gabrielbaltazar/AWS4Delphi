@@ -85,7 +85,7 @@ object Form2: TForm2
     Top = 97
     Width = 697
     Height = 250
-    ActivePage = tsGetQueueUrl
+    ActivePage = tsReceiveMessage
     Align = alClient
     TabOrder = 2
     object tsListQueues: TTabSheet
@@ -273,7 +273,21 @@ object Form2: TForm2
           Height = 13
           Caption = 'Queue Name'
         end
-        object Edit1: TEdit
+        object Label10: TLabel
+          Left = 239
+          Top = 9
+          Width = 123
+          Height = 13
+          Caption = 'Max Number of Messages'
+        end
+        object Label11: TLabel
+          Left = 383
+          Top = 9
+          Width = 78
+          Height = 13
+          Caption = 'Visibility Timeout'
+        end
+        object edtReceiveMessageQueueName: TEdit
           Left = 11
           Top = 24
           Width = 222
@@ -281,14 +295,42 @@ object Form2: TForm2
           TabOrder = 0
           Text = '159521004132/Send-to-Email-Docfiscal-dev'
         end
-        object Button1: TButton
-          Left = 583
+        object btnReceiveMessage: TButton
+          Left = 562
           Top = 22
           Width = 94
           Height = 25
           Caption = 'Receive Message'
           TabOrder = 1
+          OnClick = btnReceiveMessageClick
         end
+        object edtReceiveMessageMaxNumberMessages: TEdit
+          Left = 239
+          Top = 24
+          Width = 138
+          Height = 21
+          NumbersOnly = True
+          TabOrder = 2
+          Text = '0'
+        end
+        object edtReceiveMessageVisibilityTimeout: TEdit
+          Left = 383
+          Top = 24
+          Width = 138
+          Height = 21
+          NumbersOnly = True
+          TabOrder = 3
+          Text = '0'
+        end
+      end
+      object mmoReceiveMessageResponse: TMemo
+        Left = 0
+        Top = 56
+        Width = 689
+        Height = 166
+        Align = alClient
+        ScrollBars = ssBoth
+        TabOrder = 1
       end
     end
   end

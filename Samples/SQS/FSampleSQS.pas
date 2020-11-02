@@ -39,18 +39,24 @@ type
     tsReceiveMessage: TTabSheet;
     Panel3: TPanel;
     Label8: TLabel;
-    Edit1: TEdit;
-    Button1: TButton;
+    edtReceiveMessageQueueName: TEdit;
+    btnReceiveMessage: TButton;
     tsGetQueueUrl: TTabSheet;
     Panel4: TPanel;
     Label9: TLabel;
     edtGetQueueUrlQueueName: TEdit;
     btnGetQueueUrl: TButton;
     mmoGetQueueUrl: TMemo;
+    Label10: TLabel;
+    edtReceiveMessageMaxNumberMessages: TEdit;
+    Label11: TLabel;
+    edtReceiveMessageVisibilityTimeout: TEdit;
+    mmoReceiveMessageResponse: TMemo;
     procedure btnListQueuesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnListQueueTagsClick(Sender: TObject);
     procedure btnQueueURLClick(Sender: TObject);
+    procedure btnReceiveMessageClick(Sender: TObject);
   private
     { Private declarations }
     function CreateSQS: IAWS4DServiceSQS;
@@ -58,6 +64,7 @@ type
     procedure writeListQueuesResponse(Response: IAWS4DSQSModelListQueuesResponse);
     procedure writeListQueueTagsResponse(Response: IAWS4DSQSModelListQueueTagsResponse);
     procedure writeGetQueueUrlResponse(Response: IAWS4DSQSModelGetQueueUrlResponse);
+    procedure writeReceiveMessageResponse(Response: IAWS4DSQSModelReceiveMessageResponse);
 
     procedure writeHTTPException(AException: EAWS4DHTTPException);
   public
@@ -108,6 +115,21 @@ var
 begin
   response := CreateSQS.GetQueueUrl('Send-to-Email-Docfiscal-dev');
   writeGetQueueUrlResponse(response);
+end;
+
+procedure TForm2.btnReceiveMessageClick(Sender: TObject);
+var
+  request: IAWS4DSQSModelReceiveMessageRequest;
+  response : IAWS4DSQSModelReceiveMessageResponse;
+begin
+  request := SQSModelFactory.ReceiveMessageRequest;
+  request
+    .queueUrl(edtReceiveMessageQueueName.Text)
+    .maxNumberOfMessages(StrToIntDef(edtReceiveMessageMaxNumberMessages.Text, -1))
+    .visibilityTimeout(StrToIntDef(edtReceiveMessageVisibilityTimeout.Text, -1));
+
+  response := CreateSQS.ReceiveMessage(request);
+  writeReceiveMessageResponse(response);
 end;
 
 function TForm2.CreateSQS: IAWS4DServiceSQS;
@@ -169,6 +191,27 @@ begin
   mmoListQueueTags.Lines.Add('Tags ---------');
   for key in Response.Tags.Keys do
     mmoListQueueTags.Lines.Add(key + '=' + Response.Tags.Items[key]);
+end;
+
+procedure TForm2.writeReceiveMessageResponse(Response: IAWS4DSQSModelReceiveMessageResponse);
+var
+  receiveMessage: IAWS4DSQSModelReceiveMessage;
+  key : string;
+begin
+  mmoReceiveMessageResponse.Clear;
+  mmoReceiveMessageResponse.Lines.Add('RequestID: ' + Response.RequestId);
+
+  for receiveMessage in Response.Messages do
+  begin
+    mmoReceiveMessageResponse.Lines.Add('MessageId: ' + receiveMessage.MessageId);
+    mmoReceiveMessageResponse.Lines.Add('MD5OfBody: ' + receiveMessage.MD5OfBody);
+    mmoReceiveMessageResponse.Lines.Add('Body: ' + receiveMessage.Body);
+    mmoReceiveMessageResponse.Lines.Add('ReceiptHandle: ' + receiveMessage.ReceiptHandle);
+
+    mmoReceiveMessageResponse.Lines.Add('Attributes -----');
+    for key in receiveMessage.Attributes.Keys do
+      mmoReceiveMessageResponse.Lines.Add(key + ' = ' + receiveMessage.Attributes.Items[key]);
+  end;
 end;
 
 end.

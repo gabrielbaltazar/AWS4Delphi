@@ -44,13 +44,18 @@ type
     function messageAttributeNames: TList<String>;
   end;
 
-  IAWS4DSQSModelReceiveMessageResponse = interface(IAWS4DModelResponseMetadata)
+  IAWS4DSQSModelReceiveMessage = interface
     ['{9EA58D01-46E0-4B81-96A4-A01361C20EC9}']
     function MessageId: String;
     function ReceiptHandle: string;
     function MD5OfBody: string;
     function Body: string;
     function Attributes: TDictionary<String, String>;
+  end;
+
+  IAWS4DSQSModelReceiveMessageResponse = interface(IAWS4DModelResponseMetadata)
+    ['{8484C39F-5D49-49CB-B39B-62E927DFC120}']
+    function Messages: TList<IAWS4DSQSModelReceiveMessage>;
   end;
 
   IAWS4DSQSModelListQueueTagsResponse = interface(IAWS4DModelResponseMetadata)

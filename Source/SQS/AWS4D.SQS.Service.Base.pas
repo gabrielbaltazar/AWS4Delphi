@@ -73,7 +73,7 @@ begin
 
   json := HTTPRequest(Self)
               .GET
-              .BaseURL(url + '/')
+              .BaseURL(url)
               .Action('ListQueueTags')
               .Execute
               .Body;
@@ -94,14 +94,23 @@ begin
   if not url.EndsWith('/') then
     url := url + '/';
   url := url + Request.queueUrl;
-  if not url.EndsWith('/') then
-    url := url + '/';
+//  if not url.EndsWith('/') then
+//    url := url + '/';
 
   result :=
     HTTPRequest(Self)
       .GET
       .BaseURL(url)
-      .Action('ReceiveMessage')
+      .Action('ReceiveMessage');
+
+  if Request.maxNumberOfMessages > 0 then
+    Result.AddQuery('MaxNumberOfMessages', Request.maxNumberOfMessages.ToString);
+
+  if Request.visibilityTimeout > 0 then
+    Result.AddQuery('VisibilityTimeout', Request.visibilityTimeout.ToString);
+
+  if Request.attributeNames.Count > 0 then
+    Result.AddQuery('AttributeName', Request.attributeNames[0]);
 end;
 
 function TAWS4DSQSServiceBase.PrepareRequest(ListQueuesRequest: IAWS4DSQSModelListQueuesRequest): IAWS4DHTTPRequest;
@@ -127,15 +136,13 @@ end;
 
 function TAWS4DSQSServiceBase.ReceiveMessage(Request: IAWS4DSQSModelReceiveMessageRequest): IAWS4DSQSModelReceiveMessageResponse;
 var
-  url: string;
+  json: string;
 begin
-  url := GetURL;
-  if not url.EndsWith('/') then
-    url := url + '/';
-  url := url + Request.queueUrl;
-  if not url.EndsWith('/') then
-    url := url + '/';
+  json := PrepareRequest(Request)
+            .Execute
+            .Body;
 
+  result := TAWS4DSQSModelReceiveMessageResponse.New(json);
 end;
 
 end.

@@ -5,24 +5,17 @@ interface
 uses
   AWS4D.Model.Classes,
   AWS4D.SQS.Model.Interfaces,
-  System.JSON,
-  System.Generics.Collections;
+  AWS4D.SQS.Model.ReceiveMessage,
+  System.Generics.Collections,
+  System.JSON;
 
 type TAWS4DSQSModelReceiveMessageResponse = class(TAWS4DModelResponseMetadata, IAWS4DSQSModelReceiveMessageResponse)
 
   private
-    FMessageId: string;
-    FReceiptHandle: string;
-    FMD5OfBody: string;
-    FBody: string;
-    FAttributes: TDictionary<String, String>;
+    FMessages: TList<IAWS4DSQSModelReceiveMessage>;
 
   protected
-    function MessageId: String;
-    function ReceiptHandle: string;
-    function MD5OfBody: string;
-    function Body: string;
-    function Attributes: TDictionary<String, String>;
+    function Messages: TList<IAWS4DSQSModelReceiveMessage>;
 
   public
     constructor create(JSONString: String); override;
@@ -34,48 +27,45 @@ implementation
 
 { TAWS4DSQSModelReceiveMessageResponse }
 
-function TAWS4DSQSModelReceiveMessageResponse.Attributes: TDictionary<String, String>;
-begin
-  result := FAttributes;
-end;
-
-function TAWS4DSQSModelReceiveMessageResponse.Body: string;
-begin
-  result := FBody;
-end;
-
 constructor TAWS4DSQSModelReceiveMessageResponse.create(JSONString: String);
+var
+  i : Integer;
+  LJSONArray: TJSONArray;
+  LJSON: TJSONObject;
 begin
   inherited;
+  FMessages := TList<IAWS4DSQSModelReceiveMessage>.create;
   if not Assigned(FJSON) then
     Exit;
 
+  LJSONArray := FJSON.GetValue('ReceiveMessageResponse')
+                     .GetValue<TJSONObject>('ReceiveMessageResult')
+                     .GetValue<TJSONArray>('messages');
+
+  if not Assigned(LJSONArray) then
+    Exit;
+
+  for i := 0 to Pred(LJSONArray.Count) do
+  begin
+    LJSON := LJSONArray.Items[i] as TJSONObject;
+    FMessages.Add(TAWS4DSQSModelReceiveMessage.New(LJSON));
+  end;
 end;
 
 destructor TAWS4DSQSModelReceiveMessageResponse.Destroy;
 begin
-  FAttributes.Free;
+  FMessages.Free;
   inherited;
 end;
 
-function TAWS4DSQSModelReceiveMessageResponse.MD5OfBody: string;
+function TAWS4DSQSModelReceiveMessageResponse.Messages: TList<IAWS4DSQSModelReceiveMessage>;
 begin
-  Result := FMD5OfBody;
-end;
-
-function TAWS4DSQSModelReceiveMessageResponse.MessageId: String;
-begin
-  result := FMessageId;
+  result := FMessages;
 end;
 
 class function TAWS4DSQSModelReceiveMessageResponse.New(JSONString: String): IAWS4DSQSModelReceiveMessageResponse;
 begin
   result := Self.create(JSONString);
-end;
-
-function TAWS4DSQSModelReceiveMessageResponse.ReceiptHandle: string;
-begin
-  result := FReceiptHandle;
 end;
 
 end.
