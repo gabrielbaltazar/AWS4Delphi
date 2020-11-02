@@ -55,12 +55,18 @@ type
 
   IAWS4DSQSModelDeleteMessageRequest = interface
     ['{02989BF2-A1FB-4F0B-BF1D-52D77321CFA4}']
+    /// <summary>The URL of the Amazon SQS queue from which messages are deleted.</summary>
+    /// <remarks>Queue URLs and names are case-sensitive.</remarks>
+    function QueueUrl(Value: String): IAWS4DSQSModelDeleteMessageRequest; overload;
+
+    /// <summary>The receipt handle associated with the message to delete.</summary>
+    function ReceiptHandle(Value: String): IAWS4DSQSModelDeleteMessageRequest; overload;
+
+    /// <summary>The message interface to delete.</summary>
+    function Message(Value: IAWS4DSQSModelReceiveMessage): IAWS4DSQSModelDeleteMessageRequest;
+
     function QueueUrl: string; overload;
     function ReceiptHandle: string; overload;
-
-    function ReceiptHandle(Value: String): IAWS4DSQSModelDeleteMessageRequest; overload;
-    function QueueUrl(Value: String): IAWS4DSQSModelDeleteMessageRequest; overload;
-    function Message(Value: IAWS4DSQSModelReceiveMessage): IAWS4DSQSModelDeleteMessageRequest;
   end;
 
   IAWS4DSQSModelDeleteMessageResponse = interface(IAWS4DModelResponseMetadata)
