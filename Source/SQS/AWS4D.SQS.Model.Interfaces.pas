@@ -9,6 +9,23 @@ uses
 type
   EAWS4DHTTPException = AWS4D.Model.Interfaces.EAWS4DHTTPException;
 
+  IAWS4DSQSModelCreateQueueRequest = interface(IAWS4DModelRequest)
+    ['{128E904C-9FDC-41CF-A57C-2DB099FB331A}']
+    function QueueName(Value: String): IAWS4DSQSModelCreateQueueRequest; overload;
+    function QueueName: string; overload;
+
+    function AddTag(Key, Value: String): IAWS4DSQSModelCreateQueueRequest;
+    function AddAttribute(Key, Value: String): IAWS4DSQSModelCreateQueueRequest;
+
+    function Tags: TDictionary<String, String>;
+    function Attributes: TDictionary<String, String>;
+  end;
+
+  IAWS4DSQSModelCreateQueueResponse = interface(IAWS4DModelResponseMetadata)
+    ['{4CB34A5D-C279-4113-A7D9-F470F6277DA0}']
+    function QueueUrl: string;
+  end;
+
   IAWS4DSQSModelListQueuesRequest = interface(IAWS4DModelRequest)
     ['{B6162E16-4F71-4830-91D7-8433E64E1172}']
     function MaxResults      (Value: Integer): IAWS4DSQSModelListQueuesRequest; overload;
@@ -114,6 +131,7 @@ type
 
   IAWS4DSQSModelFactory = interface
     ['{764198C1-DD25-4001-8AA7-1732E3CA3C56}']
+    function CreateQueueRequest: IAWS4DSQSModelCreateQueueRequest;
     function DeleteMessageRequest: IAWS4DSQSModelDeleteMessageRequest;
     function ListQueuesRequest: IAWS4DSQSModelListQueuesRequest;
     function ReceiveMessageRequest: IAWS4DSQSModelReceiveMessageRequest;

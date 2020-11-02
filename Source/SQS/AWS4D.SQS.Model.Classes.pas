@@ -3,11 +3,13 @@ unit AWS4D.SQS.Model.Classes;
 interface
 
 uses
+  AWS4D.SQS.Model.CreateQueueRequest,
   AWS4D.SQS.Model.DeleteMessageRequest,
   AWS4D.SQS.Model.ListQueuesRequest,
   AWS4D.SQS.Model.ReceiveMessageRequest,
   AWS4D.SQS.Model.SendMessageRequest,
 
+  AWS4D.SQS.Model.CreateQueueResponse,
   AWS4D.SQS.Model.DeleteMessageResponse,
   AWS4D.SQS.Model.GetQueueUrlResponse,
   AWS4D.SQS.Model.ListQueuesResponse,
@@ -17,11 +19,13 @@ uses
   AWS4D.SQS.Model.SendMessageResponse;
 
 type
+  TAWS4DSQSModelCreateQueueRequest    = AWS4D.SQS.Model.CreateQueueRequest.TAWS4DSQSModelCreateQueueRequest;
   TAWS4DSQSModelDeleteMessageRequest  = AWS4D.SQS.Model.DeleteMessageRequest.TAWS4DSQSModelDeleteMessageRequest;
   TAWS4DSQSModelListQueuesRequest     = AWS4D.SQS.Model.ListQueuesRequest.TAWS4DSQSModelListQueuesRequest;
   TAWS4DSQSModelReceiveMessageRequest = AWS4D.SQS.Model.ReceiveMessageRequest.TAWS4DSQSModelReceiveMessageRequest;
   TAWS4DSQSModelSendMessageRequest    = AWS4D.SQS.Model.SendMessageRequest.TAWS4DSQSModelSendMessageRequest;
 
+  TAWS4DSQSModelCreateQueueResponse    = AWS4D.SQS.Model.CreateQueueResponse.TAWS4DSQSModelCreateQueueResponse;
   TAWS4DSQSModelDeleteMessageResponse  = AWS4D.SQS.Model.DeleteMessageResponse.TAWS4DSQSModelDeleteMessageResponse;
   TAWS4DSQSModelGetQueueUrlResponse    = AWS4D.SQS.Model.GetQueueUrlResponse.TAWS4DSQSModelGetQueueUrlResponse;
   TAWS4DSQSModelListQueuesResponse     = AWS4D.SQS.Model.ListQueuesResponse.TAWS4DSQSModelListQueuesResponse;

@@ -85,7 +85,7 @@ object Form2: TForm2
     Top = 97
     Width = 697
     Height = 250
-    ActivePage = tsReceiveMessage
+    ActivePage = tsCreateQueue
     Align = alClient
     TabOrder = 2
     object tsListQueues: TTabSheet
@@ -218,7 +218,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
         object Label9: TLabel
           Left = 11
           Top = 9
@@ -265,7 +264,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
         object Label8: TLabel
           Left = 11
           Top = 9
@@ -344,7 +342,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
         object Label12: TLabel
           Left = 11
           Top = 9
@@ -406,7 +403,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
         object Label14: TLabel
           Left = 11
           Top = 9
@@ -447,6 +443,53 @@ object Form2: TForm2
         end
       end
       object mmoDeleteMessage: TMemo
+        Left = 0
+        Top = 56
+        Width = 689
+        Height = 166
+        Align = alClient
+        ScrollBars = ssBoth
+        TabOrder = 1
+      end
+    end
+    object tsCreateQueue: TTabSheet
+      Caption = 'Create Queue'
+      ImageIndex = 6
+      object Panel7: TPanel
+        Left = 0
+        Top = 0
+        Width = 689
+        Height = 56
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitTop = 8
+        object Label16: TLabel
+          Left = 11
+          Top = 9
+          Width = 62
+          Height = 13
+          Caption = 'Queue Name'
+        end
+        object edtCreateQueueQueueName: TEdit
+          Left = 11
+          Top = 24
+          Width = 222
+          Height = 21
+          TabOrder = 0
+          Text = 'QueueTest'
+        end
+        object btnCreateQueue: TButton
+          Left = 239
+          Top = 22
+          Width = 94
+          Height = 25
+          Caption = 'Create Queue'
+          TabOrder = 1
+          OnClick = btnCreateQueueClick
+        end
+      end
+      object mmoCreateQueue: TMemo
         Left = 0
         Top = 56
         Width = 689

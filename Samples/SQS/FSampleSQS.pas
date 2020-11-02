@@ -68,6 +68,12 @@ type
     btnDeleteMessage: TButton;
     edtDeleteMessageReceiptHandle: TEdit;
     mmoDeleteMessage: TMemo;
+    tsCreateQueue: TTabSheet;
+    Panel7: TPanel;
+    Label16: TLabel;
+    edtCreateQueueQueueName: TEdit;
+    btnCreateQueue: TButton;
+    mmoCreateQueue: TMemo;
     procedure btnListQueuesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnListQueueTagsClick(Sender: TObject);
@@ -75,10 +81,12 @@ type
     procedure btnReceiveMessageClick(Sender: TObject);
     procedure btnSendMessageClick(Sender: TObject);
     procedure btnDeleteMessageClick(Sender: TObject);
+    procedure btnCreateQueueClick(Sender: TObject);
   private
     { Private declarations }
     function CreateSQS: IAWS4DServiceSQS;
 
+    procedure writeCreateQueueResponse(Response: IAWS4DSQSModelCreateQueueResponse);
     procedure writeListQueuesResponse(Response: IAWS4DSQSModelListQueuesResponse);
     procedure writeListQueueTagsResponse(Response: IAWS4DSQSModelListQueueTagsResponse);
     procedure writeGetQueueUrlResponse(Response: IAWS4DSQSModelGetQueueUrlResponse);
@@ -97,6 +105,18 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TForm2.btnCreateQueueClick(Sender: TObject);
+var
+  request: IAWS4DSQSModelCreateQueueRequest;
+  response: IAWS4DSQSModelCreateQueueResponse;
+begin
+  request := SQSModelFactory.CreateQueueRequest;
+  request.QueueName(edtCreateQueueQueueName.Text);
+
+  response := CreateSQS.CreateQueue(request);
+  writeCreateQueueResponse(response);
+end;
 
 procedure TForm2.btnDeleteMessageClick(Sender: TObject);
 var
@@ -193,6 +213,13 @@ procedure TForm2.FormCreate(Sender: TObject);
 begin
   ReportMemoryLeaksOnShutdown := True;
   edtSendMessageMessageBody.Text := Format('Message Test %s', [FormatDateTime('dd/MM/yyyy hh:mm:ss', Now)]);
+end;
+
+procedure TForm2.writeCreateQueueResponse(Response: IAWS4DSQSModelCreateQueueResponse);
+begin
+  mmoCreateQueue.Lines.Clear;
+  mmoCreateQueue.Lines.Add('RequestID: ' + Response.RequestId);
+  mmoCreateQueue.Lines.Add('Queue Url: ' + Response.QueueUrl);
 end;
 
 procedure TForm2.writeDeleteMessageResponse(Response: IAWS4DSQSModelDeleteMessageResponse);

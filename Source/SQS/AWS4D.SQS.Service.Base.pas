@@ -18,12 +18,14 @@ type TAWS4DSQSServiceBase = class(TAWS4DServiceBase, IAWS4DServiceSQS)
     function GetURL: string; overload;
     function GetURL(QueueName: String): string; overload;
 
+    function PrepareRequest(Request: IAWS4DSQSModelCreateQueueRequest): IAWS4DHTTPRequest; overload;
     function PrepareRequest(Request: IAWS4DSQSModelListQueuesRequest): IAWS4DHTTPRequest; overload;
     function PrepareRequest(Request: IAWS4DSQSModelReceiveMessageRequest): IAWS4DHTTPRequest; overload;
     function PrepareRequest(Request: IAWS4DSQSModelSendMessageRequest): IAWS4DHTTPRequest; overload;
     function PrepareRequest(Request: IAWS4DSQSModelDeleteMessageRequest): IAWS4DHTTPRequest; overload;
 
   protected
+    function CreateQueue(Request: IAWS4DSQSModelCreateQueueRequest): IAWS4DSQSModelCreateQueueResponse;
     function DeleteMessage(Request: IAWS4DSQSModelDeleteMessageRequest): IAWS4DSQSModelDeleteMessageResponse;
     function GetQueueUrl(QueueName: String): IAWS4DSQSModelGetQueueUrlResponse;
     function ListQueues(ListQueuesRequest: IAWS4DSQSModelListQueuesRequest = nil): IAWS4DSQSModelListQueuesResponse;
@@ -38,6 +40,14 @@ end;
 implementation
 
 { TAWS4DSQSServiceBase }
+
+function TAWS4DSQSServiceBase.CreateQueue(Request: IAWS4DSQSModelCreateQueueRequest): IAWS4DSQSModelCreateQueueResponse;
+var
+  json : String;
+begin
+  json := PrepareRequest(Request).Execute.Body;
+  result := TAWS4DSQSModelCreateQueueResponse.New(json);
+end;
 
 function TAWS4DSQSServiceBase.DeleteMessage(Request: IAWS4DSQSModelDeleteMessageRequest): IAWS4DSQSModelDeleteMessageResponse;
 var
@@ -197,6 +207,43 @@ begin
       .BaseURL(url)
       .Action('DeleteMessage')
       .AddQuery('ReceiptHandle', Request.ReceiptHandle);
+end;
+
+function TAWS4DSQSServiceBase.PrepareRequest(Request: IAWS4DSQSModelCreateQueueRequest): IAWS4DHTTPRequest;
+var
+  url: string;
+  key: string;
+  name: String;
+  value: string;
+  i  : Integer;
+begin
+  url := GetURL;
+  result :=
+    HTTPRequest(Self)
+      .GET
+      .BaseURL(url)
+      .Action('CreateQueue')
+      .AddQuery('QueueName', Request.QueueName);
+
+  i := 0;
+  for key in Request.Tags.Keys do
+  begin
+    Inc(i);
+    name  := Format('Tag.%s.Key', [i.ToString]);
+    value := Format('Tag.%s.Value', [i.ToString]);
+    Result.AddQuery(name, key);
+    Result.AddQuery(value, Request.Tags.Items[key]);
+  end;
+
+  i := 0;
+  for key in Request.Attributes.Keys do
+  begin
+    Inc(i);
+    name  := Format('Attribute.%s.Name', [i.ToString]);
+    value := Format('Attribute.%s.Value', [i.ToString]);
+    Result.AddQuery(name, key);
+    Result.AddQuery(value, Request.Attributes.Items[key]);
+  end;
 end;
 
 end.
