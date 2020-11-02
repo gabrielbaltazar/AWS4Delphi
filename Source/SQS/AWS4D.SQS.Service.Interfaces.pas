@@ -10,8 +10,9 @@ type
   IAWS4DServiceSQS = interface(IAWS4DService)
     ['{B653E63D-6BF8-4C53-8B89-6B8A708ED5B3}']
     function ListQueues(ListQueuesRequest: IAWS4DSQSModelListQueuesRequest = nil): IAWS4DSQSModelListQueuesResponse;
-    function ListQueueTags(QueueName: String): string;
+    function ListQueueTags(QueueName: String): IAWS4DSQSModelListQueueTagsResponse;
     function GetQueueUrl(QueueName: String): string;
+    function ReceiveMessage(Request: IAWS4DSQSModelReceiveMessageRequest): IAWS4DSQSModelReceiveMessageResponse;
   end;
 
 function SQSService: IAWS4DServiceSQS;

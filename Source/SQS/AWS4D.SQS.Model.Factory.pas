@@ -15,6 +15,7 @@ type TAWS4DSQSModelFactory = class(TInterfacedObject, IAWS4DSQSModelFactory)
     constructor createPrivate;
   protected
     function ListQueuesRequest: IAWS4DSQSModelListQueuesRequest;
+    function ReceiveMessageRequest: IAWS4DSQSModelReceiveMessageRequest;
 
   public
     constructor create;
@@ -37,6 +38,11 @@ end;
 function TAWS4DSQSModelFactory.ListQueuesRequest: IAWS4DSQSModelListQueuesRequest;
 begin
   result := TAWS4DSQSModelListQueuesRequest.New;
+end;
+
+function TAWS4DSQSModelFactory.ReceiveMessageRequest: IAWS4DSQSModelReceiveMessageRequest;
+begin
+  Result := TAWS4DSQSModelReceiveMessageRequest.New;
 end;
 
 class function TAWS4DSQSModelFactory.GetInstance: IAWS4DSQSModelFactory;

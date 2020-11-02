@@ -7,7 +7,8 @@ uses
   AWS4D.Service.Interfaces,
   System.Classes,
   System.SysUtils,
-  System.DateUtils;
+  System.DateUtils,
+  System.Net.URLClient;
 
 type TAWS4DAuthorizationBase = class(TInterfacedObject, IAWS4DAuthorization)
 
@@ -33,6 +34,8 @@ type TAWS4DAuthorizationBase = class(TInterfacedObject, IAWS4DAuthorization)
     function GetServiceVersion: string; virtual;
     function GetSHAKey: TBytes; virtual;
 
+    function BuildPrefix(HTTPVerb: String): string;
+    function BuildURL: string;
     procedure BuildQueryParams; virtual;
   public
     constructor create(AWSService: IAWS4DService);
@@ -57,6 +60,11 @@ begin
   FActionQuery.AddPair(Name, Value);
 end;
 
+function TAWS4DAuthorizationBase.BuildPrefix(HTTPVerb: String): string;
+begin
+  result := HTTPVerb + #10;
+end;
+
 procedure TAWS4DAuthorizationBase.BuildQueryParams;
 var
   i: Integer;
@@ -75,6 +83,22 @@ begin
         .AddPair('SignatureVersion', GetSignatureVersion)
         .AddPair('Timestamp', GetCurrentTime)
         .AddPair('Version', GetServiceVersion);
+end;
+
+function TAWS4DAuthorizationBase.BuildURL: string;
+var
+  path: string;
+  url : String;
+begin
+  url := FURL;
+  if not url.StartsWith('http') then
+    url := 'https://' + url;
+
+  result := TURI.Create(url).Host + #10;
+
+  path := TURI.Create(url).Path;
+  if not path.IsEmpty then
+    result := result + path + #10;
 end;
 
 constructor TAWS4DAuthorizationBase.create(AWSService: IAWS4DService);

@@ -44,6 +44,7 @@ type
     function CreateSQS: IAWS4DServiceSQS;
 
     procedure writeListQueuesResponse(Response: IAWS4DSQSModelListQueuesResponse);
+    procedure writeListQueueTagsResponse(Response: IAWS4DSQSModelListQueueTagsResponse);
     procedure writeHTTPException(AException: EAWS4DHTTPException);
   public
     { Public declarations }
@@ -80,8 +81,11 @@ begin
 end;
 
 procedure TForm2.btnListQueueTagsClick(Sender: TObject);
+var
+  response: IAWS4DSQSModelListQueueTagsResponse;
 begin
-  ShowMessage(CreateSQS.GetQueueUrl(edtListQueueTagsQueueName.Text));
+  response := CreateSQS.ListQueueTags(edtListQueueTagsQueueName.Text);
+  writeListQueueTagsResponse(response);
 end;
 
 function TForm2.CreateSQS: IAWS4DServiceSQS;
@@ -123,6 +127,18 @@ begin
   mmoListQueues.Lines.Add('Queues---------');
   for i := 0 to Pred(Response.QueuesUrls.Count) do
     mmoListQueues.Lines.Add(Response.QueuesUrls[i]);
+end;
+
+procedure TForm2.writeListQueueTagsResponse(Response: IAWS4DSQSModelListQueueTagsResponse);
+var
+  key: string;
+begin
+  mmoListQueueTags.Lines.Clear;
+  mmoListQueueTags.Lines.Add('RequestID: ' + Response.RequestId);
+
+  mmoListQueueTags.Lines.Add('Tags ---------');
+  for key in Response.Tags.Keys do
+    mmoListQueueTags.Lines.Add(key + '=' + Response.Tags.Items[key]);
 end;
 
 end.

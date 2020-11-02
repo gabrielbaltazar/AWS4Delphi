@@ -35,7 +35,9 @@ var
 begin
   BuildQueryParams;
   try
-    url := Format(HttpVerb + #$A + '%s' + #$A + '/' + #$A, [FURL]);
+    url := BuildPrefix(HttpVerb);
+    url := url + BuildURL;
+//    url := Format(HttpVerb + #$A + '%s' + #$A + '/' + #$A, [FURL]);
 
     for i := 0 to Pred(FQuery.Count) do
     begin

@@ -25,9 +25,6 @@ object Form2: TForm2
     BevelOuter = bvNone
     Caption = 'SQS'
     TabOrder = 0
-    ExplicitLeft = 232
-    ExplicitTop = 152
-    ExplicitWidth = 185
   end
   object pnlHeader: TPanel
     Left = 0
@@ -37,7 +34,6 @@ object Form2: TForm2
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitWidth = 635
     object Label1: TLabel
       Left = 11
       Top = 9
@@ -102,7 +98,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
         object Label4: TLabel
           Left = 11
           Top = 9
@@ -177,7 +172,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
         object Label7: TLabel
           Left = 11
           Top = 9
@@ -191,6 +185,7 @@ object Form2: TForm2
           Width = 222
           Height = 21
           TabOrder = 0
+          Text = '159521004132/Send-to-Email-Docfiscal-dev'
         end
         object btnListQueueTags: TButton
           Left = 239

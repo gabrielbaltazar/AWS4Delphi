@@ -17,12 +17,14 @@ type TAWS4DSQSServiceBase = class(TAWS4DServiceBase, IAWS4DServiceSQS)
   private
     function GetURL: string;
 
-    function PrepareRequest(ListQueuesRequest: IAWS4DSQSModelListQueuesRequest): IAWS4DHTTPRequest;
+    function PrepareRequest(ListQueuesRequest: IAWS4DSQSModelListQueuesRequest): IAWS4DHTTPRequest; overload;
+    function PrepareRequest(Request: IAWS4DSQSModelReceiveMessageRequest): IAWS4DHTTPRequest; overload;
 
   protected
     function ListQueues(ListQueuesRequest: IAWS4DSQSModelListQueuesRequest = nil): IAWS4DSQSModelListQueuesResponse;
-    function ListQueueTags(QueueName: String): string;
+    function ListQueueTags(QueueName: String): IAWS4DSQSModelListQueueTagsResponse;
     function GetQueueUrl(QueueName: String): string;
+    function ReceiveMessage(Request: IAWS4DSQSModelReceiveMessageRequest): IAWS4DSQSModelReceiveMessageResponse;
 
   public
     class function New: IAWS4DServiceSQS;
@@ -58,27 +60,46 @@ begin
   result := TAWS4DSQSModelListQueuesResponse.New(json);
 end;
 
-function TAWS4DSQSServiceBase.ListQueueTags(QueueName: String): string;
+function TAWS4DSQSServiceBase.ListQueueTags(QueueName: String): IAWS4DSQSModelListQueueTagsResponse;
 var
-  url: String;
+  url  : String;
+  json : string;
 begin
   url := GetURL;
   if not url.EndsWith('/') then
     url := url + '/' + QueueName;
 
-  Result := HTTPRequest(Self)
+  json := HTTPRequest(Self)
               .GET
-              .BaseURL(url)
+              .BaseURL(url + '/')
               .Action('ListQueueTags')
               .Execute
               .Body;
 
-  result := Result + Result;
+  result := TAWS4DSQSModelListQueueTagsResponse.New(json);
 end;
 
 class function TAWS4DSQSServiceBase.New: IAWS4DServiceSQS;
 begin
   Result := Self.Create;
+end;
+
+function TAWS4DSQSServiceBase.PrepareRequest(Request: IAWS4DSQSModelReceiveMessageRequest): IAWS4DHTTPRequest;
+var
+  url : String;
+begin
+  url := GetURL;
+  if not url.EndsWith('/') then
+    url := url + '/';
+  url := url + Request.queueUrl;
+  if not url.EndsWith('/') then
+    url := url + '/';
+
+  result :=
+    HTTPRequest(Self)
+      .GET
+      .BaseURL(url)
+      .Action('ReceiveMessage')
 end;
 
 function TAWS4DSQSServiceBase.PrepareRequest(ListQueuesRequest: IAWS4DSQSModelListQueuesRequest): IAWS4DHTTPRequest;
@@ -99,6 +120,19 @@ begin
 
   if not ListQueuesRequest.QueueNamePrefix.IsEmpty then
     Result.AddQuery('QueueNamePrefix', ListQueuesRequest.QueueNamePrefix);
+
+end;
+
+function TAWS4DSQSServiceBase.ReceiveMessage(Request: IAWS4DSQSModelReceiveMessageRequest): IAWS4DSQSModelReceiveMessageResponse;
+var
+  url: string;
+begin
+  url := GetURL;
+  if not url.EndsWith('/') then
+    url := url + '/';
+  url := url + Request.queueUrl;
+  if not url.EndsWith('/') then
+    url := url + '/';
 
 end;
 
