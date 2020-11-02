@@ -12,10 +12,28 @@ type
     /// <summary> Creates a new standard or FIFO queue </summary>
     /// <remarks>https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_CreateQueue.html</remarks>
     function CreateQueue(Request: IAWS4DSQSModelCreateQueueRequest): IAWS4DSQSModelCreateQueueResponse;
+
+    /// <summary>Deletes the specified message from the specified queue.</summary>
+    /// <remarks>To select the message to delete, use the ReceiptHandle of the message (not the MessageId which you receive when you send the message)
+    ///   https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_DeleteMessage.html
+    /// </remarks>
     function DeleteMessage(Request: IAWS4DSQSModelDeleteMessageRequest): IAWS4DSQSModelDeleteMessageResponse;
+
+    /// <summary>Returns the URL of an existing Amazon SQS queue.</summary>
+    /// <remarks>
+    ///    To access a queue that belongs to another AWS account, use the QueueOwnerAWSAccountId parameter to specify the account ID of the queue's owner.
+    ///    https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_GetQueueUrl.html
+    /// </remarks>
+    function GetQueueUrl(QueueName: String): IAWS4DSQSModelGetQueueUrlResponse;
+
+    /// <summary>Returns a list of your queues in the current region. The response includes a maximum of 1,000 results.</summary>
+    /// <remarks>
+    ///   If you specify a value for the optional QueueNamePrefix parameter, only queues with a name that begins with the specified value are returned.
+    ///   The listQueues methods supports pagination. Set parameter MaxResults in the request to specify the maximum number of results to be returned in the response.
+    ///   https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ListQueues.html
+    /// </remarks>
     function ListQueues(ListQueuesRequest: IAWS4DSQSModelListQueuesRequest = nil): IAWS4DSQSModelListQueuesResponse;
     function ListQueueTags(QueueName: String): IAWS4DSQSModelListQueueTagsResponse;
-    function GetQueueUrl(QueueName: String): IAWS4DSQSModelGetQueueUrlResponse;
     function ReceiveMessage(Request: IAWS4DSQSModelReceiveMessageRequest): IAWS4DSQSModelReceiveMessageResponse;
     function SendMessage(Request: IAWS4DSQSModelSendMessageRequest): IAWS4DSQSModelSendMessageResponse;
   end;

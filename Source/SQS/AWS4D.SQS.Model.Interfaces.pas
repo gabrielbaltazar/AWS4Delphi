@@ -73,20 +73,39 @@ type
     ['{080D6C3B-71DF-4B44-92B8-01CE7E031F62}']
   end;
 
+  IAWS4DSQSModelGetQueueUrlResponse = interface(IAWS4DModelResponseMetadata)
+    ['{33764771-FA8E-4472-885D-38E1085AFDC3}']
+    /// <summary>The URL of the queue.</summary>
+    function QueueUrl: string;
+  end;
+
   IAWS4DSQSModelListQueuesRequest = interface(IAWS4DModelRequest)
     ['{B6162E16-4F71-4830-91D7-8433E64E1172}']
-    function MaxResults      (Value: Integer): IAWS4DSQSModelListQueuesRequest; overload;
-    function NextToken       (Value: string): IAWS4DSQSModelListQueuesRequest; overload;
-    function QueueNamePrefix (Value: string): IAWS4DSQSModelListQueuesRequest; overload;
+    /// <summary>Maximum number of results to include in the response.</summary>
+    /// <remarks>Value range is 1 to 1000. You must set MaxResults to receive a value for NextToken in the response.</remarks>
+    function MaxResults(Value: Integer): IAWS4DSQSModelListQueuesRequest; overload;
 
-    function MaxResults      : Integer; overload;
-    function NextToken       : string; overload;
+    /// <summary>Pagination token to request the next set of results.</summary>
+    function NextToken(Value: string): IAWS4DSQSModelListQueuesRequest; overload;
+
+    /// <summary>A string to use for filtering the list results. Only those queues whose name begins with the specified string are returned.</summary>
+    /// <remarks>Queue URLs and names are case-sensitive.</remarks>
+    function QueueNamePrefix(Value: string): IAWS4DSQSModelListQueuesRequest; overload;
+
+    function MaxResults: Integer; overload;
+    function NextToken: string; overload;
     function QueueNamePrefix : string; overload;
   end;
 
   IAWS4DSQSModelListQueuesResponse = interface(IAWS4DModelResponseMetadata)
     ['{3772C8BA-4901-4018-BAFB-37C2C27CB157}']
+    /// <summary>
+    ///   A list of queue URLs, up to 1,000 entries, or the value of MaxResults that you sent in the request.
+    /// </summary>
     function QueuesUrls: TList<String>;
+
+    /// <summary>Pagination token to include in the next request.</summary>
+    /// <remarks>Token value is null if there are no additional results to request, or if you did not set MaxResults in the request.</remarks>
     function NextToken: string;
   end;
 
@@ -155,11 +174,6 @@ type
   IAWS4DSQSModelListQueueTagsResponse = interface(IAWS4DModelResponseMetadata)
     ['{03CA6BFE-4171-4EBC-903A-655E5D5EE3C4}']
     function Tags: TDictionary<String, String>;
-  end;
-
-  IAWS4DSQSModelGetQueueUrlResponse = interface(IAWS4DModelResponseMetadata)
-    ['{33764771-FA8E-4472-885D-38E1085AFDC3}']
-    function QueueUrl: string;
   end;
 
   IAWS4DSQSModelFactory = interface
