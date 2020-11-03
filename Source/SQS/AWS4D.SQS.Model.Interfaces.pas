@@ -163,6 +163,10 @@ type
     function Tags: TDictionary<String, String>;
   end;
 
+  IAWS4DSQSModelPurgeQueueResponse = interface(IAWS4DModelResponseMetadata)
+    ['{46A1FCB7-A68C-484A-B388-58F1BD835ADD}']
+  end;
+
   IAWS4DSQSModelReceiveMessageRequest = interface(IAWS4DModelRequest)
     ['{B54C8256-86AE-4619-B7C2-21A44472EEC4}']
     /// <summary>The URL of the Amazon SQS queue from which messages are received.</summary>

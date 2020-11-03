@@ -46,11 +46,20 @@ type
     function ListQueues(ListQueuesRequest: IAWS4DSQSModelListQueuesRequest = nil): IAWS4DSQSModelListQueuesResponse;
 
     /// <summary>List all cost allocation tags added to the specified Amazon SQS queue.</summary>
+    /// <param name="QueueUrl">The URL of the queue.</param>
     /// <remarks>
     ///   For an overview, see Tagging Your Amazon SQS Queues in the Amazon Simple Queue Service Developer Guide.
     ///   https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-queue-tags.html
     /// </remarks>
-    function ListQueueTags(QueueName: String): IAWS4DSQSModelListQueueTagsResponse;
+    function ListQueueTags(QueueUrl: String): IAWS4DSQSModelListQueueTagsResponse;
+
+    /// <summary>Deletes the messages in a queue specified by the QueueURL parameter.</summary>
+    /// <param name="QueueUrl">The URL of the queue from which the PurgeQueue action deletes messages.</param>
+    /// <remarks>
+    ///   Messages sent to the queue before you call PurgeQueue might be received but are deleted within the next minute.
+    ///   Messages sent to the queue after you call PurgeQueue might be deleted while the queue is being purged.
+    /// </remarks>
+    function PurgeQueue(QueueUrl: String): IAWS4DSQSModelPurgeQueueResponse;
 
     /// <summary>Retrieves one or more messages (up to 10), from the specified queue.</summary>
     /// <remarks>Using the WaitTimeSeconds parameter enables long-poll support. For more information, see Amazon SQS Long Polling in the Amazon Simple Queue Service Developer Guide.</remarks>

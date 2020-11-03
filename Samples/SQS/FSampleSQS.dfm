@@ -83,7 +83,7 @@ object Form2: TForm2
     Top = 97
     Width = 781
     Height = 250
-    ActivePage = tsGetQueueAttributes
+    ActivePage = tsPurgeQueue
     Align = alClient
     TabOrder = 2
     object tsListQueues: TTabSheet
@@ -614,6 +614,53 @@ object Form2: TForm2
         end
       end
       object mmoGetQueueAttributes: TMemo
+        Left = 0
+        Top = 56
+        Width = 773
+        Height = 166
+        Align = alClient
+        ScrollBars = ssBoth
+        TabOrder = 1
+      end
+    end
+    object tsPurgeQueue: TTabSheet
+      Caption = 'Purge Queue'
+      ImageIndex = 9
+      object Panel10: TPanel
+        Left = 0
+        Top = 0
+        Width = 773
+        Height = 56
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitTop = 8
+        object Label19: TLabel
+          Left = 11
+          Top = 9
+          Width = 48
+          Height = 13
+          Caption = 'Queue Url'
+        end
+        object edtPurgeQueueQueueUrl: TEdit
+          Left = 11
+          Top = 24
+          Width = 222
+          Height = 21
+          TabOrder = 0
+          Text = '159521004132/Send-to-Email-Docfiscal-dev'
+        end
+        object btnPurgeQueue: TButton
+          Left = 239
+          Top = 22
+          Width = 94
+          Height = 25
+          Caption = 'Purge Queue'
+          TabOrder = 1
+          OnClick = btnPurgeQueueClick
+        end
+      end
+      object mmoPurgeQueue: TMemo
         Left = 0
         Top = 56
         Width = 773

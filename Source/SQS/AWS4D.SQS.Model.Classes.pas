@@ -18,6 +18,7 @@ uses
   AWS4D.SQS.Model.GetQueueUrlResponse,
   AWS4D.SQS.Model.ListQueuesResponse,
   AWS4D.SQS.Model.ListQueueTagsResponse,
+  AWS4D.SQS.Model.PurgeQueueResponse,
   AWS4D.SQS.Model.ReceiveMessage,
   AWS4D.SQS.Model.ReceiveMessageResponse,
   AWS4D.SQS.Model.SendMessageResponse;
@@ -38,6 +39,7 @@ type
   TAWS4DSQSModelGetQueueUrlResponse    = AWS4D.SQS.Model.GetQueueUrlResponse.TAWS4DSQSModelGetQueueUrlResponse;
   TAWS4DSQSModelListQueuesResponse     = AWS4D.SQS.Model.ListQueuesResponse.TAWS4DSQSModelListQueuesResponse;
   TAWS4DSQSModelListQueueTagsResponse  = AWS4D.SQS.Model.ListQueueTagsResponse.TAWS4DSQSModelListQueueTagsResponse;
+  TAWS4DSQSModelPurgeQueueResponse     = AWS4D.SQS.Model.PurgeQueueResponse.TAWS4DSQSModelPurgeQueueResponse;
   TAWS4DSQSModelReceiveMessage         = AWS4D.SQS.Model.ReceiveMessage.TAWS4DSQSModelReceiveMessage;
   TAWS4DSQSModelReceiveMessageResponse = AWS4D.SQS.Model.ReceiveMessageResponse.TAWS4DSQSModelReceiveMessageResponse;
   TAWS4DSQSModelSendMessageResponse    = AWS4D.SQS.Model.SendMessageResponse.TAWS4DSQSModelSendMessageResponse;

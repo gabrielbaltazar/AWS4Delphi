@@ -34,6 +34,7 @@ type TAWS4DSQSServiceBase = class(TAWS4DServiceBase, IAWS4DServiceSQS)
     function GetQueueUrl(QueueName: String): IAWS4DSQSModelGetQueueUrlResponse;
     function ListQueues(ListQueuesRequest: IAWS4DSQSModelListQueuesRequest = nil): IAWS4DSQSModelListQueuesResponse;
     function ListQueueTags(QueueName: String): IAWS4DSQSModelListQueueTagsResponse;
+    function PurgeQueue(QueueUrl: String): IAWS4DSQSModelPurgeQueueResponse;
     function ReceiveMessage(Request: IAWS4DSQSModelReceiveMessageRequest): IAWS4DSQSModelReceiveMessageResponse;
     function SendMessage(Request: IAWS4DSQSModelSendMessageRequest): IAWS4DSQSModelSendMessageResponse;
 
@@ -213,6 +214,21 @@ begin
 
   if not Request.MessageBody.Trim.IsEmpty then
     Result.AddQuery('MessageBody', Request.MessageBody);
+end;
+
+function TAWS4DSQSServiceBase.PurgeQueue(QueueUrl: String): IAWS4DSQSModelPurgeQueueResponse;
+var
+  url : string;
+  json: string;
+begin
+  url := GetURL(QueueUrl);
+  json:= HTTPRequest(Self)
+            .BaseURL(url)
+            .Action('PurgeQueue')
+            .Execute
+            .Body;
+
+  result := TAWS4DSQSModelPurgeQueueResponse.New(json);
 end;
 
 function TAWS4DSQSServiceBase.PrepareRequest(Request: IAWS4DSQSModelGetQueueAttributesRequest): IAWS4DHTTPRequest;

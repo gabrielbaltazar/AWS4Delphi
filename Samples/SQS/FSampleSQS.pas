@@ -101,6 +101,12 @@ type
     edtGetQueueAttributesQueueName: TEdit;
     btnGetQueueAttributes: TButton;
     mmoGetQueueAttributes: TMemo;
+    tsPurgeQueue: TTabSheet;
+    Panel10: TPanel;
+    Label19: TLabel;
+    edtPurgeQueueQueueUrl: TEdit;
+    btnPurgeQueue: TButton;
+    mmoPurgeQueue: TMemo;
     procedure btnListQueuesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnListQueueTagsClick(Sender: TObject);
@@ -112,6 +118,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnDeleteMessageBatchClick(Sender: TObject);
     procedure btnGetQueueAttributesClick(Sender: TObject);
+    procedure btnPurgeQueueClick(Sender: TObject);
   private
     { Private declarations }
     function GetIniFile: TIniFile;
@@ -127,6 +134,7 @@ type
     procedure writeGetQueueUrlResponse(Response: IAWS4DSQSModelGetQueueUrlResponse);
     procedure writeListQueuesResponse(Response: IAWS4DSQSModelListQueuesResponse);
     procedure writeListQueueTagsResponse(Response: IAWS4DSQSModelListQueueTagsResponse);
+    procedure writePurgeQueueResponse(Response: IAWS4DSQSModelPurgeQueueResponse);
     procedure writeReceiveMessageResponse(Response: IAWS4DSQSModelReceiveMessageResponse);
     procedure writeSendMessageResponse(Response: IAWS4DSQSModelSendMessageResponse);
 
@@ -233,6 +241,14 @@ var
 begin
   response := CreateSQS.ListQueueTags(edtListQueueTagsQueueName.Text);
   writeListQueueTagsResponse(response);
+end;
+
+procedure TForm2.btnPurgeQueueClick(Sender: TObject);
+var
+  response : IAWS4DSQSModelPurgeQueueResponse;
+begin
+  response := CreateSQS.PurgeQueue(edtPurgeQueueQueueUrl.Text);
+  writePurgeQueueResponse(response);
 end;
 
 procedure TForm2.btnQueueURLClick(Sender: TObject);
@@ -411,6 +427,12 @@ begin
   mmoListQueueTags.Lines.Add('Tags ---------');
   for key in Response.Tags.Keys do
     mmoListQueueTags.Lines.Add(key + '=' + Response.Tags.Items[key]);
+end;
+
+procedure TForm2.writePurgeQueueResponse(Response: IAWS4DSQSModelPurgeQueueResponse);
+begin
+  mmoPurgeQueue.Clear;
+  mmoPurgeQueue.Lines.Add('RequestID: ' + Response.RequestId);
 end;
 
 procedure TForm2.writeReceiveMessageResponse(Response: IAWS4DSQSModelReceiveMessageResponse);
