@@ -4,7 +4,7 @@ object Form2: TForm2
   BorderStyle = bsDialog
   Caption = 'Form2'
   ClientHeight = 347
-  ClientWidth = 697
+  ClientWidth = 781
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,21 +20,23 @@ object Form2: TForm2
   object pnlTop: TPanel
     Left = 0
     Top = 0
-    Width = 697
+    Width = 781
     Height = 41
     Align = alTop
     BevelOuter = bvNone
     Caption = 'SQS'
     TabOrder = 0
+    ExplicitWidth = 697
   end
   object pnlHeader: TPanel
     Left = 0
     Top = 41
-    Width = 697
+    Width = 781
     Height = 56
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitWidth = 697
     object Label1: TLabel
       Left = 11
       Top = 9
@@ -81,21 +83,23 @@ object Form2: TForm2
   object pgcSQS: TPageControl
     Left = 0
     Top = 97
-    Width = 697
+    Width = 781
     Height = 250
-    ActivePage = tsListQueues
+    ActivePage = tsDeleteMessageBatch
     Align = alClient
     TabOrder = 2
     object tsListQueues: TTabSheet
       Caption = 'List Queues'
+      ExplicitWidth = 689
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 689
+        Width = 773
         Height = 56
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 689
         object Label4: TLabel
           Left = 11
           Top = 9
@@ -152,24 +156,27 @@ object Form2: TForm2
       object mmoListQueues: TMemo
         Left = 0
         Top = 56
-        Width = 689
+        Width = 773
         Height = 166
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
+        ExplicitWidth = 689
       end
     end
     object tsListQueueTags: TTabSheet
       Caption = 'List Queue Tags'
       ImageIndex = 1
+      ExplicitWidth = 689
       object Panel2: TPanel
         Left = 0
         Top = 0
-        Width = 689
+        Width = 773
         Height = 56
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 689
         object Label7: TLabel
           Left = 11
           Top = 9
@@ -198,24 +205,27 @@ object Form2: TForm2
       object mmoListQueueTags: TMemo
         Left = 0
         Top = 56
-        Width = 689
+        Width = 773
         Height = 166
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
+        ExplicitWidth = 689
       end
     end
     object tsGetQueueUrl: TTabSheet
       Caption = 'Get Queue Url'
       ImageIndex = 2
+      ExplicitWidth = 689
       object Panel4: TPanel
         Left = 0
         Top = 0
-        Width = 689
+        Width = 773
         Height = 56
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 689
         object Label9: TLabel
           Left = 11
           Top = 9
@@ -244,24 +254,27 @@ object Form2: TForm2
       object mmoGetQueueUrl: TMemo
         Left = 0
         Top = 56
-        Width = 689
+        Width = 773
         Height = 166
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
+        ExplicitWidth = 689
       end
     end
     object tsReceiveMessage: TTabSheet
       Caption = 'Receive Message'
       ImageIndex = 2
+      ExplicitWidth = 689
       object Panel3: TPanel
         Left = 0
         Top = 0
-        Width = 689
+        Width = 773
         Height = 56
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 689
         object Label8: TLabel
           Left = 11
           Top = 9
@@ -322,24 +335,27 @@ object Form2: TForm2
       object mmoReceiveMessageResponse: TMemo
         Left = 0
         Top = 56
-        Width = 689
+        Width = 773
         Height = 166
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
+        ExplicitWidth = 689
       end
     end
     object tsSendMessage: TTabSheet
       Caption = 'Send Message'
       ImageIndex = 4
+      ExplicitWidth = 689
       object Panel5: TPanel
         Left = 0
         Top = 0
-        Width = 689
+        Width = 773
         Height = 56
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 689
         object Label12: TLabel
           Left = 11
           Top = 9
@@ -383,24 +399,27 @@ object Form2: TForm2
       object mmoSendMessage: TMemo
         Left = 0
         Top = 56
-        Width = 689
+        Width = 773
         Height = 166
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
+        ExplicitWidth = 689
       end
     end
     object tsDeleteMessage: TTabSheet
       Caption = 'Delete Message'
       ImageIndex = 5
+      ExplicitWidth = 689
       object Panel6: TPanel
         Left = 0
         Top = 0
-        Width = 689
+        Width = 773
         Height = 56
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 689
         object Label14: TLabel
           Left = 11
           Top = 9
@@ -443,24 +462,112 @@ object Form2: TForm2
       object mmoDeleteMessage: TMemo
         Left = 0
         Top = 56
-        Width = 689
+        Width = 773
         Height = 166
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
+        ExplicitWidth = 689
+      end
+    end
+    object tsDeleteMessageBatch: TTabSheet
+      Caption = 'Delete Message Batch'
+      ImageIndex = 7
+      ExplicitWidth = 689
+      object Panel8: TPanel
+        Left = 0
+        Top = 0
+        Width = 773
+        Height = 57
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        object Label17: TLabel
+          Left = 11
+          Top = 9
+          Width = 62
+          Height = 13
+          Caption = 'Queue Name'
+        end
+        object edtDeleteMessageBatchQueueName: TEdit
+          Left = 11
+          Top = 24
+          Width = 222
+          Height = 21
+          TabOrder = 0
+          Text = '159521004132/Send-to-Email-Docfiscal-dev'
+        end
+        object btnDeleteMessageBatch: TButton
+          Left = 239
+          Top = 22
+          Width = 130
+          Height = 25
+          Caption = 'Delete Messages Batch'
+          TabOrder = 1
+          OnClick = btnDeleteMessageBatchClick
+        end
+      end
+      object edtDeleteMessageBatchList: TValueListEditor
+        Left = 0
+        Top = 57
+        Width = 409
+        Height = 165
+        Align = alLeft
+        KeyOptions = [keyEdit, keyAdd, keyUnique]
+        Strings.Strings = (
+          
+            '5d2029d3-164c-4971-a74d-51b029a9e22e=AQEBir7lAsBOQihV7XgXNXz1TLV' +
+            'pkMrTIzRG+kRNiEj7lRS707+EgMaykzeErPy6BbACsqj2zR9sfm7UWLTyERAMo1o' +
+            'n+r6EMgVVVj3eH8z+v1BSHoFdFVT0v0UBgUj7z/JT3j+EEhjEK+/CAISulmvMQ8r' +
+            '9ACzt85P2GVdxZyWpqX29jZ8euX76kiCDSUF1PnyLjzoiIqn1w7F9BOTPS/9ODTW' +
+            'BAqeBGAoj+SKkGn5Mn4KZ1FckeGzWaXdtMdbEStkkgGvCPt0ybOdlV3YJxmpb5Qi' +
+            'v//Hop6NdtrxSaQvpgcBORMxC66IH+KS14/PC1qygirqqOTLwExZbj1hepK+b1zU' +
+            'S+KtmN5V3Ni+Vnops7EG+mMf8P4ZvmUiUJG+FBAPd3r6qlHKyhyOL8ZFLpkhhmQ=' +
+            '='
+          
+            'd2adf7d6-7c77-4c10-b1de-26b083a1464f=AQEBPJySvjo371XCDSAJKLdUUZe' +
+            'td6k7l3PKQG5BpQ+IsMdR+4IjaeMt3ZYIp5sb93y1TcjL3jMlJcLLYuzn696nssn' +
+            'Y1LeS/b1W4rH/OMVShbaGZlymI7uhdiSL4RGeO0+HlhYdEHobFAz+E2pWHtLmgjw' +
+            'XZ1lQXgDhlAZWPoz5F49ZXZS3U33qRDblEKjt+JHBF+Y0pKT1vXAcTmE+Pcp6PaB' +
+            '2bbQX1hFt0Ei0WUsDSVP2U2W0Nf1KWaloDeSIQRddClMiE7H3XlTUqbBzqp5rJxY' +
+            '8IFZLzn3R6NBl0V+qJhi8SzbCpC5PJx623j4XJpkNyhbjp0uQchyQI4S9L0qAP5B' +
+            'g8oQ1ikKtAIuP5rIjH4FmJ3XYY7igExAYWm2u+riw34HjsHwXy2tUeYdPoAos8A=' +
+            '=')
+        TabOrder = 1
+        TitleCaptions.Strings = (
+          'Message Id'
+          'Receipt Handle')
+        ColWidths = (
+          162
+          241)
+      end
+      object mmoDeleteMessageBatch: TMemo
+        Left = 409
+        Top = 57
+        Width = 364
+        Height = 165
+        Align = alClient
+        ScrollBars = ssBoth
+        TabOrder = 2
+        ExplicitLeft = 0
+        ExplicitTop = 56
+        ExplicitWidth = 689
+        ExplicitHeight = 166
       end
     end
     object tsCreateQueue: TTabSheet
       Caption = 'Create Queue'
       ImageIndex = 6
+      ExplicitWidth = 689
       object Panel7: TPanel
         Left = 0
         Top = 0
-        Width = 689
+        Width = 773
         Height = 56
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 689
         object Label16: TLabel
           Left = 11
           Top = 9
@@ -489,11 +596,12 @@ object Form2: TForm2
       object mmoCreateQueue: TMemo
         Left = 0
         Top = 56
-        Width = 689
+        Width = 773
         Height = 166
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
+        ExplicitWidth = 689
       end
     end
   end

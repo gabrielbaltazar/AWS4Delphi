@@ -33,7 +33,9 @@ uses
   AWS4D.SQS.Model.DeleteMessageRequest in '..\..\Source\SQS\AWS4D.SQS.Model.DeleteMessageRequest.pas',
   AWS4D.SQS.Model.DeleteMessageResponse in '..\..\Source\SQS\AWS4D.SQS.Model.DeleteMessageResponse.pas',
   AWS4D.SQS.Model.CreateQueueResponse in '..\..\Source\SQS\AWS4D.SQS.Model.CreateQueueResponse.pas',
-  AWS4D.SQS.Model.CreateQueueRequest in '..\..\Source\SQS\AWS4D.SQS.Model.CreateQueueRequest.pas';
+  AWS4D.SQS.Model.CreateQueueRequest in '..\..\Source\SQS\AWS4D.SQS.Model.CreateQueueRequest.pas',
+  AWS4D.SQS.Model.DeleteMessageBatchRequest in '..\..\Source\SQS\AWS4D.SQS.Model.DeleteMessageBatchRequest.pas',
+  AWS4D.SQS.Model.DeleteMessageBatchResponse in '..\..\Source\SQS\AWS4D.SQS.Model.DeleteMessageBatchResponse.pas';
 
 {$R *.res}
 

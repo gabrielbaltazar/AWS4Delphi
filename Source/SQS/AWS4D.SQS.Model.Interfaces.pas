@@ -73,6 +73,35 @@ type
     ['{080D6C3B-71DF-4B44-92B8-01CE7E031F62}']
   end;
 
+  IAWS4DSQSModelDeleteMessageBatchRequest = interface
+    ['{3440199B-8B69-4430-A499-5F73157253DA}']
+    /// <summary>The URL of the Amazon SQS queue from which messages are deleted.</summary>
+    /// <remarks>Queue URLs and names are case-sensitive.</remarks>
+    function QueueUrl(Value: String): IAWS4DSQSModelDeleteMessageBatchRequest; overload;
+
+    /// <summary>Add in list of receipt handles for the messages to be deleted.</summary>
+    /// <param name="Id">
+    ///    An identifier for this particular receipt handle. This is used to communicate the result.
+    /// </param>
+    /// <param name="ReceiptHandle">
+    ///    A receipt handle.
+    /// </param>
+    function AddReceiptHandle(Id, ReceiptHandle: String): IAWS4DSQSModelDeleteMessageBatchRequest;
+
+    function QueueUrl: string; overload;
+    function ReceiptHandle: TDictionary<String, String>;
+  end;
+
+  IAWS4DSQSModelDeleteMessageBatchResponse = interface(IAWS4DModelResponseMetadata)
+    /// <summary>Message List success delete</summary>
+    function Successful: TList<String>;
+
+    /// <summary>Message List with error delete</summary>
+    /// <param name="key">MessageId</param>
+    /// <param name="Value">Error Message</param>
+    function Failed: TDictionary<string, String>;
+  end;
+
   IAWS4DSQSModelGetQueueUrlResponse = interface(IAWS4DModelResponseMetadata)
     ['{33764771-FA8E-4472-885D-38E1085AFDC3}']
     /// <summary>The URL of the queue.</summary>
@@ -246,6 +275,7 @@ type
     ['{764198C1-DD25-4001-8AA7-1732E3CA3C56}']
     function CreateQueueRequest: IAWS4DSQSModelCreateQueueRequest;
     function DeleteMessageRequest: IAWS4DSQSModelDeleteMessageRequest;
+    function DeleteMessageBatchRequest: IAWS4DSQSModelDeleteMessageBatchRequest;
     function ListQueuesRequest: IAWS4DSQSModelListQueuesRequest;
     function ReceiveMessageRequest: IAWS4DSQSModelReceiveMessageRequest;
     function SendMessageRequest: IAWS4DSQSModelSendMessageRequest;

@@ -19,14 +19,16 @@ type TAWS4DSQSServiceBase = class(TAWS4DServiceBase, IAWS4DServiceSQS)
     function GetURL(QueueName: String): string; overload;
 
     function PrepareRequest(Request: IAWS4DSQSModelCreateQueueRequest): IAWS4DHTTPRequest; overload;
+    function PrepareRequest(Request: IAWS4DSQSModelDeleteMessageRequest): IAWS4DHTTPRequest; overload;
+    function PrepareRequest(Request: IAWS4DSQSModelDeleteMessageBatchRequest): IAWS4DHTTPRequest; overload;
     function PrepareRequest(Request: IAWS4DSQSModelListQueuesRequest): IAWS4DHTTPRequest; overload;
     function PrepareRequest(Request: IAWS4DSQSModelReceiveMessageRequest): IAWS4DHTTPRequest; overload;
     function PrepareRequest(Request: IAWS4DSQSModelSendMessageRequest): IAWS4DHTTPRequest; overload;
-    function PrepareRequest(Request: IAWS4DSQSModelDeleteMessageRequest): IAWS4DHTTPRequest; overload;
 
   protected
     function CreateQueue(Request: IAWS4DSQSModelCreateQueueRequest): IAWS4DSQSModelCreateQueueResponse;
     function DeleteMessage(Request: IAWS4DSQSModelDeleteMessageRequest): IAWS4DSQSModelDeleteMessageResponse;
+    function DeleteMessageBatch(Request: IAWS4DSQSModelDeleteMessageBatchRequest): IAWS4DSQSModelDeleteMessageBatchResponse;
     function GetQueueUrl(QueueName: String): IAWS4DSQSModelGetQueueUrlResponse;
     function ListQueues(ListQueuesRequest: IAWS4DSQSModelListQueuesRequest = nil): IAWS4DSQSModelListQueuesResponse;
     function ListQueueTags(QueueName: String): IAWS4DSQSModelListQueueTagsResponse;
@@ -55,6 +57,14 @@ var
 begin
   json   := PrepareRequest(Request).Execute.Body;
   Result := TAWS4DSQSModelDeleteMessageResponse.New(json);
+end;
+
+function TAWS4DSQSServiceBase.DeleteMessageBatch(Request: IAWS4DSQSModelDeleteMessageBatchRequest): IAWS4DSQSModelDeleteMessageBatchResponse;
+var
+  json : string;
+begin
+  json := PrepareRequest(Request).Execute.Body;
+  result := TAWS4DSQSModelDeleteMessageBatchResponse.New(json);
 end;
 
 function TAWS4DSQSServiceBase.GetQueueUrl(QueueName: String): IAWS4DSQSModelGetQueueUrlResponse;
@@ -193,6 +203,35 @@ begin
 
   if not Request.MessageBody.Trim.IsEmpty then
     Result.AddQuery('MessageBody', Request.MessageBody);
+end;
+
+function TAWS4DSQSServiceBase.PrepareRequest(Request: IAWS4DSQSModelDeleteMessageBatchRequest): IAWS4DHTTPRequest;
+var
+  url : string;
+  messageId : string;
+  queryName: string;
+  queryValue: string;
+  i : Integer;
+begin
+  url := GetURL(Request.QueueUrl);
+  result :=
+    HTTPRequest(Self)
+      .GET
+      .BaseURL(url)
+      .Action('DeleteMessageBatch');
+
+  i := 0;
+  for messageId in Request.ReceiptHandle.Keys do
+  begin
+    Inc(i);
+    queryName := Format('DeleteMessageBatchRequestEntry.%s.Id', [i.ToString]);
+    queryValue := messageId;
+    Result.AddQuery(queryName, queryValue);
+
+    queryName := Format('DeleteMessageBatchRequestEntry.%s.ReceiptHandle', [i.ToString]);
+    queryValue := Request.ReceiptHandle.Items[messageId];
+    Result.AddQuery(queryName, queryValue);
+  end;
 end;
 
 function TAWS4DSQSServiceBase.PrepareRequest(Request: IAWS4DSQSModelDeleteMessageRequest): IAWS4DHTTPRequest;

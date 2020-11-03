@@ -19,6 +19,12 @@ type
     /// </remarks>
     function DeleteMessage(Request: IAWS4DSQSModelDeleteMessageRequest): IAWS4DSQSModelDeleteMessageResponse;
 
+    /// <summary>Deletes up to ten messages from the specified queue.</summary>
+    /// <remarks>
+    ///   The result of the action on each message is reported individually in the response.
+    /// </remarks>
+    function DeleteMessageBatch(Request: IAWS4DSQSModelDeleteMessageBatchRequest): IAWS4DSQSModelDeleteMessageBatchResponse;
+
     /// <summary>Returns the URL of an existing Amazon SQS queue.</summary>
     /// <remarks>
     ///    To access a queue that belongs to another AWS account, use the QueueOwnerAWSAccountId parameter to specify the account ID of the queue's owner.

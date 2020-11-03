@@ -10,7 +10,7 @@ uses
   Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls,
   System.IniFiles,
   REST.Json,
-  System.JSON;
+  System.JSON, Vcl.Grids, Vcl.ValEdit;
 
 type
   TSQSConfig = class
@@ -88,6 +88,13 @@ type
     edtCreateQueueQueueName: TEdit;
     btnCreateQueue: TButton;
     mmoCreateQueue: TMemo;
+    tsDeleteMessageBatch: TTabSheet;
+    Panel8: TPanel;
+    Label17: TLabel;
+    edtDeleteMessageBatchQueueName: TEdit;
+    btnDeleteMessageBatch: TButton;
+    edtDeleteMessageBatchList: TValueListEditor;
+    mmoDeleteMessageBatch: TMemo;
     procedure btnListQueuesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnListQueueTagsClick(Sender: TObject);
@@ -97,6 +104,7 @@ type
     procedure btnDeleteMessageClick(Sender: TObject);
     procedure btnCreateQueueClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btnDeleteMessageBatchClick(Sender: TObject);
   private
     { Private declarations }
     function GetIniFile: TIniFile;
@@ -106,12 +114,13 @@ type
     function CreateSQS: IAWS4DServiceSQS;
 
     procedure writeCreateQueueResponse(Response: IAWS4DSQSModelCreateQueueResponse);
+    procedure writeDeleteMessageResponse(Response: IAWS4DSQSModelDeleteMessageResponse);
+    procedure writeDeleteMessageBatchResponse(Response: IAWS4DSQSModelDeleteMessageBatchResponse);
+    procedure writeGetQueueUrlResponse(Response: IAWS4DSQSModelGetQueueUrlResponse);
     procedure writeListQueuesResponse(Response: IAWS4DSQSModelListQueuesResponse);
     procedure writeListQueueTagsResponse(Response: IAWS4DSQSModelListQueueTagsResponse);
-    procedure writeGetQueueUrlResponse(Response: IAWS4DSQSModelGetQueueUrlResponse);
     procedure writeReceiveMessageResponse(Response: IAWS4DSQSModelReceiveMessageResponse);
     procedure writeSendMessageResponse(Response: IAWS4DSQSModelSendMessageResponse);
-    procedure writeDeleteMessageResponse(Response: IAWS4DSQSModelDeleteMessageResponse);
 
     procedure writeHTTPException(AException: EAWS4DHTTPException);
   public
@@ -135,6 +144,29 @@ begin
 
   response := CreateSQS.CreateQueue(request);
   writeCreateQueueResponse(response);
+end;
+
+procedure TForm2.btnDeleteMessageBatchClick(Sender: TObject);
+var
+  request: IAWS4DSQSModelDeleteMessageBatchRequest;
+  response: IAWS4DSQSModelDeleteMessageBatchResponse;
+  messageId: string;
+  receiptHandle: string;
+  i : Integer;
+begin
+  request := SQSModelFactory.DeleteMessageBatchRequest;
+  request.QueueUrl(edtDeleteMessageBatchQueueName.Text);
+
+  for i := 0 to edtDeleteMessageBatchList.Strings.Count - 1 do
+  begin
+    messageId := edtDeleteMessageBatchList.Strings.Names[i];
+    receiptHandle := edtDeleteMessageBatchList.Strings.ValueFromIndex[i];
+
+    request.AddReceiptHandle(messageId, receiptHandle);
+  end;
+
+  response := CreateSQS.DeleteMessageBatch(request);
+  writeDeleteMessageBatchResponse(response);
 end;
 
 procedure TForm2.btnDeleteMessageClick(Sender: TObject);
@@ -281,6 +313,19 @@ begin
   mmoCreateQueue.Lines.Clear;
   mmoCreateQueue.Lines.Add('RequestID: ' + Response.RequestId);
   mmoCreateQueue.Lines.Add('Queue Url: ' + Response.QueueUrl);
+end;
+
+procedure TForm2.writeDeleteMessageBatchResponse(Response: IAWS4DSQSModelDeleteMessageBatchResponse);
+var
+  i : Integer;
+begin
+  mmoDeleteMessageBatch.Lines.Clear;
+  mmoDeleteMessageBatch.Lines.Add('RequestID: ' + Response.RequestId);
+  mmoDeleteMessageBatch.Lines.Add(EmptyStr);
+
+  mmoDeleteMessageBatch.Lines.Add('Successful Ids');
+  for i := 0 to Pred(Response.Successful.Count) do
+    mmoDeleteMessageBatch.Lines.Add(Response.Successful[i]);
 end;
 
 procedure TForm2.writeDeleteMessageResponse(Response: IAWS4DSQSModelDeleteMessageResponse);
