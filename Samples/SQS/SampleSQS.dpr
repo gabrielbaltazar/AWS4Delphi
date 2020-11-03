@@ -42,7 +42,8 @@ uses
   AWS4D.SQS.Model.TagQueueRequest in '..\..\Source\SQS\AWS4D.SQS.Model.TagQueueRequest.pas',
   AWS4D.SQS.Model.TagQueueResponse in '..\..\Source\SQS\AWS4D.SQS.Model.TagQueueResponse.pas',
   AWS4D.SQS.Model.UntagQueueRequest in '..\..\Source\SQS\AWS4D.SQS.Model.UntagQueueRequest.pas',
-  AWS4D.SQS.Model.UntagQueueResponse in '..\..\Source\SQS\AWS4D.SQS.Model.UntagQueueResponse.pas';
+  AWS4D.SQS.Model.UntagQueueResponse in '..\..\Source\SQS\AWS4D.SQS.Model.UntagQueueResponse.pas',
+  AWS4D.SQS.Model.DeleteQueueResponse in '..\..\Source\SQS\AWS4D.SQS.Model.DeleteQueueResponse.pas';
 
 {$R *.res}
 

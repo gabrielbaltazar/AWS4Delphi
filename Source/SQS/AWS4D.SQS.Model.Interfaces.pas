@@ -102,6 +102,10 @@ type
     function Failed: TDictionary<string, String>;
   end;
 
+  IAWS4DSQSModelDeleteQueueResponse = interface(IAWS4DModelResponseMetadata)
+    ['{95FBA067-B0D4-48F6-8637-F2A1FA535371}']
+  end;
+
   IAWS4DSQSModelGetQueueAttributesRequest = interface
     ['{E5D2B466-9CA2-4442-BF30-61D1A3CCBC36}']
     /// <summary>The URL of the Amazon SQS queue whose attribute information is retrieved.</summary>

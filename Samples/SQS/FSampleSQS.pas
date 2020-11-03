@@ -124,6 +124,12 @@ type
     edtUntagQueueTag2: TEdit;
     Label23: TLabel;
     mmoUntagQueue: TMemo;
+    tsDeleteQueue: TTabSheet;
+    Panel13: TPanel;
+    Label24: TLabel;
+    edtDeleteQueueQueueUrl: TEdit;
+    btnDeleteQueue: TButton;
+    mmoDeleteQueue: TMemo;
     procedure btnListQueuesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnListQueueTagsClick(Sender: TObject);
@@ -138,6 +144,7 @@ type
     procedure btnPurgeQueueClick(Sender: TObject);
     procedure btnTagQueueClick(Sender: TObject);
     procedure btnUntagQueueClick(Sender: TObject);
+    procedure btnDeleteQueueClick(Sender: TObject);
   private
     { Private declarations }
     function GetIniFile: TIniFile;
@@ -149,6 +156,7 @@ type
     procedure writeCreateQueueResponse(Response: IAWS4DSQSModelCreateQueueResponse);
     procedure writeDeleteMessageResponse(Response: IAWS4DSQSModelDeleteMessageResponse);
     procedure writeDeleteMessageBatchResponse(Response: IAWS4DSQSModelDeleteMessageBatchResponse);
+    procedure writeDeleteQueueResponse(Response: IAWS4DSQSModelDeleteQueueResponse);
     procedure writeGetQueueAttributesResponse(Response: IAWS4DSQSModelGetQueueAttributesResponse);
     procedure writeGetQueueUrlResponse(Response: IAWS4DSQSModelGetQueueUrlResponse);
     procedure writeListQueuesResponse(Response: IAWS4DSQSModelListQueuesResponse);
@@ -218,6 +226,14 @@ begin
 
   response := CreateSQS.DeleteMessage(request);
   writeDeleteMessageResponse(response);
+end;
+
+procedure TForm2.btnDeleteQueueClick(Sender: TObject);
+var
+  response: IAWS4DSQSModelDeleteQueueResponse;
+begin
+  response := CreateSQS.DeleteQueue(edtDeleteQueueQueueUrl.Text);
+  writeDeleteQueueResponse(response);
 end;
 
 procedure TForm2.btnGetQueueAttributesClick(Sender: TObject);
@@ -426,6 +442,12 @@ procedure TForm2.writeDeleteMessageResponse(Response: IAWS4DSQSModelDeleteMessag
 begin
   mmoDeleteMessage.Lines.Clear;
   mmoDeleteMessage.Lines.Add('RequestID: ' + Response.RequestId);
+end;
+
+procedure TForm2.writeDeleteQueueResponse(Response: IAWS4DSQSModelDeleteQueueResponse);
+begin
+  mmoDeleteQueue.Lines.Clear;
+  mmoDeleteQueue.Lines.Add('RequestID: ' + Response.RequestId);
 end;
 
 procedure TForm2.writeGetQueueAttributesResponse(Response: IAWS4DSQSModelGetQueueAttributesResponse);

@@ -16,6 +16,7 @@ uses
   AWS4D.SQS.Model.CreateQueueResponse,
   AWS4D.SQS.Model.DeleteMessageResponse,
   AWS4D.SQS.Model.DeleteMessageBatchResponse,
+  AWS4D.SQS.Model.DeleteQueueResponse,
   AWS4D.SQS.Model.GetQueueAttributesResponse,
   AWS4D.SQS.Model.GetQueueUrlResponse,
   AWS4D.SQS.Model.ListQueuesResponse,
@@ -41,6 +42,7 @@ type
   TAWS4DSQSModelCreateQueueResponse    = AWS4D.SQS.Model.CreateQueueResponse.TAWS4DSQSModelCreateQueueResponse;
   TAWS4DSQSModelDeleteMessageResponse  = AWS4D.SQS.Model.DeleteMessageResponse.TAWS4DSQSModelDeleteMessageResponse;
   TAWS4DSQSModelDeleteMessageBatchResponse = AWS4D.SQS.Model.DeleteMessageBatchResponse.TAWS4DSQSModelDeleteMessageBatchResponse;
+  TAWS4DSQSModelDeleteQueueResponse        = AWS4D.SQS.Model.DeleteQueueResponse.TAWS4DSQSModelDeleteQueueResponse;
   TAWS4DSQSModelGetQueueAttributesResponse = AWS4D.SQS.Model.GetQueueAttributesResponse.TAWS4DSQSModelGetQueueAttributesResponse;
   TAWS4DSQSModelGetQueueUrlResponse    = AWS4D.SQS.Model.GetQueueUrlResponse.TAWS4DSQSModelGetQueueUrlResponse;
   TAWS4DSQSModelListQueuesResponse     = AWS4D.SQS.Model.ListQueuesResponse.TAWS4DSQSModelListQueuesResponse;

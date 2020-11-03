@@ -25,6 +25,14 @@ type
     /// </remarks>
     function DeleteMessageBatch(Request: IAWS4DSQSModelDeleteMessageBatchRequest): IAWS4DSQSModelDeleteMessageBatchResponse;
 
+    /// <summary>Deletes the queue specified by the QueueUrl, regardless of the queue's contents.</summary>
+    /// <remarks>
+    ///   Be careful with the DeleteQueue action: When you delete a queue, any messages in the queue are no longer available.
+    ///   When you delete a queue, the deletion process takes up to 60 seconds.
+    ///   Requests you send involving that queue during the 60 seconds might succeed.
+    /// </remarks>
+    function DeleteQueue(QueueUrl: String): IAWS4DSQSModelDeleteQueueResponse;
+
     /// <summary>
     ///   Gets attributes for the specified queue.
     /// </summary>
