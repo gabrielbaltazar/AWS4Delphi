@@ -107,6 +107,13 @@ type
     edtPurgeQueueQueueUrl: TEdit;
     btnPurgeQueue: TButton;
     mmoPurgeQueue: TMemo;
+    tsTagQueue: TTabSheet;
+    Panel11: TPanel;
+    Label20: TLabel;
+    edtTagQueueQueueUrl: TEdit;
+    btnTagQueue: TButton;
+    lstTagQueue: TValueListEditor;
+    mmoTagQueue: TMemo;
     procedure btnListQueuesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnListQueueTagsClick(Sender: TObject);
@@ -119,6 +126,7 @@ type
     procedure btnDeleteMessageBatchClick(Sender: TObject);
     procedure btnGetQueueAttributesClick(Sender: TObject);
     procedure btnPurgeQueueClick(Sender: TObject);
+    procedure btnTagQueueClick(Sender: TObject);
   private
     { Private declarations }
     function GetIniFile: TIniFile;
@@ -137,6 +145,7 @@ type
     procedure writePurgeQueueResponse(Response: IAWS4DSQSModelPurgeQueueResponse);
     procedure writeReceiveMessageResponse(Response: IAWS4DSQSModelReceiveMessageResponse);
     procedure writeSendMessageResponse(Response: IAWS4DSQSModelSendMessageResponse);
+    procedure writeTagQueueResponse(Response: IAWS4DSQSModelTagQueueResponse);
 
     procedure writeHTTPException(AException: EAWS4DHTTPException);
   public
@@ -286,6 +295,24 @@ begin
 
   response := CreateSQS.SendMessage(request);
   writeSendMessageResponse(response);
+end;
+
+procedure TForm2.btnTagQueueClick(Sender: TObject);
+var
+  request: IAWS4DSQSModelTagQueueRequest;
+  response: IAWS4DSQSModelTagQueueResponse;
+  i : Integer;
+begin
+  request := SQSModelFactory.TagQueueRequest;
+  request.QueueUrl(edtTagQueueQueueUrl.Text);
+
+  for i := 0 to Pred(lstTagQueue.Strings.Count) do
+    request.AddTag(
+      lstTagQueue.Strings.Names[i],
+      lstTagQueue.Strings.ValueFromIndex[i]);
+
+  response := CreateSQS.TagQueue(request);
+  writeTagQueueResponse(response);
 end;
 
 function TForm2.CreateSQS: IAWS4DServiceSQS;
@@ -465,6 +492,12 @@ begin
   mmoSendMessage.Lines.Add('MessageId: ' + Response.MessageId);
   mmoSendMessage.Lines.Add('MD5OfMessageBody: ' + Response.MD5OfMessageBody);
   mmoSendMessage.Lines.Add('SequenceNumber: ' + Response.SequenceNumber);
+end;
+
+procedure TForm2.writeTagQueueResponse(Response: IAWS4DSQSModelTagQueueResponse);
+begin
+  mmoTagQueue.Clear;
+  mmoTagQueue.Lines.Add('RequestID: ' + Response.RequestId);
 end;
 
 end.

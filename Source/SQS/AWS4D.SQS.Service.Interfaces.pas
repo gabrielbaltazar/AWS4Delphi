@@ -68,6 +68,16 @@ type
     /// <summary>Delivers a message to the specified queue.</summary>
     /// <remarks>https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessage.html</remarks>
     function SendMessage(Request: IAWS4DSQSModelSendMessageRequest): IAWS4DSQSModelSendMessageResponse;
+
+    /// <summary>Add cost allocation tags to the specified Amazon SQS queue.</summary>
+    /// <summary>
+    ///   When you use queue tags, keep the following guidelines in mind:
+    ///   Adding more than 50 tags to a queue isn't recommended.
+    ///   Tags don't have any semantic meaning. Amazon SQS interprets tags as character strings.
+    ///   Tags are case-sensitive.
+    ///   A new tag with a key identical to that of an existing tag overwrites the existing tag.
+    /// </summary>
+    function TagQueue(Request: IAWS4DSQSModelTagQueueRequest): IAWS4DSQSModelTagQueueResponse;
   end;
 
 function SQSService: IAWS4DServiceSQS;

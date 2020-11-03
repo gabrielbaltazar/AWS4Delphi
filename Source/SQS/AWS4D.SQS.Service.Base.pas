@@ -25,6 +25,7 @@ type TAWS4DSQSServiceBase = class(TAWS4DServiceBase, IAWS4DServiceSQS)
     function PrepareRequest(Request: IAWS4DSQSModelListQueuesRequest): IAWS4DHTTPRequest; overload;
     function PrepareRequest(Request: IAWS4DSQSModelReceiveMessageRequest): IAWS4DHTTPRequest; overload;
     function PrepareRequest(Request: IAWS4DSQSModelSendMessageRequest): IAWS4DHTTPRequest; overload;
+    function PrepareRequest(Request: IAWS4DSQSModelTagQueueRequest): IAWS4DHTTPRequest; overload;
 
   protected
     function CreateQueue(Request: IAWS4DSQSModelCreateQueueRequest): IAWS4DSQSModelCreateQueueResponse;
@@ -37,6 +38,7 @@ type TAWS4DSQSServiceBase = class(TAWS4DServiceBase, IAWS4DServiceSQS)
     function PurgeQueue(QueueUrl: String): IAWS4DSQSModelPurgeQueueResponse;
     function ReceiveMessage(Request: IAWS4DSQSModelReceiveMessageRequest): IAWS4DSQSModelReceiveMessageResponse;
     function SendMessage(Request: IAWS4DSQSModelSendMessageRequest): IAWS4DSQSModelSendMessageResponse;
+    function TagQueue(Request: IAWS4DSQSModelTagQueueRequest): IAWS4DSQSModelTagQueueResponse;
 
   public
     class function New: IAWS4DServiceSQS;
@@ -200,6 +202,14 @@ begin
   result:= TAWS4DSQSModelSendMessageResponse.New(json);
 end;
 
+function TAWS4DSQSServiceBase.TagQueue(Request: IAWS4DSQSModelTagQueueRequest): IAWS4DSQSModelTagQueueResponse;
+var
+  json : string;
+begin
+  json := PrepareRequest(Request).Execute.Body;
+  result := TAWS4DSQSModelTagQueueResponse.New(json);
+end;
+
 function TAWS4DSQSServiceBase.PrepareRequest(Request: IAWS4DSQSModelSendMessageRequest): IAWS4DHTTPRequest;
 var
   url : String;
@@ -214,6 +224,30 @@ begin
 
   if not Request.MessageBody.Trim.IsEmpty then
     Result.AddQuery('MessageBody', Request.MessageBody);
+end;
+
+function TAWS4DSQSServiceBase.PrepareRequest(Request: IAWS4DSQSModelTagQueueRequest): IAWS4DHTTPRequest;
+var
+  url: string;
+  key: string;
+  name: string;
+  i: Integer;
+begin
+  url := GetURL(Request.QueueUrl);
+  result :=
+    HTTPRequest(Self)
+      .BaseURL(url)
+      .Action('TagQueue');
+
+  i := 0;
+  for key in Request.Tags.Keys do
+  begin
+    Inc(i);
+    name := Format('Tag.%s.Key', [i.ToString]);
+    result.AddQuery(name, key);
+    name := Format('Tag.%s.Value', [i.ToString]);
+    result.AddQuery(name, Request.Tags.Items[key]);
+  end;
 end;
 
 function TAWS4DSQSServiceBase.PurgeQueue(QueueUrl: String): IAWS4DSQSModelPurgeQueueResponse;

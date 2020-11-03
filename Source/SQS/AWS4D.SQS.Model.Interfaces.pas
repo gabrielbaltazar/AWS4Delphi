@@ -293,6 +293,22 @@ type
     function SequenceNumber: string;
   end;
 
+  IAWS4DSQSModelTagQueueRequest = interface(IAWS4DModelRequest)
+    ['{A40D8ED7-B878-44DB-8B43-4F47AD7061E7}']
+    /// <summary>The URL of the queue.</summary>
+    function QueueUrl(Value: String): IAWS4DSQSModelTagQueueRequest; overload;
+
+    /// <summary>Add Tag to the specified queue.</summary>
+    function AddTag(Key, Value: string): IAWS4DSQSModelTagQueueRequest;
+
+    function QueueUrl: string; overload;
+    function Tags: TDictionary<String, String>;
+  end;
+
+  IAWS4DSQSModelTagQueueResponse = interface(IAWS4DModelResponseMetadata)
+    ['{9C83C8F1-33A6-472B-A433-F16E763454EB}']
+  end;
+
   IAWS4DSQSModelFactory = interface
     ['{764198C1-DD25-4001-8AA7-1732E3CA3C56}']
     function CreateQueueRequest: IAWS4DSQSModelCreateQueueRequest;
@@ -302,6 +318,7 @@ type
     function ListQueuesRequest: IAWS4DSQSModelListQueuesRequest;
     function ReceiveMessageRequest: IAWS4DSQSModelReceiveMessageRequest;
     function SendMessageRequest: IAWS4DSQSModelSendMessageRequest;
+    function TagQueueRequest: IAWS4DSQSModelTagQueueRequest;
   end;
 
 function SQSModelFactory: IAWS4DSQSModelFactory;

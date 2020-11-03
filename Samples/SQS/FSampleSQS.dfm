@@ -83,7 +83,7 @@ object Form2: TForm2
     Top = 97
     Width = 781
     Height = 250
-    ActivePage = tsPurgeQueue
+    ActivePage = tsTagQueue
     Align = alClient
     TabOrder = 2
     object tsListQueues: TTabSheet
@@ -668,6 +668,75 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
+      end
+    end
+    object tsTagQueue: TTabSheet
+      Caption = 'Tag Queue'
+      ImageIndex = 10
+      object Panel11: TPanel
+        Left = 0
+        Top = 0
+        Width = 773
+        Height = 57
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitTop = 8
+        object Label20: TLabel
+          Left = 11
+          Top = 9
+          Width = 48
+          Height = 13
+          Caption = 'Queue Url'
+        end
+        object edtTagQueueQueueUrl: TEdit
+          Left = 11
+          Top = 24
+          Width = 222
+          Height = 21
+          TabOrder = 0
+          Text = '159521004132/Send-to-Email-Docfiscal-dev'
+        end
+        object btnTagQueue: TButton
+          Left = 239
+          Top = 22
+          Width = 90
+          Height = 25
+          Caption = 'Tag Queue'
+          TabOrder = 1
+          OnClick = btnTagQueueClick
+        end
+      end
+      object lstTagQueue: TValueListEditor
+        Left = 0
+        Top = 57
+        Width = 361
+        Height = 165
+        Align = alLeft
+        KeyOptions = [keyEdit, keyAdd, keyUnique]
+        Strings.Strings = (
+          'QueueType=Production'
+          'QueueDate=2020-11-03')
+        TabOrder = 1
+        TitleCaptions.Strings = (
+          'Key Tag'
+          'Value Tag')
+        ColWidths = (
+          162
+          193)
+      end
+      object mmoTagQueue: TMemo
+        Left = 361
+        Top = 57
+        Width = 412
+        Height = 165
+        Align = alClient
+        ScrollBars = ssBoth
+        TabOrder = 2
+        ExplicitLeft = 0
+        ExplicitTop = 56
+        ExplicitWidth = 773
+        ExplicitHeight = 166
       end
     end
   end
