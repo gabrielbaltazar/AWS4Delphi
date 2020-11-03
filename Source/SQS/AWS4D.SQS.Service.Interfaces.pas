@@ -25,6 +25,11 @@ type
     /// </remarks>
     function DeleteMessageBatch(Request: IAWS4DSQSModelDeleteMessageBatchRequest): IAWS4DSQSModelDeleteMessageBatchResponse;
 
+    /// <summary>
+    ///   Gets attributes for the specified queue.
+    /// </summary>
+    function GetQueueAttributes(Request: IAWS4DSQSModelGetQueueAttributesRequest): IAWS4DSQSModelGetQueueAttributesResponse;
+
     /// <summary>Returns the URL of an existing Amazon SQS queue.</summary>
     /// <remarks>
     ///    To access a queue that belongs to another AWS account, use the QueueOwnerAWSAccountId parameter to specify the account ID of the queue's owner.

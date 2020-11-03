@@ -26,7 +26,6 @@ object Form2: TForm2
     BevelOuter = bvNone
     Caption = 'SQS'
     TabOrder = 0
-    ExplicitWidth = 697
   end
   object pnlHeader: TPanel
     Left = 0
@@ -36,7 +35,6 @@ object Form2: TForm2
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitWidth = 697
     object Label1: TLabel
       Left = 11
       Top = 9
@@ -85,12 +83,11 @@ object Form2: TForm2
     Top = 97
     Width = 781
     Height = 250
-    ActivePage = tsDeleteMessageBatch
+    ActivePage = tsGetQueueAttributes
     Align = alClient
     TabOrder = 2
     object tsListQueues: TTabSheet
       Caption = 'List Queues'
-      ExplicitWidth = 689
       object Panel1: TPanel
         Left = 0
         Top = 0
@@ -99,7 +96,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 689
         object Label4: TLabel
           Left = 11
           Top = 9
@@ -161,13 +157,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 689
       end
     end
     object tsListQueueTags: TTabSheet
       Caption = 'List Queue Tags'
       ImageIndex = 1
-      ExplicitWidth = 689
       object Panel2: TPanel
         Left = 0
         Top = 0
@@ -176,7 +170,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 689
         object Label7: TLabel
           Left = 11
           Top = 9
@@ -210,13 +203,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 689
       end
     end
     object tsGetQueueUrl: TTabSheet
       Caption = 'Get Queue Url'
       ImageIndex = 2
-      ExplicitWidth = 689
       object Panel4: TPanel
         Left = 0
         Top = 0
@@ -225,7 +216,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 689
         object Label9: TLabel
           Left = 11
           Top = 9
@@ -259,13 +249,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 689
       end
     end
     object tsReceiveMessage: TTabSheet
       Caption = 'Receive Message'
       ImageIndex = 2
-      ExplicitWidth = 689
       object Panel3: TPanel
         Left = 0
         Top = 0
@@ -274,7 +262,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 689
         object Label8: TLabel
           Left = 11
           Top = 9
@@ -340,13 +327,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 689
       end
     end
     object tsSendMessage: TTabSheet
       Caption = 'Send Message'
       ImageIndex = 4
-      ExplicitWidth = 689
       object Panel5: TPanel
         Left = 0
         Top = 0
@@ -355,7 +340,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 689
         object Label12: TLabel
           Left = 11
           Top = 9
@@ -404,13 +388,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 689
       end
     end
     object tsDeleteMessage: TTabSheet
       Caption = 'Delete Message'
       ImageIndex = 5
-      ExplicitWidth = 689
       object Panel6: TPanel
         Left = 0
         Top = 0
@@ -419,7 +401,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 689
         object Label14: TLabel
           Left = 11
           Top = 9
@@ -467,13 +448,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 689
       end
     end
     object tsDeleteMessageBatch: TTabSheet
       Caption = 'Delete Message Batch'
       ImageIndex = 7
-      ExplicitWidth = 689
       object Panel8: TPanel
         Left = 0
         Top = 0
@@ -549,16 +528,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 2
-        ExplicitLeft = 0
-        ExplicitTop = 56
-        ExplicitWidth = 689
-        ExplicitHeight = 166
       end
     end
     object tsCreateQueue: TTabSheet
       Caption = 'Create Queue'
       ImageIndex = 6
-      ExplicitWidth = 689
       object Panel7: TPanel
         Left = 0
         Top = 0
@@ -567,7 +541,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 689
         object Label16: TLabel
           Left = 11
           Top = 9
@@ -601,7 +574,53 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 689
+      end
+    end
+    object tsGetQueueAttributes: TTabSheet
+      Caption = 'Get Queue Attributes'
+      ImageIndex = 8
+      object Panel9: TPanel
+        Left = 0
+        Top = 0
+        Width = 773
+        Height = 56
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitTop = 8
+        object Label18: TLabel
+          Left = 11
+          Top = 9
+          Width = 48
+          Height = 13
+          Caption = 'Queue Url'
+        end
+        object edtGetQueueAttributesQueueName: TEdit
+          Left = 11
+          Top = 24
+          Width = 222
+          Height = 21
+          TabOrder = 0
+          Text = '159521004132/Send-to-Email-Docfiscal-dev'
+        end
+        object btnGetQueueAttributes: TButton
+          Left = 239
+          Top = 22
+          Width = 130
+          Height = 25
+          Caption = 'Get Queue Attributes'
+          TabOrder = 1
+          OnClick = btnGetQueueAttributesClick
+        end
+      end
+      object mmoGetQueueAttributes: TMemo
+        Left = 0
+        Top = 56
+        Width = 773
+        Height = 166
+        Align = alClient
+        ScrollBars = ssBoth
+        TabOrder = 1
       end
     end
   end

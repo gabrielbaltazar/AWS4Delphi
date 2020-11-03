@@ -18,6 +18,7 @@ type TAWS4DSQSModelFactory = class(TInterfacedObject, IAWS4DSQSModelFactory)
     function CreateQueueRequest: IAWS4DSQSModelCreateQueueRequest;
     function DeleteMessageRequest: IAWS4DSQSModelDeleteMessageRequest;
     function DeleteMessageBatchRequest: IAWS4DSQSModelDeleteMessageBatchRequest;
+    function GetQueueAttributesRequest: IAWS4DSQSModelGetQueueAttributesRequest;
     function ListQueuesRequest: IAWS4DSQSModelListQueuesRequest;
     function ReceiveMessageRequest: IAWS4DSQSModelReceiveMessageRequest;
     function SendMessageRequest: IAWS4DSQSModelSendMessageRequest;
@@ -76,6 +77,11 @@ begin
     FInstance := TAWS4DSQSModelFactory.createPrivate;
   result := FInstance;
 
+end;
+
+function TAWS4DSQSModelFactory.GetQueueAttributesRequest: IAWS4DSQSModelGetQueueAttributesRequest;
+begin
+  result := TAWS4DSQSModelGetQueueAttributesRequest.New;
 end;
 
 end.

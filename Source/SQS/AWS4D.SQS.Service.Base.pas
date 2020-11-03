@@ -21,6 +21,7 @@ type TAWS4DSQSServiceBase = class(TAWS4DServiceBase, IAWS4DServiceSQS)
     function PrepareRequest(Request: IAWS4DSQSModelCreateQueueRequest): IAWS4DHTTPRequest; overload;
     function PrepareRequest(Request: IAWS4DSQSModelDeleteMessageRequest): IAWS4DHTTPRequest; overload;
     function PrepareRequest(Request: IAWS4DSQSModelDeleteMessageBatchRequest): IAWS4DHTTPRequest; overload;
+    function PrepareRequest(Request: IAWS4DSQSModelGetQueueAttributesRequest): IAWS4DHTTPRequest; overload;
     function PrepareRequest(Request: IAWS4DSQSModelListQueuesRequest): IAWS4DHTTPRequest; overload;
     function PrepareRequest(Request: IAWS4DSQSModelReceiveMessageRequest): IAWS4DHTTPRequest; overload;
     function PrepareRequest(Request: IAWS4DSQSModelSendMessageRequest): IAWS4DHTTPRequest; overload;
@@ -29,6 +30,7 @@ type TAWS4DSQSServiceBase = class(TAWS4DServiceBase, IAWS4DServiceSQS)
     function CreateQueue(Request: IAWS4DSQSModelCreateQueueRequest): IAWS4DSQSModelCreateQueueResponse;
     function DeleteMessage(Request: IAWS4DSQSModelDeleteMessageRequest): IAWS4DSQSModelDeleteMessageResponse;
     function DeleteMessageBatch(Request: IAWS4DSQSModelDeleteMessageBatchRequest): IAWS4DSQSModelDeleteMessageBatchResponse;
+    function GetQueueAttributes(Request: IAWS4DSQSModelGetQueueAttributesRequest): IAWS4DSQSModelGetQueueAttributesResponse;
     function GetQueueUrl(QueueName: String): IAWS4DSQSModelGetQueueUrlResponse;
     function ListQueues(ListQueuesRequest: IAWS4DSQSModelListQueuesRequest = nil): IAWS4DSQSModelListQueuesResponse;
     function ListQueueTags(QueueName: String): IAWS4DSQSModelListQueueTagsResponse;
@@ -65,6 +67,14 @@ var
 begin
   json := PrepareRequest(Request).Execute.Body;
   result := TAWS4DSQSModelDeleteMessageBatchResponse.New(json);
+end;
+
+function TAWS4DSQSServiceBase.GetQueueAttributes(Request: IAWS4DSQSModelGetQueueAttributesRequest): IAWS4DSQSModelGetQueueAttributesResponse;
+var
+  json : string;
+begin
+  json := PrepareRequest(Request).Execute.Body;
+  result := TAWS4DSQSModelGetQueueAttributesResponse.New(json);
 end;
 
 function TAWS4DSQSServiceBase.GetQueueUrl(QueueName: String): IAWS4DSQSModelGetQueueUrlResponse;
@@ -203,6 +213,26 @@ begin
 
   if not Request.MessageBody.Trim.IsEmpty then
     Result.AddQuery('MessageBody', Request.MessageBody);
+end;
+
+function TAWS4DSQSServiceBase.PrepareRequest(Request: IAWS4DSQSModelGetQueueAttributesRequest): IAWS4DHTTPRequest;
+var
+  url : String;
+  i: Integer;
+begin
+  url := GetURL(Request.queueUrl);
+
+  result :=
+    HTTPRequest(Self)
+      .GET
+      .BaseURL(url)
+      .Action('GetQueueAttributes');
+
+  if Request.Attributes.Count = 0 then
+    result.AddQuery('AttributeName.1', 'All');
+
+  for i := 1 to Request.Attributes.Count do
+    result.AddQuery('AttributeName.' + i.ToString, Request.Attributes[i - 1]);
 end;
 
 function TAWS4DSQSServiceBase.PrepareRequest(Request: IAWS4DSQSModelDeleteMessageBatchRequest): IAWS4DHTTPRequest;

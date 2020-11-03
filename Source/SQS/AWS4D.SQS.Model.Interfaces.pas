@@ -102,6 +102,24 @@ type
     function Failed: TDictionary<string, String>;
   end;
 
+  IAWS4DSQSModelGetQueueAttributesRequest = interface
+    ['{E5D2B466-9CA2-4442-BF30-61D1A3CCBC36}']
+    /// <summary>The URL of the Amazon SQS queue whose attribute information is retrieved.</summary>
+    /// <remarks>Queue URLs and names are case-sensitive.</remarks>
+    function QueueUrl(Value: String): IAWS4DSQSModelGetQueueAttributesRequest; overload;
+
+    /// <summary>Add attribute in list for which to retrieve information.</summary>
+    function AddAttribute(Value: String): IAWS4DSQSModelGetQueueAttributesRequest;
+
+    function Attributes: TList<String>;
+    function QueueUrl: string; overload;
+  end;
+
+  IAWS4DSQSModelGetQueueAttributesResponse = interface(IAWS4DModelResponseMetadata)
+    ['{7993BF5B-1866-4BED-948E-8A1DDC73F4D5}']
+    function Attributes: TDictionary<String, String>;
+  end;
+
   IAWS4DSQSModelGetQueueUrlResponse = interface(IAWS4DModelResponseMetadata)
     ['{33764771-FA8E-4472-885D-38E1085AFDC3}']
     /// <summary>The URL of the queue.</summary>
@@ -276,6 +294,7 @@ type
     function CreateQueueRequest: IAWS4DSQSModelCreateQueueRequest;
     function DeleteMessageRequest: IAWS4DSQSModelDeleteMessageRequest;
     function DeleteMessageBatchRequest: IAWS4DSQSModelDeleteMessageBatchRequest;
+    function GetQueueAttributesRequest: IAWS4DSQSModelGetQueueAttributesRequest;
     function ListQueuesRequest: IAWS4DSQSModelListQueuesRequest;
     function ReceiveMessageRequest: IAWS4DSQSModelReceiveMessageRequest;
     function SendMessageRequest: IAWS4DSQSModelSendMessageRequest;
