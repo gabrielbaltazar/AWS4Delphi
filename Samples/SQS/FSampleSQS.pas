@@ -114,6 +114,16 @@ type
     btnTagQueue: TButton;
     lstTagQueue: TValueListEditor;
     mmoTagQueue: TMemo;
+    tsUntagQueue: TTabSheet;
+    Panel12: TPanel;
+    Label21: TLabel;
+    edtUntagQueueQueueUrl: TEdit;
+    btnUntagQueue: TButton;
+    Label22: TLabel;
+    edtUntagQueueTag1: TEdit;
+    edtUntagQueueTag2: TEdit;
+    Label23: TLabel;
+    mmoUntagQueue: TMemo;
     procedure btnListQueuesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnListQueueTagsClick(Sender: TObject);
@@ -127,6 +137,7 @@ type
     procedure btnGetQueueAttributesClick(Sender: TObject);
     procedure btnPurgeQueueClick(Sender: TObject);
     procedure btnTagQueueClick(Sender: TObject);
+    procedure btnUntagQueueClick(Sender: TObject);
   private
     { Private declarations }
     function GetIniFile: TIniFile;
@@ -146,6 +157,7 @@ type
     procedure writeReceiveMessageResponse(Response: IAWS4DSQSModelReceiveMessageResponse);
     procedure writeSendMessageResponse(Response: IAWS4DSQSModelSendMessageResponse);
     procedure writeTagQueueResponse(Response: IAWS4DSQSModelTagQueueResponse);
+    procedure writeUntagQueueResponse(Response: IAWS4DSQSModelUntagQueueResponse);
 
     procedure writeHTTPException(AException: EAWS4DHTTPException);
   public
@@ -313,6 +325,24 @@ begin
 
   response := CreateSQS.TagQueue(request);
   writeTagQueueResponse(response);
+end;
+
+procedure TForm2.btnUntagQueueClick(Sender: TObject);
+var
+  request: IAWS4DSQSModelUntagQueueRequest;
+  response: IAWS4DSQSModelUntagQueueResponse;
+begin
+  request := SQSModelFactory.UntagQueueRequest;
+  request.QueueUrl(edtUntagQueueQueueUrl.Text);
+
+  if edtUntagQueueTag1.Text <> '' then
+    request.AddTag(edtUntagQueueTag1.Text);
+
+  if edtUntagQueueTag2.Text <> '' then
+    request.AddTag(edtUntagQueueTag2.Text);
+
+  response := CreateSQS.UntagQueue(request);
+  writeUntagQueueResponse(response);
 end;
 
 function TForm2.CreateSQS: IAWS4DServiceSQS;
@@ -498,6 +528,12 @@ procedure TForm2.writeTagQueueResponse(Response: IAWS4DSQSModelTagQueueResponse)
 begin
   mmoTagQueue.Clear;
   mmoTagQueue.Lines.Add('RequestID: ' + Response.RequestId);
+end;
+
+procedure TForm2.writeUntagQueueResponse(Response: IAWS4DSQSModelUntagQueueResponse);
+begin
+  mmoUntagQueue.Clear;
+  mmoUntagQueue.Lines.Add('RequestID: ' + Response.RequestId);
 end;
 
 end.

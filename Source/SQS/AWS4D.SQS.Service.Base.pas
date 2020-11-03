@@ -3,6 +3,7 @@ unit AWS4D.SQS.Service.Base;
 interface
 
 uses
+  AWS4D.Service.Interfaces,
   AWS4D.SQS.Service.Interfaces,
   AWS4D.SQS.Model.Interfaces,
   AWS4D.SQS.Model.Classes,
@@ -26,6 +27,7 @@ type TAWS4DSQSServiceBase = class(TAWS4DServiceBase, IAWS4DServiceSQS)
     function PrepareRequest(Request: IAWS4DSQSModelReceiveMessageRequest): IAWS4DHTTPRequest; overload;
     function PrepareRequest(Request: IAWS4DSQSModelSendMessageRequest): IAWS4DHTTPRequest; overload;
     function PrepareRequest(Request: IAWS4DSQSModelTagQueueRequest): IAWS4DHTTPRequest; overload;
+    function PrepareRequest(Request: IAWS4DSQSModelUntagQueueRequest): IAWS4DHTTPRequest; overload;
 
   protected
     function CreateQueue(Request: IAWS4DSQSModelCreateQueueRequest): IAWS4DSQSModelCreateQueueResponse;
@@ -39,7 +41,7 @@ type TAWS4DSQSServiceBase = class(TAWS4DServiceBase, IAWS4DServiceSQS)
     function ReceiveMessage(Request: IAWS4DSQSModelReceiveMessageRequest): IAWS4DSQSModelReceiveMessageResponse;
     function SendMessage(Request: IAWS4DSQSModelSendMessageRequest): IAWS4DSQSModelSendMessageResponse;
     function TagQueue(Request: IAWS4DSQSModelTagQueueRequest): IAWS4DSQSModelTagQueueResponse;
-
+    function UntagQueue(Request: IAWS4DSQSModelUntagQueueRequest): IAWS4DSQSModelUntagQueueResponse;
   public
     class function New: IAWS4DServiceSQS;
 end;
@@ -105,7 +107,7 @@ end;
 
 function TAWS4DSQSServiceBase.GetURL: string;
 begin
-  result := Format('https://sqs.%s.amazonaws.com', [Self.Region]);
+  result := Format('https://sqs.%s.amazonaws.com', [Self.Region.toString]);
 end;
 
 function TAWS4DSQSServiceBase.ListQueues(ListQueuesRequest: IAWS4DSQSModelListQueuesRequest = nil): IAWS4DSQSModelListQueuesResponse;
@@ -210,6 +212,14 @@ begin
   result := TAWS4DSQSModelTagQueueResponse.New(json);
 end;
 
+function TAWS4DSQSServiceBase.UntagQueue(Request: IAWS4DSQSModelUntagQueueRequest): IAWS4DSQSModelUntagQueueResponse;
+var
+  json : String;
+begin
+  json   := PrepareRequest(Request).Execute.Body;
+  result := TAWS4DSQSModelUntagQueueResponse.New(json);
+end;
+
 function TAWS4DSQSServiceBase.PrepareRequest(Request: IAWS4DSQSModelSendMessageRequest): IAWS4DHTTPRequest;
 var
   url : String;
@@ -236,6 +246,7 @@ begin
   url := GetURL(Request.QueueUrl);
   result :=
     HTTPRequest(Self)
+      .GET
       .BaseURL(url)
       .Action('TagQueue');
 
@@ -362,6 +373,28 @@ begin
     value := Format('Attribute.%s.Value', [i.ToString]);
     Result.AddQuery(name, key);
     Result.AddQuery(value, Request.Attributes.Items[key]);
+  end;
+end;
+
+function TAWS4DSQSServiceBase.PrepareRequest(Request: IAWS4DSQSModelUntagQueueRequest): IAWS4DHTTPRequest;
+var
+  url: string;
+  tag: string;
+  i : Integer;
+begin
+  url := GetURL(Request.QueueUrl);
+  result :=
+    HTTPRequest(Self)
+      .GET
+      .BaseURL(url)
+      .Action('UntagQueue');
+
+  i := 0;
+  for tag in Request.Tags do
+  begin
+    Inc(i);
+//    Result.AddQuery('TagKey.' + i.ToString, tag);
+    Result.AddQuery('TagKey', tag);
   end;
 end;
 

@@ -309,6 +309,22 @@ type
     ['{9C83C8F1-33A6-472B-A433-F16E763454EB}']
   end;
 
+  IAWS4DSQSModelUntagQueueRequest = interface(IAWS4DModelRequest)
+    ['{59675E77-81FC-4650-9FB3-07891E7F31A1}']
+    /// <summary>The URL of the queue.</summary>
+    function QueueUrl(Value: String): IAWS4DSQSModelUntagQueueRequest; overload;
+
+    /// <summary>Add Tag to the remove.</summary>
+    function AddTag(Key: string): IAWS4DSQSModelUntagQueueRequest;
+
+    function QueueUrl: string; overload;
+    function Tags: TList<String>;
+  end;
+
+  IAWS4DSQSModelUntagQueueResponse = interface(IAWS4DModelResponseMetadata)
+    ['{403DF221-FE67-43F7-A275-83F6F36128B2}']
+  end;
+
   IAWS4DSQSModelFactory = interface
     ['{764198C1-DD25-4001-8AA7-1732E3CA3C56}']
     function CreateQueueRequest: IAWS4DSQSModelCreateQueueRequest;
@@ -319,6 +335,7 @@ type
     function ReceiveMessageRequest: IAWS4DSQSModelReceiveMessageRequest;
     function SendMessageRequest: IAWS4DSQSModelSendMessageRequest;
     function TagQueueRequest: IAWS4DSQSModelTagQueueRequest;
+    function UntagQueueRequest: IAWS4DSQSModelUntagQueueRequest;
   end;
 
 function SQSModelFactory: IAWS4DSQSModelFactory;

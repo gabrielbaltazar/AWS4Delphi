@@ -23,6 +23,7 @@ type TAWS4DSQSModelFactory = class(TInterfacedObject, IAWS4DSQSModelFactory)
     function ReceiveMessageRequest: IAWS4DSQSModelReceiveMessageRequest;
     function SendMessageRequest: IAWS4DSQSModelSendMessageRequest;
     function TagQueueRequest: IAWS4DSQSModelTagQueueRequest;
+    function UntagQueueRequest: IAWS4DSQSModelUntagQueueRequest;
 
   public
     constructor create;
@@ -75,6 +76,11 @@ end;
 function TAWS4DSQSModelFactory.TagQueueRequest: IAWS4DSQSModelTagQueueRequest;
 begin
   result := TAWS4DSQSModelTagQueueRequest.New;
+end;
+
+function TAWS4DSQSModelFactory.UntagQueueRequest: IAWS4DSQSModelUntagQueueRequest;
+begin
+  Result := TAWS4DSQSModelUntagQueueRequest.New;
 end;
 
 class function TAWS4DSQSModelFactory.GetInstance: IAWS4DSQSModelFactory;
