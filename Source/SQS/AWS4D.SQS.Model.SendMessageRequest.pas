@@ -11,7 +11,7 @@ type TAWS4DSQSModelSendMessageRequest = class(TInterfacedObject, IAWS4DSQSModelS
   private
     FDelaySeconds: Integer;
     FMessageBody : string;
-    FMessageDuplicationId : String;
+    FMessageDeduplicationId : String;
     FMessageGroupId : string;
     FQueueUrl: String;
     FMessageAttribute: TDictionary<String, String>;
@@ -20,13 +20,13 @@ type TAWS4DSQSModelSendMessageRequest = class(TInterfacedObject, IAWS4DSQSModelS
   protected
     function DelaySeconds (Value: Integer): IAWS4DSQSModelSendMessageRequest; overload;
     function MessageBody  (Value: String): IAWS4DSQSModelSendMessageRequest; overload;
-    function MessageDuplicationId(Value: String): IAWS4DSQSModelSendMessageRequest; overload;
+    function MessageDeduplicationId(Value: String): IAWS4DSQSModelSendMessageRequest; overload;
     function MessageGroupId(Value: String): IAWS4DSQSModelSendMessageRequest; overload;
     function QueueUrl(Value: String): IAWS4DSQSModelSendMessageRequest; overload;
 
     function DelaySeconds         : Integer; overload;
     function MessageBody          : String; overload;
-    function MessageDuplicationId : String; overload;
+    function MessageDeduplicationId : String; overload;
     function MessageGroupId       : String; overload;
     function QueueUrl             : String; overload;
 
@@ -98,10 +98,10 @@ begin
   FMessageBody := Value;
 end;
 
-function TAWS4DSQSModelSendMessageRequest.MessageDuplicationId(Value: String): IAWS4DSQSModelSendMessageRequest;
+function TAWS4DSQSModelSendMessageRequest.MessageDeduplicationId(Value: String): IAWS4DSQSModelSendMessageRequest;
 begin
   result := Self;
-  FMessageDuplicationId := Value;
+  FMessageDeduplicationId := Value;
 end;
 
 function TAWS4DSQSModelSendMessageRequest.MessageGroupId(Value: String): IAWS4DSQSModelSendMessageRequest;
@@ -131,9 +131,9 @@ begin
   FQueueUrl := Value;
 end;
 
-function TAWS4DSQSModelSendMessageRequest.MessageDuplicationId: String;
+function TAWS4DSQSModelSendMessageRequest.MessageDeduplicationId: String;
 begin
-  result := FMessageDuplicationId;
+  result := FMessageDeduplicationId;
 end;
 
 function TAWS4DSQSModelSendMessageRequest.MessageGroupId: String;

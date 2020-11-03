@@ -13,6 +13,7 @@ object Form2: TForm2
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -61,7 +62,6 @@ object Form2: TForm2
       Width = 142
       Height = 21
       TabOrder = 0
-      Text = 'AKIASKJBRLJSB3T37P7Q'
     end
     object edtSecretKey: TEdit
       Left = 159
@@ -69,7 +69,6 @@ object Form2: TForm2
       Width = 266
       Height = 21
       TabOrder = 1
-      Text = '3WEBD3KUT8vTAgRoBPmyAeIhki/GMrpOJTQB3hwK'
     end
     object edtRegion: TEdit
       Left = 431
@@ -77,7 +76,6 @@ object Form2: TForm2
       Width = 114
       Height = 21
       TabOrder = 2
-      Text = 'us-east-1'
     end
   end
   object pgcSQS: TPageControl

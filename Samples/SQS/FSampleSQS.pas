@@ -7,9 +7,23 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
   AWS4D.SQS.Model.Interfaces,
   AWS4D.SQS.Service.Interfaces,
-  Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls;
+  Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls,
+  System.IniFiles,
+  REST.Json,
+  System.JSON;
 
 type
+  TSQSConfig = class
+  private
+    FaccessKeyId: string;
+    FsecretKey: string;
+    Fregion: String;
+  public
+    property accessKeyId: string read FaccessKeyId write FaccessKeyId;
+    property secretKey: string read FsecretKey write FsecretKey;
+    property region: String read Fregion write Fregion;
+  end;
+
   TForm2 = class(TForm)
     pnlTop: TPanel;
     pnlHeader: TPanel;
@@ -82,8 +96,13 @@ type
     procedure btnSendMessageClick(Sender: TObject);
     procedure btnDeleteMessageClick(Sender: TObject);
     procedure btnCreateQueueClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
+    function GetIniFile: TIniFile;
+    procedure SaveConfig;
+    procedure LoadConfig;
+
     function CreateSQS: IAWS4DServiceSQS;
 
     procedure writeCreateQueueResponse(Response: IAWS4DSQSModelCreateQueueResponse);
@@ -209,10 +228,52 @@ begin
     .SecretKey(edtSecretKey.Text);
 end;
 
+procedure TForm2.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveConfig;
+end;
+
 procedure TForm2.FormCreate(Sender: TObject);
 begin
   ReportMemoryLeaksOnShutdown := True;
+  LoadConfig;
   edtSendMessageMessageBody.Text := Format('Message Test %s', [FormatDateTime('dd/MM/yyyy hh:mm:ss', Now)]);
+end;
+
+function TForm2.GetIniFile: TIniFile;
+var
+  path : String;
+begin
+  path := ExtractFilePath(GetModuleName(HInstance)) + 'SampleSQS.ini';
+  result := TIniFile.Create(path);
+end;
+
+procedure TForm2.LoadConfig;
+var
+  iniFile   : TIniFile;
+begin
+  iniFile := GetIniFile;
+  try
+    edtAccessKey.Text := iniFile.ReadString('SQS', 'ACCESS_KEY', EmptyStr);
+    edtSecretKey.Text := iniFile.ReadString('SQS', 'SECRET_KEY', EmptyStr);
+    edtRegion.Text    := iniFile.ReadString('SQS', 'REGION', EmptyStr);
+  finally
+    iniFile.Free;
+  end;
+end;
+
+procedure TForm2.SaveConfig;
+var
+  iniFile: TIniFile;
+begin
+  iniFile := GetIniFile;
+  try
+    iniFile.WriteString('SQS', 'ACCESS_KEY', edtAccessKey.Text);
+    iniFile.WriteString('SQS', 'SECRET_KEY', edtSecretKey.Text);
+    iniFile.WriteString('SQS', 'REGION', edtRegion.Text);
+  finally
+    iniFile.Free;
+  end;
 end;
 
 procedure TForm2.writeCreateQueueResponse(Response: IAWS4DSQSModelCreateQueueResponse);
