@@ -26,7 +26,6 @@ object Form2: TForm2
     BevelOuter = bvNone
     Caption = 'SQS'
     TabOrder = 0
-    ExplicitWidth = 781
   end
   object pnlHeader: TPanel
     Left = 0
@@ -36,7 +35,6 @@ object Form2: TForm2
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitWidth = 781
     object Label1: TLabel
       Left = 11
       Top = 9
@@ -85,15 +83,11 @@ object Form2: TForm2
     Top = 97
     Width = 1171
     Height = 341
-    ActivePage = tsDeleteQueue
+    ActivePage = tsListQueueTags
     Align = alClient
     TabOrder = 2
-    ExplicitWidth = 781
-    ExplicitHeight = 250
     object tsListQueues: TTabSheet
       Caption = 'List Queues'
-      ExplicitWidth = 773
-      ExplicitHeight = 222
       object Panel1: TPanel
         Left = 0
         Top = 0
@@ -102,7 +96,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 773
         object Label4: TLabel
           Left = 11
           Top = 9
@@ -164,15 +157,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 773
-        ExplicitHeight = 166
       end
     end
     object tsListQueueTags: TTabSheet
       Caption = 'List Queue Tags'
       ImageIndex = 1
-      ExplicitWidth = 773
-      ExplicitHeight = 222
       object Panel2: TPanel
         Left = 0
         Top = 0
@@ -181,7 +170,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 773
         object Label7: TLabel
           Left = 11
           Top = 9
@@ -215,15 +203,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 773
-        ExplicitHeight = 166
       end
     end
     object tsGetQueueUrl: TTabSheet
       Caption = 'Get Queue Url'
       ImageIndex = 2
-      ExplicitWidth = 773
-      ExplicitHeight = 222
       object Panel4: TPanel
         Left = 0
         Top = 0
@@ -232,7 +216,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 773
         object Label9: TLabel
           Left = 11
           Top = 9
@@ -266,15 +249,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 773
-        ExplicitHeight = 166
       end
     end
     object tsReceiveMessage: TTabSheet
       Caption = 'Receive Message'
       ImageIndex = 2
-      ExplicitWidth = 773
-      ExplicitHeight = 222
       object Panel3: TPanel
         Left = 0
         Top = 0
@@ -283,7 +262,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 773
         object Label8: TLabel
           Left = 11
           Top = 9
@@ -349,15 +327,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 773
-        ExplicitHeight = 166
       end
     end
     object tsSendMessage: TTabSheet
       Caption = 'Send Message'
       ImageIndex = 4
-      ExplicitWidth = 773
-      ExplicitHeight = 222
       object Panel5: TPanel
         Left = 0
         Top = 0
@@ -366,7 +340,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 773
         object Label12: TLabel
           Left = 11
           Top = 9
@@ -415,15 +388,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 773
-        ExplicitHeight = 166
       end
     end
     object tsDeleteMessage: TTabSheet
       Caption = 'Delete Message'
       ImageIndex = 5
-      ExplicitWidth = 773
-      ExplicitHeight = 222
       object Panel6: TPanel
         Left = 0
         Top = 0
@@ -432,7 +401,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 773
         object Label14: TLabel
           Left = 11
           Top = 9
@@ -480,15 +448,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 773
-        ExplicitHeight = 166
       end
     end
     object tsDeleteMessageBatch: TTabSheet
       Caption = 'Delete Message Batch'
       ImageIndex = 7
-      ExplicitWidth = 773
-      ExplicitHeight = 222
       object Panel8: TPanel
         Left = 0
         Top = 0
@@ -497,7 +461,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 773
         object Label17: TLabel
           Left = 11
           Top = 9
@@ -553,7 +516,6 @@ object Form2: TForm2
         TitleCaptions.Strings = (
           'Message Id'
           'Receipt Handle')
-        ExplicitHeight = 165
         ColWidths = (
           162
           241)
@@ -566,15 +528,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 2
-        ExplicitWidth = 364
-        ExplicitHeight = 165
       end
     end
     object tsCreateQueue: TTabSheet
       Caption = 'Create Queue'
       ImageIndex = 6
-      ExplicitWidth = 773
-      ExplicitHeight = 222
       object Panel7: TPanel
         Left = 0
         Top = 0
@@ -583,7 +541,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 773
         object Label16: TLabel
           Left = 11
           Top = 9
@@ -617,15 +574,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 773
-        ExplicitHeight = 166
       end
     end
     object tsGetQueueAttributes: TTabSheet
       Caption = 'Get Queue Attributes'
       ImageIndex = 8
-      ExplicitWidth = 773
-      ExplicitHeight = 222
       object Panel9: TPanel
         Left = 0
         Top = 0
@@ -634,8 +587,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
-        ExplicitWidth = 773
         object Label18: TLabel
           Left = 11
           Top = 9
@@ -669,15 +620,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 773
-        ExplicitHeight = 166
       end
     end
     object tsPurgeQueue: TTabSheet
       Caption = 'Purge Queue'
       ImageIndex = 9
-      ExplicitWidth = 773
-      ExplicitHeight = 222
       object Panel10: TPanel
         Left = 0
         Top = 0
@@ -686,8 +633,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
-        ExplicitWidth = 773
         object Label19: TLabel
           Left = 11
           Top = 9
@@ -721,15 +666,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 773
-        ExplicitHeight = 166
       end
     end
     object tsTagQueue: TTabSheet
       Caption = 'Tag Queue'
       ImageIndex = 10
-      ExplicitWidth = 773
-      ExplicitHeight = 222
       object Panel11: TPanel
         Left = 0
         Top = 0
@@ -738,8 +679,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
-        ExplicitWidth = 773
         object Label20: TLabel
           Left = 11
           Top = 9
@@ -779,7 +718,6 @@ object Form2: TForm2
         TitleCaptions.Strings = (
           'Key Tag'
           'Value Tag')
-        ExplicitHeight = 165
         ColWidths = (
           162
           193)
@@ -792,17 +730,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 2
-        ExplicitLeft = 0
-        ExplicitTop = 56
-        ExplicitWidth = 773
-        ExplicitHeight = 166
       end
     end
     object tsUntagQueue: TTabSheet
       Caption = 'Untag Queue'
       ImageIndex = 11
-      ExplicitWidth = 773
-      ExplicitHeight = 222
       object Panel12: TPanel
         Left = 0
         Top = 0
@@ -811,8 +743,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
-        ExplicitWidth = 773
         object Label21: TLabel
           Left = 11
           Top = 9
@@ -874,16 +804,11 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitTop = 56
-        ExplicitWidth = 773
-        ExplicitHeight = 166
       end
     end
     object tsDeleteQueue: TTabSheet
       Caption = 'Delete Queue'
       ImageIndex = 12
-      ExplicitWidth = 773
-      ExplicitHeight = 222
       object Panel13: TPanel
         Left = 0
         Top = 0
@@ -892,8 +817,6 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
-        ExplicitWidth = 773
         object Label24: TLabel
           Left = 11
           Top = 9
@@ -927,9 +850,6 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitTop = 56
-        ExplicitWidth = 773
-        ExplicitHeight = 166
       end
     end
   end
