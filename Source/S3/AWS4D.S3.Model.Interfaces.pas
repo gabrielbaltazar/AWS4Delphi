@@ -63,12 +63,29 @@ type
     function ObjectName : String; overload;
   end;
 
+  IAWS4DS3ModelDownloadObjectRequest = interface(IAWS4DModelRequest)
+    ['{ECD77CC9-5859-4BC5-91F3-7E54B8046613}']
+    function BucketName (Value: String): IAWS4DS3ModelDownloadObjectRequest; overload;
+    function ObjectName (Value: String): IAWS4DS3ModelDownloadObjectRequest; overload;
+
+    function BucketName : string; overload;
+    function ObjectName : String; overload;
+  end;
+
+  IAWS4DS3ModelDownloadObjectResponse = interface(IAWS4DModelResponseMetadata)
+    ['{50718028-A861-4C5A-AB2D-DDABF84A643A}']
+    function Stream: TMemoryStream;
+    function Base64: string;
+    procedure SaveToFile(AFileName: String);
+  end;
+
   IAWS4DS3ModelFactory = interface
     ['{3D8D63D1-2147-4F04-8A3F-43113F085A54}']
     function CreateDeleteObjectRequest: IAWS4DS3ModelDeleteObjectRequest;
     function CreateObjectInfo: IAWS4DS3ModelObjectInfo;
     function CreateObjectRequest: IAWS4DS3ModelCreateObjectRequest;
     function CreateObjectExistRequest: IAWS4DS3ModelObjectExistRequest;
+    function CreateDownloadObjectRequest: IAWS4DS3ModelDownloadObjectRequest;
   end;
 
 function S3ModelFactory: IAWS4DS3ModelFactory;

@@ -19,7 +19,8 @@ uses
   AWS4D.S3.Model.ObjectInfo in '..\..\Source\S3\AWS4D.S3.Model.ObjectInfo.pas',
   AWS4D.Helper.DateTime in '..\..\Source\Base\AWS4D.Helper.DateTime.pas',
   AWS4D.S3.Model.DeleteObject.Request in '..\..\Source\S3\AWS4D.S3.Model.DeleteObject.Request.pas',
-  AWS4D.S3.Model.ObjectExist.Request in '..\..\Source\S3\AWS4D.S3.Model.ObjectExist.Request.pas';
+  AWS4D.S3.Model.ObjectExist.Request in '..\..\Source\S3\AWS4D.S3.Model.ObjectExist.Request.pas',
+  AWS4D.S3.Model.DownloadObject.Request in '..\..\Source\S3\AWS4D.S3.Model.DownloadObject.Request.pas';
 
 {$R *.res}
 

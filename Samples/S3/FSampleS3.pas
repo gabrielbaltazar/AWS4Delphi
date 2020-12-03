@@ -62,6 +62,7 @@ type
     btnListObjects: TButton;
     lstObjects: TListBox;
     btnDeleteObject: TButton;
+    btnDownloadObject: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure btnCreateBucketClick(Sender: TObject);
@@ -73,6 +74,7 @@ type
     procedure btnDeleteBucketClick(Sender: TObject);
     procedure btnListObjectsClick(Sender: TObject);
     procedure btnDeleteObjectClick(Sender: TObject);
+    procedure btnDownloadObjectClick(Sender: TObject);
   private
     function GetIniFile: TIniFile;
     procedure SaveConfig;
@@ -137,6 +139,22 @@ begin
 
   CreateS3.DeleteObject(request);
   btnListObjects.Click;
+end;
+
+procedure TfrmSampleS3.btnDownloadObjectClick(Sender: TObject);
+var
+  request: IAWS4DS3ModelDownloadObjectRequest;
+  response: IAWS4DS3ModelDownloadObjectResponse;
+  objectName: string;
+begin
+  objectName := lstObjects.Items[lstObjects.ItemIndex];
+  request := S3ModelFactory.CreateDownloadObjectRequest;
+  request
+    .BucketName(edtListObjectsBucketName.Text)
+    .ObjectName(objectName);
+
+  response := CreateS3.DownloadObject(request);
+  response.SaveToFile('testFile.txt');
 end;
 
 procedure TfrmSampleS3.btnExistBucketClick(Sender: TObject);

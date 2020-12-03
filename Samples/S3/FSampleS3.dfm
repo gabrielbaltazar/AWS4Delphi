@@ -258,7 +258,6 @@ object frmSampleS3: TfrmSampleS3
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
         object Label8: TLabel
           Left = 19
           Top = 9
@@ -292,6 +291,15 @@ object frmSampleS3: TfrmSampleS3
           TabOrder = 2
           OnClick = btnDeleteObjectClick
         end
+        object btnDownloadObject: TButton
+          Left = 439
+          Top = 22
+          Width = 94
+          Height = 25
+          Caption = 'Download Object'
+          TabOrder = 3
+          OnClick = btnDownloadObjectClick
+        end
       end
       object lstObjects: TListBox
         Left = 0
@@ -301,10 +309,6 @@ object frmSampleS3: TfrmSampleS3
         Align = alClient
         ItemHeight = 13
         TabOrder = 1
-        ExplicitLeft = 592
-        ExplicitTop = 104
-        ExplicitWidth = 121
-        ExplicitHeight = 97
       end
     end
   end

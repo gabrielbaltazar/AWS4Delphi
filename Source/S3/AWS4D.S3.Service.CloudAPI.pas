@@ -8,6 +8,7 @@ uses
   AWS4D.S3.Model.Interfaces,
   AWS4D.S3.Model.Exceptions,
   AWS4D.S3.Model.ObjectInfo,
+  AWS4D.S3.Model.DownloadObject.Response,
   AWS4D.Service.Base,
   Data.Cloud.CloudAPI,
   Data.Cloud.AmazonAPI,
@@ -43,6 +44,7 @@ type TAWS4DS3ServiceCloudAPI = class(TAWS4DServiceBase, IAWS4DServiceS3)
     procedure CreateObject(Request: IAWS4DS3ModelCreateObjectRequest);
     procedure DeleteObject(Request: IAWS4DS3ModelDeleteObjectRequest);
     function ExistObject(Request: IAWS4DS3ModelObjectExistRequest): Boolean;
+    function DownloadObject(Request: IAWS4DS3ModelDownloadObjectRequest): IAWS4DS3ModelDownloadObjectResponse;
   public
     constructor create;
     class function New: IAWS4DServiceS3;
@@ -131,6 +133,28 @@ begin
   FAmazonConnection.Free;
   FStorage.Free;
   inherited;
+end;
+
+function TAWS4DS3ServiceCloudAPI.DownloadObject(Request: IAWS4DS3ModelDownloadObjectRequest): IAWS4DS3ModelDownloadObjectResponse;
+var
+  responseInfo: TCloudResponseInfo;
+  memory: TMemoryStream;
+begin
+  memory := TMemoryStream.Create;
+  try
+    responseInfo := TCloudResponseInfo.Create;
+    try
+      if not Storage.GetObject(Request.BucketName, Request.ObjectName, memory, responseInfo) then
+        raise S3Exception(responseInfo);
+
+      result := TAWS4DS3ModelDownloadObjectResponse.New(memory);
+    finally
+      responseInfo.Free;
+    end;
+  except
+    memory.Free;
+    raise;
+  end;
 end;
 
 function TAWS4DS3ServiceCloudAPI.ExistBucket(BucketName: String): Boolean;

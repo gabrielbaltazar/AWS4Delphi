@@ -19,6 +19,7 @@ type
     procedure CreateObject(Request: IAWS4DS3ModelCreateObjectRequest);
     procedure DeleteObject(Request: IAWS4DS3ModelDeleteObjectRequest);
     function ExistObject(Request: IAWS4DS3ModelObjectExistRequest): Boolean;
+    function DownloadObject(Request: IAWS4DS3ModelDownloadObjectRequest): IAWS4DS3ModelDownloadObjectResponse;
   end;
 
 function S3Service: IAWS4DServiceS3;
