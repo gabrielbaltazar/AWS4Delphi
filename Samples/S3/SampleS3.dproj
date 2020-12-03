@@ -125,6 +125,7 @@
         <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.DeleteObject.Request.pas"/>
         <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.ObjectExist.Request.pas"/>
         <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.DownloadObject.Request.pas"/>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.DownloadObject.Response.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
