@@ -84,7 +84,7 @@ object frmSampleS3: TfrmSampleS3
     Top = 97
     Width = 818
     Height = 212
-    ActivePage = tsCreateBucket
+    ActivePage = tsListObjects
     Align = alClient
     TabOrder = 2
     object tsListBucket: TTabSheet
@@ -245,6 +245,58 @@ object frmSampleS3: TfrmSampleS3
           TabOrder = 4
           OnClick = btnCreateObjectSelectFileClick
         end
+      end
+    end
+    object tsListObjects: TTabSheet
+      Caption = 'List Objects'
+      ImageIndex = 3
+      object Panel3: TPanel
+        Left = 0
+        Top = 0
+        Width = 810
+        Height = 65
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitTop = 8
+        object Label8: TLabel
+          Left = 19
+          Top = 9
+          Width = 62
+          Height = 13
+          Caption = 'Bucket Name'
+        end
+        object edtListObjectsBucketName: TEdit
+          Left = 19
+          Top = 24
+          Width = 214
+          Height = 21
+          TabOrder = 0
+          Text = 'pw3-central-recebimento'
+        end
+        object btnListObjects: TButton
+          Left = 239
+          Top = 22
+          Width = 94
+          Height = 25
+          Caption = 'List Objects'
+          TabOrder = 1
+          OnClick = btnListObjectsClick
+        end
+      end
+      object mmoListObjects: TMemo
+        Left = 0
+        Top = 65
+        Width = 810
+        Height = 119
+        Align = alClient
+        Lines.Strings = (
+          'mmoListObjects')
+        TabOrder = 1
+        ExplicitLeft = 312
+        ExplicitTop = 48
+        ExplicitWidth = 185
+        ExplicitHeight = 89
       end
     end
   end

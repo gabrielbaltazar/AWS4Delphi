@@ -4,6 +4,7 @@ interface
 
 uses
   AWS4D.S3.Model.Interfaces,
+  AWS4D.S3.Model.ObjectInfo,
   AWS4D.S3.Model.CreateObject.Request,
   System.SysUtils;
 
@@ -15,6 +16,7 @@ type TAWS4DS3ModelFactory = class(TInterfacedObject, IAWS4DS3ModelFactory)
     constructor createPrivate;
 
   protected
+    function CreateObjectInfo: IAWS4DS3ModelObjectInfo;
     function CreateObjectRequest: IAWS4DS3ModelCreateObjectRequest;
 
   public
@@ -29,6 +31,11 @@ implementation
 constructor TAWS4DS3ModelFactory.create;
 begin
   raise Exception.CreateFmt('Use the class function GetInstance.', []);
+end;
+
+function TAWS4DS3ModelFactory.CreateObjectInfo: IAWS4DS3ModelObjectInfo;
+begin
+  result := TAWS4DS3ModelObjectInfo.New;
 end;
 
 function TAWS4DS3ModelFactory.CreateObjectRequest: IAWS4DS3ModelCreateObjectRequest;

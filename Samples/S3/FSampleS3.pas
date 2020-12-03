@@ -6,6 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
   Vcl.ComCtrls, System.IniFiles,
+  System.Generics.Collections,
 
   AWS4D.S3.Model.Interfaces,
   AWS4D.S3.Service.Interfaces, Data.Cloud.CloudAPI, Data.Cloud.AmazonAPI;
@@ -55,6 +56,12 @@ type
     mmoListBuckets: TMemo;
     btnExistBucket: TButton;
     btnDeleteBucket: TButton;
+    tsListObjects: TTabSheet;
+    Panel3: TPanel;
+    Label8: TLabel;
+    edtListObjectsBucketName: TEdit;
+    btnListObjects: TButton;
+    mmoListObjects: TMemo;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure btnCreateBucketClick(Sender: TObject);
@@ -64,6 +71,7 @@ type
     procedure btnListBucketsClick(Sender: TObject);
     procedure btnExistBucketClick(Sender: TObject);
     procedure btnDeleteBucketClick(Sender: TObject);
+    procedure btnListObjectsClick(Sender: TObject);
   private
     function GetIniFile: TIniFile;
     procedure SaveConfig;
@@ -135,6 +143,21 @@ begin
 
   for i := 0 to Pred(Length(buckets)) do
     mmoListBuckets.Lines.Add(buckets[i]);
+end;
+
+procedure TfrmSampleS3.btnListObjectsClick(Sender: TObject);
+var
+  objects : TList<IAWS4DS3ModelObjectInfo>;
+  i: Integer;
+begin
+  objects := CreateS3.ListObjects(edtListObjectsBucketName.Text);
+  try
+    mmoListObjects.Lines.Clear;
+    for i := 0 to Pred(objects.Count) do
+      mmoListObjects.Lines.Add(objects[i].Name);
+  finally
+    objects.Free;
+  end;
 end;
 
 function TfrmSampleS3.CreateS3: IAWS4DServiceS3;
