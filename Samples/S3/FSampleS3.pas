@@ -35,7 +35,7 @@ type
     tsCreateBucket: TTabSheet;
     pnlCreateBucket: TPanel;
     Label7: TLabel;
-    edtCreateBucketBucketName: TEdit;
+    edtBucketBucketName: TEdit;
     btnCreateBucket: TButton;
     tsCreateObject: TTabSheet;
     Panel1: TPanel;
@@ -53,6 +53,8 @@ type
     Panel2: TPanel;
     btnListBuckets: TButton;
     mmoListBuckets: TMemo;
+    btnExistBucket: TButton;
+    btnDeleteBucket: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure btnCreateBucketClick(Sender: TObject);
@@ -60,6 +62,8 @@ type
     procedure edtCreateObjectFileNameChange(Sender: TObject);
     procedure btnCreateObjectClick(Sender: TObject);
     procedure btnListBucketsClick(Sender: TObject);
+    procedure btnExistBucketClick(Sender: TObject);
+    procedure btnDeleteBucketClick(Sender: TObject);
   private
     function GetIniFile: TIniFile;
     procedure SaveConfig;
@@ -84,7 +88,7 @@ implementation
 
 procedure TfrmSampleS3.btnCreateBucketClick(Sender: TObject);
 begin
-  CreateS3.createBucket(edtCreateBucketBucketName.Text);
+  CreateS3.createBucket(edtBucketBucketName.Text);
   ShowMessage('Bucket created.');
 end;
 
@@ -105,6 +109,20 @@ end;
 procedure TfrmSampleS3.btnCreateObjectSelectFileClick(Sender: TObject);
 begin
   selectFileDialog(edtCreateObjectFileName);
+end;
+
+procedure TfrmSampleS3.btnDeleteBucketClick(Sender: TObject);
+begin
+  CreateS3.DeleteBucket(edtBucketBucketName.Text);
+  ShowMessage('Bucket deleted.');
+end;
+
+procedure TfrmSampleS3.btnExistBucketClick(Sender: TObject);
+begin
+  if CreateS3.ExistBucket(edtBucketBucketName.Text) then
+    ShowMessage('Bucket Exist.')
+  else
+    ShowMessage('Bucket Not Exist.')
 end;
 
 procedure TfrmSampleS3.btnListBucketsClick(Sender: TObject);

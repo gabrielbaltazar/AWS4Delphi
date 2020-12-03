@@ -75,6 +75,7 @@ end;
 
 function TAWS4DS3ModelCreateObjectRequest.FileStream: TStream;
 begin
+  result := nil;
   if Assigned(FFileStream) then
     Exit(FFileStream);
 

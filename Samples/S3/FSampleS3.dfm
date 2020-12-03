@@ -26,8 +26,6 @@ object frmSampleS3: TfrmSampleS3
     BevelOuter = bvNone
     Caption = 'S3'
     TabOrder = 0
-    ExplicitLeft = -526
-    ExplicitWidth = 1171
   end
   object pnlHeader: TPanel
     Left = 0
@@ -37,8 +35,6 @@ object frmSampleS3: TfrmSampleS3
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitLeft = -526
-    ExplicitWidth = 1171
     object Label1: TLabel
       Left = 11
       Top = 9
@@ -91,8 +87,39 @@ object frmSampleS3: TfrmSampleS3
     ActivePage = tsCreateBucket
     Align = alClient
     TabOrder = 2
+    object tsListBucket: TTabSheet
+      Caption = 'List Buckets'
+      object Panel2: TPanel
+        Left = 0
+        Top = 0
+        Width = 810
+        Height = 65
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        object btnListBuckets: TButton
+          Left = 15
+          Top = 14
+          Width = 94
+          Height = 25
+          Caption = 'List Buckets'
+          TabOrder = 0
+          OnClick = btnListBucketsClick
+        end
+      end
+      object mmoListBuckets: TMemo
+        Left = 0
+        Top = 65
+        Width = 810
+        Height = 119
+        Align = alClient
+        Lines.Strings = (
+          'mmoListBuckets')
+        TabOrder = 1
+      end
+    end
     object tsCreateBucket: TTabSheet
-      Caption = 'Create Bucket'
+      Caption = 'Bucket'
       object pnlCreateBucket: TPanel
         Left = 0
         Top = 0
@@ -108,7 +135,7 @@ object frmSampleS3: TfrmSampleS3
           Height = 13
           Caption = 'Bucket Name'
         end
-        object edtCreateBucketBucketName: TEdit
+        object edtBucketBucketName: TEdit
           Left = 19
           Top = 24
           Width = 214
@@ -125,6 +152,24 @@ object frmSampleS3: TfrmSampleS3
           TabOrder = 1
           OnClick = btnCreateBucketClick
         end
+        object btnExistBucket: TButton
+          Left = 339
+          Top = 22
+          Width = 94
+          Height = 25
+          Caption = 'Exist Bucket'
+          TabOrder = 2
+          OnClick = btnExistBucketClick
+        end
+        object btnDeleteBucket: TButton
+          Left = 439
+          Top = 22
+          Width = 94
+          Height = 25
+          Caption = 'Delete Bucket'
+          TabOrder = 3
+          OnClick = btnDeleteBucketClick
+        end
       end
     end
     object tsCreateObject: TTabSheet
@@ -138,7 +183,6 @@ object frmSampleS3: TfrmSampleS3
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
         object Label4: TLabel
           Left = 19
           Top = 9
@@ -166,7 +210,7 @@ object frmSampleS3: TfrmSampleS3
           Width = 150
           Height = 21
           TabOrder = 0
-          Text = 'pw3-central-recebimento-teste'
+          Text = 'pw3-central-recebimento'
         end
         object btnCreateObject: TButton
           Left = 711
@@ -201,43 +245,6 @@ object frmSampleS3: TfrmSampleS3
           TabOrder = 4
           OnClick = btnCreateObjectSelectFileClick
         end
-      end
-    end
-    object tsListBucket: TTabSheet
-      Caption = 'List Buckets'
-      ImageIndex = 2
-      object Panel2: TPanel
-        Left = 0
-        Top = 0
-        Width = 810
-        Height = 65
-        Align = alTop
-        BevelOuter = bvNone
-        TabOrder = 0
-        ExplicitTop = 8
-        object btnListBuckets: TButton
-          Left = 15
-          Top = 14
-          Width = 94
-          Height = 25
-          Caption = 'List Buckets'
-          TabOrder = 0
-          OnClick = btnListBucketsClick
-        end
-      end
-      object mmoListBuckets: TMemo
-        Left = 0
-        Top = 65
-        Width = 810
-        Height = 119
-        Align = alClient
-        Lines.Strings = (
-          'mmoListBuckets')
-        TabOrder = 1
-        ExplicitLeft = 155
-        ExplicitTop = 71
-        ExplicitWidth = 185
-        ExplicitHeight = 89
       end
     end
   end

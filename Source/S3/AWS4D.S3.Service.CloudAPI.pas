@@ -31,8 +31,10 @@ type TAWS4DS3ServiceCloudAPI = class(TAWS4DServiceBase, IAWS4DServiceS3)
     function S3Exception(AResponseInfo: TCloudResponseInfo): EAWS4DS3ModelException;
   protected
     function ListBuckets: TArray<String>;
-    procedure createBucket(BucketName: String);
-    procedure createObject(Request: IAWS4DS3ModelCreateObjectRequest);
+    procedure CreateBucket(BucketName: String);
+    procedure DeleteBucket(BucketName: String);
+    function  ExistBucket(BucketName: String): Boolean;
+    procedure CreateObject(Request: IAWS4DS3ModelCreateObjectRequest);
 
   public
     constructor create;
@@ -91,11 +93,36 @@ begin
   end;
 end;
 
+procedure TAWS4DS3ServiceCloudAPI.DeleteBucket(BucketName: String);
+var
+  response: TCloudResponseInfo;
+begin
+  response := TCloudResponseInfo.Create;
+  try
+    if not Storage.DeleteBucket(BucketName, response, GetRegion) then
+      raise S3Exception(response);
+  finally
+    response.Free;
+  end;
+end;
+
 destructor TAWS4DS3ServiceCloudAPI.Destroy;
 begin
   FAmazonConnection.Free;
   FStorage.Free;
   inherited;
+end;
+
+function TAWS4DS3ServiceCloudAPI.ExistBucket(BucketName: String): Boolean;
+var
+  bucket: TAmazonBucketResult;
+begin
+  bucket := Storage.GetBucket(BucketName, nil, nil, GetRegion);
+  try
+    result := Assigned(bucket);
+  finally
+    bucket.Free;
+  end;
 end;
 
 function TAWS4DS3ServiceCloudAPI.FileBytes(AStream: TStream): TBytes;

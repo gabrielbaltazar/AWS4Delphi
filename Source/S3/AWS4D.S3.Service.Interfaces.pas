@@ -10,8 +10,10 @@ type
   IAWS4DServiceS3 = interface(IAWS4DService)
     ['{C5FB57EF-F2FC-4C50-9861-4F5463B9A90D}']
     function ListBuckets: TArray<String>;
-    procedure createBucket(BucketName: String);
-    procedure createObject(Request: IAWS4DS3ModelCreateObjectRequest);
+    procedure CreateBucket(BucketName: String);
+    procedure DeleteBucket(BucketName: String);
+    function  ExistBucket(BucketName: String): Boolean;
+    procedure CreateObject(Request: IAWS4DS3ModelCreateObjectRequest);
   end;
 
 function S3Service: IAWS4DServiceS3;
