@@ -7,10 +7,12 @@ uses
   AWS4D.S3.Service.Interfaces,
   AWS4D.S3.Model.Interfaces,
   AWS4D.S3.Model.Exceptions,
+  AWS4D.S3.Model.ObjectInfo,
   AWS4D.Service.Base,
   Data.Cloud.CloudAPI,
   Data.Cloud.AmazonAPI,
   System.Classes,
+  System.Generics.Collections,
   System.NetEncoding,
   System.StrUtils,
   System.SysUtils;
@@ -29,6 +31,8 @@ type TAWS4DS3ServiceCloudAPI = class(TAWS4DServiceBase, IAWS4DServiceS3)
     function Storage: TAmazonStorageService;
 
     function S3Exception(AResponseInfo: TCloudResponseInfo): EAWS4DS3ModelException;
+
+//    function
   protected
     function ListBuckets: TArray<String>;
     procedure CreateBucket(BucketName: String);
@@ -36,6 +40,7 @@ type TAWS4DS3ServiceCloudAPI = class(TAWS4DServiceBase, IAWS4DServiceS3)
     function  ExistBucket(BucketName: String): Boolean;
     procedure CreateObject(Request: IAWS4DS3ModelCreateObjectRequest);
 
+    function ListObjects(BucketName: String): TList<IAWS4DS3ModelObjectInfo>;
   public
     constructor create;
     class function New: IAWS4DServiceS3;
@@ -178,6 +183,34 @@ begin
     response.Free;
   end;
 end;
+
+function TAWS4DS3ServiceCloudAPI.ListObjects(BucketName: String): TList<IAWS4DS3ModelObjectInfo>;
+var
+  bucketInfo: TAmazonBucketResult;
+  objectInfo: TAmazonObjectResult;
+  response  : TCloudResponseInfo;
+begin
+  response := TCloudResponseInfo.Create;
+  try
+    bucketInfo := GetBucket(BucketName);
+    try
+      result := TList<IAWS4DS3ModelObjectInfo>.Create;
+      try
+        for objectInfo in bucketInfo.Objects do
+          if objectInfo.Size > 0 then
+            result.Add(TAWS4DS3ModelObjectInfo.CreateFromObjectResult(objectInfo));
+      except
+        result.Free;
+        raise;
+      end;
+    finally
+      bucketInfo.Free;
+    end;
+  finally
+    response.Free;
+  end;
+end;
+
 
 class function TAWS4DS3ServiceCloudAPI.New: IAWS4DServiceS3;
 begin

@@ -4,7 +4,8 @@ interface
 
 uses
   AWS4D.Service.Interfaces,
-  AWS4D.S3.Model.Interfaces;
+  AWS4D.S3.Model.Interfaces,
+  System.Generics.Collections;
 
 type
   IAWS4DServiceS3 = interface(IAWS4DService)
@@ -13,6 +14,8 @@ type
     procedure CreateBucket(BucketName: String);
     procedure DeleteBucket(BucketName: String);
     function  ExistBucket(BucketName: String): Boolean;
+
+    function ListObjects(BucketName: String): TList<IAWS4DS3ModelObjectInfo>;
     procedure CreateObject(Request: IAWS4DS3ModelCreateObjectRequest);
   end;
 

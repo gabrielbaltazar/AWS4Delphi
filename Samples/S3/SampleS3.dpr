@@ -15,7 +15,8 @@ uses
   AWS4D.Model.Exceptions in '..\..\Source\Base\AWS4D.Model.Exceptions.pas',
   AWS4D.Model.Interfaces in '..\..\Source\Base\AWS4D.Model.Interfaces.pas',
   AWS4D.Model.ResponseMetadata in '..\..\Source\Base\AWS4D.Model.ResponseMetadata.pas',
-  AWS4D.S3.Model.Factory in '..\..\Source\S3\AWS4D.S3.Model.Factory.pas';
+  AWS4D.S3.Model.Factory in '..\..\Source\S3\AWS4D.S3.Model.Factory.pas',
+  AWS4D.S3.Model.ObjectInfo in '..\..\Source\S3\AWS4D.S3.Model.ObjectInfo.pas';
 
 {$R *.res}
 
