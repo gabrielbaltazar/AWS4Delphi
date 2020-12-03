@@ -38,9 +38,10 @@ type TAWS4DS3ServiceCloudAPI = class(TAWS4DServiceBase, IAWS4DServiceS3)
     procedure CreateBucket(BucketName: String);
     procedure DeleteBucket(BucketName: String);
     function  ExistBucket(BucketName: String): Boolean;
-    procedure CreateObject(Request: IAWS4DS3ModelCreateObjectRequest);
 
     function ListObjects(BucketName: String): TList<IAWS4DS3ModelObjectInfo>;
+    procedure CreateObject(Request: IAWS4DS3ModelCreateObjectRequest);
+    procedure DeleteObject(Request: IAWS4DS3ModelDeleteObjectRequest);
   public
     constructor create;
     class function New: IAWS4DServiceS3;
@@ -105,6 +106,19 @@ begin
   response := TCloudResponseInfo.Create;
   try
     if not Storage.DeleteBucket(BucketName, response, GetRegion) then
+      raise S3Exception(response);
+  finally
+    response.Free;
+  end;
+end;
+
+procedure TAWS4DS3ServiceCloudAPI.DeleteObject(Request: IAWS4DS3ModelDeleteObjectRequest);
+var
+  response: TCloudResponseInfo;
+begin
+  response := TCloudResponseInfo.Create;
+  try
+    if not Storage.DeleteObject(Request.BucketName, Request.ObjectName, response) then
       raise S3Exception(response);
   finally
     response.Free;

@@ -61,7 +61,8 @@ type
     Label8: TLabel;
     edtListObjectsBucketName: TEdit;
     btnListObjects: TButton;
-    mmoListObjects: TMemo;
+    lstObjects: TListBox;
+    btnDeleteObject: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure btnCreateBucketClick(Sender: TObject);
@@ -72,6 +73,7 @@ type
     procedure btnExistBucketClick(Sender: TObject);
     procedure btnDeleteBucketClick(Sender: TObject);
     procedure btnListObjectsClick(Sender: TObject);
+    procedure btnDeleteObjectClick(Sender: TObject);
   private
     function GetIniFile: TIniFile;
     procedure SaveConfig;
@@ -125,6 +127,19 @@ begin
   ShowMessage('Bucket deleted.');
 end;
 
+procedure TfrmSampleS3.btnDeleteObjectClick(Sender: TObject);
+var
+  request: IAWS4DS3ModelDeleteObjectRequest;
+begin
+  request := S3ModelFactory.CreateDeleteObjectRequest;
+  request
+    .BucketName(edtListObjectsBucketName.Text)
+    .ObjectName(lstObjects.Items[lstObjects.ItemIndex]);
+
+  CreateS3.DeleteObject(request);
+  btnListObjects.Click;
+end;
+
 procedure TfrmSampleS3.btnExistBucketClick(Sender: TObject);
 begin
   if CreateS3.ExistBucket(edtBucketBucketName.Text) then
@@ -152,9 +167,9 @@ var
 begin
   objects := CreateS3.ListObjects(edtListObjectsBucketName.Text);
   try
-    mmoListObjects.Lines.Clear;
+    lstObjects.Items.Clear;
     for i := 0 to Pred(objects.Count) do
-      mmoListObjects.Lines.Add(objects[i].Name);
+      lstObjects.Items.Add(objects[i].Name);
   finally
     objects.Free;
   end;

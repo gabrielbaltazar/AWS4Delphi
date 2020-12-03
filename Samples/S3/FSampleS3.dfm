@@ -283,20 +283,28 @@ object frmSampleS3: TfrmSampleS3
           TabOrder = 1
           OnClick = btnListObjectsClick
         end
+        object btnDeleteObject: TButton
+          Left = 339
+          Top = 22
+          Width = 94
+          Height = 25
+          Caption = 'Delete Object'
+          TabOrder = 2
+          OnClick = btnDeleteObjectClick
+        end
       end
-      object mmoListObjects: TMemo
+      object lstObjects: TListBox
         Left = 0
         Top = 65
         Width = 810
         Height = 119
         Align = alClient
-        Lines.Strings = (
-          'mmoListObjects')
+        ItemHeight = 13
         TabOrder = 1
-        ExplicitLeft = 312
-        ExplicitTop = 48
-        ExplicitWidth = 185
-        ExplicitHeight = 89
+        ExplicitLeft = 592
+        ExplicitTop = 104
+        ExplicitWidth = 121
+        ExplicitHeight = 97
       end
     end
   end

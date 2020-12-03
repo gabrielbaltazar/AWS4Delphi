@@ -17,6 +17,7 @@ type
 
     function ListObjects(BucketName: String): TList<IAWS4DS3ModelObjectInfo>;
     procedure CreateObject(Request: IAWS4DS3ModelCreateObjectRequest);
+    procedure DeleteObject(Request: IAWS4DS3ModelDeleteObjectRequest);
   end;
 
 function S3Service: IAWS4DServiceS3;
