@@ -7,6 +7,7 @@ uses
   AWS4D.S3.Model.ObjectInfo,
   AWS4D.S3.Model.DeleteObject.Request,
   AWS4D.S3.Model.CreateObject.Request,
+  AWS4D.S3.Model.ObjectExist.Request,
   System.SysUtils;
 
 type TAWS4DS3ModelFactory = class(TInterfacedObject, IAWS4DS3ModelFactory)
@@ -20,6 +21,7 @@ type TAWS4DS3ModelFactory = class(TInterfacedObject, IAWS4DS3ModelFactory)
     function CreateDeleteObjectRequest: IAWS4DS3ModelDeleteObjectRequest;
     function CreateObjectInfo: IAWS4DS3ModelObjectInfo;
     function CreateObjectRequest: IAWS4DS3ModelCreateObjectRequest;
+    function CreateObjectExistRequest: IAWS4DS3ModelObjectExistRequest;
 
   public
     constructor create;
@@ -38,6 +40,11 @@ end;
 function TAWS4DS3ModelFactory.CreateDeleteObjectRequest: IAWS4DS3ModelDeleteObjectRequest;
 begin
   result := TAWS4DS3ModelDeleteObjectRequest.New;
+end;
+
+function TAWS4DS3ModelFactory.CreateObjectExistRequest: IAWS4DS3ModelObjectExistRequest;
+begin
+  result := TAWS4DS3ModelObjectExistRequest.New;
 end;
 
 function TAWS4DS3ModelFactory.CreateObjectInfo: IAWS4DS3ModelObjectInfo;

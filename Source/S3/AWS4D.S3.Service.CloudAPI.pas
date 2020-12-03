@@ -42,6 +42,7 @@ type TAWS4DS3ServiceCloudAPI = class(TAWS4DServiceBase, IAWS4DServiceS3)
     function ListObjects(BucketName: String): TList<IAWS4DS3ModelObjectInfo>;
     procedure CreateObject(Request: IAWS4DS3ModelCreateObjectRequest);
     procedure DeleteObject(Request: IAWS4DS3ModelDeleteObjectRequest);
+    function ExistObject(Request: IAWS4DS3ModelObjectExistRequest): Boolean;
   public
     constructor create;
     class function New: IAWS4DServiceS3;
@@ -141,6 +142,24 @@ begin
     result := Assigned(bucket);
   finally
     bucket.Free;
+  end;
+end;
+
+function TAWS4DS3ServiceCloudAPI.ExistObject(Request: IAWS4DS3ModelObjectExistRequest): Boolean;
+var
+  objects: TList<IAWS4DS3ModelObjectInfo>;
+  i : Integer;
+begin
+  result  := False;
+  objects := ListObjects(Request.BucketName);
+  try
+    for i := 0 to Pred(objects.Count) do
+    begin
+      if objects[i].Name.Equals(Request.ObjectName) then
+        Exit(True);
+    end;
+  finally
+    objects.Free;
   end;
 end;
 

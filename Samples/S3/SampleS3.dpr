@@ -16,7 +16,10 @@ uses
   AWS4D.Model.Interfaces in '..\..\Source\Base\AWS4D.Model.Interfaces.pas',
   AWS4D.Model.ResponseMetadata in '..\..\Source\Base\AWS4D.Model.ResponseMetadata.pas',
   AWS4D.S3.Model.Factory in '..\..\Source\S3\AWS4D.S3.Model.Factory.pas',
-  AWS4D.S3.Model.ObjectInfo in '..\..\Source\S3\AWS4D.S3.Model.ObjectInfo.pas';
+  AWS4D.S3.Model.ObjectInfo in '..\..\Source\S3\AWS4D.S3.Model.ObjectInfo.pas',
+  AWS4D.Helper.DateTime in '..\..\Source\Base\AWS4D.Helper.DateTime.pas',
+  AWS4D.S3.Model.DeleteObject.Request in '..\..\Source\S3\AWS4D.S3.Model.DeleteObject.Request.pas',
+  AWS4D.S3.Model.ObjectExist.Request in '..\..\Source\S3\AWS4D.S3.Model.ObjectExist.Request.pas';
 
 {$R *.res}
 

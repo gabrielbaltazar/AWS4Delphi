@@ -9,7 +9,7 @@ uses
   System.Generics.Collections,
 
   AWS4D.S3.Model.Interfaces,
-  AWS4D.S3.Service.Interfaces, Data.Cloud.CloudAPI, Data.Cloud.AmazonAPI;
+  AWS4D.S3.Service.Interfaces;
 
 type
   TS3Config = class
@@ -49,7 +49,6 @@ type
     edtCreateObjectObjectName: TEdit;
     btnCreateObjectSelectFile: TButton;
     FileDialog: TFileOpenDialog;
-    AmazonConnectionInfo1: TAmazonConnectionInfo;
     tsListBucket: TTabSheet;
     Panel2: TPanel;
     btnListBuckets: TButton;

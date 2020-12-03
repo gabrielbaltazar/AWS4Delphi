@@ -315,14 +315,4 @@ object frmSampleS3: TfrmSampleS3
     Left = 472
     Top = 1
   end
-  object AmazonConnectionInfo1: TAmazonConnectionInfo
-    AccountName = 'AKIAJFMGZYXJAZPC7B6Q'
-    AccountKey = '6RjaGG19MnWtKQdoSVYlk+FxVCwmL4daymodUqPg'
-    Protocol = 'https'
-    TableEndpoint = 'sdb.amazonaws.com'
-    QueueEndpoint = 'queue.amazonaws.com'
-    StorageEndpoint = 's3.amazonaws.com'
-    Left = 400
-    Top = 192
-  end
 end

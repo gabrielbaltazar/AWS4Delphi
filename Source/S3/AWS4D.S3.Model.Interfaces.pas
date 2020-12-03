@@ -54,11 +54,21 @@ type
     function ObjectName : String; overload;
   end;
 
+  IAWS4DS3ModelObjectExistRequest = interface(IAWS4DModelRequest)
+    ['{A4A3FB28-68B7-49DA-830A-F927EC74806D}']
+    function BucketName (Value: String): IAWS4DS3ModelObjectExistRequest; overload;
+    function ObjectName (Value: String): IAWS4DS3ModelObjectExistRequest; overload;
+
+    function BucketName : string; overload;
+    function ObjectName : String; overload;
+  end;
+
   IAWS4DS3ModelFactory = interface
     ['{3D8D63D1-2147-4F04-8A3F-43113F085A54}']
     function CreateDeleteObjectRequest: IAWS4DS3ModelDeleteObjectRequest;
     function CreateObjectInfo: IAWS4DS3ModelObjectInfo;
     function CreateObjectRequest: IAWS4DS3ModelCreateObjectRequest;
+    function CreateObjectExistRequest: IAWS4DS3ModelObjectExistRequest;
   end;
 
 function S3ModelFactory: IAWS4DS3ModelFactory;

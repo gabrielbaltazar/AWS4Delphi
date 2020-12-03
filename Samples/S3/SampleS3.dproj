@@ -121,6 +121,9 @@
         <DCCReference Include="..\..\Source\Base\AWS4D.Model.ResponseMetadata.pas"/>
         <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.Factory.pas"/>
         <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.ObjectInfo.pas"/>
+        <DCCReference Include="..\..\Source\Base\AWS4D.Helper.DateTime.pas"/>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.DeleteObject.Request.pas"/>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.ObjectExist.Request.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
