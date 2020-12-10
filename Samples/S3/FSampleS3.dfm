@@ -87,10 +87,8 @@ object frmSampleS3: TfrmSampleS3
     ActivePage = tsListObjects
     Align = alClient
     TabOrder = 2
-    ExplicitHeight = 212
     object tsListBucket: TTabSheet
       Caption = 'List Buckets'
-      ExplicitHeight = 184
       object Panel2: TPanel
         Left = 0
         Top = 0
@@ -118,12 +116,10 @@ object frmSampleS3: TfrmSampleS3
         Lines.Strings = (
           'mmoListBuckets')
         TabOrder = 1
-        ExplicitHeight = 119
       end
     end
     object tsCreateBucket: TTabSheet
       Caption = 'Bucket'
-      ExplicitHeight = 184
       object pnlCreateBucket: TPanel
         Left = 0
         Top = 0
@@ -179,7 +175,6 @@ object frmSampleS3: TfrmSampleS3
     object tsCreateObject: TTabSheet
       Caption = 'Create Object'
       ImageIndex = 1
-      ExplicitHeight = 184
       object Panel1: TPanel
         Left = 0
         Top = 0
@@ -255,12 +250,11 @@ object frmSampleS3: TfrmSampleS3
     object tsListObjects: TTabSheet
       Caption = 'List Objects'
       ImageIndex = 3
-      ExplicitHeight = 184
       object Panel3: TPanel
         Left = 0
         Top = 0
         Width = 810
-        Height = 65
+        Height = 89
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
@@ -270,6 +264,13 @@ object frmSampleS3: TfrmSampleS3
           Width = 62
           Height = 13
           Caption = 'Bucket Name'
+        end
+        object Label9: TLabel
+          Left = 19
+          Top = 47
+          Width = 62
+          Height = 13
+          Caption = 'Object Name'
         end
         object edtListObjectsBucketName: TEdit
           Left = 19
@@ -315,16 +316,25 @@ object frmSampleS3: TfrmSampleS3
           TabOrder = 4
           OnClick = btnObjectExistClick
         end
+        object edtListObjectObjectName: TEdit
+          Left = 19
+          Top = 62
+          Width = 314
+          Height = 21
+          TabOrder = 5
+        end
       end
       object lstObjects: TListBox
         Left = 0
-        Top = 65
+        Top = 89
         Width = 810
-        Height = 187
+        Height = 163
         Align = alClient
         ItemHeight = 13
         TabOrder = 1
-        ExplicitHeight = 119
+        OnClick = lstObjectsClick
+        ExplicitTop = 65
+        ExplicitHeight = 187
       end
     end
   end
