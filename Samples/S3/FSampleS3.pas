@@ -152,7 +152,7 @@ var
   response: IAWS4DS3ModelDownloadObjectResponse;
   objectName: string;
 begin
-  objectName := lstObjects.Items[lstObjects.ItemIndex];
+  objectName := edtListObjectObjectName.Text;
   request := S3ModelFactory.CreateDownloadObjectRequest;
   request
     .BucketName(edtListObjectsBucketName.Text)

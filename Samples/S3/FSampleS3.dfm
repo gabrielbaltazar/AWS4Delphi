@@ -333,8 +333,6 @@ object frmSampleS3: TfrmSampleS3
         ItemHeight = 13
         TabOrder = 1
         OnClick = lstObjectsClick
-        ExplicitTop = 65
-        ExplicitHeight = 187
       end
     end
   end

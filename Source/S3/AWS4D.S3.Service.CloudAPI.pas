@@ -211,7 +211,7 @@ end;
 
 function TAWS4DS3ServiceCloudAPI.GetRegion: TAmazonRegion;
 begin
-  Result := FAmazonConnection.GetRegionFromString(Region.toString);
+  Result := FStorage.GetRegionFromString(Region.toString);
 end;
 
 function TAWS4DS3ServiceCloudAPI.ListBuckets: TArray<String>;
@@ -281,9 +281,14 @@ begin
   begin
     FAmazonConnection.AccountName := Self.AccessKeyID;
     FAmazonConnection.AccountKey  := Self.SecretKey;
-    FAmazonConnection.Region      := GetRegion;
+    {$IF CompilerVersion >= 33.0}
+      FAmazonConnection.Region := GetRegion;
+    {$IFEND}
 
     FStorage := TAmazonStorageService.Create(FAmazonConnection);
+    {$IF CompilerVersion < 33.0}
+    FAmazonConnection.StorageEndpoint := FStorage.GetEndpointFromRegion(GetRegion)
+    {$ENDIF}
   end;
   result := FStorage;
 end;
