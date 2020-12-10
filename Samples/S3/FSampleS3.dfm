@@ -3,7 +3,7 @@ object frmSampleS3: TfrmSampleS3
   Top = 0
   BorderStyle = bsDialog
   Caption = 'S3 Sample'
-  ClientHeight = 309
+  ClientHeight = 377
   ClientWidth = 818
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -83,12 +83,14 @@ object frmSampleS3: TfrmSampleS3
     Left = 0
     Top = 97
     Width = 818
-    Height = 212
+    Height = 280
     ActivePage = tsListObjects
     Align = alClient
     TabOrder = 2
+    ExplicitHeight = 212
     object tsListBucket: TTabSheet
       Caption = 'List Buckets'
+      ExplicitHeight = 184
       object Panel2: TPanel
         Left = 0
         Top = 0
@@ -111,15 +113,17 @@ object frmSampleS3: TfrmSampleS3
         Left = 0
         Top = 65
         Width = 810
-        Height = 119
+        Height = 187
         Align = alClient
         Lines.Strings = (
           'mmoListBuckets')
         TabOrder = 1
+        ExplicitHeight = 119
       end
     end
     object tsCreateBucket: TTabSheet
       Caption = 'Bucket'
+      ExplicitHeight = 184
       object pnlCreateBucket: TPanel
         Left = 0
         Top = 0
@@ -175,6 +179,7 @@ object frmSampleS3: TfrmSampleS3
     object tsCreateObject: TTabSheet
       Caption = 'Create Object'
       ImageIndex = 1
+      ExplicitHeight = 184
       object Panel1: TPanel
         Left = 0
         Top = 0
@@ -250,6 +255,7 @@ object frmSampleS3: TfrmSampleS3
     object tsListObjects: TTabSheet
       Caption = 'List Objects'
       ImageIndex = 3
+      ExplicitHeight = 184
       object Panel3: TPanel
         Left = 0
         Top = 0
@@ -300,15 +306,25 @@ object frmSampleS3: TfrmSampleS3
           TabOrder = 3
           OnClick = btnDownloadObjectClick
         end
+        object btnObjectExist: TButton
+          Left = 539
+          Top = 22
+          Width = 102
+          Height = 25
+          Caption = 'Object Exist'
+          TabOrder = 4
+          OnClick = btnObjectExistClick
+        end
       end
       object lstObjects: TListBox
         Left = 0
         Top = 65
         Width = 810
-        Height = 119
+        Height = 187
         Align = alClient
         ItemHeight = 13
         TabOrder = 1
+        ExplicitHeight = 119
       end
     end
   end

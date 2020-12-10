@@ -63,6 +63,7 @@ type
     lstObjects: TListBox;
     btnDeleteObject: TButton;
     btnDownloadObject: TButton;
+    btnObjectExist: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure btnCreateBucketClick(Sender: TObject);
@@ -75,6 +76,7 @@ type
     procedure btnListObjectsClick(Sender: TObject);
     procedure btnDeleteObjectClick(Sender: TObject);
     procedure btnDownloadObjectClick(Sender: TObject);
+    procedure btnObjectExistClick(Sender: TObject);
   private
     function GetIniFile: TIniFile;
     procedure SaveConfig;
@@ -190,6 +192,23 @@ begin
   finally
     objects.Free;
   end;
+end;
+
+procedure TfrmSampleS3.btnObjectExistClick(Sender: TObject);
+var
+  request: IAWS4DS3ModelObjectExistRequest;
+  objectName: string;
+begin
+  objectName := lstObjects.Items[lstObjects.ItemIndex];
+  request := S3ModelFactory.CreateObjectExistRequest;
+  request
+    .BucketName(edtListObjectsBucketName.Text)
+    .ObjectName(objectName);
+
+  if CreateS3.ExistObject(request) then
+    ShowMessage('Exist')
+  else
+    ShowMessage('Not Exist');
 end;
 
 function TfrmSampleS3.CreateS3: IAWS4DServiceS3;

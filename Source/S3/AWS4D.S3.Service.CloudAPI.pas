@@ -171,19 +171,15 @@ end;
 
 function TAWS4DS3ServiceCloudAPI.ExistObject(Request: IAWS4DS3ModelObjectExistRequest): Boolean;
 var
-  objects: TList<IAWS4DS3ModelObjectInfo>;
-  i : Integer;
+  stream : TMemoryStream;
 begin
-  result  := False;
-  objects := ListObjects(Request.BucketName);
+  stream := TMemoryStream.Create;
   try
-    for i := 0 to Pred(objects.Count) do
-    begin
-      if objects[i].Name.Equals(Request.ObjectName) then
-        Exit(True);
-    end;
+    result := Storage.GetObject(Request.BucketName,
+                             Request.ObjectName,
+                             stream);
   finally
-    objects.Free;
+    stream.Free;
   end;
 end;
 
