@@ -67,3 +67,5 @@ __recovery/
 
 # Boss dependency manager vendor folder https://github.com/HashLoad/boss
 modules/
+Samples/SQS/Win32/Debug/
+Samples/S3/Win32/Debug/SampleS3.ini

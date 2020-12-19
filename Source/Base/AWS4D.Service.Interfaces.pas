@@ -2,18 +2,125 @@ unit AWS4D.Service.Interfaces;
 
 interface
 
+uses
+  System.SysUtils;
+
 type
+  /// <summary>Regions which can be used with Amazon Services.</summary>
+  TAWS4DRegion = (aws4dEUWest1,
+                  aws4dEUCentral1,
+                  aws4dUSEast1,
+                  aws4dUSWest1,
+                  aws4dUSWest2,
+                  aws4dAPSoutheast1,
+                  aws4dAPSoutheast2,
+                  aws4dAPNortheast1,
+                  aws4dAPNortheast2,
+                  aws4dSAEast1);
+
   IAWS4DService = interface
     ['{D93A37C0-ADA3-44A2-AAD4-EADF1BC984BB}']
     function Region      (Value: String): IAWS4DService; overload;
+    function Region      (Value: TAWS4DRegion): IAWS4DService; overload;
     function AccessKeyID (Value: String): IAWS4DService; overload;
     function SecretKey   (Value: String): IAWS4DService; overload;
 
-    function Region      : String; overload;
+    function Region      : TAWS4DRegion; overload;
     function AccessKeyID : string; overload;
     function SecretKey   : string; overload;
   end;
 
+  TAWS4DRegionHelper = record helper for TAWS4DRegion
+  public
+    function toString: string;
+    procedure fromString(Value: String);
+  end;
+
 implementation
+
+{ TAWS4DRegionHelper }
+
+procedure TAWS4DRegionHelper.fromString(Value: String);
+var
+  region: string;
+begin
+  region := Value.ToLower;
+  if region.Equals(aws4dEUWest1.toString) then
+  begin
+    Self := aws4dEUWest1;
+    Exit;
+  end;
+
+  if region.Equals(aws4dEUCentral1.toString) then
+  begin
+    Self := aws4dEUCentral1;
+    Exit;
+  end;
+
+  if region.Equals(aws4dUSEast1.toString) then
+  begin
+    Self := aws4dUSEast1;
+    Exit;
+  end;
+
+  if region.Equals(aws4dUSWest1.toString) then
+  begin
+    Self := aws4dUSWest1;
+    Exit;
+  end;
+
+  if region.Equals(aws4dUSWest2.toString) then
+  begin
+    Self := aws4dUSWest2;
+    Exit;
+  end;
+
+  if region.Equals(aws4dAPSoutheast1.toString) then
+  begin
+    Self := aws4dAPSoutheast1;
+    Exit;
+  end;
+
+  if region.Equals(aws4dAPSoutheast2.toString) then
+  begin
+    Self := aws4dAPSoutheast2;
+    Exit;
+  end;
+
+  if region.Equals(aws4dAPNortheast1.toString) then
+  begin
+    Self := aws4dAPNortheast1;
+    Exit;
+  end;
+
+  if region.Equals(aws4dAPNortheast2.toString) then
+  begin
+    Self := aws4dAPNortheast2;
+    Exit;
+  end;
+
+  if region.Equals(aws4dSAEast1.toString) then
+  begin
+    Self := aws4dSAEast1;
+    Exit;
+  end;
+end;
+
+function TAWS4DRegionHelper.toString: string;
+begin
+  result := 'us-east-1';
+  case Self of
+    aws4dEUWest1      : result := 'eu-west-1';
+    aws4dEUCentral1   : result := 'eu-central-1';
+    aws4dUSEast1      : result := 'us-east-1';
+    aws4dUSWest1      : result := 'us-west-1';
+    aws4dUSWest2      : result := 'us-west-2';
+    aws4dAPSoutheast1 : result := 'ap-southeast-1';
+    aws4dAPSoutheast2 : result := 'ap-southeast-2';
+    aws4dAPNortheast1 : result := 'ap-northeast-1';
+    aws4dAPNortheast2 : result := 'ap-northeast-2';
+    aws4dSAEast1      : result := 'sa-east-1';
+  end;
+end;
 
 end.

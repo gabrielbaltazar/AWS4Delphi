@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{7CB6F14E-2081-44E4-8247-23A117EB80CA}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="SQS\SampleSQS.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="S3\SampleS3.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="SampleSQS">
+        <MSBuild Projects="SQS\SampleSQS.dproj"/>
+    </Target>
+    <Target Name="SampleSQS:Clean">
+        <MSBuild Projects="SQS\SampleSQS.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SampleSQS:Make">
+        <MSBuild Projects="SQS\SampleSQS.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SampleS3">
+        <MSBuild Projects="S3\SampleS3.dproj"/>
+    </Target>
+    <Target Name="SampleS3:Clean">
+        <MSBuild Projects="S3\SampleS3.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SampleS3:Make">
+        <MSBuild Projects="S3\SampleS3.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="SampleSQS;SampleS3"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="SampleSQS:Clean;SampleS3:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="SampleSQS:Make;SampleS3:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
