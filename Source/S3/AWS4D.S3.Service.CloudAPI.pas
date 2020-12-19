@@ -83,6 +83,7 @@ begin
   try
     metaInfo := TStringList.Create;
     metaInfo.Add('Content-type=text/xml');
+    Request.FileStream.Position := 0;
 
     if not Storage.UploadObject(
         Request.BucketName,
