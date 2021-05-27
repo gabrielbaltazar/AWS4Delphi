@@ -30,6 +30,7 @@ type TAWS4DS3ServiceCloudAPI = class(TAWS4DServiceBase, IAWS4DServiceS3)
     function GetBucket(ABucketName: String): TAmazonBucketResult;
 
     function Storage: TAmazonStorageService;
+    procedure PrepareRequest;
 
     function S3Exception(AResponseInfo: TCloudResponseInfo): EAWS4DS3ModelException;
 
@@ -212,7 +213,7 @@ end;
 
 function TAWS4DS3ServiceCloudAPI.GetRegion: TAmazonRegion;
 begin
-  Result := FStorage.GetRegionFromString(Region.toString);
+  Result := Storage.GetRegionFromString(Region.toString);
 end;
 
 function TAWS4DS3ServiceCloudAPI.ListBuckets: TArray<String>;
@@ -269,6 +270,11 @@ end;
 class function TAWS4DS3ServiceCloudAPI.New: IAWS4DServiceS3;
 begin
   result := Self.create;
+end;
+
+procedure TAWS4DS3ServiceCloudAPI.PrepareRequest;
+begin
+  FreeAndNil(FStorage);
 end;
 
 function TAWS4DS3ServiceCloudAPI.S3Exception(AResponseInfo: TCloudResponseInfo): EAWS4DS3ModelException;

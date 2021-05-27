@@ -18,8 +18,11 @@ type TAWS4DSQSModelGetQueueAttributesResponse = class(TAWS4DModelResponseMetadat
     function Attributes: TDictionary<String, String>;
 
   public
-    constructor create(JSONString: String); override;
-    class function New(JSONString: String): IAWS4DSQSModelGetQueueAttributesResponse;
+    constructor create; overload; override;
+    class function New: IAWS4DSQSModelGetQueueAttributesResponse; overload;
+
+    constructor create(JSONString: String); overload; override;
+    class function New(JSONString: String): IAWS4DSQSModelGetQueueAttributesResponse; overload;
     destructor Destroy; override;
 end;
 
@@ -65,10 +68,20 @@ begin
   end;
 end;
 
+constructor TAWS4DSQSModelGetQueueAttributesResponse.create;
+begin
+  FAttributes := TDictionary<String, String>.create;
+end;
+
 destructor TAWS4DSQSModelGetQueueAttributesResponse.Destroy;
 begin
   FAttributes.Free;
   inherited;
+end;
+
+class function TAWS4DSQSModelGetQueueAttributesResponse.New: IAWS4DSQSModelGetQueueAttributesResponse;
+begin
+  Result := Self.create;
 end;
 
 class function TAWS4DSQSModelGetQueueAttributesResponse.New(JSONString: String): IAWS4DSQSModelGetQueueAttributesResponse;

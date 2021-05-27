@@ -148,6 +148,8 @@
         <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.UntagQueueRequest.pas"/>
         <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.UntagQueueResponse.pas"/>
         <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.DeleteQueueResponse.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Service.CloudAPI.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.Exceptions.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

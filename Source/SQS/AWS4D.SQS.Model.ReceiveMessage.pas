@@ -17,21 +17,36 @@ type TAWS4DSQSModelReceiveMessage = class(TInterfacedObject, IAWS4DSQSModelRecei
     FAttributes: TDictionary<String, String>;
 
   protected
-    function MessageId: String;
-    function ReceiptHandle: string;
-    function MD5OfBody: string;
-    function Body: string;
-    function Attributes: TDictionary<String, String>;
+    function MessageId: String; overload;
+    function ReceiptHandle: string; overload;
+    function MD5OfBody: string; overload;
+    function Body: string; overload;
+    function Attributes: TDictionary<String, String>; overload;
 
   public
-    constructor create(JSONObject: TJSONObject);
-    class function New(JSONObject: TJSONObject): IAWS4DSQSModelReceiveMessage;
+    function MessageId(Value: String): TAWS4DSQSModelReceiveMessage; overload;
+    function ReceiptHandle(Value: string): TAWS4DSQSModelReceiveMessage; overload;
+    function MD5OfBody(Value: string): TAWS4DSQSModelReceiveMessage; overload;
+    function Body(Value: string): TAWS4DSQSModelReceiveMessage; overload;
+    function AddAttribute(Key, Value: string): TAWS4DSQSModelReceiveMessage;
+
+    constructor create; overload;
+    class function New: IAWS4DSQSModelReceiveMessage; overload;
+
+    constructor create(JSONObject: TJSONObject); overload;
+    class function New(JSONObject: TJSONObject): IAWS4DSQSModelReceiveMessage; overload;
     destructor Destroy; override;
 end;
 
 implementation
 
 { TAWS4DSQSModelReceiveMessage }
+
+function TAWS4DSQSModelReceiveMessage.AddAttribute(Key, Value: string): TAWS4DSQSModelReceiveMessage;
+begin
+  result := Self;
+  FAttributes.AddOrSetValue(Key, Value);
+end;
 
 function TAWS4DSQSModelReceiveMessage.Attributes: TDictionary<String, String>;
 begin
@@ -41,6 +56,17 @@ end;
 function TAWS4DSQSModelReceiveMessage.Body: string;
 begin
   result := FBody;
+end;
+
+constructor TAWS4DSQSModelReceiveMessage.create;
+begin
+  FAttributes := TDictionary<String, String>.create;
+end;
+
+function TAWS4DSQSModelReceiveMessage.Body(Value: string): TAWS4DSQSModelReceiveMessage;
+begin
+  result := Self;
+  FBody := Value;
 end;
 
 constructor TAWS4DSQSModelReceiveMessage.create(JSONObject: TJSONObject);
@@ -90,14 +116,37 @@ begin
   result := FMessageId;
 end;
 
+class function TAWS4DSQSModelReceiveMessage.New: IAWS4DSQSModelReceiveMessage;
+begin
+  result := Self.create;
+end;
+
 class function TAWS4DSQSModelReceiveMessage.New(JSONObject: TJSONObject): IAWS4DSQSModelReceiveMessage;
 begin
   result := Self.create(JSONObject);
 end;
 
+function TAWS4DSQSModelReceiveMessage.ReceiptHandle(Value: string): TAWS4DSQSModelReceiveMessage;
+begin
+  result := Self;
+  FReceiptHandle := Value;
+end;
+
 function TAWS4DSQSModelReceiveMessage.ReceiptHandle: string;
 begin
   result := FReceiptHandle;
+end;
+
+function TAWS4DSQSModelReceiveMessage.MD5OfBody(Value: string): TAWS4DSQSModelReceiveMessage;
+begin
+  result := Self;
+  FMD5OfBody := Value;
+end;
+
+function TAWS4DSQSModelReceiveMessage.MessageId(Value: String): TAWS4DSQSModelReceiveMessage;
+begin
+  result := Self;
+  FMessageId := Value;
 end;
 
 end.

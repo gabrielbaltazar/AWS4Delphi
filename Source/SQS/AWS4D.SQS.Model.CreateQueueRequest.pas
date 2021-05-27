@@ -11,6 +11,7 @@ type TAWS4DSQSModelCreateQueueRequest = class(TInterfacedObject, IAWS4DSQSModelC
 
   private
     FQueueName: string;
+    FVisibilityTimeout: Integer;
     FTags: TDictionary<String, String>;
     FAttributes: TDictionary<String, String>;
 
@@ -23,6 +24,9 @@ type TAWS4DSQSModelCreateQueueRequest = class(TInterfacedObject, IAWS4DSQSModelC
 
     function Tags: TDictionary<String, String>;
     function Attributes: TDictionary<String, String>;
+
+    function VisibilityTimeout: Integer; overload;
+    function VisibilityTimeout(Value: Integer): IAWS4DSQSModelCreateQueueRequest; overload;
 
   public
     constructor create;
@@ -56,6 +60,7 @@ constructor TAWS4DSQSModelCreateQueueRequest.create;
 begin
   FAttributes := TDictionary<String, String>.Create;
   FTags := TDictionary<String, String>.Create;
+  FVisibilityTimeout := -1;
 end;
 
 destructor TAWS4DSQSModelCreateQueueRequest.Destroy;
@@ -84,6 +89,17 @@ end;
 function TAWS4DSQSModelCreateQueueRequest.Tags: TDictionary<String, String>;
 begin
   result := FTags;
+end;
+
+function TAWS4DSQSModelCreateQueueRequest.VisibilityTimeout(Value: Integer): IAWS4DSQSModelCreateQueueRequest;
+begin
+  result := Self;
+  FVisibilityTimeout := Value;
+end;
+
+function TAWS4DSQSModelCreateQueueRequest.VisibilityTimeout: Integer;
+begin
+  result := FVisibilityTimeout;
 end;
 
 end.

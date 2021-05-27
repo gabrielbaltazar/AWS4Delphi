@@ -19,9 +19,14 @@ type TAWS4DSQSModelListQueuesResponse = class(TAWS4DModelResponseMetadata, IAWS4
     function NextToken: string; overload;
 
   public
+    function NextToken(Value: String): TAWS4DSQSModelListQueuesResponse; overload;
+    function AddQueueUrl(Value: String): TAWS4DSQSModelListQueuesResponse; overload;
 
-    constructor create(JSONString: String); override;
-    class function New(JSONString: String): IAWS4DSQSModelListQueuesResponse;
+    constructor create; overload; override;
+    class function New: IAWS4DSQSModelListQueuesResponse; overload;
+
+    constructor create(JSONString: String); overload; override;
+    class function New(JSONString: String): IAWS4DSQSModelListQueuesResponse; overload;
     destructor Destroy; override;
 end;
 
@@ -38,6 +43,12 @@ end;
 function TAWS4DSQSModelListQueuesResponse.QueuesUrls: TList<String>;
 begin
   result := FQueuesUrls;
+end;
+
+function TAWS4DSQSModelListQueuesResponse.AddQueueUrl(Value: String): TAWS4DSQSModelListQueuesResponse;
+begin
+  result := Self;
+  FQueuesUrls.Add(Value);
 end;
 
 constructor TAWS4DSQSModelListQueuesResponse.create(JSONString: String);
@@ -61,6 +72,12 @@ begin
     FQueuesUrls.Add(queues.Items[i].Value);
 end;
 
+constructor TAWS4DSQSModelListQueuesResponse.create;
+begin
+  inherited;
+  FQueuesUrls := TList<String>.create;
+end;
+
 destructor TAWS4DSQSModelListQueuesResponse.Destroy;
 begin
   FQueuesUrls.Free;
@@ -70,6 +87,17 @@ end;
 class function TAWS4DSQSModelListQueuesResponse.New(JSONString: String): IAWS4DSQSModelListQueuesResponse;
 begin
   result := Self.Create(JSONString);
+end;
+
+class function TAWS4DSQSModelListQueuesResponse.New: IAWS4DSQSModelListQueuesResponse;
+begin
+  Result := Self.create;
+end;
+
+function TAWS4DSQSModelListQueuesResponse.NextToken(Value: String): TAWS4DSQSModelListQueuesResponse;
+begin
+  result := Self;
+  FNextToken := Value;
 end;
 
 end.

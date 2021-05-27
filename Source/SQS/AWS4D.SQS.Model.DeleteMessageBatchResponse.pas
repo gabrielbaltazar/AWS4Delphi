@@ -21,8 +21,11 @@ type TAWS4DSQSModelDeleteMessageBatchResponse = class(TAWS4DModelResponseMetadat
     function Failed: TDictionary<string, String>;
 
   public
-    constructor create(JSONString: String); override;
-    class function New(JSONString: String): IAWS4DSQSModelDeleteMessageBatchResponse;
+    constructor create; overload; override;
+    class function New: IAWS4DSQSModelDeleteMessageBatchResponse; overload;
+
+    constructor create(JSONString: String); overload; override;
+    class function New(JSONString: String): IAWS4DSQSModelDeleteMessageBatchResponse; overload;
     destructor  Destroy; override;
 end;
 
@@ -43,6 +46,13 @@ begin
   readFailed;
 end;
 
+constructor TAWS4DSQSModelDeleteMessageBatchResponse.create;
+begin
+  inherited;
+  FSuccessful := TList<String>.create;
+  FFailed     := TDictionary<string, string>.create;
+end;
+
 destructor TAWS4DSQSModelDeleteMessageBatchResponse.Destroy;
 begin
   FSuccessful.Free;
@@ -53,6 +63,11 @@ end;
 function TAWS4DSQSModelDeleteMessageBatchResponse.Failed: TDictionary<string, String>;
 begin
   result := Failed;
+end;
+
+class function TAWS4DSQSModelDeleteMessageBatchResponse.New: IAWS4DSQSModelDeleteMessageBatchResponse;
+begin
+  result := Self.create;
 end;
 
 class function TAWS4DSQSModelDeleteMessageBatchResponse.New(JSONString: String): IAWS4DSQSModelDeleteMessageBatchResponse;

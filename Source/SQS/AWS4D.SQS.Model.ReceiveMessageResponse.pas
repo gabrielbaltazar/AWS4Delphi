@@ -18,8 +18,13 @@ type TAWS4DSQSModelReceiveMessageResponse = class(TAWS4DModelResponseMetadata, I
     function Messages: TList<IAWS4DSQSModelReceiveMessage>;
 
   public
-    constructor create(JSONString: String); override;
-    class function New(JSONString: String): IAWS4DSQSModelReceiveMessageResponse;
+    function NewMessage: IAWS4DSQSModelReceiveMessage;
+
+    constructor create; overload; override;
+    class function New: IAWS4DSQSModelReceiveMessageResponse; overload;
+
+    constructor create(JSONString: String); overload; override;
+    class function New(JSONString: String): IAWS4DSQSModelReceiveMessageResponse; overload;
     destructor Destroy; override;
 end;
 
@@ -51,6 +56,11 @@ begin
   end;
 end;
 
+constructor TAWS4DSQSModelReceiveMessageResponse.create;
+begin
+  FMessages := TList<IAWS4DSQSModelReceiveMessage>.create;
+end;
+
 destructor TAWS4DSQSModelReceiveMessageResponse.Destroy;
 begin
   FMessages.Free;
@@ -62,9 +72,20 @@ begin
   result := FMessages;
 end;
 
+class function TAWS4DSQSModelReceiveMessageResponse.New: IAWS4DSQSModelReceiveMessageResponse;
+begin
+  result := Self.create;
+end;
+
 class function TAWS4DSQSModelReceiveMessageResponse.New(JSONString: String): IAWS4DSQSModelReceiveMessageResponse;
 begin
   result := Self.create(JSONString);
+end;
+
+function TAWS4DSQSModelReceiveMessageResponse.NewMessage: IAWS4DSQSModelReceiveMessage;
+begin
+  result := TAWS4DSQSModelReceiveMessage.New;
+  FMessages.Add(result);
 end;
 
 end.

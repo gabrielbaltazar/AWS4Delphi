@@ -96,11 +96,13 @@ function SQSService: IAWS4DServiceSQS;
 implementation
 
 uses
-  AWS4D.SQS.Service.Base;
+  AWS4D.SQS.Service.Base,
+  AWS4D.SQS.Service.CloudAPI;
 
 function SQSService: IAWS4DServiceSQS;
 begin
-  result := TAWS4DSQSServiceBase.New;
+//  result := TAWS4DSQSServiceBase.New;
+  result := TAWS4DSQSServiceCloudAPI.New;
 end;
 
 end.

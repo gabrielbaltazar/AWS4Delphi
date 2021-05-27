@@ -9,7 +9,8 @@ uses
 type TAWS4DSQSModelDeleteQueueResponse = class(TAWS4DModelResponseMetadata, IAWS4DSQSModelDeleteQueueResponse)
 
   public
-    class function New(JSONString: String): IAWS4DSQSModelDeleteQueueResponse;
+    class function New: IAWS4DSQSModelDeleteQueueResponse; overload;
+    class function New(JSONString: String): IAWS4DSQSModelDeleteQueueResponse; overload;
 end;
 
 implementation
@@ -19,6 +20,11 @@ implementation
 class function TAWS4DSQSModelDeleteQueueResponse.New(JSONString: String): IAWS4DSQSModelDeleteQueueResponse;
 begin
   Result := Self.create(JSONString);
+end;
+
+class function TAWS4DSQSModelDeleteQueueResponse.New: IAWS4DSQSModelDeleteQueueResponse;
+begin
+  result := Self.create;
 end;
 
 end.

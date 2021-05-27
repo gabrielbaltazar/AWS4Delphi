@@ -9,6 +9,9 @@
         <Projects Include="S3\SampleS3.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="C:\ProjetosHOTAL10_2\Shared\Plugin\Biblioteca\AWS\Samples\SQS\AWSSQSSample.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -35,14 +38,23 @@
     <Target Name="SampleS3:Make">
         <MSBuild Projects="S3\SampleS3.dproj" Targets="Make"/>
     </Target>
+    <Target Name="AWSSQSSample">
+        <MSBuild Projects="C:\ProjetosHOTAL10_2\Shared\Plugin\Biblioteca\AWS\Samples\SQS\AWSSQSSample.dproj"/>
+    </Target>
+    <Target Name="AWSSQSSample:Clean">
+        <MSBuild Projects="C:\ProjetosHOTAL10_2\Shared\Plugin\Biblioteca\AWS\Samples\SQS\AWSSQSSample.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="AWSSQSSample:Make">
+        <MSBuild Projects="C:\ProjetosHOTAL10_2\Shared\Plugin\Biblioteca\AWS\Samples\SQS\AWSSQSSample.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="SampleSQS;SampleS3"/>
+        <CallTarget Targets="SampleSQS;SampleS3;AWSSQSSample"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="SampleSQS:Clean;SampleS3:Clean"/>
+        <CallTarget Targets="SampleSQS:Clean;SampleS3:Clean;AWSSQSSample:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="SampleSQS:Make;SampleS3:Make"/>
+        <CallTarget Targets="SampleSQS:Make;SampleS3:Make;AWSSQSSample:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

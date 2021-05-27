@@ -18,15 +18,24 @@ type TAWS4DSQSModelSendMessageResponse = class(TAWS4DModelResponseMetadata, IAWS
     FSequenceNumber: string;
 
   protected
-    function MD5OfMessageAttributes: string;
-    function MD5OfMessageBody: string;
-    function MD5OfMessageSystemAttributes: string;
-    function MessageId: string;
-    function SequenceNumber: string;
+    function MD5OfMessageAttributes: string; overload;
+    function MD5OfMessageBody: string; overload;
+    function MD5OfMessageSystemAttributes: string; overload;
+    function MessageId: string; overload;
+    function SequenceNumber: string; overload;
 
   public
-    constructor create(JSONString: String); override;
-    class function New(JSONString: String): IAWS4DSQSModelSendMessageResponse;
+    function MD5OfMessageAttributes(Value: string): TAWS4DSQSModelSendMessageResponse; overload;
+    function MD5OfMessageBody(Value: string): TAWS4DSQSModelSendMessageResponse; overload;
+    function MD5OfMessageSystemAttributes(Value: string): TAWS4DSQSModelSendMessageResponse; overload;
+    function MessageId(Value: string): TAWS4DSQSModelSendMessageResponse; overload;
+    function SequenceNumber(Value: string): TAWS4DSQSModelSendMessageResponse; overload;
+
+    constructor create; overload; override;
+    class function New: IAWS4DSQSModelSendMessageResponse; overload;
+
+    constructor create(JSONString: String); overload; override;
+    class function New(JSONString: String): IAWS4DSQSModelSendMessageResponse; overload;
     destructor Destroy; override;
 end;
 
@@ -51,6 +60,11 @@ begin
   LJSON.TryGetValue<String>('MD5OfMessageBody', FMD5OfMessageBody);
   LJSON.TryGetValue<String>('MessageId', FMessageId);
   LJSON.TryGetValue<String>('SequenceNumber', FSequenceNumber);
+end;
+
+constructor TAWS4DSQSModelSendMessageResponse.create;
+begin
+  inherited;
 end;
 
 destructor TAWS4DSQSModelSendMessageResponse.Destroy;
@@ -79,14 +93,49 @@ begin
   result := FMessageId;
 end;
 
+class function TAWS4DSQSModelSendMessageResponse.New: IAWS4DSQSModelSendMessageResponse;
+begin
+  result := Self.create;
+end;
+
 class function TAWS4DSQSModelSendMessageResponse.New(JSONString: String): IAWS4DSQSModelSendMessageResponse;
 begin
   result := Self.create(JSONString);
 end;
 
+function TAWS4DSQSModelSendMessageResponse.SequenceNumber(Value: string): TAWS4DSQSModelSendMessageResponse;
+begin
+  result := Self;
+  FSequenceNumber := Value;
+end;
+
 function TAWS4DSQSModelSendMessageResponse.SequenceNumber: string;
 begin
   result := FSequenceNumber;
+end;
+
+function TAWS4DSQSModelSendMessageResponse.MD5OfMessageAttributes(Value: string): TAWS4DSQSModelSendMessageResponse;
+begin
+  result := Self;
+  FMD5OfMessageAttributes := Value;
+end;
+
+function TAWS4DSQSModelSendMessageResponse.MD5OfMessageBody(Value: string): TAWS4DSQSModelSendMessageResponse;
+begin
+  result := Self;
+  FMD5OfMessageBody := Value;
+end;
+
+function TAWS4DSQSModelSendMessageResponse.MD5OfMessageSystemAttributes(Value: string): TAWS4DSQSModelSendMessageResponse;
+begin
+  result := Self;
+  FMD5OfMessageSystemAttributes := Value;
+end;
+
+function TAWS4DSQSModelSendMessageResponse.MessageId(Value: string): TAWS4DSQSModelSendMessageResponse;
+begin
+  result := Self;
+  FMessageId := Value;
 end;
 
 end.

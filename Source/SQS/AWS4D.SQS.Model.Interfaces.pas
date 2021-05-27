@@ -23,6 +23,9 @@ type
     function QueueName(Value: String): IAWS4DSQSModelCreateQueueRequest; overload;
     function QueueName: string; overload;
 
+    function VisibilityTimeout: Integer; overload;
+    function VisibilityTimeout(Value: Integer): IAWS4DSQSModelCreateQueueRequest; overload;
+
     /// <summary>Add cost allocation tags to the specified Amazon SQS queue.</summary>
     /// <remarks>
     ///   When you use queue tags, keep the following guidelines in mind:

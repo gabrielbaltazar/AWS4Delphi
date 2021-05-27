@@ -397,7 +397,7 @@ function TAWS4DSQSServiceBase.PrepareRequest(Request: IAWS4DSQSModelUntagQueueRe
 var
   url: string;
   tag: string;
-  i : Integer;
+//  i : Integer;
 begin
   url := GetURL(Request.QueueUrl);
   result :=
@@ -406,10 +406,10 @@ begin
       .BaseURL(url)
       .Action('UntagQueue');
 
-  i := 0;
+//  i := 0;
   for tag in Request.Tags do
   begin
-    Inc(i);
+//    Inc(i);
 //    Result.AddQuery('TagKey.' + i.ToString, tag);
     Result.AddQuery('TagKey', tag);
   end;

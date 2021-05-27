@@ -27,6 +27,7 @@ type TAWS4DSQSModelFactory = class(TInterfacedObject, IAWS4DSQSModelFactory)
 
   public
     constructor create;
+    destructor Destroy; override;
     class function GetInstance: IAWS4DSQSModelFactory;
 end;
 
@@ -58,6 +59,12 @@ begin
   result := TAWS4DSQSModelDeleteMessageRequest.New;
 end;
 
+destructor TAWS4DSQSModelFactory.Destroy;
+begin
+
+  inherited;
+end;
+
 function TAWS4DSQSModelFactory.ListQueuesRequest: IAWS4DSQSModelListQueuesRequest;
 begin
   result := TAWS4DSQSModelListQueuesRequest.New;
@@ -85,9 +92,10 @@ end;
 
 class function TAWS4DSQSModelFactory.GetInstance: IAWS4DSQSModelFactory;
 begin
-  if not Assigned(FInstance) then
-    FInstance := TAWS4DSQSModelFactory.createPrivate;
-  result := FInstance;
+//  if not Assigned(FInstance) then
+//    FInstance := TAWS4DSQSModelFactory.createPrivate;
+//  result := FInstance;
+    result := TAWS4DSQSModelFactory.createPrivate;
 
 end;
 
