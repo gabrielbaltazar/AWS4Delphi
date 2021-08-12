@@ -84,7 +84,7 @@ object frmSampleS3: TfrmSampleS3
     Top = 97
     Width = 818
     Height = 280
-    ActivePage = tsListObjects
+    ActivePage = tsObjectProperties
     Align = alClient
     TabOrder = 2
     object tsListBucket: TTabSheet
@@ -141,7 +141,6 @@ object frmSampleS3: TfrmSampleS3
           Width = 214
           Height = 21
           TabOrder = 0
-          Text = 'pw3-central-recebimento'
         end
         object btnCreateBucket: TButton
           Left = 239
@@ -210,7 +209,6 @@ object frmSampleS3: TfrmSampleS3
           Width = 150
           Height = 21
           TabOrder = 0
-          Text = 'pw3-central-recebimento'
         end
         object btnCreateObject: TButton
           Left = 711
@@ -278,7 +276,6 @@ object frmSampleS3: TfrmSampleS3
           Width = 214
           Height = 21
           TabOrder = 0
-          Text = 'pw3-central-recebimento'
         end
         object btnListObjects: TButton
           Left = 239
@@ -333,6 +330,132 @@ object frmSampleS3: TfrmSampleS3
         ItemHeight = 13
         TabOrder = 1
         OnClick = lstObjectsClick
+      end
+    end
+    object tsObjectProperties: TTabSheet
+      Caption = 'Object Properties'
+      ImageIndex = 4
+      object pnl1: TPanel
+        Left = 0
+        Top = 0
+        Width = 810
+        Height = 65
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        object Label10: TLabel
+          Left = 27
+          Top = 17
+          Width = 62
+          Height = 13
+          Caption = 'Bucket Name'
+        end
+        object Label11: TLabel
+          Left = 235
+          Top = 17
+          Width = 62
+          Height = 13
+          Caption = 'Object Name'
+        end
+        object edtGetObjectPropertiesBucketName: TEdit
+          Left = 27
+          Top = 32
+          Width = 190
+          Height = 21
+          TabOrder = 0
+        end
+        object edtGetObjectPropertiesObjectName: TEdit
+          Left = 235
+          Top = 32
+          Width = 342
+          Height = 21
+          TabOrder = 1
+        end
+        object btnGetObjectProperties: TButton
+          Left = 583
+          Top = 30
+          Width = 146
+          Height = 25
+          Caption = 'Get Object Properties'
+          TabOrder = 2
+          OnClick = btnGetObjectPropertiesClick
+        end
+      end
+      object pnlMetaData: TPanel
+        Left = 345
+        Top = 65
+        Width = 345
+        Height = 187
+        Align = alLeft
+        BevelOuter = bvNone
+        TabOrder = 1
+        ExplicitLeft = 0
+        object pnlMetaDataTitle: TPanel
+          Left = 0
+          Top = 0
+          Width = 345
+          Height = 24
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'Properties'
+          TabOrder = 0
+          ExplicitLeft = 1
+          ExplicitTop = 1
+          ExplicitWidth = 343
+        end
+        object ValueListProperties: TValueListEditor
+          Left = 0
+          Top = 24
+          Width = 345
+          Height = 163
+          Align = alClient
+          TabOrder = 1
+          ExplicitLeft = 2
+          ExplicitTop = 26
+          ExplicitWidth = 343
+          ExplicitHeight = 161
+          ColWidths = (
+            150
+            189)
+        end
+      end
+      object Panel4: TPanel
+        Left = 0
+        Top = 65
+        Width = 345
+        Height = 187
+        Align = alLeft
+        BevelOuter = bvNone
+        TabOrder = 2
+        ExplicitLeft = 8
+        object Panel5: TPanel
+          Left = 0
+          Top = 0
+          Width = 345
+          Height = 24
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'MetaData'
+          TabOrder = 0
+          ExplicitLeft = 1
+          ExplicitTop = 1
+          ExplicitWidth = 343
+        end
+        object valueListMetaData: TValueListEditor
+          Left = 0
+          Top = 24
+          Width = 345
+          Height = 163
+          Align = alClient
+          TabOrder = 1
+          ExplicitLeft = 16
+          ExplicitTop = -56
+          ExplicitWidth = 306
+          ExplicitHeight = 300
+          ColWidths = (
+            150
+            189)
+        end
       end
     end
   end

@@ -4,6 +4,7 @@ interface
 
 uses
   AWS4D.Model.Interfaces,
+  Data.Cloud.AmazonAPI,
   System.Classes;
 
 type
@@ -39,10 +40,13 @@ type
     function FileStream (Value: TStream): IAWS4DS3ModelCreateObjectRequest; overload;
     function ObjectName (Value: String): IAWS4DS3ModelCreateObjectRequest; overload;
 
+    function AddMetaInfo(Key, Value: String): IAWS4DS3ModelCreateObjectRequest;
+
     function BucketName : string; overload;
     function FileName   : string; overload;
     function ObjectName : String; overload;
     function FileStream : TStream; overload;
+    function MetaInfo   : TStrings;
   end;
 
   IAWS4DS3ModelDeleteObjectRequest = interface(IAWS4DModelRequest)
@@ -79,6 +83,37 @@ type
     procedure SaveToFile(AFileName: String);
   end;
 
+  IAWS4DS3ModelGetObjectPropertiesRequest = interface(IAWS4DModelRequest)
+    ['{1E375930-CCC7-42CE-B899-E1982C934EBB}']
+    function BucketName (Value: String): IAWS4DS3ModelGetObjectPropertiesRequest; overload;
+    function ObjectName (Value: String): IAWS4DS3ModelGetObjectPropertiesRequest; overload;
+    function ResponseContentType(Value: string): IAWS4DS3ModelGetObjectPropertiesRequest;
+    function ResponseContentLanguage(Value: string): IAWS4DS3ModelGetObjectPropertiesRequest;
+    function ResponseExpires(Value: string): IAWS4DS3ModelGetObjectPropertiesRequest;
+    function ResponseCacheControl(Value: string): IAWS4DS3ModelGetObjectPropertiesRequest;
+    function ResponseContentDisposition(Value: string): IAWS4DS3ModelGetObjectPropertiesRequest;
+    function ResponseContentEncoding(Value: string): IAWS4DS3ModelGetObjectPropertiesRequest;
+    function RangeStartByte(Value: Integer): IAWS4DS3ModelGetObjectPropertiesRequest;
+    function RangeEndByte(Value: Integer): IAWS4DS3ModelGetObjectPropertiesRequest;
+
+    function BucketName : string; overload;
+    function ObjectName : String; overload;
+    function OptionParams: TAmazonGetObjectOptionals;
+  end;
+
+  IAWS4DS3ModelGetObjectPropertiesResponse = interface(IAWS4DModelResponseMetadata)
+    ['{3FC120F3-0F75-48D9-A85A-4C12326FDF09}']
+    function PropertyValue(Key: String): string; overload;
+    function PropertyValue(Index: Integer): string; overload;
+    function PropertyKey(Index: Integer): string;
+    function MetaDataValue(Key: String): string; overload;
+    function MetaDataValue(Index: Integer): string; overload;
+    function MetaDataKey(Index: Integer): string;
+
+    function PropertyCount: Integer;
+    function MetaDataCount: Integer;
+  end;
+
   IAWS4DS3ModelFactory = interface
     ['{3D8D63D1-2147-4F04-8A3F-43113F085A54}']
     function CreateDeleteObjectRequest: IAWS4DS3ModelDeleteObjectRequest;
@@ -86,6 +121,7 @@ type
     function CreateObjectRequest: IAWS4DS3ModelCreateObjectRequest;
     function CreateObjectExistRequest: IAWS4DS3ModelObjectExistRequest;
     function CreateDownloadObjectRequest: IAWS4DS3ModelDownloadObjectRequest;
+    function CreateGetObjectPropertiesRequest: IAWS4DS3ModelGetObjectPropertiesRequest;
   end;
 
 function S3ModelFactory: IAWS4DS3ModelFactory;

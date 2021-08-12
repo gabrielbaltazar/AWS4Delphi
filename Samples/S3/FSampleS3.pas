@@ -9,7 +9,7 @@ uses
   System.Generics.Collections,
 
   AWS4D.S3.Model.Interfaces,
-  AWS4D.S3.Service.Interfaces;
+  AWS4D.S3.Service.Interfaces, Vcl.Grids, Vcl.ValEdit;
 
 type
   TS3Config = class
@@ -17,10 +17,12 @@ type
     FaccessKeyId: string;
     FsecretKey: string;
     Fregion: String;
+    Fbucket: String;
   public
     property accessKeyId: string read FaccessKeyId write FaccessKeyId;
     property secretKey: string read FsecretKey write FsecretKey;
     property region: String read Fregion write Fregion;
+    property bucket: String read Fbucket write Fbucket;
   end;
 
   TfrmSampleS3 = class(TForm)
@@ -66,6 +68,19 @@ type
     btnObjectExist: TButton;
     Label9: TLabel;
     edtListObjectObjectName: TEdit;
+    tsObjectProperties: TTabSheet;
+    pnl1: TPanel;
+    Label10: TLabel;
+    edtGetObjectPropertiesBucketName: TEdit;
+    Label11: TLabel;
+    edtGetObjectPropertiesObjectName: TEdit;
+    btnGetObjectProperties: TButton;
+    pnlMetaData: TPanel;
+    pnlMetaDataTitle: TPanel;
+    Panel4: TPanel;
+    Panel5: TPanel;
+    valueListMetaData: TValueListEditor;
+    ValueListProperties: TValueListEditor;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure btnCreateBucketClick(Sender: TObject);
@@ -80,6 +95,7 @@ type
     procedure btnDownloadObjectClick(Sender: TObject);
     procedure btnObjectExistClick(Sender: TObject);
     procedure lstObjectsClick(Sender: TObject);
+    procedure btnGetObjectPropertiesClick(Sender: TObject);
   private
     function GetIniFile: TIniFile;
     procedure SaveConfig;
@@ -116,7 +132,8 @@ begin
   request
     .BucketName(edtCreateObjectBucketName.Text)
     .FileName(edtCreateObjectFileName.Text)
-    .ObjectName(edtCreateObjectObjectName.Text);
+    .ObjectName(edtCreateObjectObjectName.Text)
+    .AddMetaInfo('meta-key', 'meta-value');
 
   CreateS3.createObject(request);
 
@@ -170,6 +187,27 @@ begin
     ShowMessage('Bucket Not Exist.')
 end;
 
+procedure TfrmSampleS3.btnGetObjectPropertiesClick(Sender: TObject);
+var
+  response: IAWS4DS3ModelGetObjectPropertiesResponse;
+  i: Integer;
+begin
+  for i := valueListMetaData.RowCount - 1 downto 0 do
+    valueListMetaData.DeleteRow(i);
+
+  for i := ValueListProperties.RowCount - 1 downto 0 do
+    ValueListProperties.DeleteRow(i);
+
+  response := CreateS3.GetObjectProperties(edtGetObjectPropertiesBucketName.Text,
+                                           edtGetObjectPropertiesObjectName.Text);
+
+  for i := 0 to response.MetaDataCount - 1 do
+    valueListMetaData.InsertRow(response.MetaDataKey(i), response.MetaDataValue(i), True);
+
+  for i := 0 to response.PropertyCount - 1 do
+    valueListMetaData.InsertRow(response.PropertyKey(i), response.PropertyValue(i), True);
+end;
+
 procedure TfrmSampleS3.btnListBucketsClick(Sender: TObject);
 var
   buckets : TArray<string>;
@@ -187,11 +225,12 @@ var
   objects : TList<IAWS4DS3ModelObjectInfo>;
   i: Integer;
 begin
-  objects := CreateS3.ListObjects(edtListObjectsBucketName.Text);
+  objects := CreateS3.ListObjects(edtListObjectsBucketName.Text, edtListObjectObjectName.Text);
   try
     lstObjects.Items.Clear;
     for i := 0 to Pred(objects.Count) do
       lstObjects.Items.Add(objects[i].Name);
+    ShowMessage(objects.Count.ToString);
   finally
     objects.Free;
   end;
@@ -260,6 +299,7 @@ begin
     edtAccessKey.Text := iniFile.ReadString('S3', 'ACCESS_KEY', EmptyStr);
     edtSecretKey.Text := iniFile.ReadString('S3', 'SECRET_KEY', EmptyStr);
     edtRegion.Text    := iniFile.ReadString('S3', 'REGION', EmptyStr);
+    edtListObjectsBucketName.Text := iniFile.ReadString('S3', 'BUCKET', EmptyStr);
   finally
     iniFile.Free;
   end;

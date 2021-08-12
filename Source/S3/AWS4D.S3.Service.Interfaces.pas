@@ -15,11 +15,14 @@ type
     procedure DeleteBucket(BucketName: String);
     function  ExistBucket(BucketName: String): Boolean;
 
-    function ListObjects(BucketName: String): TList<IAWS4DS3ModelObjectInfo>;
+    function ListObjects(BucketName: String; Prefix: String = ''): TList<IAWS4DS3ModelObjectInfo>;
     procedure CreateObject(Request: IAWS4DS3ModelCreateObjectRequest);
     procedure DeleteObject(Request: IAWS4DS3ModelDeleteObjectRequest);
     function ExistObject(Request: IAWS4DS3ModelObjectExistRequest): Boolean;
     function DownloadObject(Request: IAWS4DS3ModelDownloadObjectRequest): IAWS4DS3ModelDownloadObjectResponse;
+
+    function GetObjectProperties(Request: IAWS4DS3ModelGetObjectPropertiesRequest): IAWS4DS3ModelGetObjectPropertiesResponse; overload;
+    function GetObjectProperties(BucketName, ObjectName: String): IAWS4DS3ModelGetObjectPropertiesResponse; overload;
   end;
 
 function S3Service: IAWS4DServiceS3;

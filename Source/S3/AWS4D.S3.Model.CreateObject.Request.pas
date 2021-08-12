@@ -13,6 +13,7 @@ type TAWS4DS3ModelCreateObjectRequest = class(TInterfacedObject, IAWS4DS3ModelCr
   protected
     FOwnerStream: Boolean;
 
+    FMetaInfo: TStrings;
     FBucketName : string;
     FFileName   : String;
     FFileStream : TStream;
@@ -23,10 +24,13 @@ type TAWS4DS3ModelCreateObjectRequest = class(TInterfacedObject, IAWS4DS3ModelCr
     function FileStream (Value: TStream): IAWS4DS3ModelCreateObjectRequest; overload;
     function ObjectName (Value: String): IAWS4DS3ModelCreateObjectRequest; overload;
 
+    function AddMetaInfo(Key, Value: String): IAWS4DS3ModelCreateObjectRequest;
+
     function BucketName : string; overload;
     function FileName   : string; overload;
     function ObjectName : String; overload;
     function FileStream : TStream; overload;
+    function MetaInfo   : TStrings;
 
   public
     constructor create;
@@ -39,6 +43,12 @@ implementation
 
 { TAWS4DS3ModelCreateObjectRequest }
 
+function TAWS4DS3ModelCreateObjectRequest.AddMetaInfo(Key, Value: String): IAWS4DS3ModelCreateObjectRequest;
+begin
+  result := Self;
+  FMetaInfo.Values[Key] := Value;
+end;
+
 function TAWS4DS3ModelCreateObjectRequest.BucketName: string;
 begin
   Result := FBucketName;
@@ -47,10 +57,13 @@ end;
 constructor TAWS4DS3ModelCreateObjectRequest.create;
 begin
   FOwnerStream := False;
+  FMetaInfo := TStringList.Create;
+  FMetaInfo.Values['Content-type'] := 'text/xml';
 end;
 
 destructor TAWS4DS3ModelCreateObjectRequest.Destroy;
 begin
+  FMetaInfo.Free;
   if FOwnerStream then
     FFileStream.Free;
   inherited;
@@ -85,6 +98,11 @@ begin
     FFileStream  := TFileStream.Create(FFileName, fmOpenRead);
     result       := FFileStream;
   end;
+end;
+
+function TAWS4DS3ModelCreateObjectRequest.MetaInfo: TStrings;
+begin
+  Result := FMetaInfo;
 end;
 
 class function TAWS4DS3ModelCreateObjectRequest.New: IAWS4DS3ModelCreateObjectRequest;

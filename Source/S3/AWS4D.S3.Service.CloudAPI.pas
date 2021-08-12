@@ -9,6 +9,8 @@ uses
   AWS4D.S3.Model.Exceptions,
   AWS4D.S3.Model.ObjectInfo,
   AWS4D.S3.Model.DownloadObject.Response,
+  AWS4D.S3.Model.GetObjectProperties.Request,
+  AWS4D.S3.Model.GetObjectProperties.Response,
   AWS4D.Service.Base,
   Data.Cloud.CloudAPI,
   Data.Cloud.AmazonAPI,
@@ -27,25 +29,26 @@ type TAWS4DS3ServiceCloudAPI = class(TAWS4DServiceBase, IAWS4DServiceS3)
     function FileBytes(AStream: TStream): TBytes;
 
     function GetRegion: TAmazonRegion;
-    function GetBucket(ABucketName: String): TAmazonBucketResult;
+    function GetBucket(ABucketName: String; AParams: TStrings = nil): TAmazonBucketResult; overload;
 
     function Storage: TAmazonStorageService;
-    procedure PrepareRequest;
 
     function S3Exception(AResponseInfo: TCloudResponseInfo): EAWS4DS3ModelException;
 
-//    function
   protected
     function ListBuckets: TArray<String>;
     procedure CreateBucket(BucketName: String);
     procedure DeleteBucket(BucketName: String);
     function  ExistBucket(BucketName: String): Boolean;
 
-    function ListObjects(BucketName: String): TList<IAWS4DS3ModelObjectInfo>;
+    function ListObjects(BucketName: String; Prefix: String = ''): TList<IAWS4DS3ModelObjectInfo>;
     procedure CreateObject(Request: IAWS4DS3ModelCreateObjectRequest);
     procedure DeleteObject(Request: IAWS4DS3ModelDeleteObjectRequest);
     function ExistObject(Request: IAWS4DS3ModelObjectExistRequest): Boolean;
     function DownloadObject(Request: IAWS4DS3ModelDownloadObjectRequest): IAWS4DS3ModelDownloadObjectResponse;
+
+    function GetObjectProperties(Request: IAWS4DS3ModelGetObjectPropertiesRequest): IAWS4DS3ModelGetObjectPropertiesResponse; overload;
+    function GetObjectProperties(BucketName, ObjectName: String): IAWS4DS3ModelGetObjectPropertiesResponse; overload;
   public
     constructor create;
     class function New: IAWS4DServiceS3;
@@ -77,13 +80,9 @@ end;
 procedure TAWS4DS3ServiceCloudAPI.createObject(Request: IAWS4DS3ModelCreateObjectRequest);
 var
   response: TCloudResponseInfo;
-  metaInfo: TStrings;
 begin
-  metaInfo     := nil;
   response := TCloudResponseInfo.Create;
   try
-    metaInfo := TStringList.Create;
-    metaInfo.Add('Content-type=text/xml');
     Request.FileStream.Position := 0;
 
     if not Storage.UploadObject(
@@ -91,7 +90,7 @@ begin
         Request.ObjectName,
         FileBytes(Request.FileStream),
         False,
-        metaInfo,
+        Request.MetaInfo,
         nil,
         amzbaPrivate,
         response)
@@ -100,7 +99,6 @@ begin
 
   finally
     response.Free;
-    metaInfo.Free;
   end;
 end;
 
@@ -197,17 +195,63 @@ begin
   end;
 end;
 
-function TAWS4DS3ServiceCloudAPI.GetBucket(ABucketName: String): TAmazonBucketResult;
+function TAWS4DS3ServiceCloudAPI.GetBucket(ABucketName: String; AParams: TStrings = nil): TAmazonBucketResult;
 var
   response: TCloudResponseInfo;
 begin
   response := TCloudResponseInfo.Create;
   try
-    result := Storage.GetBucket(ABucketName, nil, response, GetRegion);
+    result := Storage.GetBucket(ABucketName, AParams, response, GetRegion);
     if not Assigned(Result) then
       raise EResNotFound.CreateFmt('Bucket %s not found', [ABucketName]);
   finally
     response.Free;
+  end;
+end;
+
+function TAWS4DS3ServiceCloudAPI.GetObjectProperties(BucketName, ObjectName: String): IAWS4DS3ModelGetObjectPropertiesResponse;
+var
+  request: IAWS4DS3ModelGetObjectPropertiesRequest;
+begin
+  request := TAWS4DS3ModelGetObjectPropertiesRequest.New;
+  request
+    .BucketName(BucketName)
+    .ObjectName(ObjectName);
+
+  result := GetObjectProperties(request);
+end;
+
+function TAWS4DS3ServiceCloudAPI.GetObjectProperties(Request: IAWS4DS3ModelGetObjectPropertiesRequest): IAWS4DS3ModelGetObjectPropertiesResponse;
+var
+  properties: TStrings;
+  metaData: TStrings;
+  responseInfo: TCloudResponseInfo;
+begin
+  properties := nil;
+  metaData := nil;
+  try
+    properties := TStringList.Create;
+    metaData := TStringList.Create;
+
+    responseInfo := TCloudResponseInfo.Create;
+    try
+      if not Storage.GetObjectProperties(
+        request.BucketName,
+        Request.ObjectName,
+        Request.OptionParams,
+        properties,
+        metaData,
+        responseInfo
+      ) then
+        raise S3Exception(responseInfo);
+
+      result := TAWS4DS3ModelGetObjectPropertiesResponse.New(metaData, properties);
+    finally
+      responseInfo.Free;
+    end;
+  finally
+    properties.Free;
+    metaData.Free;
   end;
 end;
 
@@ -239,21 +283,36 @@ begin
   end;
 end;
 
-function TAWS4DS3ServiceCloudAPI.ListObjects(BucketName: String): TList<IAWS4DS3ModelObjectInfo>;
+function TAWS4DS3ServiceCloudAPI.ListObjects(BucketName: String; Prefix: String = ''): TList<IAWS4DS3ModelObjectInfo>;
 var
   bucketInfo: TAmazonBucketResult;
   objectInfo: TAmazonObjectResult;
   response  : TCloudResponseInfo;
+  params: TStrings;
 begin
   response := TCloudResponseInfo.Create;
+  params := TStringList.Create;
   try
-    bucketInfo := GetBucket(BucketName);
+    params.Values['prefix'] := Prefix;
+    bucketInfo := GetBucket(BucketName, params);
     try
       result := TList<IAWS4DS3ModelObjectInfo>.Create;
       try
         for objectInfo in bucketInfo.Objects do
           if objectInfo.Size > 0 then
             result.Add(TAWS4DS3ModelObjectInfo.CreateFromObjectResult(objectInfo));
+
+        while bucketInfo.IsTruncated do
+        begin
+          params.Values['marker'] := bucketInfo.Objects.Last.Name;
+
+          FreeAndNil(bucketInfo);
+          bucketInfo := GetBucket(BucketName, params);
+
+          for objectInfo in bucketInfo.Objects do
+            if objectInfo.Size > 0 then
+              result.Add(TAWS4DS3ModelObjectInfo.CreateFromObjectResult(objectInfo));
+        end;
       except
         result.Free;
         raise;
@@ -263,6 +322,7 @@ begin
     end;
   finally
     response.Free;
+    params.Free;
   end;
 end;
 
@@ -270,11 +330,6 @@ end;
 class function TAWS4DS3ServiceCloudAPI.New: IAWS4DServiceS3;
 begin
   result := Self.create;
-end;
-
-procedure TAWS4DS3ServiceCloudAPI.PrepareRequest;
-begin
-  FreeAndNil(FStorage);
 end;
 
 function TAWS4DS3ServiceCloudAPI.S3Exception(AResponseInfo: TCloudResponseInfo): EAWS4DS3ModelException;

@@ -21,7 +21,9 @@ uses
   AWS4D.S3.Model.DeleteObject.Request in '..\..\Source\S3\AWS4D.S3.Model.DeleteObject.Request.pas',
   AWS4D.S3.Model.ObjectExist.Request in '..\..\Source\S3\AWS4D.S3.Model.ObjectExist.Request.pas',
   AWS4D.S3.Model.DownloadObject.Request in '..\..\Source\S3\AWS4D.S3.Model.DownloadObject.Request.pas',
-  AWS4D.S3.Model.DownloadObject.Response in '..\..\Source\S3\AWS4D.S3.Model.DownloadObject.Response.pas';
+  AWS4D.S3.Model.DownloadObject.Response in '..\..\Source\S3\AWS4D.S3.Model.DownloadObject.Response.pas',
+  AWS4D.S3.Model.GetObjectProperties.Request in '..\..\Source\S3\AWS4D.S3.Model.GetObjectProperties.Request.pas',
+  AWS4D.S3.Model.GetObjectProperties.Response in '..\..\Source\S3\AWS4D.S3.Model.GetObjectProperties.Response.pas';
 
 {$R *.res}
 
