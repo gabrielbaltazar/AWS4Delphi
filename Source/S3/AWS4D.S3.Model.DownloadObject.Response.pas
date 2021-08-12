@@ -67,7 +67,13 @@ end;
 
 function TAWS4DS3ModelDownloadObjectResponse.Stream: TMemoryStream;
 begin
-  result := FStream;
+  Result := TMemoryStream.Create;
+  try
+    Result.LoadFromStream(FStream);
+  except
+    Result.Free;
+    raise;
+  end;
 end;
 
 end.
