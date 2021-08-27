@@ -80,7 +80,7 @@ begin
     FAmazonConnection.AccountName := Self.AccessKeyID;
     FAmazonConnection.AccountKey  := Self.SecretKey;
     {$IF CompilerVersion >= 33.0}
-      FAmazonConnection.Region := GetRegion;
+      FAmazonConnection.Region := Self.Region.toString;
     {$IFEND}
 
     FQueueService := TAmazonQueueService.Create(FAmazonConnection);
