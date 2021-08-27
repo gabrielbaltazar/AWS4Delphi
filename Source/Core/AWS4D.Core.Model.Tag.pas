@@ -24,7 +24,8 @@ type TAWS4DCoreModelTag = class(TInterfacedObject, IAWS4DCoreModelTag)
 
   public
     class function New: IAWS4DCoreModelTag;
-    class function NewIterator(JSONArray: TJSONArray): IAWS4DIterator<IAWS4DCoreModelTag>;
+    class function NewIterator(JSONArray: TJSONArray): IAWS4DIterator<IAWS4DCoreModelTag>; overload;
+    class function NewIterator(Values: TDictionary<string, String>): IAWS4DIterator<IAWS4DCoreModelTag>; overload;
 end;
 
 implementation
@@ -45,6 +46,27 @@ end;
 class function TAWS4DCoreModelTag.New: IAWS4DCoreModelTag;
 begin
   result := Self.Create;
+end;
+
+class function TAWS4DCoreModelTag.NewIterator(Values: TDictionary<string, String>): IAWS4DIterator<IAWS4DCoreModelTag>;
+var
+  list: TList<IAWS4DCoreModelTag>;
+  key: string;
+begin
+  list := TList<IAWS4DCoreModelTag>.create;
+  try
+    result := TAWS4DCoreModelIterator<IAWS4DCoreModelTag>.New(list);
+    for key in Values.Keys do
+    begin
+      list.Add(TAWS4DCoreModelTag.New);
+      list.Last.Key(key);
+      list.Last.Value(Values.Items[key]);
+    end;
+
+  except
+    list.Free;
+    raise;
+  end;
 end;
 
 class function TAWS4DCoreModelTag.NewIterator(JSONArray: TJSONArray): IAWS4DIterator<IAWS4DCoreModelTag>;

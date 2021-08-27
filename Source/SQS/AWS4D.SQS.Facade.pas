@@ -9,9 +9,8 @@ uses
   AWS4D.SQS.Facade.GetQueueUrl,
   AWS4D.SQS.Facade.ListQueues,
   AWS4D.SQS.Facade.ListQueueTags,
+  AWS4D.SQS.Facade.SendMessage,
   AWS4D.SQS.Service,
-  AWS4D.SQS.Model.ListQueues.Request,
-  AWS4D.SQS.Model.ListQueues.Response,
   AWS4D.Core.Model.Types;
 
 type TAWS4DSQSFacade = class(TInterfacedObject, IAWS4DSQSFacade)
@@ -20,6 +19,7 @@ type TAWS4DSQSFacade = class(TInterfacedObject, IAWS4DSQSFacade)
     FGetQueueUrl: IAWS4DSQSFacadeGetQueueUrl;
     FListQueues: IAWS4DSQSFacadeListQueues;
     FListQueueTags: IAWS4DSQSFacadeListQueueTags;
+    FSendMessage: IAWS4DSQSFacadeSendMessage;
 
     FAccessKey: String;
     FSecretKey: String;
@@ -36,6 +36,7 @@ type TAWS4DSQSFacade = class(TInterfacedObject, IAWS4DSQSFacade)
     function GetQueueUrl: IAWS4DSQSFacadeGetQueueUrl;
     function ListQueues: IAWS4DSQSFacadeListQueues;
     function ListQueueTags: IAWS4DSQSFacadeListQueueTags;
+    function SendMessage: IAWS4DSQSFacadeSendMessage;
 
   public
     constructor create;
@@ -118,6 +119,19 @@ function TAWS4DSQSFacade.SecretKey(Value: String): IAWS4DSQSFacade;
 begin
   result := Self;
   FSecretKey := Value;
+end;
+
+function TAWS4DSQSFacade.SendMessage: IAWS4DSQSFacadeSendMessage;
+var
+  service: IAWS4DSQSService<IAWS4DSQSFacadeSendMessage>;
+begin
+  if not Assigned(FSendMessage) then
+  begin
+    service := Self.SQSService<IAWS4DSQSFacadeSendMessage>;
+    FSendMessage := TAWS4DSQSFacadeSendMessage.New(service);
+  end;
+
+  result := FSendMessage;
 end;
 
 function TAWS4DSQSFacade.SQSService<I>: IAWS4DSQSService<I>;

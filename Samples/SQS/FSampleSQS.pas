@@ -305,17 +305,13 @@ begin
 end;
 
 procedure TForm2.btnSendMessageClick(Sender: TObject);
-//var
-//  request: IAWS4DSQSModelSendMessageRequest;
-//  response: IAWS4DSQSModelSendMessageResponse;
 begin
-//  request := SQSModelFactory.SendMessageRequest;
-//  request
-//    .QueueUrl(edtSendMessageQueueName.Text)
-//    .MessageBody(edtSendMessageMessageBody.Text);
-//
-//  response := CreateSQS.SendMessage(request);
-//  writeSendMessageResponse(response);
+  FSQS.SendMessage
+    .Request
+      .QueueUrl(edtSendMessageQueueName.Text)
+      .MessageBody(edtSendMessageMessageBody.Text)
+    .&End
+    .Send;
 end;
 
 procedure TForm2.btnTagQueueClick(Sender: TObject);

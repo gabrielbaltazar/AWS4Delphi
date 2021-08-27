@@ -127,6 +127,9 @@
         <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.GetQueueUrl.Request.pas"/>
         <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.GetQueueUrl.Response.pas"/>
         <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Facade.GetQueueUrl.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.SendMessage.Request.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.SendMessage.Response.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Facade.SendMessage.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

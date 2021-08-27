@@ -52,8 +52,41 @@ type
   end;
 
   IAWS4DSQSListQueueTagsResponse<I: IInterface> = interface
-    ['{EC9ADDAA-4DCB-49CD-8353-48A204E88951}']
+    ['{1D2DA9FB-7D73-4646-A108-506736ADB9F5}']
     function Tags: IAWS4DIterator<IAWS4DCoreModelTag>;
+
+    function &End: I;
+  end;
+
+  IAWS4DSQSSendMessageRequest<I: IInterface> = interface
+    ['{F5FC9F83-DFCE-4CAD-B244-A631F7F9F4E4}']
+    function AddAttribute(Key, Value: String): IAWS4DSQSSendMessageRequest<I>;
+    function AddSystemAttribute(Key, Value: String): IAWS4DSQSSendMessageRequest<I>;
+    function DelaySeconds(Value: Integer): IAWS4DSQSSendMessageRequest<I>; overload;
+    function MessageBody(Value: String): IAWS4DSQSSendMessageRequest<I>; overload;
+    function MessageDeduplicationId(Value: String): IAWS4DSQSSendMessageRequest<I>; overload;
+    function MessageGroupId(Value: String): IAWS4DSQSSendMessageRequest<I>; overload;
+    function QueueUrl(Value: String): IAWS4DSQSSendMessageRequest<I>; overload;
+
+    function DelaySeconds: Integer; overload;
+    function MessageBody: String; overload;
+    function MessageDeduplicationId: String; overload;
+    function MessageGroupId: String; overload;
+    function QueueUrl: String; overload;
+
+    function Attributes: IAWS4DIterator<IAWS4DCoreModelTag>;
+    function MessageSystemAttributes: IAWS4DIterator<IAWS4DCoreModelTag>;
+
+    function &End: I;
+  end;
+
+  IAWS4DSQSSendMessageResponse<I: IInterface> = interface
+    ['{2F9E34FB-3207-4EDF-A5F2-0A5E2DCFE1B2}']
+    function MD5OfMessageAttributes: string;
+    function MD5OfMessageBody: string;
+    function MD5OfMessageSystemAttributes: string;
+    function MessageId: string;
+    function SequenceNumber: string;
 
     function &End: I;
   end;

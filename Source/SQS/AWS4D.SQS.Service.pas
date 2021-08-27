@@ -8,6 +8,7 @@ uses
   AWS4D.SQS.Model.ListQueues.Response,
   AWS4D.SQS.Model.ListQueueTags.Response,
   AWS4D.SQS.Model.GetQueueUrl.Response,
+  AWS4D.SQS.Model.SendMessage.Response,
   AWS4D.Core.Model.Types,
   GBClient.Interfaces,
   System.JSON,
@@ -34,6 +35,7 @@ type TAWS4DSQSService<I: IInterface> = class(TInterfacedObject, IAWS4DSQSService
     function GetQueueUrl(Request: IAWS4DSQSGetQueueUrlRequest<I>): IAWS4DSQSGetQueueUrlResponse<I>;
     function ListQueues(Request: IAWS4DSQSListQueuesRequest<I>): IAWS4DSQSListQueuesResponse<I>;
     function ListQueueTags(Request: IAWS4DSQSListQueueTagsRequest<I>): IAWS4DSQSListQueueTagsResponse<I>;
+    function SendMessage(Request: IAWS4DSQSSendMessageRequest<I>): IAWS4DSQSSendMessageResponse<I>;
 
     function Parent(Value: I): IAWS4DSQSService<I>;
     function &End: I;
@@ -171,6 +173,61 @@ function TAWS4DSQSService<I>.SecretKey(Value: String): IAWS4DSQSService<I>;
 begin
   Result := Self;
   FSecretKey := Value;
+end;
+
+function TAWS4DSQSService<I>.SendMessage(Request: IAWS4DSQSSendMessageRequest<I>): IAWS4DSQSSendMessageResponse<I>;
+var
+  restRequest: IGBClientRequest;
+  json: TJSONObject;
+  LCount: Integer;
+begin
+  restRequest := Self.NewGETRequest('SendMessage');
+  restRequest
+    .Resource(Request.QueueUrl)
+    .Params
+      .QueryAddOrSet('MessageBody', Request.MessageBody);
+
+  if Request.DelaySeconds > 0 then
+    restRequest.Params.QueryAddOrSet('DelaySeconds', Request.DelaySeconds);
+
+  if Request.MessageDeduplicationId <> EmptyStr then
+    restRequest.Params.QueryAddOrSet('MessageDeduplicationId', Request.MessageDeduplicationId);
+
+  if Request.MessageGroupId <> EmptyStr then
+    restRequest.Params.QueryAddOrSet('MessageGroupId', Request.MessageGroupId);
+
+  LCount := 0;
+  while Request.Attributes.HasNext do
+  begin
+    Inc(LCount);
+    restRequest.Params
+      .QueryAddOrSet(Format('MessageAttribute.%s.Name', [LCount.ToString]),
+                     Request.Attributes.Current.Key);
+    restRequest.Params
+      .QueryAddOrSet(Format('MessageAttribute.%s.Value.StringValue', [LCount.ToString]),
+                     Request.Attributes.Current.Value);
+    restRequest.Params
+      .QueryAddOrSet(Format('MessageAttribute.%s.Value.DataType', [LCount.ToString]),
+                     'String');
+  end;
+
+  LCount := 0;
+  while Request.MessageSystemAttributes.HasNext do
+  begin
+    Inc(LCount);
+    restRequest.Params
+      .QueryAddOrSet(Format('MessageSystemAttribute.%s.Name', [LCount.ToString]),
+                     Request.MessageSystemAttributes.Current.Key);
+    restRequest.Params
+      .QueryAddOrSet(Format('MessageSystemAttribute.%s.Value.StringValue', [LCount.ToString]),
+                     Request.MessageSystemAttributes.Current.Value);
+    restRequest.Params
+      .QueryAddOrSet(Format('MessageAttribute.%s.Value.DataType', [LCount.ToString]),
+                     'String');
+  end;
+
+  json := restRequest.Send.GetJSONObject;
+  result := TAWS4SQSSendMessageResponse<I>.New(FParent, json);
 end;
 
 end.

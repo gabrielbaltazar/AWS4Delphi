@@ -83,7 +83,7 @@ object Form2: TForm2
     Top = 97
     Width = 1171
     Height = 341
-    ActivePage = tsGetQueueUrl
+    ActivePage = tsSendMessage
     Align = alClient
     TabOrder = 2
     object tsListQueues: TTabSheet
@@ -360,7 +360,7 @@ object Form2: TForm2
           Width = 222
           Height = 21
           TabOrder = 0
-          Text = '159521004132/Send-to-Email-Docfiscal-dev'
+          Text = '451809183281/vendas'
         end
         object btnSendMessage: TButton
           Left = 562
