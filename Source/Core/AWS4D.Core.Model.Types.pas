@@ -6,6 +6,22 @@ uses
   System.SysUtils;
 
 type
+  IAWS4DIterator<T> = interface
+    ['{9D00D1BF-8A07-46DC-BD14-AC7D08662EE1}']
+    function First: IAWS4DIterator<T>;
+    function HasNext: Boolean;
+    function Current: T;
+  end;
+
+  IAWS4DCoreModelTag = interface
+    ['{8891CDBC-D18C-4763-AFDB-BCA67859C833}']
+    function Key: String; overload;
+    function Value: string; overload;
+
+    function Key(Value: String): IAWS4DCoreModelTag; overload;
+    function Value(AValue: string): IAWS4DCoreModelTag; overload;
+  end;
+
   /// <summary>Regions which can be used with Amazon Services.</summary>
   TAWS4DRegion = (aws4dEUWest1,
                   aws4dEUCentral1,

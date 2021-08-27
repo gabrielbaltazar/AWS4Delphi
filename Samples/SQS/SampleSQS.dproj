@@ -61,6 +61,7 @@
         <DCC_DUPLICATE_CTOR_DTOR>false</DCC_DUPLICATE_CTOR_DTOR>
         <VerInfo_Locale>1046</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <DCC_UnitSearchPath>C:\workspace\Delphi\Frameworks\GBClient\Source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <DCC_UsePackage>DBXSqliteDriver;IndyIPCommon;RESTComponents;bindcompdbx;DBXInterBaseDriver;vcl;IndyIPServer;vclactnband;ZComponent;vclFireDAC;IndySystem;IconFontsImageListFMX;ZCore;frxDB26;tethering;svnui;dsnapcon;FireDACADSDriver;FireDACMSAccDriver;fmxFireDAC;vclimg;ZDbc;FireDAC;IconFontsImageList;vcltouch;vcldb;bindcompfmx;svn;frxe26;FireDACSqliteDriver;FireDACPgDriver;inetdb;soaprtl;DbxCommonDriver;fmx;FireDACIBDriver;fmxdae;xmlrtl;soapmidas;fmxobj;vclwinx;rtl;RFindUnit;DbxClientDriver;CustomIPTransport;vcldsnap;dbexpress;IndyCore;DOSCommandDR;boss_ide;vclx;ZParseSql;bindcomp;appanalytics;dsnap;ZPlain;FireDACCommon;IndyIPClient;bindcompvcl;RESTBackendComponents;VCLRESTComponents;dmvcframeworkRT;soapserver;dbxcds;VclSmp;adortl;dmvcframeworkDT;vclie;bindengine;DBXMySQLDriver;CloudService;dsnapxml;FireDACMySQLDriver;dbrtl;IndyProtocols;inetdbxpress;frx26;FireDACCommonODBC;FireDACCommonDriver;inet;fmxase;$(DCC_UsePackage)</DCC_UsePackage>
@@ -107,49 +108,25 @@
             <Form>Form2</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\Source\Base\AWS4D.Service.Interfaces.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.ListQueuesResponse.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Service.Interfaces.pas"/>
+        <DCCReference Include="..\..\Source\Core\AWS4D.Core.Model.Types.pas"/>
+        <DCCReference Include="..\..\Source\Core\AWS4D.Core.Model.Iterator.pas"/>
+        <DCCReference Include="..\..\Source\Core\AWS4D.Core.Helper.JSON.pas"/>
+        <DCCReference Include="..\..\Source\Core\AWS4D.Core.Model.Tag.pas"/>
+        <DCCReference Include="..\..\Source\Core\AWS4D.Core.Model.Classes.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Facade.Interfaces.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Facade.ListQueues.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Facade.ListQueueTags.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Facade.pas"/>
         <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.Interfaces.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.Model.Interfaces.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.Model.ResponseMetadata.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.Model.Classes.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.Service.Base.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Service.Base.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.Authorization.Interfaces.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.Authorization.Base.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.Authorization.Sign2HmacSHA256.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.Utils.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.HTTP.Interfaces.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.HTTP.Base.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.HTTP.RestClient.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.Classes.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.Factory.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.ListQueuesRequest.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.Model.Exceptions.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessageRequest.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessage.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.ListQueueTagsResponse.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.GetQueueUrlResponse.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessageResponse.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.SendMessageRequest.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.SendMessageResponse.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.DeleteMessageRequest.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.DeleteMessageResponse.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.CreateQueueResponse.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.CreateQueueRequest.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.DeleteMessageBatchRequest.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.DeleteMessageBatchResponse.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.GetQueueAttributesRequest.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.GetQueueAttributesResponse.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.PurgeQueueResponse.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.TagQueueRequest.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.TagQueueResponse.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.UntagQueueRequest.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.UntagQueueResponse.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.DeleteQueueResponse.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Service.CloudAPI.pas"/>
-        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.Exceptions.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.ListQueues.Request.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.ListQueues.Response.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.ListQueueTags.Request.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.ListQueueTags.Response.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Service.Interfaces.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Service.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.GetQueueUrl.Request.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.GetQueueUrl.Response.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Facade.GetQueueUrl.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -171,9 +148,7 @@
                     <Source Name="MainSource">SampleSQS.dpr</Source>
                 </Source>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k260.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp260.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Program Files (x86)\FastReports\LibD26\dclfrxtee26.bpl">FastReport 6.0 Tee Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k250.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
@@ -192,15 +167,12 @@
                         <Operation>1</Operation>
                     </Platform>
                     <Platform Name="Win32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>0</Operation>
                     </Platform>
                 </DeployClass>
                 <DeployClass Name="AndroidClassesDexFile">
                     <Platform Name="Android">
-                        <RemoteDir>classes</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
-                    <Platform Name="Android64">
                         <RemoteDir>classes</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
@@ -226,10 +198,6 @@
                         <RemoteDir>library\lib\armeabi</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
-                    <Platform Name="Android64">
-                        <RemoteDir>library\lib\armeabi</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
                 </DeployClass>
                 <DeployClass Name="AndroidLibnativeArmeabiv7aFile">
                     <Platform Name="Android64">
@@ -242,18 +210,10 @@
                         <RemoteDir>library\lib\mips</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
-                    <Platform Name="Android64">
-                        <RemoteDir>library\lib\mips</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
                 </DeployClass>
                 <DeployClass Name="AndroidServiceOutput">
                     <Platform Name="Android">
                         <RemoteDir>library\lib\armeabi-v7a</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
-                    <Platform Name="Android64">
-                        <RemoteDir>library\lib\arm64-v8a</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
                 </DeployClass>
@@ -268,17 +228,9 @@
                         <RemoteDir>res\drawable</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
-                    <Platform Name="Android64">
-                        <RemoteDir>res\drawable</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
                 </DeployClass>
                 <DeployClass Name="AndroidSplashStyles">
                     <Platform Name="Android">
-                        <RemoteDir>res\values</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
-                    <Platform Name="Android64">
                         <RemoteDir>res\values</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
@@ -308,17 +260,9 @@
                         <RemoteDir>res\drawable</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
-                    <Platform Name="Android64">
-                        <RemoteDir>res\drawable</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
                 </DeployClass>
                 <DeployClass Name="Android_LauncherIcon144">
                     <Platform Name="Android">
-                        <RemoteDir>res\drawable-xxhdpi</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
-                    <Platform Name="Android64">
                         <RemoteDir>res\drawable-xxhdpi</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
@@ -338,17 +282,9 @@
                         <RemoteDir>res\drawable-ldpi</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
-                    <Platform Name="Android64">
-                        <RemoteDir>res\drawable-ldpi</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
                 </DeployClass>
                 <DeployClass Name="Android_LauncherIcon48">
                     <Platform Name="Android">
-                        <RemoteDir>res\drawable-mdpi</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
-                    <Platform Name="Android64">
                         <RemoteDir>res\drawable-mdpi</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
@@ -358,17 +294,9 @@
                         <RemoteDir>res\drawable-hdpi</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
-                    <Platform Name="Android64">
-                        <RemoteDir>res\drawable-hdpi</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
                 </DeployClass>
                 <DeployClass Name="Android_LauncherIcon96">
                     <Platform Name="Android">
-                        <RemoteDir>res\drawable-xhdpi</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
-                    <Platform Name="Android64">
                         <RemoteDir>res\drawable-xhdpi</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
@@ -428,17 +356,9 @@
                         <RemoteDir>res\drawable-small</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
-                    <Platform Name="Android64">
-                        <RemoteDir>res\drawable-small</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
                 </DeployClass>
                 <DeployClass Name="Android_SplashImage470">
                     <Platform Name="Android">
-                        <RemoteDir>res\drawable-normal</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
-                    <Platform Name="Android64">
                         <RemoteDir>res\drawable-normal</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
@@ -448,17 +368,9 @@
                         <RemoteDir>res\drawable-large</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
-                    <Platform Name="Android64">
-                        <RemoteDir>res\drawable-large</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
                 </DeployClass>
                 <DeployClass Name="Android_SplashImage960">
                     <Platform Name="Android">
-                        <RemoteDir>res\drawable-xlarge</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
-                    <Platform Name="Android64">
                         <RemoteDir>res\drawable-xlarge</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
@@ -491,11 +403,6 @@
                         <Operation>1</Operation>
                         <Extensions>.framework</Extensions>
                     </Platform>
-                    <Platform Name="OSX64">
-                        <RemoteDir>Contents\MacOS</RemoteDir>
-                        <Operation>1</Operation>
-                        <Extensions>.framework</Extensions>
-                    </Platform>
                     <Platform Name="Win32">
                         <Operation>0</Operation>
                     </Platform>
@@ -514,11 +421,6 @@
                         <Extensions>.dylib</Extensions>
                     </Platform>
                     <Platform Name="OSX32">
-                        <RemoteDir>Contents\MacOS</RemoteDir>
-                        <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
-                    </Platform>
-                    <Platform Name="OSX64">
                         <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                         <Extensions>.dylib</Extensions>
@@ -546,11 +448,6 @@
                         <Operation>1</Operation>
                         <Extensions>.dylib</Extensions>
                     </Platform>
-                    <Platform Name="OSX64">
-                        <RemoteDir>Contents\MacOS</RemoteDir>
-                        <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
-                    </Platform>
                     <Platform Name="Win32">
                         <Operation>0</Operation>
                         <Extensions>.bpl</Extensions>
@@ -558,9 +455,6 @@
                 </DeployClass>
                 <DeployClass Name="File">
                     <Platform Name="Android">
-                        <Operation>0</Operation>
-                    </Platform>
-                    <Platform Name="Android64">
                         <Operation>0</Operation>
                     </Platform>
                     <Platform Name="iOSDevice32">
@@ -573,10 +467,6 @@
                         <Operation>0</Operation>
                     </Platform>
                     <Platform Name="OSX32">
-                        <RemoteDir>Contents\Resources\StartUp\</RemoteDir>
-                        <Operation>0</Operation>
-                    </Platform>
-                    <Platform Name="OSX64">
                         <RemoteDir>Contents\Resources\StartUp\</RemoteDir>
                         <Operation>0</Operation>
                     </Platform>
@@ -1092,9 +982,6 @@
                     <Platform Name="Android">
                         <Operation>1</Operation>
                     </Platform>
-                    <Platform Name="Android64">
-                        <Operation>1</Operation>
-                    </Platform>
                 </DeployClass>
                 <DeployClass Name="ProjectiOSDeviceDebug">
                     <Platform Name="iOSDevice32">
@@ -1167,17 +1054,9 @@
                         <RemoteDir>..\</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
-                    <Platform Name="OSX64">
-                        <RemoteDir>..\</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
                 </DeployClass>
                 <DeployClass Name="ProjectOSXInfoPList">
                     <Platform Name="OSX32">
-                        <RemoteDir>Contents</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
-                    <Platform Name="OSX64">
                         <RemoteDir>Contents</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
@@ -1187,18 +1066,10 @@
                         <RemoteDir>Contents\Resources</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
-                    <Platform Name="OSX64">
-                        <RemoteDir>Contents\Resources</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
                 </DeployClass>
                 <DeployClass Required="true" Name="ProjectOutput">
                     <Platform Name="Android">
                         <RemoteDir>library\lib\armeabi-v7a</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
-                    <Platform Name="Android64">
-                        <RemoteDir>library\lib\arm64-v8a</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
                     <Platform Name="iOSDevice32">
@@ -1214,10 +1085,6 @@
                         <Operation>1</Operation>
                     </Platform>
                     <Platform Name="OSX32">
-                        <RemoteDir>Contents\MacOS</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
-                    <Platform Name="OSX64">
                         <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>

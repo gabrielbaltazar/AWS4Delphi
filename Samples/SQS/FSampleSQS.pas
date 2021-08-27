@@ -6,9 +6,10 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.ValEdit,
   Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls,
-  AWS4D.SQS.Model.Interfaces,
-  AWS4D.SQS.Service.Interfaces,
   System.IniFiles,
+  AWS4D.Core.Model.Types,
+  AWS4D.SQS.Facade.Interfaces,
+  AWS4D.SQS.Facade,
   REST.Json,
   System.JSON;
 
@@ -130,15 +131,15 @@ type
     edtDeleteQueueQueueUrl: TEdit;
     btnDeleteQueue: TButton;
     mmoDeleteQueue: TMemo;
-    procedure btnListQueuesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btnListQueuesClick(Sender: TObject);
     procedure btnListQueueTagsClick(Sender: TObject);
     procedure btnQueueURLClick(Sender: TObject);
     procedure btnReceiveMessageClick(Sender: TObject);
     procedure btnSendMessageClick(Sender: TObject);
     procedure btnDeleteMessageClick(Sender: TObject);
     procedure btnCreateQueueClick(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnDeleteMessageBatchClick(Sender: TObject);
     procedure btnGetQueueAttributesClick(Sender: TObject);
     procedure btnPurgeQueueClick(Sender: TObject);
@@ -146,28 +147,15 @@ type
     procedure btnUntagQueueClick(Sender: TObject);
     procedure btnDeleteQueueClick(Sender: TObject);
   private
+    FSQS: IAWS4DSQSFacade;
+
     { Private declarations }
     function GetIniFile: TIniFile;
     procedure SaveConfig;
     procedure LoadConfig;
 
-    function CreateSQS: IAWS4DServiceSQS;
+//    function CreateSQS: IAWS4DServiceSQS;
 
-    procedure writeCreateQueueResponse(Response: IAWS4DSQSModelCreateQueueResponse);
-    procedure writeDeleteMessageResponse(Response: IAWS4DSQSModelDeleteMessageResponse);
-    procedure writeDeleteMessageBatchResponse(Response: IAWS4DSQSModelDeleteMessageBatchResponse);
-    procedure writeDeleteQueueResponse(Response: IAWS4DSQSModelDeleteQueueResponse);
-    procedure writeGetQueueAttributesResponse(Response: IAWS4DSQSModelGetQueueAttributesResponse);
-    procedure writeGetQueueUrlResponse(Response: IAWS4DSQSModelGetQueueUrlResponse);
-    procedure writeListQueuesResponse(Response: IAWS4DSQSModelListQueuesResponse);
-    procedure writeListQueueTagsResponse(Response: IAWS4DSQSModelListQueueTagsResponse);
-    procedure writePurgeQueueResponse(Response: IAWS4DSQSModelPurgeQueueResponse);
-    procedure writeReceiveMessageResponse(Response: IAWS4DSQSModelReceiveMessageResponse);
-    procedure writeSendMessageResponse(Response: IAWS4DSQSModelSendMessageResponse);
-    procedure writeTagQueueResponse(Response: IAWS4DSQSModelTagQueueResponse);
-    procedure writeUntagQueueResponse(Response: IAWS4DSQSModelUntagQueueResponse);
-
-    procedure writeHTTPException(AException: EAWS4DHTTPException);
   public
     { Public declarations }
   end;
@@ -180,194 +168,189 @@ implementation
 {$R *.dfm}
 
 procedure TForm2.btnCreateQueueClick(Sender: TObject);
-var
-  request: IAWS4DSQSModelCreateQueueRequest;
-  response: IAWS4DSQSModelCreateQueueResponse;
+//var
+//  request: IAWS4DSQSModelCreateQueueRequest;
+//  response: IAWS4DSQSModelCreateQueueResponse;
 begin
-  request := SQSModelFactory.CreateQueueRequest;
-  request.QueueName(edtCreateQueueQueueName.Text);
-
-  response := CreateSQS.CreateQueue(request);
-  writeCreateQueueResponse(response);
+//  request := SQSModelFactory.CreateQueueRequest;
+//  request.QueueName(edtCreateQueueQueueName.Text);
+//
+//  response := CreateSQS.CreateQueue(request);
+//  writeCreateQueueResponse(response);
 end;
 
 procedure TForm2.btnDeleteMessageBatchClick(Sender: TObject);
-var
-  request: IAWS4DSQSModelDeleteMessageBatchRequest;
-  response: IAWS4DSQSModelDeleteMessageBatchResponse;
-  messageId: string;
-  receiptHandle: string;
-  i : Integer;
+//var
+//  request: IAWS4DSQSModelDeleteMessageBatchRequest;
+//  response: IAWS4DSQSModelDeleteMessageBatchResponse;
+//  messageId: string;
+//  receiptHandle: string;
+//  i : Integer;
 begin
-  request := SQSModelFactory.DeleteMessageBatchRequest;
-  request.QueueUrl(edtDeleteMessageBatchQueueName.Text);
-
-  for i := 0 to edtDeleteMessageBatchList.Strings.Count - 1 do
-  begin
-    messageId := edtDeleteMessageBatchList.Strings.Names[i];
-    receiptHandle := edtDeleteMessageBatchList.Strings.ValueFromIndex[i];
-
-    request.AddReceiptHandle(messageId, receiptHandle);
-  end;
-
-  response := CreateSQS.DeleteMessageBatch(request);
-  writeDeleteMessageBatchResponse(response);
+//  request := SQSModelFactory.DeleteMessageBatchRequest;
+//  request.QueueUrl(edtDeleteMessageBatchQueueName.Text);
+//
+//  for i := 0 to edtDeleteMessageBatchList.Strings.Count - 1 do
+//  begin
+//    messageId := edtDeleteMessageBatchList.Strings.Names[i];
+//    receiptHandle := edtDeleteMessageBatchList.Strings.ValueFromIndex[i];
+//
+//    request.AddReceiptHandle(messageId, receiptHandle);
+//  end;
+//
+//  response := CreateSQS.DeleteMessageBatch(request);
+//  writeDeleteMessageBatchResponse(response);
 end;
 
 procedure TForm2.btnDeleteMessageClick(Sender: TObject);
-var
-  request: IAWS4DSQSModelDeleteMessageRequest;
-  response : IAWS4DSQSModelDeleteMessageResponse;
+//var
+//  request: IAWS4DSQSModelDeleteMessageRequest;
+//  response : IAWS4DSQSModelDeleteMessageResponse;
 begin
-  request := SQSModelFactory.DeleteMessageRequest;
-  request
-    .QueueUrl(edtDeleteMessageQueueName.Text)
-    .ReceiptHandle(edtDeleteMessageReceiptHandle.Text);
-
-  response := CreateSQS.DeleteMessage(request);
-  writeDeleteMessageResponse(response);
+//  request := SQSModelFactory.DeleteMessageRequest;
+//  request
+//    .QueueUrl(edtDeleteMessageQueueName.Text)
+//    .ReceiptHandle(edtDeleteMessageReceiptHandle.Text);
+//
+//  response := CreateSQS.DeleteMessage(request);
+//  writeDeleteMessageResponse(response);
 end;
 
 procedure TForm2.btnDeleteQueueClick(Sender: TObject);
-var
-  response: IAWS4DSQSModelDeleteQueueResponse;
+//var
+//  response: IAWS4DSQSModelDeleteQueueResponse;
 begin
-  response := CreateSQS.DeleteQueue(edtDeleteQueueQueueUrl.Text);
-  writeDeleteQueueResponse(response);
+//  response := CreateSQS.DeleteQueue(edtDeleteQueueQueueUrl.Text);
+//  writeDeleteQueueResponse(response);
 end;
 
 procedure TForm2.btnGetQueueAttributesClick(Sender: TObject);
-var
-  request: IAWS4DSQSModelGetQueueAttributesRequest;
-  response: IAWS4DSQSModelGetQueueAttributesResponse;
+//var
+//  request: IAWS4DSQSModelGetQueueAttributesRequest;
+//  response: IAWS4DSQSModelGetQueueAttributesResponse;
 begin
-  request := SQSModelFactory.GetQueueAttributesRequest;
-  request
-    .QueueUrl(edtGetQueueAttributesQueueName.Text);
-
-  response := CreateSQS.GetQueueAttributes(request);
-  writeGetQueueAttributesResponse(response);
+//  request := SQSModelFactory.GetQueueAttributesRequest;
+//  request
+//    .QueueUrl(edtGetQueueAttributesQueueName.Text);
+//
+//  response := CreateSQS.GetQueueAttributes(request);
+//  writeGetQueueAttributesResponse(response);
 end;
 
 procedure TForm2.btnListQueuesClick(Sender: TObject);
-var
-  response : IAWS4DSQSModelListQueuesResponse;
-  request  : IAWS4DSQSModelListQueuesRequest;
 begin
-  request := SQSModelFactory.ListQueuesRequest;
-  request
-    .QueueNamePrefix(edtListQueuesQueuePrefix.Text)
-    .MaxResults(StrToIntDef(edtListQueuesMaxResult.Text, 0))
-    .NextToken(edtListQueuesNextToken.Text);
+  FSQS.ListQueues
+    .Request
+      .MaxResults(5)
+    .&End
+    .Send;
 
-  try
-    response := CreateSQS.ListQueues(request);
-    writeListQueuesResponse(response);
-  except
-    on e : EAWS4DHTTPException do
-    begin
-      writeHTTPException(e);
-      raise;
-    end;
-  end;
+  FSQS.ListQueues.Response;
+
+  while FSQS.ListQueues.Response.QueueUrls.HasNext do
+    mmoListQueues.Lines.Add(FSQS.ListQueues.Response.QueueUrls.Current);
 end;
 
 procedure TForm2.btnListQueueTagsClick(Sender: TObject);
-var
-  response: IAWS4DSQSModelListQueueTagsResponse;
 begin
-  response := CreateSQS.ListQueueTags(edtListQueueTagsQueueName.Text);
-  writeListQueueTagsResponse(response);
+  mmoListQueueTags.Lines.Clear;
+
+  FSQS.ListQueueTags
+    .Request
+      .QueueUrl(edtListQueueTagsQueueName.Text)
+    .&End
+    .Send;
+
+  while FSQS.ListQueueTags.Response.Tags.HasNext do
+  begin
+    mmoListQueueTags.Lines.Add(FSQS.ListQueueTags.Response.Tags.Current.Key);
+    mmoListQueueTags.Lines.Add(FSQS.ListQueueTags.Response.Tags.Current.Value);
+
+    mmoListQueueTags.Lines.Add('');
+  end;
 end;
 
 procedure TForm2.btnPurgeQueueClick(Sender: TObject);
-var
-  response : IAWS4DSQSModelPurgeQueueResponse;
+//var
+//  response : IAWS4DSQSModelPurgeQueueResponse;
 begin
-  response := CreateSQS.PurgeQueue(edtPurgeQueueQueueUrl.Text);
-  writePurgeQueueResponse(response);
+//  response := CreateSQS.PurgeQueue(edtPurgeQueueQueueUrl.Text);
+//  writePurgeQueueResponse(response);
 end;
 
 procedure TForm2.btnQueueURLClick(Sender: TObject);
-var
-  response : IAWS4DSQSModelGetQueueUrlResponse;
 begin
-  response := CreateSQS.GetQueueUrl('Send-to-Email-Docfiscal-dev');
-  writeGetQueueUrlResponse(response);
+  FSQS.GetQueueUrl
+    .Request
+      .QueueName(edtGetQueueUrlQueueName.Text)
+    .&End
+    .Send;
+
+  mmoGetQueueUrl.Lines.Add(FSQS.GetQueueUrl.Response.QueueUrl);
 end;
 
 procedure TForm2.btnReceiveMessageClick(Sender: TObject);
-var
-  request: IAWS4DSQSModelReceiveMessageRequest;
-  response : IAWS4DSQSModelReceiveMessageResponse;
+//var
+//  request: IAWS4DSQSModelReceiveMessageRequest;
+//  response : IAWS4DSQSModelReceiveMessageResponse;
 begin
-  request := SQSModelFactory.ReceiveMessageRequest;
-  request
-    .queueUrl(edtReceiveMessageQueueName.Text)
-    .maxNumberOfMessages(StrToIntDef(edtReceiveMessageMaxNumberMessages.Text, -1))
-    .visibilityTimeout(StrToIntDef(edtReceiveMessageVisibilityTimeout.Text, -1));
-
-  response := CreateSQS.ReceiveMessage(request);
-  writeReceiveMessageResponse(response);
+//  request := SQSModelFactory.ReceiveMessageRequest;
+//  request
+//    .queueUrl(edtReceiveMessageQueueName.Text)
+//    .maxNumberOfMessages(StrToIntDef(edtReceiveMessageMaxNumberMessages.Text, -1))
+//    .visibilityTimeout(StrToIntDef(edtReceiveMessageVisibilityTimeout.Text, -1));
+//
+//  response := CreateSQS.ReceiveMessage(request);
+//  writeReceiveMessageResponse(response);
 end;
 
 procedure TForm2.btnSendMessageClick(Sender: TObject);
-var
-  request: IAWS4DSQSModelSendMessageRequest;
-  response: IAWS4DSQSModelSendMessageResponse;
+//var
+//  request: IAWS4DSQSModelSendMessageRequest;
+//  response: IAWS4DSQSModelSendMessageResponse;
 begin
-  request := SQSModelFactory.SendMessageRequest;
-  request
-    .QueueUrl(edtSendMessageQueueName.Text)
-    .MessageBody(edtSendMessageMessageBody.Text);
-
-  response := CreateSQS.SendMessage(request);
-  writeSendMessageResponse(response);
+//  request := SQSModelFactory.SendMessageRequest;
+//  request
+//    .QueueUrl(edtSendMessageQueueName.Text)
+//    .MessageBody(edtSendMessageMessageBody.Text);
+//
+//  response := CreateSQS.SendMessage(request);
+//  writeSendMessageResponse(response);
 end;
 
 procedure TForm2.btnTagQueueClick(Sender: TObject);
-var
-  request: IAWS4DSQSModelTagQueueRequest;
-  response: IAWS4DSQSModelTagQueueResponse;
-  i : Integer;
+//var
+//  request: IAWS4DSQSModelTagQueueRequest;
+//  response: IAWS4DSQSModelTagQueueResponse;
+//  i : Integer;
 begin
-  request := SQSModelFactory.TagQueueRequest;
-  request.QueueUrl(edtTagQueueQueueUrl.Text);
-
-  for i := 0 to Pred(lstTagQueue.Strings.Count) do
-    request.AddTag(
-      lstTagQueue.Strings.Names[i],
-      lstTagQueue.Strings.ValueFromIndex[i]);
-
-  response := CreateSQS.TagQueue(request);
-  writeTagQueueResponse(response);
+//  request := SQSModelFactory.TagQueueRequest;
+//  request.QueueUrl(edtTagQueueQueueUrl.Text);
+//
+//  for i := 0 to Pred(lstTagQueue.Strings.Count) do
+//    request.AddTag(
+//      lstTagQueue.Strings.Names[i],
+//      lstTagQueue.Strings.ValueFromIndex[i]);
+//
+//  response := CreateSQS.TagQueue(request);
+//  writeTagQueueResponse(response);
 end;
 
 procedure TForm2.btnUntagQueueClick(Sender: TObject);
-var
-  request: IAWS4DSQSModelUntagQueueRequest;
-  response: IAWS4DSQSModelUntagQueueResponse;
+//var
+//  request: IAWS4DSQSModelUntagQueueRequest;
+//  response: IAWS4DSQSModelUntagQueueResponse;
 begin
-  request := SQSModelFactory.UntagQueueRequest;
-  request.QueueUrl(edtUntagQueueQueueUrl.Text);
-
-  if edtUntagQueueTag1.Text <> '' then
-    request.AddTag(edtUntagQueueTag1.Text);
-
-  if edtUntagQueueTag2.Text <> '' then
-    request.AddTag(edtUntagQueueTag2.Text);
-
-  response := CreateSQS.UntagQueue(request);
-  writeUntagQueueResponse(response);
-end;
-
-function TForm2.CreateSQS: IAWS4DServiceSQS;
-begin
-  result := SQSService;
-  result
-    .AccessKeyID(edtAccessKey.Text)
-    .Region(edtRegion.Text)
-    .SecretKey(edtSecretKey.Text);
+//  request := SQSModelFactory.UntagQueueRequest;
+//  request.QueueUrl(edtUntagQueueQueueUrl.Text);
+//
+//  if edtUntagQueueTag1.Text <> '' then
+//    request.AddTag(edtUntagQueueTag1.Text);
+//
+//  if edtUntagQueueTag2.Text <> '' then
+//    request.AddTag(edtUntagQueueTag2.Text);
+//
+//  response := CreateSQS.UntagQueue(request);
 end;
 
 procedure TForm2.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -379,6 +362,13 @@ procedure TForm2.FormCreate(Sender: TObject);
 begin
   ReportMemoryLeaksOnShutdown := True;
   LoadConfig;
+
+  FSQS := TAWS4DSQSFacade.New;
+  FSQS
+    .AccessKey(edtAccessKey.Text)
+    .SecretKey(edtSecretKey.Text)
+    .Region(edtRegion.Text);
+
   edtSendMessageMessageBody.Text := Format('Message Test %s', [FormatDateTime('dd/MM/yyyy hh:mm:ss', Now)]);
 end;
 
@@ -416,146 +406,6 @@ begin
   finally
     iniFile.Free;
   end;
-end;
-
-procedure TForm2.writeCreateQueueResponse(Response: IAWS4DSQSModelCreateQueueResponse);
-begin
-  mmoCreateQueue.Lines.Clear;
-  mmoCreateQueue.Lines.Add('RequestID: ' + Response.RequestId);
-  mmoCreateQueue.Lines.Add('Queue Url: ' + Response.QueueUrl);
-end;
-
-procedure TForm2.writeDeleteMessageBatchResponse(Response: IAWS4DSQSModelDeleteMessageBatchResponse);
-var
-  i : Integer;
-begin
-  mmoDeleteMessageBatch.Lines.Clear;
-  mmoDeleteMessageBatch.Lines.Add('RequestID: ' + Response.RequestId);
-  mmoDeleteMessageBatch.Lines.Add(EmptyStr);
-
-  mmoDeleteMessageBatch.Lines.Add('Successful Ids');
-  for i := 0 to Pred(Response.Successful.Count) do
-    mmoDeleteMessageBatch.Lines.Add(Response.Successful[i]);
-end;
-
-procedure TForm2.writeDeleteMessageResponse(Response: IAWS4DSQSModelDeleteMessageResponse);
-begin
-  mmoDeleteMessage.Lines.Clear;
-  mmoDeleteMessage.Lines.Add('RequestID: ' + Response.RequestId);
-end;
-
-procedure TForm2.writeDeleteQueueResponse(Response: IAWS4DSQSModelDeleteQueueResponse);
-begin
-  mmoDeleteQueue.Lines.Clear;
-  mmoDeleteQueue.Lines.Add('RequestID: ' + Response.RequestId);
-end;
-
-procedure TForm2.writeGetQueueAttributesResponse(Response: IAWS4DSQSModelGetQueueAttributesResponse);
-var
-  key: string;
-begin
-  mmoGetQueueAttributes.Lines.Clear;
-  mmoGetQueueAttributes.Lines.Add('RequestID: ' + Response.RequestId);
-
-  for key in Response.Attributes.Keys do
-    mmoGetQueueAttributes.Lines.Add(key + ' = ' + Response.Attributes.Items[key]);
-end;
-
-procedure TForm2.writeGetQueueUrlResponse(Response: IAWS4DSQSModelGetQueueUrlResponse);
-begin
-  mmoGetQueueUrl.Lines.Clear;
-  mmoGetQueueUrl.Lines.Add('RequestID: ' + Response.RequestId);
-
-  mmoGetQueueUrl.Lines.Add('Url = ' + Response.QueueUrl);
-end;
-
-procedure TForm2.writeHTTPException(AException: EAWS4DHTTPException);
-begin
-  mmoListQueues.Lines.Clear;
-  mmoListQueues.Lines.Add('RequestID: ' + AException.RequestId);
-  mmoListQueues.Lines.Add('Code: '      + AException.Code);
-  mmoListQueues.Lines.Add('Message: '   + AException.Message);
-  mmoListQueues.Lines.Add('Type: '      + AException.&Type);
-end;
-
-procedure TForm2.writeListQueuesResponse(Response: IAWS4DSQSModelListQueuesResponse);
-var
-  i : Integer;
-begin
-  edtListQueuesNextToken.Clear;
-  mmoListQueues.Lines.Clear;
-  mmoListQueues.Lines.Add('RequestID: ' + Response.RequestId);
-  if not Response.NextToken.IsEmpty then
-  begin
-    edtListQueuesNextToken.Text := Response.NextToken;
-    mmoListQueues.Lines.Add('NextToken: ' + Response.NextToken);
-  end;
-
-  mmoListQueues.Lines.Add('Queues---------');
-  for i := 0 to Pred(Response.QueuesUrls.Count) do
-    mmoListQueues.Lines.Add(Response.QueuesUrls[i]);
-end;
-
-procedure TForm2.writeListQueueTagsResponse(Response: IAWS4DSQSModelListQueueTagsResponse);
-var
-  key: string;
-begin
-  mmoListQueueTags.Lines.Clear;
-  mmoListQueueTags.Lines.Add('RequestID: ' + Response.RequestId);
-
-  mmoListQueueTags.Lines.Add('Tags ---------');
-  for key in Response.Tags.Keys do
-    mmoListQueueTags.Lines.Add(key + '=' + Response.Tags.Items[key]);
-end;
-
-procedure TForm2.writePurgeQueueResponse(Response: IAWS4DSQSModelPurgeQueueResponse);
-begin
-  mmoPurgeQueue.Clear;
-  mmoPurgeQueue.Lines.Add('RequestID: ' + Response.RequestId);
-end;
-
-procedure TForm2.writeReceiveMessageResponse(Response: IAWS4DSQSModelReceiveMessageResponse);
-var
-  receiveMessage: IAWS4DSQSModelReceiveMessage;
-  key : string;
-begin
-  mmoReceiveMessageResponse.Clear;
-  mmoReceiveMessageResponse.Lines.Add('RequestID: ' + Response.RequestId);
-
-  for receiveMessage in Response.Messages do
-  begin
-    mmoReceiveMessageResponse.Lines.Add('MessageId: ' + receiveMessage.MessageId);
-    mmoReceiveMessageResponse.Lines.Add('MD5OfBody: ' + receiveMessage.MD5OfBody);
-    mmoReceiveMessageResponse.Lines.Add('Body: ' + receiveMessage.Body);
-    mmoReceiveMessageResponse.Lines.Add('ReceiptHandle: ' + receiveMessage.ReceiptHandle);
-
-    edtDeleteMessageReceiptHandle.Text := receiveMessage.ReceiptHandle;
-
-    mmoReceiveMessageResponse.Lines.Add('Attributes -----');
-    for key in receiveMessage.Attributes.Keys do
-      mmoReceiveMessageResponse.Lines.Add(key + ' = ' + receiveMessage.Attributes.Items[key]);
-  end;
-end;
-
-procedure TForm2.writeSendMessageResponse(Response: IAWS4DSQSModelSendMessageResponse);
-begin
-  mmoSendMessage.Clear;
-  mmoSendMessage.Lines.Add('RequestID: ' + Response.RequestId);
-  mmoSendMessage.Lines.Add('MessageId: ' + Response.MessageId);
-  mmoSendMessage.Lines.Add('MD5OfMessageBody: ' + Response.MD5OfMessageBody);
-  mmoSendMessage.Lines.Add('SequenceNumber: ' + Response.SequenceNumber);
-end;
-
-procedure TForm2.writeTagQueueResponse(Response: IAWS4DSQSModelTagQueueResponse);
-begin
-  mmoTagQueue.Clear;
-  mmoTagQueue.Lines.Add('RequestID: ' + Response.RequestId);
-end;
-
-procedure TForm2.writeUntagQueueResponse(Response: IAWS4DSQSModelUntagQueueResponse);
-begin
-  mmoUntagQueue.Clear;
-  mmoUntagQueue.Lines.Add('RequestID: ' + Response.RequestId);
 end;
 
 end.
