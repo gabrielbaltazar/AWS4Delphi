@@ -1,0 +1,11 @@
+{
+	"name": "SNS",
+	"description": "",
+	"version": "1.0.0",
+	"homepage": "",
+	"mainsrc": "./",
+	"projects": [],
+	"dependencies": {
+		"github.com/git@github.com:gabrielbaltazar/gbclient": "2.0.0"
+	}
+}
