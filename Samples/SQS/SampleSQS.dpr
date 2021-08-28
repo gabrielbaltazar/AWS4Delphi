@@ -28,7 +28,9 @@ uses
   AWS4D.SQS.Model.ReceiveMessage.Request in '..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessage.Request.pas',
   AWS4D.SQS.Model.ReceiveMessage in '..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessage.pas',
   AWS4D.SQS.Model.ReceiveMessage.Response in '..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessage.Response.pas',
-  AWS4D.SQS.Facade.ReceiveMessage in '..\..\Source\SQS\AWS4D.SQS.Facade.ReceiveMessage.pas';
+  AWS4D.SQS.Facade.ReceiveMessage in '..\..\Source\SQS\AWS4D.SQS.Facade.ReceiveMessage.pas',
+  AWS4D.SQS.Model.DeleteMessage.Request in '..\..\Source\SQS\AWS4D.SQS.Model.DeleteMessage.Request.pas',
+  AWS4D.SQS.Facade.DeleteMessage in '..\..\Source\SQS\AWS4D.SQS.Facade.DeleteMessage.pas';
 
 {$R *.res}
 

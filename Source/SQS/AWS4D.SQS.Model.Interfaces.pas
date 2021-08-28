@@ -6,6 +6,17 @@ uses
   AWS4D.Core.Model.Types;
 
 type
+  IAWS4DSQSDeleteMessageRequest<I: IInterface> = interface
+    ['{14908AEE-2924-49A4-8D71-6369C339EE76}']
+    function QueueName(Value: String): IAWS4DSQSDeleteMessageRequest<I>; overload;
+    function ReceiptHandle(Value: String): IAWS4DSQSDeleteMessageRequest<I>; overload;
+
+    function QueueName: string; overload;
+    function ReceiptHandle: string; overload;
+
+    function &End: I;
+  end;
+
   IAWS4DSQSGetQueueUrlRequest<I: IInterface> = interface
     ['{DD921743-06EE-43D4-926A-C20199517337}']
     function QueueName(Value: String): IAWS4DSQSGetQueueUrlRequest<I>; overload;

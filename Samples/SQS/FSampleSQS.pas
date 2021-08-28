@@ -47,14 +47,10 @@ type
     mmoListQueues: TMemo;
     tsListQueueTags: TTabSheet;
     Panel2: TPanel;
-    Label7: TLabel;
-    edtListQueueTagsQueueName: TEdit;
     btnListQueueTags: TButton;
     mmoListQueueTags: TMemo;
     tsReceiveMessage: TTabSheet;
     Panel3: TPanel;
-    Label8: TLabel;
-    edtReceiveMessageQueueName: TEdit;
     btnReceiveMessage: TButton;
     tsGetQueueUrl: TTabSheet;
     Panel4: TPanel;
@@ -69,17 +65,13 @@ type
     mmoReceiveMessageResponse: TMemo;
     tsSendMessage: TTabSheet;
     Panel5: TPanel;
-    Label12: TLabel;
     Label13: TLabel;
-    edtSendMessageQueueName: TEdit;
     btnSendMessage: TButton;
     edtSendMessageMessageBody: TEdit;
     mmoSendMessage: TMemo;
     tsDeleteMessage: TTabSheet;
     Panel6: TPanel;
-    Label14: TLabel;
     Label15: TLabel;
-    edtDeleteMessageQueueName: TEdit;
     btnDeleteMessage: TButton;
     edtDeleteMessageReceiptHandle: TEdit;
     mmoDeleteMessage: TMemo;
@@ -131,6 +123,8 @@ type
     edtDeleteQueueQueueUrl: TEdit;
     btnDeleteQueue: TButton;
     mmoDeleteQueue: TMemo;
+    edtQueueName: TEdit;
+    Label14: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnListQueuesClick(Sender: TObject);
@@ -203,17 +197,13 @@ begin
 end;
 
 procedure TForm2.btnDeleteMessageClick(Sender: TObject);
-//var
-//  request: IAWS4DSQSModelDeleteMessageRequest;
-//  response : IAWS4DSQSModelDeleteMessageResponse;
 begin
-//  request := SQSModelFactory.DeleteMessageRequest;
-//  request
-//    .QueueUrl(edtDeleteMessageQueueName.Text)
-//    .ReceiptHandle(edtDeleteMessageReceiptHandle.Text);
-//
-//  response := CreateSQS.DeleteMessage(request);
-//  writeDeleteMessageResponse(response);
+  FSQS.DeleteMessage
+    .Request
+      .QueueName(edtQueueName.Text)
+      .ReceiptHandle(edtDeleteMessageReceiptHandle.Text)
+    .&End
+    .Send;
 end;
 
 procedure TForm2.btnDeleteQueueClick(Sender: TObject);
@@ -257,7 +247,7 @@ begin
 
   FSQS.ListQueueTags
     .Request
-      .QueueUrl(edtListQueueTagsQueueName.Text)
+      .QueueUrl(edtQueueName.Text)
     .&End
     .Send;
 
@@ -295,7 +285,7 @@ begin
     .Request
       .MaxNumberOfMessages(StrToIntDef(edtReceiveMessageMaxNumberMessages.Text, 0))
       .VisibilityTimeout(StrToIntDef(edtReceiveMessageVisibilityTimeout.Text, 0))
-      .QueueUrl(edtReceiveMessageQueueName.Text)
+      .QueueUrl(edtQueueName.Text)
       .AddMessageAttribute('aaa')
     .&End
     .Send;
@@ -312,6 +302,8 @@ begin
     );
 
     mmoReceiveMessageResponse.Lines.Add('');
+
+    edtDeleteMessageReceiptHandle.Text := FSQS.ReceiveMessage.Response.Messages.Current.ReceiptHandle;
   end;
 end;
 
@@ -319,7 +311,7 @@ procedure TForm2.btnSendMessageClick(Sender: TObject);
 begin
   FSQS.SendMessage
     .Request
-      .QueueUrl(edtSendMessageQueueName.Text)
+      .QueueUrl(edtQueueName.Text)
       .MessageBody(edtSendMessageMessageBody.Text)
       .AddAttribute('aaa', 'bbb')
       .AddAttribute('ccc', 'ddd')

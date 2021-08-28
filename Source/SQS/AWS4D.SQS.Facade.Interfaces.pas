@@ -8,6 +8,7 @@ uses
   AWS4D.Core.Model.Types;
 
 type
+  IAWS4DSQSFacadeDeleteMessage = interface;
   IAWS4DSQSFacadeGetQueueUrl = interface;
   IAWS4DSQSFacadeListQueues = interface;
   IAWS4DSQSFacadeListQueueTags = interface;
@@ -21,11 +22,18 @@ type
     function Region(Value: String): IAWS4DSQSFacade; overload;
     function Region(Value: TAWS4DRegion): IAWS4DSQSFacade; overload;
 
+    function DeleteMessage: IAWS4DSQSFacadeDeleteMessage;
     function GetQueueUrl: IAWS4DSQSFacadeGetQueueUrl;
     function ListQueues: IAWS4DSQSFacadeListQueues;
     function ListQueueTags: IAWS4DSQSFacadeListQueueTags;
     function ReceiveMessage: IAWS4DSQSFacadeReceiveMessage;
     function SendMessage: IAWS4DSQSFacadeSendMessage;
+  end;
+
+  IAWS4DSQSFacadeDeleteMessage = interface
+    ['{AF249379-9F6F-42A5-9E50-BC007E815282}']
+    function Request: IAWS4DSQSDeleteMessageRequest<IAWS4DSQSFacadeDeleteMessage>;
+    function Send: IAWS4DSQSFacadeDeleteMessage;
   end;
 
   IAWS4DSQSFacadeGetQueueUrl = interface

@@ -25,7 +25,7 @@ type TAWS4DSQSService<I: IInterface> = class(TInterfacedObject, IAWS4DSQSService
     FRegion: TAWS4DRegion;
 
     function Host: string;
-    function NewGETRequest(Action: String): IGBClientRequest;
+    function NewGETRequest(Action: String): IGBClientRequest; overload;
 
   protected
     function AccessKey(Value: String): IAWS4DSQSService<I>;
@@ -33,6 +33,7 @@ type TAWS4DSQSService<I: IInterface> = class(TInterfacedObject, IAWS4DSQSService
     function Region(Value: String): IAWS4DSQSService<I>; overload;
     function Region(Value: TAWS4DRegion): IAWS4DSQSService<I>; overload;
 
+    procedure DeleteMessage(Request: IAWS4DSQSDeleteMessageRequest<I>);
     function GetQueueUrl(Request: IAWS4DSQSGetQueueUrlRequest<I>): IAWS4DSQSGetQueueUrlResponse<I>;
     function ListQueues(Request: IAWS4DSQSListQueuesRequest<I>): IAWS4DSQSListQueuesResponse<I>;
     function ListQueueTags(Request: IAWS4DSQSListQueueTagsRequest<I>): IAWS4DSQSListQueueTagsResponse<I>;
@@ -83,6 +84,19 @@ end;
 constructor TAWS4DSQSService<I>.create;
 begin
   FRegion := aws4dUSEast1;
+end;
+
+procedure TAWS4DSQSService<I>.DeleteMessage(Request: IAWS4DSQSDeleteMessageRequest<I>);
+var
+  restRequest: IGBClientRequest;
+begin
+  restRequest := NewGETRequest('DeleteMessage');
+  restRequest
+    .Resource(Request.QueueName)
+    .Params
+      .QueryAddOrSet('ReceiptHandle', Request.ReceiptHandle);
+
+  restRequest.Send;
 end;
 
 destructor TAWS4DSQSService<I>.Destroy;

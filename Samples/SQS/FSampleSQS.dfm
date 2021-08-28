@@ -56,6 +56,13 @@ object Form2: TForm2
       Height = 13
       Caption = 'Region'
     end
+    object Label14: TLabel
+      Left = 551
+      Top = 9
+      Width = 62
+      Height = 13
+      Caption = 'Queue Name'
+    end
     object edtAccessKey: TEdit
       Left = 11
       Top = 24
@@ -77,13 +84,21 @@ object Form2: TForm2
       Height = 21
       TabOrder = 2
     end
+    object edtQueueName: TEdit
+      Left = 551
+      Top = 24
+      Width = 222
+      Height = 21
+      TabOrder = 3
+      Text = '451809183281/vendas'
+    end
   end
   object pgcSQS: TPageControl
     Left = 0
     Top = 97
     Width = 1171
     Height = 341
-    ActivePage = tsDeleteMessage
+    ActivePage = tsReceiveMessage
     Align = alClient
     TabOrder = 2
     object tsListQueues: TTabSheet
@@ -170,28 +185,13 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object Label7: TLabel
-          Left = 11
-          Top = 9
-          Width = 62
-          Height = 13
-          Caption = 'Queue Name'
-        end
-        object edtListQueueTagsQueueName: TEdit
-          Left = 11
-          Top = 24
-          Width = 222
-          Height = 21
-          TabOrder = 0
-          Text = '451809183281/vendas'
-        end
         object btnListQueueTags: TButton
-          Left = 239
-          Top = 22
+          Left = 7
+          Top = 14
           Width = 94
           Height = 25
           Caption = 'List Queues Tags'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnListQueueTagsClick
         end
       end
@@ -262,60 +262,45 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object Label8: TLabel
-          Left = 11
-          Top = 9
-          Width = 62
-          Height = 13
-          Caption = 'Queue Name'
-        end
         object Label10: TLabel
-          Left = 239
+          Left = 3
           Top = 9
           Width = 123
           Height = 13
           Caption = 'Max Number of Messages'
         end
         object Label11: TLabel
-          Left = 383
+          Left = 147
           Top = 9
           Width = 78
           Height = 13
           Caption = 'Visibility Timeout'
         end
-        object edtReceiveMessageQueueName: TEdit
-          Left = 11
-          Top = 24
-          Width = 222
-          Height = 21
-          TabOrder = 0
-          Text = '159521004132/Send-to-Email-Docfiscal-dev'
-        end
         object btnReceiveMessage: TButton
-          Left = 562
+          Left = 291
           Top = 22
           Width = 94
           Height = 25
           Caption = 'Receive Message'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnReceiveMessageClick
         end
         object edtReceiveMessageMaxNumberMessages: TEdit
-          Left = 239
+          Left = 3
+          Top = 24
+          Width = 138
+          Height = 21
+          NumbersOnly = True
+          TabOrder = 1
+          Text = '0'
+        end
+        object edtReceiveMessageVisibilityTimeout: TEdit
+          Left = 147
           Top = 24
           Width = 138
           Height = 21
           NumbersOnly = True
           TabOrder = 2
-          Text = '0'
-        end
-        object edtReceiveMessageVisibilityTimeout: TEdit
-          Left = 383
-          Top = 24
-          Width = 138
-          Height = 21
-          NumbersOnly = True
-          TabOrder = 3
           Text = '0'
         end
       end
@@ -340,43 +325,28 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object Label12: TLabel
-          Left = 11
-          Top = 9
-          Width = 62
-          Height = 13
-          Caption = 'Queue Name'
-        end
         object Label13: TLabel
-          Left = 239
-          Top = 9
+          Left = 7
+          Top = 10
           Width = 69
           Height = 13
           Caption = 'Message Body'
         end
-        object edtSendMessageQueueName: TEdit
-          Left = 11
-          Top = 24
-          Width = 222
-          Height = 21
-          TabOrder = 0
-          Text = '451809183281/vendas'
-        end
         object btnSendMessage: TButton
-          Left = 562
-          Top = 22
+          Left = 330
+          Top = 23
           Width = 94
           Height = 25
           Caption = 'Send Message'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnSendMessageClick
         end
         object edtSendMessageMessageBody: TEdit
-          Left = 239
-          Top = 24
+          Left = 7
+          Top = 25
           Width = 302
           Height = 21
-          TabOrder = 2
+          TabOrder = 1
           Text = '0'
         end
       end
@@ -401,43 +371,28 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object Label14: TLabel
-          Left = 11
-          Top = 9
-          Width = 62
-          Height = 13
-          Caption = 'Queue Name'
-        end
         object Label15: TLabel
-          Left = 239
-          Top = 9
+          Left = 7
+          Top = 5
           Width = 72
           Height = 13
           Caption = 'Receipt Handle'
         end
-        object edtDeleteMessageQueueName: TEdit
-          Left = 11
-          Top = 24
-          Width = 222
-          Height = 21
-          TabOrder = 0
-          Text = '159521004132/Send-to-Email-Docfiscal-dev'
-        end
         object btnDeleteMessage: TButton
-          Left = 562
-          Top = 22
+          Left = 330
+          Top = 18
           Width = 94
           Height = 25
           Caption = 'Delete Message'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnDeleteMessageClick
         end
         object edtDeleteMessageReceiptHandle: TEdit
-          Left = 239
-          Top = 24
+          Left = 7
+          Top = 20
           Width = 302
           Height = 21
-          TabOrder = 2
+          TabOrder = 1
         end
       end
       object mmoDeleteMessage: TMemo

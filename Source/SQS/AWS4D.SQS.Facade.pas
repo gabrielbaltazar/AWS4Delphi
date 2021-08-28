@@ -6,6 +6,7 @@ uses
   AWS4D.SQS.Facade.Interfaces,
   AWS4D.SQS.Service.Interfaces,
   AWS4D.SQS.Model.Interfaces,
+  AWS4D.SQS.Facade.DeleteMessage,
   AWS4D.SQS.Facade.GetQueueUrl,
   AWS4D.SQS.Facade.ListQueues,
   AWS4D.SQS.Facade.ListQueueTags,
@@ -17,6 +18,7 @@ uses
 type TAWS4DSQSFacade = class(TInterfacedObject, IAWS4DSQSFacade)
 
   private
+    FDeleteMessage: IAWS4DSQSFacadeDeleteMessage;
     FGetQueueUrl: IAWS4DSQSFacadeGetQueueUrl;
     FListQueues: IAWS4DSQSFacadeListQueues;
     FListQueueTags: IAWS4DSQSFacadeListQueueTags;
@@ -35,6 +37,7 @@ type TAWS4DSQSFacade = class(TInterfacedObject, IAWS4DSQSFacade)
     function Region(Value: String): IAWS4DSQSFacade; overload;
     function Region(Value: TAWS4DRegion): IAWS4DSQSFacade; overload;
 
+    function DeleteMessage: IAWS4DSQSFacadeDeleteMessage;
     function GetQueueUrl: IAWS4DSQSFacadeGetQueueUrl;
     function ListQueues: IAWS4DSQSFacadeListQueues;
     function ListQueueTags: IAWS4DSQSFacadeListQueueTags;
@@ -60,6 +63,19 @@ end;
 constructor TAWS4DSQSFacade.create;
 begin
 
+end;
+
+function TAWS4DSQSFacade.DeleteMessage: IAWS4DSQSFacadeDeleteMessage;
+var
+  service: IAWS4DSQSService<IAWS4DSQSFacadeDeleteMessage>;
+begin
+  if not Assigned(FDeleteMessage) then
+  begin
+    service := Self.SQSService<IAWS4DSQSFacadeDeleteMessage>;
+    FDeleteMessage := TAWS4DSQSFacadeDeleteMessage.New(service);
+  end;
+
+  result := FDeleteMessage;
 end;
 
 function TAWS4DSQSFacade.GetQueueUrl: IAWS4DSQSFacadeGetQueueUrl;

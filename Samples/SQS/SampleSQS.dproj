@@ -134,6 +134,8 @@
         <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessage.pas"/>
         <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessage.Response.pas"/>
         <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Facade.ReceiveMessage.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.DeleteMessage.Request.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Facade.DeleteMessage.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
