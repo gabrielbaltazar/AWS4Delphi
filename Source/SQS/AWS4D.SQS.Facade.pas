@@ -9,6 +9,7 @@ uses
   AWS4D.SQS.Facade.GetQueueUrl,
   AWS4D.SQS.Facade.ListQueues,
   AWS4D.SQS.Facade.ListQueueTags,
+  AWS4D.SQS.Facade.ReceiveMessage,
   AWS4D.SQS.Facade.SendMessage,
   AWS4D.SQS.Service,
   AWS4D.Core.Model.Types;
@@ -19,6 +20,7 @@ type TAWS4DSQSFacade = class(TInterfacedObject, IAWS4DSQSFacade)
     FGetQueueUrl: IAWS4DSQSFacadeGetQueueUrl;
     FListQueues: IAWS4DSQSFacadeListQueues;
     FListQueueTags: IAWS4DSQSFacadeListQueueTags;
+    FReceiveMessage: IAWS4DSQSFacadeReceiveMessage;
     FSendMessage: IAWS4DSQSFacadeSendMessage;
 
     FAccessKey: String;
@@ -36,6 +38,7 @@ type TAWS4DSQSFacade = class(TInterfacedObject, IAWS4DSQSFacade)
     function GetQueueUrl: IAWS4DSQSFacadeGetQueueUrl;
     function ListQueues: IAWS4DSQSFacadeListQueues;
     function ListQueueTags: IAWS4DSQSFacadeListQueueTags;
+    function ReceiveMessage: IAWS4DSQSFacadeReceiveMessage;
     function SendMessage: IAWS4DSQSFacadeSendMessage;
 
   public
@@ -101,6 +104,19 @@ end;
 class function TAWS4DSQSFacade.New: IAWS4DSQSFacade;
 begin
   result := Self.create;
+end;
+
+function TAWS4DSQSFacade.ReceiveMessage: IAWS4DSQSFacadeReceiveMessage;
+var
+  service: IAWS4DSQSService<IAWS4DSQSFacadeReceiveMessage>;
+begin
+  if not Assigned(FReceiveMessage) then
+  begin
+    service := Self.SQSService<IAWS4DSQSFacadeReceiveMessage>;
+    FReceiveMessage := TAWS4DSQSFacadeReceiveMessage.New(service);
+  end;
+
+  result := FReceiveMessage;
 end;
 
 function TAWS4DSQSFacade.Region(Value: TAWS4DRegion): IAWS4DSQSFacade;

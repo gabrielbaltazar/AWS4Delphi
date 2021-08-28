@@ -77,6 +77,9 @@ begin
   list := TList<IAWS4DCoreModelTag>.create;
   try
     result := TAWS4DCoreModelIterator<IAWS4DCoreModelTag>.New(list);
+    if not Assigned(JSONArray) then
+      Exit;
+
     for I := 0 to Pred(JSONArray.Count) do
     begin
       list.Add(TAWS4DCoreModelTag.New);

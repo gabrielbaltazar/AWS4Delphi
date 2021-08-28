@@ -24,7 +24,11 @@ uses
   AWS4D.SQS.Facade.GetQueueUrl in '..\..\Source\SQS\AWS4D.SQS.Facade.GetQueueUrl.pas',
   AWS4D.SQS.Model.SendMessage.Request in '..\..\Source\SQS\AWS4D.SQS.Model.SendMessage.Request.pas',
   AWS4D.SQS.Model.SendMessage.Response in '..\..\Source\SQS\AWS4D.SQS.Model.SendMessage.Response.pas',
-  AWS4D.SQS.Facade.SendMessage in '..\..\Source\SQS\AWS4D.SQS.Facade.SendMessage.pas';
+  AWS4D.SQS.Facade.SendMessage in '..\..\Source\SQS\AWS4D.SQS.Facade.SendMessage.pas',
+  AWS4D.SQS.Model.ReceiveMessage.Request in '..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessage.Request.pas',
+  AWS4D.SQS.Model.ReceiveMessage in '..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessage.pas',
+  AWS4D.SQS.Model.ReceiveMessage.Response in '..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessage.Response.pas',
+  AWS4D.SQS.Facade.ReceiveMessage in '..\..\Source\SQS\AWS4D.SQS.Facade.ReceiveMessage.pas';
 
 {$R *.res}
 

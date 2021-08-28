@@ -290,18 +290,29 @@ begin
 end;
 
 procedure TForm2.btnReceiveMessageClick(Sender: TObject);
-//var
-//  request: IAWS4DSQSModelReceiveMessageRequest;
-//  response : IAWS4DSQSModelReceiveMessageResponse;
 begin
-//  request := SQSModelFactory.ReceiveMessageRequest;
-//  request
-//    .queueUrl(edtReceiveMessageQueueName.Text)
-//    .maxNumberOfMessages(StrToIntDef(edtReceiveMessageMaxNumberMessages.Text, -1))
-//    .visibilityTimeout(StrToIntDef(edtReceiveMessageVisibilityTimeout.Text, -1));
-//
-//  response := CreateSQS.ReceiveMessage(request);
-//  writeReceiveMessageResponse(response);
+  FSQS.ReceiveMessage
+    .Request
+      .MaxNumberOfMessages(StrToIntDef(edtReceiveMessageMaxNumberMessages.Text, 0))
+      .VisibilityTimeout(StrToIntDef(edtReceiveMessageVisibilityTimeout.Text, 0))
+      .QueueUrl(edtReceiveMessageQueueName.Text)
+      .AddMessageAttribute('aaa')
+    .&End
+    .Send;
+
+  mmoReceiveMessageResponse.Clear;
+  while FSQS.ReceiveMessage.Response.Messages.HasNext do
+  begin
+    mmoReceiveMessageResponse.Lines.Add(
+      FSQS.ReceiveMessage.Response.Messages.Current.Body
+    );
+
+    mmoReceiveMessageResponse.Lines.Add(
+      FSQS.ReceiveMessage.Response.Messages.Current.ReceiptHandle
+    );
+
+    mmoReceiveMessageResponse.Lines.Add('');
+  end;
 end;
 
 procedure TForm2.btnSendMessageClick(Sender: TObject);
@@ -310,6 +321,8 @@ begin
     .Request
       .QueueUrl(edtSendMessageQueueName.Text)
       .MessageBody(edtSendMessageMessageBody.Text)
+      .AddAttribute('aaa', 'bbb')
+      .AddAttribute('ccc', 'ddd')
     .&End
     .Send;
 end;

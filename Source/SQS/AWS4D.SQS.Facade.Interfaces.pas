@@ -11,6 +11,7 @@ type
   IAWS4DSQSFacadeGetQueueUrl = interface;
   IAWS4DSQSFacadeListQueues = interface;
   IAWS4DSQSFacadeListQueueTags = interface;
+  IAWS4DSQSFacadeReceiveMessage = interface;
   IAWS4DSQSFacadeSendMessage = interface;
 
   IAWS4DSQSFacade = interface
@@ -23,6 +24,7 @@ type
     function GetQueueUrl: IAWS4DSQSFacadeGetQueueUrl;
     function ListQueues: IAWS4DSQSFacadeListQueues;
     function ListQueueTags: IAWS4DSQSFacadeListQueueTags;
+    function ReceiveMessage: IAWS4DSQSFacadeReceiveMessage;
     function SendMessage: IAWS4DSQSFacadeSendMessage;
   end;
 
@@ -45,6 +47,13 @@ type
     function Request: IAWS4DSQSListQueueTagsRequest<IAWS4DSQSFacadeListQueueTags>;
     function Send: IAWS4DSQSListQueueTagsResponse<IAWS4DSQSFacadeListQueueTags>;
     function Response: IAWS4DSQSListQueueTagsResponse<IAWS4DSQSFacadeListQueueTags>;
+  end;
+
+  IAWS4DSQSFacadeReceiveMessage = interface
+    ['{8BEDCCBF-82B0-4FC8-A4E6-EE4BBF245F87}']
+    function Request: IAWS4DSQSReceiveMessageRequest<IAWS4DSQSFacadeReceiveMessage>;
+    function Send: IAWS4DSQSReceiveMessageResponse<IAWS4DSQSFacadeReceiveMessage>;
+    function Response: IAWS4DSQSReceiveMessageResponse<IAWS4DSQSFacadeReceiveMessage>;
   end;
 
   IAWS4DSQSFacadeSendMessage = interface

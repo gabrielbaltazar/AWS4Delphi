@@ -8,6 +8,7 @@ uses
   AWS4D.SQS.Model.ListQueues.Response,
   AWS4D.SQS.Model.ListQueueTags.Response,
   AWS4D.SQS.Model.GetQueueUrl.Response,
+  AWS4D.SQS.Model.ReceiveMessage.Response,
   AWS4D.SQS.Model.SendMessage.Response,
   AWS4D.Core.Model.Types,
   GBClient.Interfaces,
@@ -35,6 +36,7 @@ type TAWS4DSQSService<I: IInterface> = class(TInterfacedObject, IAWS4DSQSService
     function GetQueueUrl(Request: IAWS4DSQSGetQueueUrlRequest<I>): IAWS4DSQSGetQueueUrlResponse<I>;
     function ListQueues(Request: IAWS4DSQSListQueuesRequest<I>): IAWS4DSQSListQueuesResponse<I>;
     function ListQueueTags(Request: IAWS4DSQSListQueueTagsRequest<I>): IAWS4DSQSListQueueTagsResponse<I>;
+    function ReceiveMessage(Request: IAWS4DSQSReceiveMessageRequest<I>): IAWS4DSQSReceiveMessageResponse<I>;
     function SendMessage(Request: IAWS4DSQSSendMessageRequest<I>): IAWS4DSQSSendMessageResponse<I>;
 
     function Parent(Value: I): IAWS4DSQSService<I>;
@@ -161,6 +163,50 @@ function TAWS4DSQSService<I>.Region(Value: String): IAWS4DSQSService<I>;
 begin
   result := Self;
   FRegion.fromString(Value);
+end;
+
+function TAWS4DSQSService<I>.ReceiveMessage(Request: IAWS4DSQSReceiveMessageRequest<I>): IAWS4DSQSReceiveMessageResponse<I>;
+var
+  restRequest: IGBClientRequest;
+  json: TJSONObject;
+  LCount: Integer;
+begin
+  restRequest := Self.NewGETRequest('ReceiveMessage');
+  restRequest
+    .Resource(Request.QueueUrl);
+
+  LCount := 0;
+  while Request.Attributes.HasNext do
+  begin
+    Inc(LCount);
+    restRequest.Params
+      .QueryAddOrSet(Format('AttributeName.%s', [LCount.ToString]),
+                     Request.Attributes.Current);
+  end;
+
+  if Request.MaxNumberOfMessages > 0 then
+    restRequest.Params.QueryAddOrSet('MaxNumberOfMessages', Request.MaxNumberOfMessages);
+
+  LCount := 0;
+  while Request.MessageAttributes.HasNext do
+  begin
+    Inc(LCount);
+    restRequest.Params
+      .QueryAddOrSet(Format('MessageAttributeName.%s', [LCount.ToString]),
+                     Request.MessageAttributes.Current);
+  end;
+
+  if Request.ReceiveRequestAttemptId <> EmptyStr then
+    restRequest.Params.QueryAddOrSet('ReceiveRequestAttemptId', Request.ReceiveRequestAttemptId);
+
+  if Request.VisibilityTimeout > 0 then
+    restRequest.Params.QueryAddOrSet('VisibilityTimeout', Request.VisibilityTimeout);
+
+  if Request.WaitTimeSeconds > 0 then
+    restRequest.Params.QueryAddOrSet('WaitTimeSeconds', Request.WaitTimeSeconds);
+
+  json := restRequest.Send.GetJSONObject;
+  result := TAWS4SQSReceiveMessageResponse<I>.New(FParent, json);
 end;
 
 function TAWS4DSQSService<I>.Region(Value: TAWS4DRegion): IAWS4DSQSService<I>;
