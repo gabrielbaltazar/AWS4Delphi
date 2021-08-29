@@ -38,6 +38,7 @@ type TAWS4DSQSService<I: IInterface> = class(TInterfacedObject, IAWS4DSQSService
     function GetQueueUrl(Request: IAWS4DSQSGetQueueUrlRequest<I>): IAWS4DSQSGetQueueUrlResponse<I>;
     function ListQueues(Request: IAWS4DSQSListQueuesRequest<I>): IAWS4DSQSListQueuesResponse<I>;
     function ListQueueTags(Request: IAWS4DSQSListQueueTagsRequest<I>): IAWS4DSQSListQueueTagsResponse<I>;
+    procedure PurgeQueue(Request: IAWS4DSQSPurgeQueueRequest<I>);
     function ReceiveMessage(Request: IAWS4DSQSReceiveMessageRequest<I>): IAWS4DSQSReceiveMessageResponse<I>;
     function SendMessage(Request: IAWS4DSQSSendMessageRequest<I>): IAWS4DSQSSendMessageResponse<I>;
 
@@ -183,6 +184,14 @@ function TAWS4DSQSService<I>.Parent(Value: I): IAWS4DSQSService<I>;
 begin
   result := Self;
   FParent := Value;
+end;
+
+procedure TAWS4DSQSService<I>.PurgeQueue(Request: IAWS4DSQSPurgeQueueRequest<I>);
+var
+  restRequest: IGBClientRequest;
+begin
+  restRequest := Self.NewGETRequest('PurgeQueue');
+  restRequest.Resource(Request.QueueUrl).Send;
 end;
 
 function TAWS4DSQSService<I>.Region(Value: String): IAWS4DSQSService<I>;

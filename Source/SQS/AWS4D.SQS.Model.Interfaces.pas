@@ -77,6 +77,14 @@ type
     function &End: I;
   end;
 
+  IAWS4DSQSPurgeQueueRequest<I: IInterface> = interface
+    ['{8E8EE0E9-5C37-429E-8D2E-482E2736B524}']
+    function QueueUrl(Value: String): IAWS4DSQSPurgeQueueRequest<I>; overload;
+    function QueueUrl: String; overload;
+
+    function &End: I;
+  end;
+
   IAWS4DSQSReceiveMessageRequest<I: IInterface> = interface
     ['{E960D790-4503-4BFD-A2E4-DFADF2A7CAF8}']
     function MaxNumberOfMessages(Value: Integer): IAWS4DSQSReceiveMessageRequest<I>; overload;

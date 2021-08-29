@@ -32,7 +32,9 @@ uses
   AWS4D.SQS.Model.DeleteMessage.Request in '..\..\Source\SQS\AWS4D.SQS.Model.DeleteMessage.Request.pas',
   AWS4D.SQS.Facade.DeleteMessage in '..\..\Source\SQS\AWS4D.SQS.Facade.DeleteMessage.pas',
   AWS4D.SQS.Model.DeleteQueue.Request in '..\..\Source\SQS\AWS4D.SQS.Model.DeleteQueue.Request.pas',
-  AWS4D.SQS.Facade.DeleteQueue in '..\..\Source\SQS\AWS4D.SQS.Facade.DeleteQueue.pas';
+  AWS4D.SQS.Facade.DeleteQueue in '..\..\Source\SQS\AWS4D.SQS.Facade.DeleteQueue.pas',
+  AWS4D.SQS.Model.PurgeQueue.Request in '..\..\Source\SQS\AWS4D.SQS.Model.PurgeQueue.Request.pas',
+  AWS4D.SQS.Facade.PurgeQueue in '..\..\Source\SQS\AWS4D.SQS.Facade.PurgeQueue.pas';
 
 {$R *.res}
 

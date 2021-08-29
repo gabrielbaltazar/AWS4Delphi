@@ -96,14 +96,10 @@ type
     mmoGetQueueAttributes: TMemo;
     tsPurgeQueue: TTabSheet;
     Panel10: TPanel;
-    Label19: TLabel;
-    edtPurgeQueueQueueUrl: TEdit;
     btnPurgeQueue: TButton;
     mmoPurgeQueue: TMemo;
     tsTagQueue: TTabSheet;
     Panel11: TPanel;
-    Label20: TLabel;
-    edtTagQueueQueueUrl: TEdit;
     btnTagQueue: TButton;
     lstTagQueue: TValueListEditor;
     mmoTagQueue: TMemo;
@@ -260,11 +256,12 @@ begin
 end;
 
 procedure TForm2.btnPurgeQueueClick(Sender: TObject);
-//var
-//  response : IAWS4DSQSModelPurgeQueueResponse;
 begin
-//  response := CreateSQS.PurgeQueue(edtPurgeQueueQueueUrl.Text);
-//  writePurgeQueueResponse(response);
+  FSQS.PurgeQueue
+    .Request
+      .QueueUrl(edtQueueName.Text)
+    .&End
+    .Send;
 end;
 
 procedure TForm2.btnQueueURLClick(Sender: TObject);

@@ -47,6 +47,7 @@ end;
 
 function TAWS4DSQSFacadeDeleteQueue.Send: IAWS4DSQSFacadeDeleteQueue;
 begin
+  result := Self;
   try
     FService.DeleteQueue(FRequest);
   finally

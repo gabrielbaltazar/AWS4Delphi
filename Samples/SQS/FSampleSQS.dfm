@@ -98,7 +98,7 @@ object Form2: TForm2
     Top = 97
     Width = 1171
     Height = 341
-    ActivePage = tsDeleteQueue
+    ActivePage = tsPurgeQueue
     Align = alClient
     TabOrder = 2
     object tsListQueues: TTabSheet
@@ -588,28 +588,13 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object Label19: TLabel
-          Left = 11
-          Top = 9
-          Width = 48
-          Height = 13
-          Caption = 'Queue Url'
-        end
-        object edtPurgeQueueQueueUrl: TEdit
-          Left = 11
-          Top = 24
-          Width = 222
-          Height = 21
-          TabOrder = 0
-          Text = '159521004132/Send-to-Email-Docfiscal-dev'
-        end
         object btnPurgeQueue: TButton
-          Left = 239
-          Top = 22
+          Left = 7
+          Top = 14
           Width = 94
           Height = 25
           Caption = 'Purge Queue'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnPurgeQueueClick
         end
       end
@@ -634,28 +619,13 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object Label20: TLabel
-          Left = 11
-          Top = 9
-          Width = 48
-          Height = 13
-          Caption = 'Queue Url'
-        end
-        object edtTagQueueQueueUrl: TEdit
-          Left = 11
-          Top = 24
-          Width = 222
-          Height = 21
-          TabOrder = 0
-          Text = '159521004132/Send-to-Email-Docfiscal-dev'
-        end
         object btnTagQueue: TButton
-          Left = 239
-          Top = 22
+          Left = 7
+          Top = 18
           Width = 90
           Height = 25
           Caption = 'Tag Queue'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnTagQueueClick
         end
       end

@@ -11,6 +11,7 @@ uses
   AWS4D.SQS.Facade.GetQueueUrl,
   AWS4D.SQS.Facade.ListQueues,
   AWS4D.SQS.Facade.ListQueueTags,
+  AWS4D.SQS.Facade.PurgeQueue,
   AWS4D.SQS.Facade.ReceiveMessage,
   AWS4D.SQS.Facade.SendMessage,
   AWS4D.SQS.Service,
@@ -29,6 +30,7 @@ type TAWS4DSQSFacade = class(TInterfacedObject, IAWS4DSQSFacade)
     FGetQueueUrl: IAWS4DSQSFacadeGetQueueUrl;
     FListQueues: IAWS4DSQSFacadeListQueues;
     FListQueueTags: IAWS4DSQSFacadeListQueueTags;
+    FPurgeQueue: IAWS4DSQSFacadePurgeQueue;
     FReceiveMessage: IAWS4DSQSFacadeReceiveMessage;
     FSendMessage: IAWS4DSQSFacadeSendMessage;
 
@@ -46,6 +48,7 @@ type TAWS4DSQSFacade = class(TInterfacedObject, IAWS4DSQSFacade)
     function GetQueueUrl: IAWS4DSQSFacadeGetQueueUrl;
     function ListQueues: IAWS4DSQSFacadeListQueues;
     function ListQueueTags: IAWS4DSQSFacadeListQueueTags;
+    function PurgeQueue: IAWS4DSQSFacadePurgeQueue;
     function ReceiveMessage: IAWS4DSQSFacadeReceiveMessage;
     function SendMessage: IAWS4DSQSFacadeSendMessage;
 
@@ -142,6 +145,20 @@ end;
 class function TAWS4DSQSFacade.New: IAWS4DSQSFacade;
 begin
   result := Self.create;
+end;
+
+function TAWS4DSQSFacade.PurgeQueue: IAWS4DSQSFacadePurgeQueue;
+var
+  service: IAWS4DSQSService<IAWS4DSQSFacadePurgeQueue>;
+begin
+  if not Assigned(FPurgeQueue) then
+  begin
+    service := Self.SQSService<IAWS4DSQSFacadePurgeQueue>;
+    FPurgeQueue := TAWS4DSQSFacadePurgeQueue.New(service);
+    FPurgeQueue.Request.QueueUrl(FQueue);
+  end;
+
+  result := FPurgeQueue;
 end;
 
 function TAWS4DSQSFacade.Queue(Value: String): IAWS4DSQSFacade;
