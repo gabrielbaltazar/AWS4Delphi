@@ -9,6 +9,7 @@ uses
 
 type
   IAWS4DSQSFacadeDeleteMessage = interface;
+  IAWS4DSQSFacadeDeleteQueue = interface;
   IAWS4DSQSFacadeGetQueueUrl = interface;
   IAWS4DSQSFacadeListQueues = interface;
   IAWS4DSQSFacadeListQueueTags = interface;
@@ -21,8 +22,10 @@ type
     function SecretKey(Value: String): IAWS4DSQSFacade;
     function Region(Value: String): IAWS4DSQSFacade; overload;
     function Region(Value: TAWS4DRegion): IAWS4DSQSFacade; overload;
+    function Queue(Value: String): IAWS4DSQSFacade;
 
     function DeleteMessage: IAWS4DSQSFacadeDeleteMessage;
+    function DeleteQueue: IAWS4DSQSFacadeDeleteQueue;
     function GetQueueUrl: IAWS4DSQSFacadeGetQueueUrl;
     function ListQueues: IAWS4DSQSFacadeListQueues;
     function ListQueueTags: IAWS4DSQSFacadeListQueueTags;
@@ -34,6 +37,12 @@ type
     ['{AF249379-9F6F-42A5-9E50-BC007E815282}']
     function Request: IAWS4DSQSDeleteMessageRequest<IAWS4DSQSFacadeDeleteMessage>;
     function Send: IAWS4DSQSFacadeDeleteMessage;
+  end;
+
+  IAWS4DSQSFacadeDeleteQueue = interface
+    ['{DACCF0CE-9923-4045-80F9-B0D49ABB68A5}']
+    function Request: IAWS4DSQSDeleteQueueRequest<IAWS4DSQSFacadeDeleteQueue>;
+    function Send: IAWS4DSQSFacadeDeleteQueue;
   end;
 
   IAWS4DSQSFacadeGetQueueUrl = interface

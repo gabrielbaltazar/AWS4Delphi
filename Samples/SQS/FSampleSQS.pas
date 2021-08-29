@@ -119,8 +119,6 @@ type
     mmoUntagQueue: TMemo;
     tsDeleteQueue: TTabSheet;
     Panel13: TPanel;
-    Label24: TLabel;
-    edtDeleteQueueQueueUrl: TEdit;
     btnDeleteQueue: TButton;
     mmoDeleteQueue: TMemo;
     edtQueueName: TEdit;
@@ -207,11 +205,12 @@ begin
 end;
 
 procedure TForm2.btnDeleteQueueClick(Sender: TObject);
-//var
-//  response: IAWS4DSQSModelDeleteQueueResponse;
 begin
-//  response := CreateSQS.DeleteQueue(edtDeleteQueueQueueUrl.Text);
-//  writeDeleteQueueResponse(response);
+  FSQS.DeleteQueue
+    .Request
+      .QueueUrl(edtQueueName.Text)
+    .&End
+    .Send;
 end;
 
 procedure TForm2.btnGetQueueAttributesClick(Sender: TObject);

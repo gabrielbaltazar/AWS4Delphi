@@ -98,7 +98,7 @@ object Form2: TForm2
     Top = 97
     Width = 1171
     Height = 341
-    ActivePage = tsReceiveMessage
+    ActivePage = tsDeleteQueue
     Align = alClient
     TabOrder = 2
     object tsListQueues: TTabSheet
@@ -772,28 +772,13 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object Label24: TLabel
-          Left = 11
-          Top = 9
-          Width = 48
-          Height = 13
-          Caption = 'Queue Url'
-        end
-        object edtDeleteQueueQueueUrl: TEdit
-          Left = 11
-          Top = 24
-          Width = 222
-          Height = 21
-          TabOrder = 0
-          Text = '159521004132/Send-to-Email-Docfiscal-dev'
-        end
         object btnDeleteQueue: TButton
-          Left = 239
-          Top = 22
+          Left = 7
+          Top = 14
           Width = 90
           Height = 25
           Caption = 'Delete Queue'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnDeleteQueueClick
         end
       end

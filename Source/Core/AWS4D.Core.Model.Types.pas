@@ -13,13 +13,13 @@ type
     function Current: T;
   end;
 
-  IAWS4DCoreModelTag = interface
+  IAWS4DCoreModelAttribute = interface
     ['{8891CDBC-D18C-4763-AFDB-BCA67859C833}']
     function Key: String; overload;
     function Value: string; overload;
 
-    function Key(Value: String): IAWS4DCoreModelTag; overload;
-    function Value(AValue: string): IAWS4DCoreModelTag; overload;
+    function Key(Value: String): IAWS4DCoreModelAttribute; overload;
+    function Value(AValue: string): IAWS4DCoreModelAttribute; overload;
   end;
 
   /// <summary>Regions which can be used with Amazon Services.</summary>

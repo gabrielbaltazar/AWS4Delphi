@@ -6,7 +6,7 @@ uses
   AWS4D.SQS.Model.Interfaces,
   AWS4D.Core.Model.Types,
   AWS4D.Core.Model.Iterator,
-  AWS4D.Core.Model.Tag,
+  AWS4D.Core.Model.Attribute,
   System.Generics.Collections;
 
 type TAWS4DSQSSendMessageRequest<I: IInterface> = class(TInterfacedObject, IAWS4DSQSSendMessageRequest<I>)
@@ -16,8 +16,8 @@ type TAWS4DSQSSendMessageRequest<I: IInterface> = class(TInterfacedObject, IAWS4
     FParent: I;
     FAttributes: TDictionary<String, String>;
     FSystemAttribute: TDictionary<String, String>;
-    FIteratorAttributes: IAWS4DIterator<IAWS4DCoreModelTag>;
-    FIteratorSystemAttributes: IAWS4DIterator<IAWS4DCoreModelTag>;
+    FIteratorAttributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+    FIteratorSystemAttributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
 
     FDelaySeconds: Integer;
     FMessageBody: String;
@@ -40,8 +40,8 @@ type TAWS4DSQSSendMessageRequest<I: IInterface> = class(TInterfacedObject, IAWS4
     function MessageGroupId: String; overload;
     function QueueUrl: String; overload;
 
-    function Attributes: IAWS4DIterator<IAWS4DCoreModelTag>;
-    function MessageSystemAttributes: IAWS4DIterator<IAWS4DCoreModelTag>;
+    function Attributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+    function MessageSystemAttributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
 
     function &End: I;
 
@@ -66,10 +66,10 @@ begin
   FSystemAttribute.AddOrSetValue(Key, Value);
 end;
 
-function TAWS4DSQSSendMessageRequest<I>.Attributes: IAWS4DIterator<IAWS4DCoreModelTag>;
+function TAWS4DSQSSendMessageRequest<I>.Attributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
 begin
   if not Assigned(FIteratorAttributes) then
-    FIteratorAttributes := TAWS4DCoreModelTag.NewIterator(FAttributes);
+    FIteratorAttributes := TAWS4DCoreModelAttribute.NewIterator(FAttributes);
   Result := FIteratorAttributes;
 end;
 
@@ -136,10 +136,10 @@ begin
   FMessageGroupId := Value;
 end;
 
-function TAWS4DSQSSendMessageRequest<I>.MessageSystemAttributes: IAWS4DIterator<IAWS4DCoreModelTag>;
+function TAWS4DSQSSendMessageRequest<I>.MessageSystemAttributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
 begin
   if not Assigned(FIteratorSystemAttributes) then
-    FIteratorSystemAttributes := TAWS4DCoreModelTag.NewIterator(FSystemAttribute);
+    FIteratorSystemAttributes := TAWS4DCoreModelAttribute.NewIterator(FSystemAttribute);
   Result := FIteratorSystemAttributes;
 end;
 

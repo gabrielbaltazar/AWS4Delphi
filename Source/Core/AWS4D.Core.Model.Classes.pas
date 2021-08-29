@@ -4,10 +4,10 @@ interface
 
 uses
   AWS4D.Core.Model.Types,
-  AWS4D.Core.Model.Tag;
+  AWS4D.Core.Model.Attribute;
 
 type
-  TAWS4DCoreModelTag = AWS4D.Core.Model.Tag.TAWS4DCoreModelTag;
+  TAWS4DCoreModelAttribute = AWS4D.Core.Model.Attribute.TAWS4DCoreModelAttribute;
 
 implementation
 

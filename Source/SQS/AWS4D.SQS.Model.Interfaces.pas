@@ -17,6 +17,14 @@ type
     function &End: I;
   end;
 
+  IAWS4DSQSDeleteQueueRequest<I: IInterface> = interface
+    ['{1EE7659B-4CE4-45B3-948B-069C575971C8}']
+    function QueueUrl(Value: String): IAWS4DSQSDeleteQueueRequest<I>; overload;
+    function QueueUrl: string; overload;
+
+    function &End: I;
+  end;
+
   IAWS4DSQSGetQueueUrlRequest<I: IInterface> = interface
     ['{DD921743-06EE-43D4-926A-C20199517337}']
     function QueueName(Value: String): IAWS4DSQSGetQueueUrlRequest<I>; overload;
@@ -64,7 +72,7 @@ type
 
   IAWS4DSQSListQueueTagsResponse<I: IInterface> = interface
     ['{1D2DA9FB-7D73-4646-A108-506736ADB9F5}']
-    function Tags: IAWS4DIterator<IAWS4DCoreModelTag>;
+    function Tags: IAWS4DIterator<IAWS4DCoreModelAttribute>;
 
     function &End: I;
   end;
@@ -93,8 +101,8 @@ type
 
   IAWS4DSQSReceiveMessage = interface
     ['{047DE96B-0588-469A-8DD1-D4D4E6862E82}']
-    function Attributes: IAWS4DIterator<IAWS4DCoreModelTag>;
-    function MessageAttribute: IAWS4DIterator<IAWS4DCoreModelTag>;
+    function Attributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+    function MessageAttribute: IAWS4DIterator<IAWS4DCoreModelAttribute>;
     function Body: string;
     function MD5OfBody: string;
     function MD5OfMessageAttributes: String;
@@ -123,8 +131,8 @@ type
     function MessageGroupId: String; overload;
     function QueueUrl: String; overload;
 
-    function Attributes: IAWS4DIterator<IAWS4DCoreModelTag>;
-    function MessageSystemAttributes: IAWS4DIterator<IAWS4DCoreModelTag>;
+    function Attributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+    function MessageSystemAttributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
 
     function &End: I;
   end;

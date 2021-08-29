@@ -6,7 +6,7 @@ uses
   AWS4D.SQS.Model.Interfaces,
   AWS4D.Core.Model.Types,
   AWS4D.Core.Model.Iterator,
-  AWS4D.Core.Model.Tag,
+  AWS4D.Core.Model.Classes,
   AWS4D.Core.Helper.JSON,
   System.Generics.Collections,
   System.JSON;
@@ -19,15 +19,15 @@ type TAWS4SQSReceiveMessage = class(TInterfacedObject, IAWS4DSQSReceiveMessage)
     FMD5OfMessageAttributes: String;
     FMessageId: String;
     FReceiptHandle: string;
-    FMessageAttributes: TList<IAWS4DCoreModelTag>;
-    FIteratorAttributes: IAWS4DIterator<IAWS4DCoreModelTag>;
-    FIteratorMessageAttributes: IAWS4DIterator<IAWS4DCoreModelTag>;
+    FMessageAttributes: TList<IAWS4DCoreModelAttribute>;
+    FIteratorAttributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+    FIteratorMessageAttributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
 
     procedure FromJSON(Value: TJSONObject);
 
   protected
-    function Attributes: IAWS4DIterator<IAWS4DCoreModelTag>;
-    function MessageAttribute: IAWS4DIterator<IAWS4DCoreModelTag>;
+    function Attributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+    function MessageAttribute: IAWS4DIterator<IAWS4DCoreModelAttribute>;
     function Body: string;
     function MD5OfBody: string;
     function MD5OfMessageAttributes: String;
@@ -43,7 +43,7 @@ end;
 
 implementation
 
-function TAWS4SQSReceiveMessage.Attributes: IAWS4DIterator<IAWS4DCoreModelTag>;
+function TAWS4SQSReceiveMessage.Attributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
 begin
   result := FIteratorAttributes;
 end;
@@ -55,8 +55,8 @@ end;
 
 constructor TAWS4SQSReceiveMessage.create(JSON: TJSONObject);
 begin
-  FMessageAttributes := TList<IAWS4DCoreModelTag>.create;
-  FIteratorMessageAttributes := TAWS4DCoreModelIterator<IAWS4DCoreModelTag>.New(FMessageAttributes);
+  FMessageAttributes := TList<IAWS4DCoreModelAttribute>.create;
+  FIteratorMessageAttributes := TAWS4DCoreModelIterator<IAWS4DCoreModelAttribute>.New(FMessageAttributes);
 
   FromJSON(JSON);
 end;
@@ -82,7 +82,7 @@ begin
   FReceiptHandle := Value.ValueAsString('ReceiptHandle');
   FMD5OfMessageAttributes := Value.ValueAsString('MD5OfMessageAttributes');
   FMD5OfBody := Value.ValueAsString('MD5OfBody');
-  FIteratorAttributes := TAWS4DCoreModelTag.NewIterator(Value.ValueAsJSONArray('Attributes'));
+  FIteratorAttributes := TAWS4DCoreModelAttribute.NewIterator(Value.ValueAsJSONArray('Attributes'));
 
   jsonAttributes := Value.ValueAsJSONArray('MessageAttributes');
   if not Assigned(jsonAttributes) then
@@ -90,7 +90,7 @@ begin
 
   for i := 0 to Pred(jsonAttributes.Count) do
   begin
-    FMessageAttributes.Add(TAWS4DCoreModelTag.New);
+    FMessageAttributes.Add(TAWS4DCoreModelAttribute.New);
     FMessageAttributes.Last.Key(jsonAttributes.ItemAsString(i, 'Name'));
     jsonValue := jsonAttributes.ItemAsJSONObject(i);
     if Assigned(jsonValue) then
@@ -109,7 +109,7 @@ begin
   result := FMD5OfMessageAttributes;
 end;
 
-function TAWS4SQSReceiveMessage.MessageAttribute: IAWS4DIterator<IAWS4DCoreModelTag>;
+function TAWS4SQSReceiveMessage.MessageAttribute: IAWS4DIterator<IAWS4DCoreModelAttribute>;
 begin
   result := FIteratorMessageAttributes;
 end;

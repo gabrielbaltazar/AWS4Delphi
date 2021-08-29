@@ -6,7 +6,7 @@ uses
   AWS4D.Core.Model.Types in '..\..\Source\Core\AWS4D.Core.Model.Types.pas',
   AWS4D.Core.Model.Iterator in '..\..\Source\Core\AWS4D.Core.Model.Iterator.pas',
   AWS4D.Core.Helper.JSON in '..\..\Source\Core\AWS4D.Core.Helper.JSON.pas',
-  AWS4D.Core.Model.Tag in '..\..\Source\Core\AWS4D.Core.Model.Tag.pas',
+  AWS4D.Core.Model.Attribute in '..\..\Source\Core\AWS4D.Core.Model.Attribute.pas',
   AWS4D.Core.Model.Classes in '..\..\Source\Core\AWS4D.Core.Model.Classes.pas',
   AWS4D.SQS.Facade.Interfaces in '..\..\Source\SQS\AWS4D.SQS.Facade.Interfaces.pas',
   AWS4D.SQS.Facade.ListQueues in '..\..\Source\SQS\AWS4D.SQS.Facade.ListQueues.pas',
@@ -30,7 +30,9 @@ uses
   AWS4D.SQS.Model.ReceiveMessage.Response in '..\..\Source\SQS\AWS4D.SQS.Model.ReceiveMessage.Response.pas',
   AWS4D.SQS.Facade.ReceiveMessage in '..\..\Source\SQS\AWS4D.SQS.Facade.ReceiveMessage.pas',
   AWS4D.SQS.Model.DeleteMessage.Request in '..\..\Source\SQS\AWS4D.SQS.Model.DeleteMessage.Request.pas',
-  AWS4D.SQS.Facade.DeleteMessage in '..\..\Source\SQS\AWS4D.SQS.Facade.DeleteMessage.pas';
+  AWS4D.SQS.Facade.DeleteMessage in '..\..\Source\SQS\AWS4D.SQS.Facade.DeleteMessage.pas',
+  AWS4D.SQS.Model.DeleteQueue.Request in '..\..\Source\SQS\AWS4D.SQS.Model.DeleteQueue.Request.pas',
+  AWS4D.SQS.Facade.DeleteQueue in '..\..\Source\SQS\AWS4D.SQS.Facade.DeleteQueue.pas';
 
 {$R *.res}
 

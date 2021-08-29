@@ -1,4 +1,4 @@
-unit AWS4D.Core.Model.Tag;
+unit AWS4D.Core.Model.Attribute;
 
 interface
 

@@ -6,7 +6,7 @@ uses
   AWS4D.SQS.Model.Interfaces,
   AWS4D.Core.Model.Types,
   AWS4D.Core.Model.Iterator,
-  AWS4D.Core.Model.Tag,
+  AWS4D.Core.Model.Classes,
   AWS4D.Core.Helper.JSON,
   System.Generics.Collections,
   System.JSON;
@@ -16,12 +16,12 @@ type TAWS4DSQSModelListQueueTagsResponse<I: IInterface> = class(TInterfacedObjec
   private
     [Weak]
     FParent: I;
-    FTags: IAWS4DIterator<IAWS4DCoreModelTag>;
+    FTags: IAWS4DIterator<IAWS4DCoreModelAttribute>;
 
     procedure FromJSON(Value: TJSONObject);
 
   protected
-    function Tags: IAWS4DIterator<IAWS4DCoreModelTag>;
+    function Tags: IAWS4DIterator<IAWS4DCoreModelAttribute>;
 
     function &End: I;
 
@@ -63,7 +63,7 @@ begin
   json := Value.ValueAsJSONObject('ListQueueTagsResponse')
                .ValueAsJSONObject('ListQueueTagsResult');
 
-  FTags := TAWS4DCoreModelTag.NewIterator(json.ValueAsJSONArray('Tags'));
+  FTags := TAWS4DCoreModelAttribute.NewIterator(json.ValueAsJSONArray('Tags'));
 end;
 
 class function TAWS4DSQSModelListQueueTagsResponse<I>.New(Parent: I; JSON: TJSONObject): IAWS4DSQSListQueueTagsResponse<I>;
@@ -71,7 +71,7 @@ begin
   result := Self.create(Parent, JSON);
 end;
 
-function TAWS4DSQSModelListQueueTagsResponse<I>.Tags: IAWS4DIterator<IAWS4DCoreModelTag>;
+function TAWS4DSQSModelListQueueTagsResponse<I>.Tags: IAWS4DIterator<IAWS4DCoreModelAttribute>;
 begin
   result := FTags;
 end;

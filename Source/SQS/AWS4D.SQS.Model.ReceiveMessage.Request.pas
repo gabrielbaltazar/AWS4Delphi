@@ -6,7 +6,7 @@ uses
   AWS4D.SQS.Model.Interfaces,
   AWS4D.Core.Model.Types,
   AWS4D.Core.Model.Iterator,
-  AWS4D.Core.Model.Tag,
+  AWS4D.Core.Model.Classes,
   System.Generics.Collections;
 
 type TAWS4DSQSReceiveMessageRequest<I: IInterface> = class(TInterfacedObject, IAWS4DSQSReceiveMessageRequest<I>)

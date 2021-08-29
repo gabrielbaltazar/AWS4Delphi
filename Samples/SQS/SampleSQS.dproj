@@ -111,7 +111,7 @@
         <DCCReference Include="..\..\Source\Core\AWS4D.Core.Model.Types.pas"/>
         <DCCReference Include="..\..\Source\Core\AWS4D.Core.Model.Iterator.pas"/>
         <DCCReference Include="..\..\Source\Core\AWS4D.Core.Helper.JSON.pas"/>
-        <DCCReference Include="..\..\Source\Core\AWS4D.Core.Model.Tag.pas"/>
+        <DCCReference Include="..\..\Source\Core\AWS4D.Core.Model.Attribute.pas"/>
         <DCCReference Include="..\..\Source\Core\AWS4D.Core.Model.Classes.pas"/>
         <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Facade.Interfaces.pas"/>
         <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Facade.ListQueues.pas"/>
@@ -136,6 +136,8 @@
         <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Facade.ReceiveMessage.pas"/>
         <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.DeleteMessage.Request.pas"/>
         <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Facade.DeleteMessage.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.DeleteQueue.Request.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Facade.DeleteQueue.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

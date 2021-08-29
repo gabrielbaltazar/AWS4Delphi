@@ -15,6 +15,7 @@ type
     function Region(Value: TAWS4DRegion): IAWS4DSQSService<I>; overload;
 
     procedure DeleteMessage(Request: IAWS4DSQSDeleteMessageRequest<I>);
+    procedure DeleteQueue(Request: IAWS4DSQSDeleteQueueRequest<I>);
     function GetQueueUrl(Request: IAWS4DSQSGetQueueUrlRequest<I>): IAWS4DSQSGetQueueUrlResponse<I>;
     function ListQueues(Request: IAWS4DSQSListQueuesRequest<I>): IAWS4DSQSListQueuesResponse<I>;
     function ListQueueTags(Request: IAWS4DSQSListQueueTagsRequest<I>): IAWS4DSQSListQueueTagsResponse<I>;
