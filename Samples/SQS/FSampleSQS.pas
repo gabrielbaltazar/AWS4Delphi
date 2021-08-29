@@ -105,8 +105,6 @@ type
     mmoTagQueue: TMemo;
     tsUntagQueue: TTabSheet;
     Panel12: TPanel;
-    Label21: TLabel;
-    edtUntagQueueQueueUrl: TEdit;
     btnUntagQueue: TButton;
     Label22: TLabel;
     edtUntagQueueTag1: TEdit;
@@ -316,38 +314,30 @@ begin
 end;
 
 procedure TForm2.btnTagQueueClick(Sender: TObject);
-//var
-//  request: IAWS4DSQSModelTagQueueRequest;
-//  response: IAWS4DSQSModelTagQueueResponse;
-//  i : Integer;
+var
+  i: Integer;
 begin
-//  request := SQSModelFactory.TagQueueRequest;
-//  request.QueueUrl(edtTagQueueQueueUrl.Text);
-//
-//  for i := 0 to Pred(lstTagQueue.Strings.Count) do
-//    request.AddTag(
-//      lstTagQueue.Strings.Names[i],
-//      lstTagQueue.Strings.ValueFromIndex[i]);
-//
-//  response := CreateSQS.TagQueue(request);
-//  writeTagQueueResponse(response);
+  FSQS.TagQueue
+    .Request
+      .QueueUrl(edtQueueName.Text);
+
+  for i := 0 to Pred(lstTagQueue.Strings.Count) do
+    FSQS.TagQueue
+      .Request
+        .AddTag(lstTagQueue.Strings.Names[i], lstTagQueue.Strings.ValueFromIndex[i]);
+
+  FSQS.TagQueue.Send;
 end;
 
 procedure TForm2.btnUntagQueueClick(Sender: TObject);
-//var
-//  request: IAWS4DSQSModelUntagQueueRequest;
-//  response: IAWS4DSQSModelUntagQueueResponse;
 begin
-//  request := SQSModelFactory.UntagQueueRequest;
-//  request.QueueUrl(edtUntagQueueQueueUrl.Text);
-//
-//  if edtUntagQueueTag1.Text <> '' then
-//    request.AddTag(edtUntagQueueTag1.Text);
-//
-//  if edtUntagQueueTag2.Text <> '' then
-//    request.AddTag(edtUntagQueueTag2.Text);
-//
-//  response := CreateSQS.UntagQueue(request);
+  FSQS.UnTagQueue
+    .Request
+      .QueueUrl(edtQueueName.Text)
+      .AddTag(edtUntagQueueTag1.Text)
+      .AddTag(edtUntagQueueTag2.Text)
+    .&End
+    .Send;
 end;
 
 procedure TForm2.FormClose(Sender: TObject; var Action: TCloseAction);

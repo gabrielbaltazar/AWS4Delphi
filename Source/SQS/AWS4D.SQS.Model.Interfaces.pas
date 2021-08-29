@@ -156,6 +156,28 @@ type
     function &End: I;
   end;
 
+  IAWS4DSQSTagQueueRequest<I: IInterface> = interface
+    ['{BEE66C4C-3450-4267-A400-15DC9CBDDBC2}']
+    function QueueUrl(Value: String): IAWS4DSQSTagQueueRequest<I>; overload;
+    function QueueUrl: String; overload;
+
+    function AddTag(Key, Value: String): IAWS4DSQSTagQueueRequest<I>;
+    function Tags: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+
+    function &End: I;
+  end;
+
+  IAWS4DSQSUnTagQueueRequest<I: IInterface> = interface
+    ['{D523F34A-056C-4E84-871F-DEFB028F230F}']
+    function QueueUrl(Value: String): IAWS4DSQSUnTagQueueRequest<I>; overload;
+    function QueueUrl: String; overload;
+
+    function AddTag(Key: String): IAWS4DSQSUnTagQueueRequest<I>;
+    function Tags: IAWS4DIterator<String>;
+
+    function &End: I;
+  end;
+
 implementation
 
 end.

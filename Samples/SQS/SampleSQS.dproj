@@ -140,6 +140,10 @@
         <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Facade.DeleteQueue.pas"/>
         <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.PurgeQueue.Request.pas"/>
         <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Facade.PurgeQueue.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.TagQueue.Request.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Facade.TagQueue.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Model.UnTagQueue.Request.pas"/>
+        <DCCReference Include="..\..\Source\SQS\AWS4D.SQS.Facade.UnTagQueue.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

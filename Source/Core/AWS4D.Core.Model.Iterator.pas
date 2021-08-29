@@ -16,6 +16,7 @@ type TAWS4DCoreModelIterator<T> = class(TInterfacedObject, IAWS4DIterator<T>)
   protected
     function First: IAWS4DIterator<T>;
     function HasNext: Boolean;
+    function Index: Integer;
     function Current: T;
 
   public
@@ -61,6 +62,11 @@ begin
   Inc(FIndex);
 
   result := FList.Count > FIndex;
+end;
+
+function TAWS4DCoreModelIterator<T>.Index: Integer;
+begin
+  Result := FIndex;
 end;
 
 class function TAWS4DCoreModelIterator<T>.New(AList: TList<T>): IAWS4DIterator<T>;

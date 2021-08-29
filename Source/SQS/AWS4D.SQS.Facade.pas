@@ -14,6 +14,8 @@ uses
   AWS4D.SQS.Facade.PurgeQueue,
   AWS4D.SQS.Facade.ReceiveMessage,
   AWS4D.SQS.Facade.SendMessage,
+  AWS4D.SQS.Facade.TagQueue,
+  AWS4D.SQS.Facade.UnTagQueue,
   AWS4D.SQS.Service,
   AWS4D.Core.Model.Types;
 
@@ -33,6 +35,8 @@ type TAWS4DSQSFacade = class(TInterfacedObject, IAWS4DSQSFacade)
     FPurgeQueue: IAWS4DSQSFacadePurgeQueue;
     FReceiveMessage: IAWS4DSQSFacadeReceiveMessage;
     FSendMessage: IAWS4DSQSFacadeSendMessage;
+    FTagQueue: IAWS4DSQSFacadeTagQueue;
+    FUnTagQueue: IAWS4DSQSFacadeUnTagQueue;
 
     function SQSService<I: IInterface>: IAWS4DSQSService<I>;
 
@@ -51,6 +55,8 @@ type TAWS4DSQSFacade = class(TInterfacedObject, IAWS4DSQSFacade)
     function PurgeQueue: IAWS4DSQSFacadePurgeQueue;
     function ReceiveMessage: IAWS4DSQSFacadeReceiveMessage;
     function SendMessage: IAWS4DSQSFacadeSendMessage;
+    function TagQueue: IAWS4DSQSFacadeTagQueue;
+    function UnTagQueue: IAWS4DSQSFacadeUnTagQueue;
 
   public
     constructor create;
@@ -220,6 +226,34 @@ begin
     .AccessKey(FAccessKey)
     .SecretKey(FSecretKey)
     .Region(FRegion);
+end;
+
+function TAWS4DSQSFacade.TagQueue: IAWS4DSQSFacadeTagQueue;
+var
+  service: IAWS4DSQSService<IAWS4DSQSFacadeTagQueue>;
+begin
+  if not Assigned(FTagQueue) then
+  begin
+    service := Self.SQSService<IAWS4DSQSFacadeTagQueue>;
+    FTagQueue := TAWS4DSQSFacadeTagQueue.New(service);
+    FTagQueue.Request.QueueUrl(FQueue);
+  end;
+
+  result := FTagQueue;
+end;
+
+function TAWS4DSQSFacade.UnTagQueue: IAWS4DSQSFacadeUnTagQueue;
+var
+  service: IAWS4DSQSService<IAWS4DSQSFacadeUnTagQueue>;
+begin
+  if not Assigned(FUnTagQueue) then
+  begin
+    service := Self.SQSService<IAWS4DSQSFacadeUnTagQueue>;
+    FUnTagQueue := TAWS4DSQSFacadeUnTagQueue.New(service);
+    FUnTagQueue.Request.QueueUrl(FQueue);
+  end;
+
+  result := FUnTagQueue;
 end;
 
 end.

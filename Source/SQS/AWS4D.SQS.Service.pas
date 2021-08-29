@@ -41,6 +41,8 @@ type TAWS4DSQSService<I: IInterface> = class(TInterfacedObject, IAWS4DSQSService
     procedure PurgeQueue(Request: IAWS4DSQSPurgeQueueRequest<I>);
     function ReceiveMessage(Request: IAWS4DSQSReceiveMessageRequest<I>): IAWS4DSQSReceiveMessageResponse<I>;
     function SendMessage(Request: IAWS4DSQSSendMessageRequest<I>): IAWS4DSQSSendMessageResponse<I>;
+    procedure TagQueue(Request: IAWS4DSQSTagQueueRequest<I>);
+    procedure UnTagQueue(Request: IAWS4DSQSUnTagQueueRequest<I>);
 
     function Parent(Value: I): IAWS4DSQSService<I>;
     function &End: I;
@@ -309,6 +311,44 @@ begin
 
   json := restRequest.Send.GetJSONObject;
   result := TAWS4SQSSendMessageResponse<I>.New(FParent, json);
+end;
+
+procedure TAWS4DSQSService<I>.TagQueue(Request: IAWS4DSQSTagQueueRequest<I>);
+var
+  restRequest: IGBClientRequest;
+begin
+  restRequest := Self.NewGETRequest('TagQueue');
+  restRequest.Resource(Request.QueueUrl);
+
+  while Request.Tags.HasNext do
+  begin
+    restRequest.Params.QueryAddOrSet(
+      Format('Tag.%s.Key', [(Request.Tags.Index + 1).ToString]),
+      Request.Tags.Current.Key);
+
+    restRequest.Params.QueryAddOrSet(
+      Format('Tag.%s.Value', [(Request.Tags.Index + 1).ToString]),
+      Request.Tags.Current.Value);
+  end;
+
+  restRequest.Send;
+end;
+
+procedure TAWS4DSQSService<I>.UnTagQueue(Request: IAWS4DSQSUnTagQueueRequest<I>);
+var
+  restRequest: IGBClientRequest;
+begin
+  restRequest := Self.NewGETRequest('UntagQueue');
+  restRequest.Resource(Request.QueueUrl);
+
+  while Request.Tags.HasNext do
+  begin
+    restRequest.Params.QueryAddOrSet(
+      Format('TagKey.%s', [(Request.Tags.Index + 1).ToString]),
+      Request.Tags.Current);
+  end;
+
+  restRequest.Send;
 end;
 
 end.

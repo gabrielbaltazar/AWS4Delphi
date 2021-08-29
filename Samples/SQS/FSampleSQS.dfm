@@ -98,7 +98,7 @@ object Form2: TForm2
     Top = 97
     Width = 1171
     Height = 341
-    ActivePage = tsPurgeQueue
+    ActivePage = tsDeleteMessageBatch
     Align = alClient
     TabOrder = 2
     object tsListQueues: TTabSheet
@@ -668,57 +668,42 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object Label21: TLabel
-          Left = 11
-          Top = 9
-          Width = 48
-          Height = 13
-          Caption = 'Queue Url'
-        end
         object Label22: TLabel
-          Left = 239
+          Left = 7
           Top = 9
           Width = 29
           Height = 13
           Caption = 'TAG 1'
         end
         object Label23: TLabel
-          Left = 351
+          Left = 119
           Top = 9
           Width = 29
           Height = 13
           Caption = 'TAG 2'
         end
-        object edtUntagQueueQueueUrl: TEdit
-          Left = 11
-          Top = 24
-          Width = 222
-          Height = 21
-          TabOrder = 0
-          Text = '159521004132/Send-to-Email-Docfiscal-dev'
-        end
         object btnUntagQueue: TButton
-          Left = 471
+          Left = 239
           Top = 22
           Width = 90
           Height = 25
           Caption = 'UnTag Queue'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnUntagQueueClick
         end
         object edtUntagQueueTag1: TEdit
-          Left = 239
+          Left = 7
+          Top = 24
+          Width = 106
+          Height = 21
+          TabOrder = 1
+        end
+        object edtUntagQueueTag2: TEdit
+          Left = 119
           Top = 24
           Width = 106
           Height = 21
           TabOrder = 2
-        end
-        object edtUntagQueueTag2: TEdit
-          Left = 351
-          Top = 24
-          Width = 106
-          Height = 21
-          TabOrder = 3
         end
       end
       object mmoUntagQueue: TMemo

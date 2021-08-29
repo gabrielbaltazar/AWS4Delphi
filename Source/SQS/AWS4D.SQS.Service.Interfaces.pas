@@ -22,6 +22,8 @@ type
     procedure PurgeQueue(Request: IAWS4DSQSPurgeQueueRequest<I>);
     function ReceiveMessage(Request: IAWS4DSQSReceiveMessageRequest<I>): IAWS4DSQSReceiveMessageResponse<I>;
     function SendMessage(Request: IAWS4DSQSSendMessageRequest<I>): IAWS4DSQSSendMessageResponse<I>;
+    procedure TagQueue(Request: IAWS4DSQSTagQueueRequest<I>);
+    procedure UnTagQueue(Request: IAWS4DSQSUnTagQueueRequest<I>);
 
     function Parent(Value: I): IAWS4DSQSService<I>;
     function &End: I;

@@ -10,6 +10,7 @@ type
     ['{9D00D1BF-8A07-46DC-BD14-AC7D08662EE1}']
     function First: IAWS4DIterator<T>;
     function HasNext: Boolean;
+    function Index: Integer;
     function Current: T;
   end;
 

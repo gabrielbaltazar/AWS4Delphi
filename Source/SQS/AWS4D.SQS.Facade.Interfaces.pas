@@ -16,6 +16,8 @@ type
   IAWS4DSQSFacadePurgeQueue = interface;
   IAWS4DSQSFacadeReceiveMessage = interface;
   IAWS4DSQSFacadeSendMessage = interface;
+  IAWS4DSQSFacadeTagQueue = interface;
+  IAWS4DSQSFacadeUnTagQueue = interface;
 
   IAWS4DSQSFacade = interface
     ['{0D47D22F-3793-498D-AAA2-A40D48B72F12}']
@@ -33,6 +35,8 @@ type
     function PurgeQueue: IAWS4DSQSFacadePurgeQueue;
     function ReceiveMessage: IAWS4DSQSFacadeReceiveMessage;
     function SendMessage: IAWS4DSQSFacadeSendMessage;
+    function TagQueue: IAWS4DSQSFacadeTagQueue;
+    function UnTagQueue: IAWS4DSQSFacadeUnTagQueue;
   end;
 
   IAWS4DSQSFacadeDeleteMessage = interface
@@ -86,6 +90,18 @@ type
     function Request: IAWS4DSQSSendMessageRequest<IAWS4DSQSFacadeSendMessage>;
     function Send: IAWS4DSQSSendMessageResponse<IAWS4DSQSFacadeSendMessage>;
     function Response: IAWS4DSQSSendMessageResponse<IAWS4DSQSFacadeSendMessage>;
+  end;
+
+  IAWS4DSQSFacadeTagQueue = interface
+    ['{66B3E18B-F166-4D11-97B9-F59FCA0EB303}']
+    function Request: IAWS4DSQSTagQueueRequest<IAWS4DSQSFacadeTagQueue>;
+    function Send: IAWS4DSQSFacadeTagQueue;
+  end;
+
+  IAWS4DSQSFacadeUnTagQueue = interface
+    ['{365605D5-D6E6-4416-B169-7BAD920112CF}']
+    function Request: IAWS4DSQSUnTagQueueRequest<IAWS4DSQSFacadeUnTagQueue>;
+    function Send: IAWS4DSQSFacadeUnTagQueue;
   end;
 
 implementation

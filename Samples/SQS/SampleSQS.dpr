@@ -34,7 +34,11 @@ uses
   AWS4D.SQS.Model.DeleteQueue.Request in '..\..\Source\SQS\AWS4D.SQS.Model.DeleteQueue.Request.pas',
   AWS4D.SQS.Facade.DeleteQueue in '..\..\Source\SQS\AWS4D.SQS.Facade.DeleteQueue.pas',
   AWS4D.SQS.Model.PurgeQueue.Request in '..\..\Source\SQS\AWS4D.SQS.Model.PurgeQueue.Request.pas',
-  AWS4D.SQS.Facade.PurgeQueue in '..\..\Source\SQS\AWS4D.SQS.Facade.PurgeQueue.pas';
+  AWS4D.SQS.Facade.PurgeQueue in '..\..\Source\SQS\AWS4D.SQS.Facade.PurgeQueue.pas',
+  AWS4D.SQS.Model.TagQueue.Request in '..\..\Source\SQS\AWS4D.SQS.Model.TagQueue.Request.pas',
+  AWS4D.SQS.Facade.TagQueue in '..\..\Source\SQS\AWS4D.SQS.Facade.TagQueue.pas',
+  AWS4D.SQS.Model.UnTagQueue.Request in '..\..\Source\SQS\AWS4D.SQS.Model.UnTagQueue.Request.pas',
+  AWS4D.SQS.Facade.UnTagQueue in '..\..\Source\SQS\AWS4D.SQS.Facade.UnTagQueue.pas';
 
 {$R *.res}
 
