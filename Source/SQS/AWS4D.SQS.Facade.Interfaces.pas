@@ -121,6 +121,16 @@ type
     function Send: IAWS4DSQSFacadeUnTagQueue;
   end;
 
+function NewSQSFacade: IAWS4DSQSFacade;
+
 implementation
+
+uses
+  AWS4D.SQS.Facade;
+
+function NewSQSFacade: IAWS4DSQSFacade;
+begin
+  result := TAWS4DSQSFacade.New;
+end;
 
 end.
