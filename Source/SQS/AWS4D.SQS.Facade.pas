@@ -7,7 +7,9 @@ uses
   AWS4D.SQS.Service.Interfaces,
   AWS4D.SQS.Model.Interfaces,
   AWS4D.SQS.Facade.DeleteMessage,
+  AWS4D.SQS.Facade.DeleteMessageBatch,
   AWS4D.SQS.Facade.DeleteQueue,
+  AWS4D.SQS.Facade.GetQueueAttributes,
   AWS4D.SQS.Facade.GetQueueUrl,
   AWS4D.SQS.Facade.ListQueues,
   AWS4D.SQS.Facade.ListQueueTags,
@@ -28,7 +30,9 @@ type TAWS4DSQSFacade = class(TInterfacedObject, IAWS4DSQSFacade)
     FRegion: TAWS4DRegion;
 
     FDeleteMessage: IAWS4DSQSFacadeDeleteMessage;
+    FDeleteMessageBatch: IAWS4DSQSFacadeDeleteMessageBatch;
     FDeleteQueue: IAWS4DSQSFacadeDeleteQueue;
+    FGetQueueAttributes: IAWS4DSQSFacadeGetQueueAttributes;
     FGetQueueUrl: IAWS4DSQSFacadeGetQueueUrl;
     FListQueues: IAWS4DSQSFacadeListQueues;
     FListQueueTags: IAWS4DSQSFacadeListQueueTags;
@@ -48,7 +52,9 @@ type TAWS4DSQSFacade = class(TInterfacedObject, IAWS4DSQSFacade)
     function Queue(Value: String): IAWS4DSQSFacade;
 
     function DeleteMessage: IAWS4DSQSFacadeDeleteMessage;
+    function DeleteMessageBatch: IAWS4DSQSFacadeDeleteMessageBatch;
     function DeleteQueue: IAWS4DSQSFacadeDeleteQueue;
+    function GetQueueAttributes: IAWS4DSQSFacadeGetQueueAttributes;
     function GetQueueUrl: IAWS4DSQSFacadeGetQueueUrl;
     function ListQueues: IAWS4DSQSFacadeListQueues;
     function ListQueueTags: IAWS4DSQSFacadeListQueueTags;
@@ -93,6 +99,20 @@ begin
   result := FDeleteMessage;
 end;
 
+function TAWS4DSQSFacade.DeleteMessageBatch: IAWS4DSQSFacadeDeleteMessageBatch;
+var
+  service: IAWS4DSQSService<IAWS4DSQSFacadeDeleteMessageBatch>;
+begin
+  if not Assigned(FDeleteMessageBatch) then
+  begin
+    service := Self.SQSService<IAWS4DSQSFacadeDeleteMessageBatch>;
+    FDeleteMessageBatch := TAWS4DSQSFacadeDeleteMessageBatch.New(service);
+    FDeleteMessageBatch.Request.QueueUrl(FQueue);
+  end;
+
+  result := FDeleteMessageBatch;
+end;
+
 function TAWS4DSQSFacade.DeleteQueue: IAWS4DSQSFacadeDeleteQueue;
 var
   service: IAWS4DSQSService<IAWS4DSQSFacadeDeleteQueue>;
@@ -105,6 +125,20 @@ begin
   end;
 
   result := FDeleteQueue;
+end;
+
+function TAWS4DSQSFacade.GetQueueAttributes: IAWS4DSQSFacadeGetQueueAttributes;
+var
+  service: IAWS4DSQSService<IAWS4DSQSFacadeGetQueueAttributes>;
+begin
+  if not Assigned(FGetQueueAttributes) then
+  begin
+    service := Self.SQSService<IAWS4DSQSFacadeGetQueueAttributes>;
+    FGetQueueAttributes := TAWS4DSQSFacadeGetQueueAttributes.New(service);
+    FGetQueueAttributes.Request.QueueUrl(FQueue);
+  end;
+
+  result := FGetQueueAttributes;
 end;
 
 function TAWS4DSQSFacade.GetQueueUrl: IAWS4DSQSFacadeGetQueueUrl;

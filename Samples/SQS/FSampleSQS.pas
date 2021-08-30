@@ -83,15 +83,10 @@ type
     mmoCreateQueue: TMemo;
     tsDeleteMessageBatch: TTabSheet;
     Panel8: TPanel;
-    Label17: TLabel;
-    edtDeleteMessageBatchQueueName: TEdit;
     btnDeleteMessageBatch: TButton;
-    edtDeleteMessageBatchList: TValueListEditor;
     mmoDeleteMessageBatch: TMemo;
     tsGetQueueAttributes: TTabSheet;
     Panel9: TPanel;
-    Label18: TLabel;
-    edtGetQueueAttributesQueueName: TEdit;
     btnGetQueueAttributes: TButton;
     mmoGetQueueAttributes: TMemo;
     tsPurgeQueue: TTabSheet;
@@ -117,6 +112,14 @@ type
     mmoDeleteQueue: TMemo;
     edtQueueName: TEdit;
     Label14: TLabel;
+    Label7: TLabel;
+    edtDeleteBatchMessageID1: TEdit;
+    Label8: TLabel;
+    edtDeleteBatchReceiptHandle1: TEdit;
+    Label12: TLabel;
+    edtDeleteBatchMessageID2: TEdit;
+    Label17: TLabel;
+    edtDeleteBatchReceiptHandle2: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnListQueuesClick(Sender: TObject);
@@ -166,26 +169,14 @@ begin
 end;
 
 procedure TForm2.btnDeleteMessageBatchClick(Sender: TObject);
-//var
-//  request: IAWS4DSQSModelDeleteMessageBatchRequest;
-//  response: IAWS4DSQSModelDeleteMessageBatchResponse;
-//  messageId: string;
-//  receiptHandle: string;
-//  i : Integer;
 begin
-//  request := SQSModelFactory.DeleteMessageBatchRequest;
-//  request.QueueUrl(edtDeleteMessageBatchQueueName.Text);
-//
-//  for i := 0 to edtDeleteMessageBatchList.Strings.Count - 1 do
-//  begin
-//    messageId := edtDeleteMessageBatchList.Strings.Names[i];
-//    receiptHandle := edtDeleteMessageBatchList.Strings.ValueFromIndex[i];
-//
-//    request.AddReceiptHandle(messageId, receiptHandle);
-//  end;
-//
-//  response := CreateSQS.DeleteMessageBatch(request);
-//  writeDeleteMessageBatchResponse(response);
+  FSQS.DeleteMessageBatch
+    .Request
+      .QueueUrl(edtQueueName.Text)
+      .AddMessage(edtDeleteBatchMessageID1.Text, edtDeleteBatchReceiptHandle1.Text)
+      .AddMessage(edtDeleteBatchMessageID2.Text, edtDeleteBatchReceiptHandle2.Text)
+    .&End
+    .Send;
 end;
 
 procedure TForm2.btnDeleteMessageClick(Sender: TObject);
@@ -208,16 +199,12 @@ begin
 end;
 
 procedure TForm2.btnGetQueueAttributesClick(Sender: TObject);
-//var
-//  request: IAWS4DSQSModelGetQueueAttributesRequest;
-//  response: IAWS4DSQSModelGetQueueAttributesResponse;
 begin
-//  request := SQSModelFactory.GetQueueAttributesRequest;
-//  request
-//    .QueueUrl(edtGetQueueAttributesQueueName.Text);
-//
-//  response := CreateSQS.GetQueueAttributes(request);
-//  writeGetQueueAttributesResponse(response);
+  FSQS.GetQueueAttributes
+    .Request
+      .QueueUrl(edtQueueName.Text)
+    .&End
+    .Send;
 end;
 
 procedure TForm2.btnListQueuesClick(Sender: TObject);
@@ -293,6 +280,10 @@ begin
 
     mmoReceiveMessageResponse.Lines.Add(
       FSQS.ReceiveMessage.Response.Messages.Current.ReceiptHandle
+    );
+
+    mmoReceiveMessageResponse.Lines.Add(
+      FSQS.ReceiveMessage.Response.Messages.Current.MessageId
     );
 
     mmoReceiveMessageResponse.Lines.Add('');

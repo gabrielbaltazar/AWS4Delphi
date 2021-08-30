@@ -6,6 +6,17 @@ uses
   AWS4D.Core.Model.Types;
 
 type
+  IAWS4DSQSDeleteMessageBatchRequest<I: IInterface> = interface
+    ['{3FCE37CA-B31A-4398-BBC6-DB79D357CBE2}']
+    function QueueUrl(Value: String): IAWS4DSQSDeleteMessageBatchRequest<I>; overload;
+    function QueueUrl: string; overload;
+
+    function AddMessage(Id, ReceiptHandle: String): IAWS4DSQSDeleteMessageBatchRequest<I>;
+    function Messages: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+
+    function &End: I;
+  end;
+
   IAWS4DSQSDeleteMessageRequest<I: IInterface> = interface
     ['{14908AEE-2924-49A4-8D71-6369C339EE76}']
     function QueueName(Value: String): IAWS4DSQSDeleteMessageRequest<I>; overload;
@@ -21,6 +32,23 @@ type
     ['{1EE7659B-4CE4-45B3-948B-069C575971C8}']
     function QueueUrl(Value: String): IAWS4DSQSDeleteQueueRequest<I>; overload;
     function QueueUrl: string; overload;
+
+    function &End: I;
+  end;
+
+  IAWS4DSQSGetQueueAttributesRequest<I: IInterface> = interface
+    ['{A8A42720-E27B-4E2C-9883-5D41DE567F9A}']
+    function QueueUrl(Value: String): IAWS4DSQSGetQueueAttributesRequest<I>; overload;
+    function QueueUrl: string; overload;
+    function Attributtes: IAWS4DIterator<String>;
+
+    function AddAttribute(Value: String): IAWS4DSQSGetQueueAttributesRequest<I>;
+    function &End: I;
+  end;
+
+  IAWS4DSQSGetQueueAttributesResponse<I: IInterface> = interface
+    ['{A2BD5487-8DC6-4E30-A913-9CE6F16A02BD}']
+    function Attributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
 
     function &End: I;
   end;

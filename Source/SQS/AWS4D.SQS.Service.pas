@@ -7,6 +7,7 @@ uses
   AWS4D.SQS.Model.Interfaces,
   AWS4D.SQS.Model.ListQueues.Response,
   AWS4D.SQS.Model.ListQueueTags.Response,
+  AWS4D.SQS.Model.GetQueueAttributes.Response,
   AWS4D.SQS.Model.GetQueueUrl.Response,
   AWS4D.SQS.Model.ReceiveMessage.Response,
   AWS4D.SQS.Model.SendMessage.Response,
@@ -34,7 +35,9 @@ type TAWS4DSQSService<I: IInterface> = class(TInterfacedObject, IAWS4DSQSService
     function Region(Value: TAWS4DRegion): IAWS4DSQSService<I>; overload;
 
     procedure DeleteMessage(Request: IAWS4DSQSDeleteMessageRequest<I>);
+    procedure DeleteMessageBatch(Request: IAWS4DSQSDeleteMessageBatchRequest<I>);
     procedure DeleteQueue(Request: IAWS4DSQSDeleteQueueRequest<I>);
+    function GetQueueAttributes(Request: IAWS4DSQSGetQueueAttributesRequest<I>): IAWS4DSQSGetQueueAttributesResponse<I>;
     function GetQueueUrl(Request: IAWS4DSQSGetQueueUrlRequest<I>): IAWS4DSQSGetQueueUrlResponse<I>;
     function ListQueues(Request: IAWS4DSQSListQueuesRequest<I>): IAWS4DSQSListQueuesResponse<I>;
     function ListQueueTags(Request: IAWS4DSQSListQueueTagsRequest<I>): IAWS4DSQSListQueueTagsResponse<I>;
@@ -61,6 +64,27 @@ implementation
 function TAWS4DSQSService<I>.&End: I;
 begin
   result := FParent;
+end;
+
+function TAWS4DSQSService<I>.GetQueueAttributes(Request: IAWS4DSQSGetQueueAttributesRequest<I>): IAWS4DSQSGetQueueAttributesResponse<I>;
+var
+  restRequest: IGBClientRequest;
+  json: TJSONObject;
+  index: String;
+begin
+  restRequest := NewGETRequest('GetQueueAttributes');
+  restRequest.Resource(Request.QueueUrl);
+
+  while Request.Attributtes.HasNext do
+  begin
+    index := (Request.Attributtes.Index + 1).ToString;
+    restRequest.Params
+      .QueryAddOrSet(Format('AttributeName.%s', [index]),
+                     Request.Attributtes.Current);
+  end;
+
+  json := restRequest.Send.GetJSONObject;
+  result := TAWS4SQSGetQueueAttributesResponse<I>.New(FParent, json);
 end;
 
 function TAWS4DSQSService<I>.GetQueueUrl(Request: IAWS4DSQSGetQueueUrlRequest<I>): IAWS4DSQSGetQueueUrlResponse<I>;
@@ -99,6 +123,29 @@ begin
     .Resource(Request.QueueName)
     .Params
       .QueryAddOrSet('ReceiptHandle', Request.ReceiptHandle);
+
+  restRequest.Send;
+end;
+
+procedure TAWS4DSQSService<I>.DeleteMessageBatch(Request: IAWS4DSQSDeleteMessageBatchRequest<I>);
+var
+  restRequest: IGBClientRequest;
+  index: String;
+begin
+  restRequest := NewGETRequest('DeleteMessageBatch');
+  restRequest.Resource(Request.QueueUrl);
+
+  while Request.Messages.HasNext do
+  begin
+    index := (Request.Messages.Index + 1).ToString;
+    restRequest.Params.QueryAddOrSet(
+      Format('DeleteMessageBatchRequestEntry.%s.Id', [index]),
+      Request.Messages.Current.Key);
+
+    restRequest.Params.QueryAddOrSet(
+      Format('DeleteMessageBatchRequestEntry.%s.ReceiptHandle', [index]),
+      Request.Messages.Current.Value);
+  end;
 
   restRequest.Send;
 end;

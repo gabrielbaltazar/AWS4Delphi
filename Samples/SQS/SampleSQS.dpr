@@ -38,7 +38,12 @@ uses
   AWS4D.SQS.Model.TagQueue.Request in '..\..\Source\SQS\AWS4D.SQS.Model.TagQueue.Request.pas',
   AWS4D.SQS.Facade.TagQueue in '..\..\Source\SQS\AWS4D.SQS.Facade.TagQueue.pas',
   AWS4D.SQS.Model.UnTagQueue.Request in '..\..\Source\SQS\AWS4D.SQS.Model.UnTagQueue.Request.pas',
-  AWS4D.SQS.Facade.UnTagQueue in '..\..\Source\SQS\AWS4D.SQS.Facade.UnTagQueue.pas';
+  AWS4D.SQS.Facade.UnTagQueue in '..\..\Source\SQS\AWS4D.SQS.Facade.UnTagQueue.pas',
+  AWS4D.SQS.Model.GetQueueAttributes.Request in '..\..\Source\SQS\AWS4D.SQS.Model.GetQueueAttributes.Request.pas',
+  AWS4D.SQS.Model.GetQueueAttributes.Response in '..\..\Source\SQS\AWS4D.SQS.Model.GetQueueAttributes.Response.pas',
+  AWS4D.SQS.Facade.GetQueueAttributes in '..\..\Source\SQS\AWS4D.SQS.Facade.GetQueueAttributes.pas',
+  AWS4D.SQS.Model.DeleteMessageBatch.Request in '..\..\Source\SQS\AWS4D.SQS.Model.DeleteMessageBatch.Request.pas',
+  AWS4D.SQS.Facade.DeleteMessageBatch in '..\..\Source\SQS\AWS4D.SQS.Facade.DeleteMessageBatch.pas';
 
 {$R *.res}
 

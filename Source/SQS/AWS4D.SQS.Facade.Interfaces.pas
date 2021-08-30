@@ -9,7 +9,9 @@ uses
 
 type
   IAWS4DSQSFacadeDeleteMessage = interface;
+  IAWS4DSQSFacadeDeleteMessageBatch = interface;
   IAWS4DSQSFacadeDeleteQueue = interface;
+  IAWS4DSQSFacadeGetQueueAttributes = interface;
   IAWS4DSQSFacadeGetQueueUrl = interface;
   IAWS4DSQSFacadeListQueues = interface;
   IAWS4DSQSFacadeListQueueTags = interface;
@@ -28,7 +30,9 @@ type
     function Queue(Value: String): IAWS4DSQSFacade;
 
     function DeleteMessage: IAWS4DSQSFacadeDeleteMessage;
+    function DeleteMessageBatch: IAWS4DSQSFacadeDeleteMessageBatch;
     function DeleteQueue: IAWS4DSQSFacadeDeleteQueue;
+    function GetQueueAttributes: IAWS4DSQSFacadeGetQueueAttributes;
     function GetQueueUrl: IAWS4DSQSFacadeGetQueueUrl;
     function ListQueues: IAWS4DSQSFacadeListQueues;
     function ListQueueTags: IAWS4DSQSFacadeListQueueTags;
@@ -45,10 +49,23 @@ type
     function Send: IAWS4DSQSFacadeDeleteMessage;
   end;
 
+  IAWS4DSQSFacadeDeleteMessageBatch = interface
+    ['{3A905727-1841-4921-8AF3-7C5E61064490}']
+    function Request: IAWS4DSQSDeleteMessageBatchRequest<IAWS4DSQSFacadeDeleteMessageBatch>;
+    function Send: IAWS4DSQSFacadeDeleteMessageBatch;
+  end;
+
   IAWS4DSQSFacadeDeleteQueue = interface
     ['{DACCF0CE-9923-4045-80F9-B0D49ABB68A5}']
     function Request: IAWS4DSQSDeleteQueueRequest<IAWS4DSQSFacadeDeleteQueue>;
     function Send: IAWS4DSQSFacadeDeleteQueue;
+  end;
+
+  IAWS4DSQSFacadeGetQueueAttributes = interface
+    ['{78529DE6-F4BA-457B-A6DE-BD08A04506B7}']
+    function Request: IAWS4DSQSGetQueueAttributesRequest<IAWS4DSQSFacadeGetQueueAttributes>;
+    function Send: IAWS4DSQSGetQueueAttributesResponse<IAWS4DSQSFacadeGetQueueAttributes>;
+    function Response: IAWS4DSQSGetQueueAttributesResponse<IAWS4DSQSFacadeGetQueueAttributes>;
   end;
 
   IAWS4DSQSFacadeGetQueueUrl = interface
