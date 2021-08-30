@@ -5,6 +5,7 @@ interface
 uses
   AWS4D.SQS.Service.Interfaces,
   AWS4D.SQS.Model.Interfaces,
+  AWS4D.SQS.Model.CreateQueue.Response,
   AWS4D.SQS.Model.ListQueues.Response,
   AWS4D.SQS.Model.ListQueueTags.Response,
   AWS4D.SQS.Model.GetQueueAttributes.Response,
@@ -34,6 +35,7 @@ type TAWS4DSQSService<I: IInterface> = class(TInterfacedObject, IAWS4DSQSService
     function Region(Value: String): IAWS4DSQSService<I>; overload;
     function Region(Value: TAWS4DRegion): IAWS4DSQSService<I>; overload;
 
+    function CreateQueue(Request: IAWS4DSQSCreateQueueRequest<I>): IAWS4DSQSCreateQueueResponse<I>;
     procedure DeleteMessage(Request: IAWS4DSQSDeleteMessageRequest<I>);
     procedure DeleteMessageBatch(Request: IAWS4DSQSDeleteMessageBatchRequest<I>);
     procedure DeleteQueue(Request: IAWS4DSQSDeleteQueueRequest<I>);
@@ -112,6 +114,44 @@ end;
 constructor TAWS4DSQSService<I>.create;
 begin
   FRegion := aws4dUSEast1;
+end;
+
+function TAWS4DSQSService<I>.CreateQueue(Request: IAWS4DSQSCreateQueueRequest<I>): IAWS4DSQSCreateQueueResponse<I>;
+var
+  restRequest: IGBClientRequest;
+  json: TJSONObject;
+  index: String;
+begin
+  restRequest := NewGETRequest('CreateQueue');
+  restRequest
+    .Params.QueryAddOrSet('QueueName', Request.QueueName);
+
+  while Request.Attributes.HasNext do
+  begin
+    index := (Request.Attributes.Index + 1).ToString;
+    restRequest.Params.QueryAddOrSet(
+      Format('Attribute.%s.Name', [index]),
+      Request.Attributes.Current.Key);
+
+    restRequest.Params.QueryAddOrSet(
+      Format('Attribute.%s.Value ', [index]),
+      Request.Attributes.Current.Value);
+  end;
+
+  while Request.Tags.HasNext do
+  begin
+    index := (Request.Tags.Index + 1).ToString;
+    restRequest.Params.QueryAddOrSet(
+      Format('Tag.%s.Name', [index]),
+      Request.Tags.Current.Key);
+
+    restRequest.Params.QueryAddOrSet(
+      Format('Tag.%s.Value ', [index]),
+      Request.Tags.Current.Value);
+  end;
+
+  json := restRequest.Send.GetJSONObject;
+  Result := TAWS4SQSCreateQueueResponse<I>.New(FParent, json);
 end;
 
 procedure TAWS4DSQSService<I>.DeleteMessage(Request: IAWS4DSQSDeleteMessageRequest<I>);

@@ -157,15 +157,14 @@ implementation
 {$R *.dfm}
 
 procedure TForm2.btnCreateQueueClick(Sender: TObject);
-//var
-//  request: IAWS4DSQSModelCreateQueueRequest;
-//  response: IAWS4DSQSModelCreateQueueResponse;
 begin
-//  request := SQSModelFactory.CreateQueueRequest;
-//  request.QueueName(edtCreateQueueQueueName.Text);
-//
-//  response := CreateSQS.CreateQueue(request);
-//  writeCreateQueueResponse(response);
+  FSQS.CreateQueue
+    .Request
+      .QueueName(edtCreateQueueQueueName.Text)
+    .&End
+    .Send;
+
+  mmoCreateQueue.Lines.Add(FSQS.CreateQueue.Response.QueueUrl);
 end;
 
 procedure TForm2.btnDeleteMessageBatchClick(Sender: TObject);

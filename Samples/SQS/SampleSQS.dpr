@@ -43,7 +43,10 @@ uses
   AWS4D.SQS.Model.GetQueueAttributes.Response in '..\..\Source\SQS\AWS4D.SQS.Model.GetQueueAttributes.Response.pas',
   AWS4D.SQS.Facade.GetQueueAttributes in '..\..\Source\SQS\AWS4D.SQS.Facade.GetQueueAttributes.pas',
   AWS4D.SQS.Model.DeleteMessageBatch.Request in '..\..\Source\SQS\AWS4D.SQS.Model.DeleteMessageBatch.Request.pas',
-  AWS4D.SQS.Facade.DeleteMessageBatch in '..\..\Source\SQS\AWS4D.SQS.Facade.DeleteMessageBatch.pas';
+  AWS4D.SQS.Facade.DeleteMessageBatch in '..\..\Source\SQS\AWS4D.SQS.Facade.DeleteMessageBatch.pas',
+  AWS4D.SQS.Model.CreateQueue.Request in '..\..\Source\SQS\AWS4D.SQS.Model.CreateQueue.Request.pas',
+  AWS4D.SQS.Model.CreateQueue.Response in '..\..\Source\SQS\AWS4D.SQS.Model.CreateQueue.Response.pas',
+  AWS4D.SQS.Facade.CreateQueue in '..\..\Source\SQS\AWS4D.SQS.Facade.CreateQueue.pas';
 
 {$R *.res}
 

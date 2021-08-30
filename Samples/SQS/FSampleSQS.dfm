@@ -98,7 +98,7 @@ object Form2: TForm2
     Top = 97
     Width = 1171
     Height = 341
-    ActivePage = tsReceiveMessage
+    ActivePage = tsCreateQueue
     Align = alClient
     TabOrder = 2
     object tsListQueues: TTabSheet

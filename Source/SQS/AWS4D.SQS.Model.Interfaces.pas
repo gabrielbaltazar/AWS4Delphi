@@ -6,6 +6,26 @@ uses
   AWS4D.Core.Model.Types;
 
 type
+  IAWS4DSQSCreateQueueRequest<I: IInterface> = interface
+    ['{3A50EA4B-B926-4DA7-9C37-D58FB25AA14C}']
+    function QueueName(Value: String): IAWS4DSQSCreateQueueRequest<I>; overload;
+    function QueueName: string; overload;
+    function Attributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+    function Tags: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+
+    function AddAttribute(Key, Value: String): IAWS4DSQSCreateQueueRequest<I>;
+    function AddTag(Key, Value: String): IAWS4DSQSCreateQueueRequest<I>;
+
+    function &End: I;
+  end;
+
+  IAWS4DSQSCreateQueueResponse<I: IInterface> = interface
+    ['{6DA3ED5A-16A9-4D2B-9CC4-2DCAF7429BBD}']
+    function QueueUrl: string;
+
+    function &End: I;
+  end;
+
   IAWS4DSQSDeleteMessageBatchRequest<I: IInterface> = interface
     ['{3FCE37CA-B31A-4398-BBC6-DB79D357CBE2}']
     function QueueUrl(Value: String): IAWS4DSQSDeleteMessageBatchRequest<I>; overload;

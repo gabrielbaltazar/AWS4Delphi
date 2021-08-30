@@ -6,6 +6,7 @@ uses
   AWS4D.SQS.Facade.Interfaces,
   AWS4D.SQS.Service.Interfaces,
   AWS4D.SQS.Model.Interfaces,
+  AWS4D.SQS.Facade.CreateQueue,
   AWS4D.SQS.Facade.DeleteMessage,
   AWS4D.SQS.Facade.DeleteMessageBatch,
   AWS4D.SQS.Facade.DeleteQueue,
@@ -29,6 +30,7 @@ type TAWS4DSQSFacade = class(TInterfacedObject, IAWS4DSQSFacade)
     FSecretKey: String;
     FRegion: TAWS4DRegion;
 
+    FCreateQueue: IAWS4DSQSFacadeCreateQueue;
     FDeleteMessage: IAWS4DSQSFacadeDeleteMessage;
     FDeleteMessageBatch: IAWS4DSQSFacadeDeleteMessageBatch;
     FDeleteQueue: IAWS4DSQSFacadeDeleteQueue;
@@ -51,6 +53,7 @@ type TAWS4DSQSFacade = class(TInterfacedObject, IAWS4DSQSFacade)
     function Region(Value: TAWS4DRegion): IAWS4DSQSFacade; overload;
     function Queue(Value: String): IAWS4DSQSFacade;
 
+    function CreateQueue: IAWS4DSQSFacadeCreateQueue;
     function DeleteMessage: IAWS4DSQSFacadeDeleteMessage;
     function DeleteMessageBatch: IAWS4DSQSFacadeDeleteMessageBatch;
     function DeleteQueue: IAWS4DSQSFacadeDeleteQueue;
@@ -83,6 +86,19 @@ end;
 constructor TAWS4DSQSFacade.create;
 begin
 
+end;
+
+function TAWS4DSQSFacade.CreateQueue: IAWS4DSQSFacadeCreateQueue;
+var
+  service: IAWS4DSQSService<IAWS4DSQSFacadeCreateQueue>;
+begin
+  if not Assigned(FCreateQueue) then
+  begin
+    service := Self.SQSService<IAWS4DSQSFacadeCreateQueue>;
+    FCreateQueue := TAWS4DSQSFacadeCreateQueue.New(service);
+  end;
+
+  result := FCreateQueue;
 end;
 
 function TAWS4DSQSFacade.DeleteMessage: IAWS4DSQSFacadeDeleteMessage;
