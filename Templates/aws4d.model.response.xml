@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="aws4d.model.response" invoke="manual">
+		<description>
+			Model Response
+		</description>
+		<author>
+			Gabriel Baltazar
+		</author>
+         <point name="Service">
+             <text>
+                 Service
+             </text>
+             <hint>
+                 Service Name
+             </hint>
+         </point>
+          <point name="Action">
+              <text>
+                  Action
+              </text>
+              <hint>
+                  Action Name
+              </hint>
+          </point>
+		<code language="Delphi" delimiter="|"><![CDATA[
+unit AWS4D.|Service|.Model.|Action|.Response;
+
+interface
+
+uses
+  AWS4D.|Service|.Model.Interfaces,
+  AWS4D.Core.Model.Types,
+  AWS4D.Core.Model.Iterator,
+  AWS4D.Core.Helper.JSON,
+  System.Generics.Collections,
+  System.JSON;
+
+type TAWS4|Service||Action|Response<I: IInterface> = class(TInterfacedObject, IAWS4D|Service||Action|Response<I>)
+
+  private
+    [Weak]
+    FParent: I;
+
+    procedure FromJSON(Value: TJSONObject);
+
+  protected
+    |end|
+
+    function &End: I;
+
+  public
+    constructor create(Parent: I; JSON: TJSONObject);
+    class function New(Parent: I; JSON: TJSONObject): IAWS4D|Service||Action|Response<I>;
+    destructor Destroy; override;
+
+end;
+
+implementation
+
+constructor TAWS4|Service||Action|Response<I>.create(Parent: I; JSON: TJSONObject);
+begin
+  FParent := Parent;
+  FromJSON(JSON);
+end;
+
+destructor TAWS4|Service||Action|Response<I>.Destroy;
+begin
+
+  inherited;
+end;
+
+function TAWS4|Service||Action|Response<I>.&End: I;
+begin
+  result := FParent;
+end;
+
+procedure TAWS4|Service||Action|Response<I>.FromJSON(Value: TJSONObject);
+var
+  json: TJSONObject;
+begin
+  inherited;
+  if not Assigned(Value) then
+    Exit;
+
+end;
+
+class function TAWS4|Service||Action|Response<I>.New(Parent: I; JSON: TJSONObject): IAWS4D|Service||Action|Response<I>;
+begin
+  result := Self.create(Parent, JSON);
+end;
+
+end.]]>
+		</code>
+	</template>
+</codetemplate>

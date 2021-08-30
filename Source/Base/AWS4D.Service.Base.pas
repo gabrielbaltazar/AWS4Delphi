@@ -16,6 +16,7 @@ type TAWS4DServiceBase = class(TInterfacedObject, IAWS4DService)
     FSecretKey   : string;
 
   protected
+
     function Region      (Value: String): IAWS4DService; overload;
     function Region      (Value: TAWS4DRegion): IAWS4DService; overload;
     function AccessKeyID (Value: String): IAWS4DService; overload;

@@ -1,0 +1,14 @@
+{
+	"hash": "d41d8cd98f00b204e9800998ecf8427e",
+	"updated": "2021-08-27T07:00:31.1374047-03:00",
+	"installedModules": {
+		"github.com/git@github.com:gabrielbaltazar/gbclient": {
+			"name": "gbclient",
+			"version": "2.0.0",
+			"hash": "95f1d172e34b318b449c257ecd513d21",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		}
+	}
+}
