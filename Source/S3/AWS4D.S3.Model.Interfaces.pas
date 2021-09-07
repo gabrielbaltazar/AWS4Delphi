@@ -23,6 +23,24 @@ type
     function &End: I;
   end;
 
+  IAWS4DS3DownloadObjectRequest<I: IInterface> = interface
+    ['{8C6FC293-AF4E-41C5-A9ED-AAAC882B7A4E}']
+    function BucketName (Value: String): IAWS4DS3DownloadObjectRequest<I>; overload;
+    function ObjectName (Value: String): IAWS4DS3DownloadObjectRequest<I>; overload;
+
+    function BucketName : string; overload;
+    function ObjectName : String; overload;
+
+    function &End: I;
+  end;
+
+  IAWS4DS3DownloadObjectResponse<I: IInterface> = interface
+    ['{5752D790-B36C-4D7A-A02F-F34585165260}']
+    function Stream: TMemoryStream;
+    function Base64: string;
+    procedure SaveToFile(AFileName: String);
+  end;
+
   IAWS4DS3ExistBucketRequest<I: IInterface> = interface
     ['{46D157EB-75BD-426E-A7D1-68B31F9632A8}']
     function BucketName(Value: String): IAWS4DS3ExistBucketRequest<I>; overload;
@@ -55,6 +73,17 @@ type
     function ObjectName: String; overload;
     function FileStream: TStream; overload;
     function MetaInfo: TStrings;
+
+    function &End: I;
+  end;
+
+  IAWS4DS3ObjectDeleteRequest<I: IInterface> = interface
+    ['{4381BB8B-3B34-47BB-AB53-D41E94F85D89}']
+    function BucketName(Value: String): IAWS4DS3ObjectDeleteRequest<I>; overload;
+    function ObjectName(Value: String): IAWS4DS3ObjectDeleteRequest<I>; overload;
+
+    function BucketName: string; overload;
+    function ObjectName: String; overload;
 
     function &End: I;
   end;

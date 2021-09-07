@@ -24,7 +24,12 @@ uses
   AWS4D.S3.Model.DeleteBucket.Request in '..\..\Source\S3\AWS4D.S3.Model.DeleteBucket.Request.pas',
   AWS4D.S3.Facade.DeleteBucket in '..\..\Source\S3\AWS4D.S3.Facade.DeleteBucket.pas',
   AWS4D.S3.Model.ObjectCreate.Request in '..\..\Source\S3\AWS4D.S3.Model.ObjectCreate.Request.pas',
-  AWS4D.S3.Facade.ObjectCreate in '..\..\Source\S3\AWS4D.S3.Facade.ObjectCreate.pas';
+  AWS4D.S3.Facade.ObjectCreate in '..\..\Source\S3\AWS4D.S3.Facade.ObjectCreate.pas',
+  AWS4D.S3.Model.ObjectDelete.Request in '..\..\Source\S3\AWS4D.S3.Model.ObjectDelete.Request.pas',
+  AWS4D.S3.Facade.ObjectDelete in '..\..\Source\S3\AWS4D.S3.Facade.ObjectDelete.pas',
+  AWS4D.S3.Model.DownloadObject.Request in '..\..\Source\S3\AWS4D.S3.Model.DownloadObject.Request.pas',
+  AWS4D.S3.Model.DownloadObject.Response in '..\..\Source\S3\AWS4D.S3.Model.DownloadObject.Response.pas',
+  AWS4D.S3.Facade.DownloadObject in '..\..\Source\S3\AWS4D.S3.Facade.DownloadObject.pas';
 
 {$R *.res}
 

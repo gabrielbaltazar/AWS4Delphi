@@ -17,8 +17,10 @@ type
     function BucketExist(Request: IAWS4DS3ExistBucketRequest<I>): IAWS4DS3ExistBucketResponse<I>;
     procedure CreateBucket(Request: IAWS4DS3CreateBucketRequest<I>);
     procedure DeleteBucket(Request: IAWS4DS3DeleteBucketRequest<I>);
+    function DownloadObject(Request: IAWS4DS3DownloadObjectRequest<I>): IAWS4DS3DownloadObjectResponse<I>;
     function ListBuckets: IAWS4DS3ListBucketsResponse<I>;
     procedure ObjectCreate(Request: IAWS4DS3ObjectCreateRequest<I>);
+    procedure ObjectDelete(Request: IAWS4DS3ObjectDeleteRequest<I>);
 
     function Parent(Value: I): IAWS4DS3Service<I>;
     function &End: I;

@@ -6,6 +6,7 @@ uses
   AWS4D.Core.Model.Types,
   AWS4D.S3.Service.Interfaces,
   AWS4D.S3.Model.Interfaces,
+  AWS4D.S3.Model.DownloadObject.Response,
   AWS4D.S3.Model.ExistBucket.Response,
   AWS4D.S3.Model.ListBuckets.Response,
   Data.Cloud.CloudAPI,
@@ -45,8 +46,10 @@ type TAWS4DS3ServiceCloudAPI<I: IInterface> = class(TInterfacedObject, IAWS4DS3S
     function BucketExist(Request: IAWS4DS3ExistBucketRequest<I>): IAWS4DS3ExistBucketResponse<I>;
     procedure CreateBucket(Request: IAWS4DS3CreateBucketRequest<I>);
     procedure DeleteBucket(Request: IAWS4DS3DeleteBucketRequest<I>);
+    function DownloadObject(Request: IAWS4DS3DownloadObjectRequest<I>): IAWS4DS3DownloadObjectResponse<I>;
     function ListBuckets: IAWS4DS3ListBucketsResponse<I>;
     procedure ObjectCreate(Request: IAWS4DS3ObjectCreateRequest<I>);
+    procedure ObjectDelete(Request: IAWS4DS3ObjectDeleteRequest<I>);
 
     function Parent(Value: I): IAWS4DS3Service<I>;
     function &End: I;
@@ -133,6 +136,28 @@ begin
   inherited;
 end;
 
+function TAWS4DS3ServiceCloudAPI<I>.DownloadObject(Request: IAWS4DS3DownloadObjectRequest<I>): IAWS4DS3DownloadObjectResponse<I>;
+var
+  stream: TMemoryStream;
+begin
+  AWSComponentsCreate;
+  stream := TMemoryStream.Create;
+  try
+    if not FStorage.GetObject(
+        Request.BucketName,
+        Request.ObjectName,
+        stream,
+        FCloudResponse,
+        FRegion.toString)
+    then
+      RaiseException;
+
+    result := TAWS4S3DownloadObjectResponse<I>.New(FParent, stream);
+  finally
+    stream.Free;
+  end;
+end;
+
 function TAWS4DS3ServiceCloudAPI<I>.&End: I;
 begin
   result := FParent;
@@ -196,6 +221,17 @@ begin
       Request.MetaInfo,
       nil,
       amzbaPrivate,
+      FCloudResponse)
+  then
+    RaiseException;
+end;
+
+procedure TAWS4DS3ServiceCloudAPI<I>.ObjectDelete(Request: IAWS4DS3ObjectDeleteRequest<I>);
+begin
+  AWSComponentsCreate;
+  if not FStorage.DeleteObject(
+      Request.BucketName,
+      Request.ObjectName,
       FCloudResponse)
   then
     RaiseException;

@@ -165,32 +165,28 @@ begin
 end;
 
 procedure TfrmSampleS3.btnDeleteObjectClick(Sender: TObject);
-//var
-//  request: IAWS4DS3ModelDeleteObjectRequest;
 begin
-//  request := S3ModelFactory.CreateDeleteObjectRequest;
-//  request
-//    .BucketName(edtListObjectsBucketName.Text)
-//    .ObjectName(lstObjects.Items[lstObjects.ItemIndex]);
-//
-//  CreateS3.DeleteObject(request);
-//  btnListObjects.Click;
+  S3Initialize;
+  FS3.ObjectDelete
+    .Request
+      .BucketName(edtListObjectsBucketName.Text)
+      .ObjectName(lstObjects.Items[lstObjects.ItemIndex])
+    .&End
+    .Send;
+
+  btnListObjects.Click;
 end;
 
 procedure TfrmSampleS3.btnDownloadObjectClick(Sender: TObject);
-//var
-//  request: IAWS4DS3ModelDownloadObjectRequest;
-//  response: IAWS4DS3ModelDownloadObjectResponse;
-//  objectName: string;
 begin
-//  objectName := edtListObjectObjectName.Text;
-//  request := S3ModelFactory.CreateDownloadObjectRequest;
-//  request
-//    .BucketName(edtListObjectsBucketName.Text)
-//    .ObjectName(objectName);
-//
-//  response := CreateS3.DownloadObject(request);
-//  response.SaveToFile('testFile.txt');
+  S3Initialize;
+  FS3.DownloadObject
+    .Request
+      .BucketName(edtListObjectsBucketName.Text)
+      .ObjectName(edtListObjectObjectName.Text)
+    .&End
+    .Send
+      .SaveToFile(ExtractFileName(edtListObjectObjectName.Text));
 end;
 
 procedure TfrmSampleS3.btnExistBucketClick(Sender: TObject);
