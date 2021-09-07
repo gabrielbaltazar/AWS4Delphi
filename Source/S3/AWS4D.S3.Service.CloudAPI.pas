@@ -8,6 +8,7 @@ uses
   AWS4D.S3.Model.Interfaces,
   AWS4D.S3.Model.DownloadObject.Response,
   AWS4D.S3.Model.ExistBucket.Response,
+  AWS4D.S3.Model.ExistObject.Response,
   AWS4D.S3.Model.ListBuckets.Response,
   Data.Cloud.CloudAPI,
   Data.Cloud.AmazonAPI,
@@ -47,6 +48,7 @@ type TAWS4DS3ServiceCloudAPI<I: IInterface> = class(TInterfacedObject, IAWS4DS3S
     procedure CreateBucket(Request: IAWS4DS3CreateBucketRequest<I>);
     procedure DeleteBucket(Request: IAWS4DS3DeleteBucketRequest<I>);
     function DownloadObject(Request: IAWS4DS3DownloadObjectRequest<I>): IAWS4DS3DownloadObjectResponse<I>;
+    function ExistObject(Request: IAWS4DS3ExistObjectRequest<I>): IAWS4DS3ExistObjectResponse<I>;
     function ListBuckets: IAWS4DS3ListBucketsResponse<I>;
     procedure ObjectCreate(Request: IAWS4DS3ObjectCreateRequest<I>);
     procedure ObjectDelete(Request: IAWS4DS3ObjectDeleteRequest<I>);
@@ -161,6 +163,24 @@ end;
 function TAWS4DS3ServiceCloudAPI<I>.&End: I;
 begin
   result := FParent;
+end;
+
+function TAWS4DS3ServiceCloudAPI<I>.ExistObject(Request: IAWS4DS3ExistObjectRequest<I>): IAWS4DS3ExistObjectResponse<I>;
+var
+  exist: Boolean;
+  stream: TMemoryStream;
+begin
+  AWSComponentsCreate;
+  stream := TMemoryStream.Create;
+  try
+    exist := FStorage.GetObject(Request.BucketName,
+                                Request.ObjectName,
+                                stream);
+
+    result := TAWS4S3ExistObjectResponse<I>.New(FParent, exist);
+  finally
+    stream.Free;
+  end;
 end;
 
 function TAWS4DS3ServiceCloudAPI<I>.FileBytes(AStream: TStream): TBytes;

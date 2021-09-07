@@ -8,6 +8,7 @@ uses
   AWS4D.S3.Facade.CreateBucket,
   AWS4D.S3.Facade.DeleteBucket,
   AWS4D.S3.Facade.DownloadObject,
+  AWS4D.S3.Facade.ExistObject,
   AWS4D.S3.Facade.ListBuckets,
   AWS4D.S3.Facade.ObjectCreate,
   AWS4D.S3.Facade.ObjectDelete,
@@ -28,6 +29,7 @@ type TAWS4DS3Facade = class(TInterfacedObject, IAWS4DS3Facade)
     FDeleteBucket: IAWS4DS3FacadeDeleteBucket;
     FDownloadObject: IAWS4DS3FacadeDownloadObject;
     FExistBucket: IAWS4DS3FacadeExistBucket;
+    FExistObject: IAWS4DS3FacadeExistObject;
     FListBuckets: IAWS4DS3FacadeListBuckets;
     FObjectCreate: IAWS4DS3FacadeObjectCreate;
     FObjectDelete: IAWS4DS3FacadeObjectDelete;
@@ -43,6 +45,7 @@ type TAWS4DS3Facade = class(TInterfacedObject, IAWS4DS3Facade)
     function CreateBucket: IAWS4DS3FacadeCreateBucket;
     function DeleteBucket: IAWS4DS3FacadeDeleteBucket;
     function DownloadObject: IAWS4DS3FacadeDownloadObject;
+    function ExistObject: IAWS4DS3FacadeExistObject;
     function ExistBucket: IAWS4DS3FacadeExistBucket;
     function ListBuckets: IAWS4DS3FacadeListBuckets;
     function ObjectCreate: IAWS4DS3FacadeObjectCreate;
@@ -74,6 +77,19 @@ begin
   end;
 
   result := FExistBucket;
+end;
+
+function TAWS4DS3Facade.ExistObject: IAWS4DS3FacadeExistObject;
+var
+  service: IAWS4DS3Service<IAWS4DS3FacadeExistObject>;
+begin
+  if not Assigned(FExistObject) then
+  begin
+    service := Self.S3Service<IAWS4DS3FacadeExistObject>;
+    FExistObject := TAWS4DS3FacadeExistObject.New(service);
+  end;
+
+  result := FExistObject;
 end;
 
 constructor TAWS4DS3Facade.create;

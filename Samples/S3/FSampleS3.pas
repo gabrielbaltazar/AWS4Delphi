@@ -253,20 +253,19 @@ begin
 end;
 
 procedure TfrmSampleS3.btnObjectExistClick(Sender: TObject);
-//var
-//  request: IAWS4DS3ModelObjectExistRequest;
-//  objectName: string;
 begin
-//  objectName := edtListObjectObjectName.Text;
-//  request := S3ModelFactory.CreateObjectExistRequest;
-//  request
-//    .BucketName(edtListObjectsBucketName.Text)
-//    .ObjectName(objectName);
-//
-//  if CreateS3.ExistObject(request) then
-//    ShowMessage('Exist')
-//  else
-//    ShowMessage('Not Exist');
+  S3Initialize;
+  FS3.ExistObject
+    .Request
+      .BucketName(edtListObjectsBucketName.Text)
+      .ObjectName(edtListObjectObjectName.Text)
+    .&End
+    .Send;
+
+  if FS3.ExistObject.Response.Exist then
+    ShowMessage('Exist')
+  else
+    ShowMessage('Not Exist');
 end;
 
 procedure TfrmSampleS3.S3Initialize;
@@ -276,15 +275,6 @@ begin
      .SecretKey(edtSecretKey.Text)
      .Region(edtRegion.Text);
 end;
-
-//function TfrmSampleS3.CreateS3: IAWS4DServiceS3;
-//begin
-//  result := S3Service;
-//  result
-//    .AccessKeyID(edtAccessKey.Text)
-//    .Region(edtRegion.Text)
-//    .SecretKey(edtSecretKey.Text);
-//end;
 
 procedure TfrmSampleS3.edtCreateObjectFileNameChange(Sender: TObject);
 begin

@@ -52,6 +52,24 @@ type
   IAWS4DS3ExistBucketResponse<I: IInterface> = interface
     ['{5661C319-A357-4FD7-AC24-3F5FB7700F12}']
     function Exist: Boolean;
+    function &End: I;
+  end;
+
+  IAWS4DS3ExistObjectRequest<I: IInterface> = interface
+    ['{CA1B0CE7-3926-4C10-BC34-3CABFE2C9333}']
+    function BucketName (Value: String): IAWS4DS3ExistObjectRequest<I>; overload;
+    function ObjectName (Value: String): IAWS4DS3ExistObjectRequest<I>; overload;
+
+    function BucketName : string; overload;
+    function ObjectName : String; overload;
+
+    function &End: I;
+  end;
+
+  IAWS4DS3ExistObjectResponse<I: IInterface> = interface
+    ['{85B3E147-D4D2-4E88-B556-F3BF58B15296}']
+    function Exist: Boolean;
+    function &End: I;
   end;
 
   IAWS4DS3ListBucketsResponse<I: IInterface> = interface

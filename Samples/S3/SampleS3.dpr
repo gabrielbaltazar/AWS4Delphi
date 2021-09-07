@@ -29,7 +29,10 @@ uses
   AWS4D.S3.Facade.ObjectDelete in '..\..\Source\S3\AWS4D.S3.Facade.ObjectDelete.pas',
   AWS4D.S3.Model.DownloadObject.Request in '..\..\Source\S3\AWS4D.S3.Model.DownloadObject.Request.pas',
   AWS4D.S3.Model.DownloadObject.Response in '..\..\Source\S3\AWS4D.S3.Model.DownloadObject.Response.pas',
-  AWS4D.S3.Facade.DownloadObject in '..\..\Source\S3\AWS4D.S3.Facade.DownloadObject.pas';
+  AWS4D.S3.Facade.DownloadObject in '..\..\Source\S3\AWS4D.S3.Facade.DownloadObject.pas',
+  AWS4D.S3.Model.ExistObject.Request in '..\..\Source\S3\AWS4D.S3.Model.ExistObject.Request.pas',
+  AWS4D.S3.Model.ExistObject.Response in '..\..\Source\S3\AWS4D.S3.Model.ExistObject.Response.pas',
+  AWS4D.S3.Facade.ExistObject in '..\..\Source\S3\AWS4D.S3.Facade.ExistObject.pas';
 
 {$R *.res}
 
