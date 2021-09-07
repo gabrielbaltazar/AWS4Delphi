@@ -34,7 +34,12 @@ uses
   AWS4D.S3.Model.ExistObject.Response in '..\..\Source\S3\AWS4D.S3.Model.ExistObject.Response.pas',
   AWS4D.S3.Facade.ExistObject in '..\..\Source\S3\AWS4D.S3.Facade.ExistObject.pas',
   AWS4D.S3.Model.GetObjectProperties.Request in '..\..\Source\S3\AWS4D.S3.Model.GetObjectProperties.Request.pas',
-  AWS4D.S3.Model.GetObjectProperties.Response in '..\..\Source\S3\AWS4D.S3.Model.GetObjectProperties.Response.pas';
+  AWS4D.S3.Model.GetObjectProperties.Response in '..\..\Source\S3\AWS4D.S3.Model.GetObjectProperties.Response.pas',
+  AWS4D.S3.Facade.GetObjectProperties in '..\..\Source\S3\AWS4D.S3.Facade.GetObjectProperties.pas',
+  AWS4D.S3.Model.ListObjects.Request in '..\..\Source\S3\AWS4D.S3.Model.ListObjects.Request.pas',
+  AWS4D.S3.Model.ListObjects.Response in '..\..\Source\S3\AWS4D.S3.Model.ListObjects.Response.pas',
+  AWS4D.S3.Model.ObjectInfo in '..\..\Source\S3\AWS4D.S3.Model.ObjectInfo.pas',
+  AWS4D.S3.Facade.ListObjects in '..\..\Source\S3\AWS4D.S3.Facade.ListObjects.pas';
 
 {$R *.res}
 

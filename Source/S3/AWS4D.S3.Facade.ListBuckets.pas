@@ -45,6 +45,7 @@ end;
 function TAWS4DS3FacadeListBuckets.Send: IAWS4DS3ListBucketsResponse<IAWS4DS3FacadeListBuckets>;
 begin
   FResponse := FService.ListBuckets;
+  result := FResponse;
 end;
 
 end.

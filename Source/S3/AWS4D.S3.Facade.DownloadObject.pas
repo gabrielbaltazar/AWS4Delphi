@@ -58,6 +58,7 @@ begin
   FResponse := nil;
   try
     FResponse := FService.DownloadObject(FRequest);
+    result := FResponse;
   finally
     FRequest := nil;
   end;

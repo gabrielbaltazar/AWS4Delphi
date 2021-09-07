@@ -48,6 +48,7 @@ end;
 function TAWS4DS3FacadeObjectCreate.Send: IAWS4DS3FacadeObjectCreate;
 begin
   try
+    result := Self;
     FService.ObjectCreate(FRequest);
   finally
     FRequest := nil;

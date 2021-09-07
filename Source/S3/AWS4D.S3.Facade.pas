@@ -11,6 +11,7 @@ uses
   AWS4D.S3.Facade.ExistObject,
   AWS4D.S3.Facade.GetObjectProperties,
   AWS4D.S3.Facade.ListBuckets,
+  AWS4D.S3.Facade.ListObjects,
   AWS4D.S3.Facade.ObjectCreate,
   AWS4D.S3.Facade.ObjectDelete,
   AWS4D.S3.Service.Interfaces,
@@ -33,6 +34,7 @@ type TAWS4DS3Facade = class(TInterfacedObject, IAWS4DS3Facade)
     FExistObject: IAWS4DS3FacadeExistObject;
     FGetObjectProperties: IAWS4DS3FacadeGetObjectProperties;
     FListBuckets: IAWS4DS3FacadeListBuckets;
+    FListObjects: IAWS4DS3FacadeListObjects;
     FObjectCreate: IAWS4DS3FacadeObjectCreate;
     FObjectDelete: IAWS4DS3FacadeObjectDelete;
 
@@ -51,6 +53,7 @@ type TAWS4DS3Facade = class(TInterfacedObject, IAWS4DS3Facade)
     function ExistBucket: IAWS4DS3FacadeExistBucket;
     function GetObjectProperties: IAWS4DS3FacadeGetObjectProperties;
     function ListBuckets: IAWS4DS3FacadeListBuckets;
+    function ListObjects: IAWS4DS3FacadeListObjects;
     function ObjectCreate: IAWS4DS3FacadeObjectCreate;
     function ObjectDelete: IAWS4DS3FacadeObjectDelete;
 
@@ -163,6 +166,19 @@ begin
   end;
 
   result := FListBuckets;
+end;
+
+function TAWS4DS3Facade.ListObjects: IAWS4DS3FacadeListObjects;
+var
+  service: IAWS4DS3Service<IAWS4DS3FacadeListObjects>;
+begin
+  if not Assigned(FListObjects) then
+  begin
+    service := Self.S3Service<IAWS4DS3FacadeListObjects>;
+    FListObjects := TAWS4DS3FacadeListObjects.New(service);
+  end;
+
+  result := FListObjects;
 end;
 
 class function TAWS4DS3Facade.New: IAWS4DS3Facade;

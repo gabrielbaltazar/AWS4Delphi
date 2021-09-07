@@ -11,6 +11,8 @@ uses
   AWS4D.S3.Model.ExistObject.Response,
   AWS4D.S3.Model.GetObjectProperties.Response,
   AWS4D.S3.Model.ListBuckets.Response,
+  AWS4D.S3.Model.ListObjects.Response,
+  AWS4D.S3.Model.ObjectInfo,
   Data.Cloud.CloudAPI,
   Data.Cloud.AmazonAPI,
   System.Classes,
@@ -36,8 +38,9 @@ type TAWS4DS3ServiceCloudAPI<I: IInterface> = class(TInterfacedObject, IAWS4DS3S
     procedure AWSComponentsDestroy;
 
     procedure RaiseException;
-
     function FileBytes(AStream: TStream): TBytes;
+
+    function GetBucket(ABucketName: String; AParams: TStrings = nil): TAmazonBucketResult;
 
   protected
     function AccessKey(Value: String): IAWS4DS3Service<I>;
@@ -52,6 +55,7 @@ type TAWS4DS3ServiceCloudAPI<I: IInterface> = class(TInterfacedObject, IAWS4DS3S
     function ExistObject(Request: IAWS4DS3ExistObjectRequest<I>): IAWS4DS3ExistObjectResponse<I>;
     function GetObjectProperties(Request: IAWS4DS3GetObjectPropertiesRequest<I>): IAWS4DS3GetObjectPropertiesResponse<I>;
     function ListBuckets: IAWS4DS3ListBucketsResponse<I>;
+    function ListObjects(Request: IAWS4DS3ListObjectsRequest<I>): IAWS4DS3ListObjectsResponse<I>;
     procedure ObjectCreate(Request: IAWS4DS3ObjectCreateRequest<I>);
     procedure ObjectDelete(Request: IAWS4DS3ObjectDeleteRequest<I>);
 
@@ -197,17 +201,23 @@ begin
   end;
 end;
 
+function TAWS4DS3ServiceCloudAPI<I>.GetBucket(ABucketName: String; AParams: TStrings): TAmazonBucketResult;
+begin
+  AWSComponentsCreate;
+  result := FStorage.GetBucket(ABucketName, AParams, FCloudResponse, FRegion.toString);
+  if not Assigned(Result) then
+    raise EResNotFound.CreateFmt('Bucket %s not found', [ABucketName]);
+end;
+
 function TAWS4DS3ServiceCloudAPI<I>.GetObjectProperties(Request: IAWS4DS3GetObjectPropertiesRequest<I>): IAWS4DS3GetObjectPropertiesResponse<I>;
 var
   properties: TStrings;
   metaData: TStrings;
 begin
+  AWSComponentsCreate;
   properties := nil;
   metaData := nil;
   try
-    properties := TStringList.Create;
-    metaData := TStringList.Create;
-
     if not FStorage.GetObjectProperties(
         Request.BucketName,
         Request.ObjectName,
@@ -250,6 +260,53 @@ begin
     result := TAWS4DS3ListBucketsResponse<I>.New(FParent, list);
   finally
     list.Free;
+  end;
+end;
+
+function TAWS4DS3ServiceCloudAPI<I>.ListObjects(Request: IAWS4DS3ListObjectsRequest<I>): IAWS4DS3ListObjectsResponse<I>;
+var
+  params: TStrings;
+  bucketInfo: TAmazonBucketResult;
+  objectInfo: TAmazonObjectResult;
+  list: TList<IAWS4DS3ModelObjectInfo>;
+begin
+  AWSComponentsCreate;
+  params := TStringList.Create;
+  try
+    list := TList<IAWS4DS3ModelObjectInfo>.Create;
+    try
+      params.Values['prefix'] := Request.Prefix;
+      params.Values['max-keys'] := Request.MaxKeys.ToString;
+      params.Values['marker'] := Request.Marker;
+      bucketInfo := GetBucket(Request.BucketName, params);
+      try
+        for objectInfo in bucketInfo.Objects do
+          if objectInfo.Size > 0 then
+            list.Add(TAWS4DS3ModelObjectInfo.CreateFromObjectResult(objectInfo));
+
+        while (bucketInfo.IsTruncated) and (Request.FullBucket) do
+        begin
+          params.Values['prefix'] := Request.Prefix;
+          params.Values['max-keys'] := Request.MaxKeys.ToString;
+          params.Values['marker'] := bucketInfo.Objects.Last.Name;
+          FreeAndNil(bucketInfo);
+          bucketInfo := GetBucket(Request.BucketName, params);
+
+          for objectInfo in bucketInfo.Objects do
+            if objectInfo.Size > 0 then
+              list.Add(TAWS4DS3ModelObjectInfo.CreateFromObjectResult(objectInfo));
+        end;
+
+        result := TAWS4S3ListObjectsResponse<I>.New(FParent, list);
+      finally
+        bucketInfo.Free;
+      end;
+    except
+      list.Free;
+      raise;
+    end;
+  finally
+    params.Free;
   end;
 end;
 

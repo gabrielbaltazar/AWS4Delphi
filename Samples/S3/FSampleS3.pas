@@ -186,7 +186,7 @@ begin
       .ObjectName(edtListObjectObjectName.Text)
     .&End
     .Send
-      .SaveToFile(ExtractFileName(edtListObjectObjectName.Text));
+      .SaveToFile('test.txt');
 end;
 
 procedure TfrmSampleS3.btnExistBucketClick(Sender: TObject);
@@ -208,10 +208,10 @@ procedure TfrmSampleS3.btnGetObjectPropertiesClick(Sender: TObject);
 var
   i: Integer;
 begin
-  for i := valueListMetaData.RowCount - 1 downto 0 do
+  for i := valueListMetaData.RowCount - 2 downto 1 do
     valueListMetaData.DeleteRow(i);
 
-  for i := ValueListProperties.RowCount - 1 downto 0 do
+  for i := ValueListProperties.RowCount - 2 downto 1 do
     ValueListProperties.DeleteRow(i);
 
   S3Initialize;
@@ -247,19 +247,20 @@ begin
 end;
 
 procedure TfrmSampleS3.btnListObjectsClick(Sender: TObject);
-//var
-//  objects : TList<IAWS4DS3ModelObjectInfo>;
-//  i: Integer;
 begin
-//  objects := CreateS3.ListObjects(edtListObjectsBucketName.Text, edtListObjectObjectName.Text);
-//  try
-//    lstObjects.Items.Clear;
-//    for i := 0 to Pred(objects.Count) do
-//      lstObjects.Items.Add(objects[i].Name);
-//    ShowMessage(objects.Count.ToString);
-//  finally
-//    objects.Free;
-//  end;
+  if not Assigned(FS3) then
+    S3Initialize;
+
+  FS3.ListObjects
+    .Request
+      .BucketName(edtListObjectsBucketName.Text)
+      .MaxKeys(10)
+      .Prefix('C/Users')
+    .&End
+    .Send;
+
+  while FS3.ListObjects.Response.Objects.HasNext do
+    lstObjects.Items.Add(FS3.ListObjects.Response.Objects.Current.Name);
 end;
 
 procedure TfrmSampleS3.btnObjectExistClick(Sender: TObject);

@@ -61,7 +61,6 @@ end;
 
 destructor TAWS4DS3GetObjectPropertiesRequest<I>.Destroy;
 begin
-
   inherited;
 end;
 

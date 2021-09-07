@@ -8,6 +8,8 @@ uses
   System.Classes;
 
 type
+  IAWS4DS3ModelObjectInfo = interface;
+
   IAWS4DS3CreateBucketRequest<I: IInterface> = interface
     ['{904D2523-5D22-4B94-AB44-86662FB680A6}']
     function BucketName(Value: String): IAWS4DS3CreateBucketRequest<I>; overload;
@@ -107,6 +109,30 @@ type
   IAWS4DS3ListBucketsResponse<I: IInterface> = interface
     ['{4EE25118-D4CB-419D-A238-E19C9818EF6F}']
     function Buckets: IAWS4DIterator<String>;
+    function &End: I;
+  end;
+
+  IAWS4DS3ListObjectsRequest<I: IInterface> = interface
+    ['{B964A524-B492-483C-8FCE-AE8A6A6DF527}']
+    function BucketName(Value: String): IAWS4DS3ListObjectsRequest<I>; overload;
+    function Marker(Value: string): IAWS4DS3ListObjectsRequest<I>; overload;
+    function Prefix(Value: string): IAWS4DS3ListObjectsRequest<I>; overload;
+    function MaxKeys(Value: Integer): IAWS4DS3ListObjectsRequest<I>; overload;
+    function FullBucket(Value: Boolean): IAWS4DS3ListObjectsRequest<I>; overload;
+
+    function BucketName: string; overload;
+    function Marker: string; overload;
+    function Prefix: string; overload;
+    function MaxKeys: Integer; overload;
+    function FullBucket: Boolean; overload;
+
+    function &End: I;
+  end;
+
+  IAWS4DS3ListObjectsResponse<I: IInterface> = interface
+    ['{8ADA4FED-0D86-4B92-9310-8BD0648E31C7}']
+    function Objects: IAWS4DIterator<IAWS4DS3ModelObjectInfo>;
+    function &End: I;
   end;
 
   IAWS4DS3ObjectCreateRequest<I: IInterface> = interface
@@ -136,6 +162,31 @@ type
     function ObjectName: String; overload;
 
     function &End: I;
+  end;
+
+  IAWS4DS3ModelObjectInfo = interface
+    ['{43A9902C-0C1B-4DA4-ADE7-3239CE0D3058}']
+    function Name(Value: string): IAWS4DS3ModelObjectInfo; overload;
+    function LastModified(Value: TDateTime): IAWS4DS3ModelObjectInfo; overload;
+    function ETag(Value: String): IAWS4DS3ModelObjectInfo; overload;
+    function OwnerID(Value: String): IAWS4DS3ModelObjectInfo; overload;
+    function OwnerDisplayName(Value: String): IAWS4DS3ModelObjectInfo; overload;
+    function VersionId(Value: String): IAWS4DS3ModelObjectInfo; overload;
+    function StorageClass(Value: String): IAWS4DS3ModelObjectInfo; overload;
+    function IsLatest(Value: Boolean): IAWS4DS3ModelObjectInfo; overload;
+    function IsDeleted(Value: Boolean): IAWS4DS3ModelObjectInfo; overload;
+    function Size(Value: Int64): IAWS4DS3ModelObjectInfo; overload;
+
+    function Name: string; overload;
+    function LastModified: TDateTime; overload;
+    function ETag: String; overload;
+    function OwnerID: String; overload;
+    function OwnerDisplayName: String; overload;
+    function VersionId: String; overload;
+    function StorageClass: String; overload;
+    function IsLatest: Boolean; overload;
+    function IsDeleted: Boolean; overload;
+    function Size: Int64; overload;
   end;
 
 implementation

@@ -84,7 +84,7 @@ object frmSampleS3: TfrmSampleS3
     Top = 97
     Width = 818
     Height = 280
-    ActivePage = tsObjectProperties
+    ActivePage = tsListObjects
     Align = alClient
     TabOrder = 2
     object tsListBucket: TTabSheet

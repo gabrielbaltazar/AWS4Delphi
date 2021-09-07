@@ -14,6 +14,7 @@ type
   IAWS4DS3FacadeExistObject = interface;
   IAWS4DS3FacadeGetObjectProperties = interface;
   IAWS4DS3FacadeListBuckets = interface;
+  IAWS4DS3FacadeListObjects = interface;
   IAWS4DS3FacadeExistBucket = interface;
   IAWS4DS3FacadeObjectCreate = interface;
   IAWS4DS3FacadeObjectDelete = interface;
@@ -32,6 +33,7 @@ type
     function ExistObject: IAWS4DS3FacadeExistObject;
     function GetObjectProperties: IAWS4DS3FacadeGetObjectProperties;
     function ListBuckets: IAWS4DS3FacadeListBuckets;
+    function ListObjects: IAWS4DS3FacadeListObjects;
     function ObjectCreate: IAWS4DS3FacadeObjectCreate;
     function ObjectDelete: IAWS4DS3FacadeObjectDelete;
   end;
@@ -80,6 +82,13 @@ type
     ['{BAA4A272-ABCC-410C-B2E9-BD3B32DBAAF9}']
     function Send: IAWS4DS3ListBucketsResponse<IAWS4DS3FacadeListBuckets>;
     function Response: IAWS4DS3ListBucketsResponse<IAWS4DS3FacadeListBuckets>;
+  end;
+
+  IAWS4DS3FacadeListObjects = interface
+    ['{A0C8A577-9D64-4BD8-BC5A-8F5AB694536F}']
+    function Request: IAWS4DS3ListObjectsRequest<IAWS4DS3FacadeListObjects>;
+    function Send: IAWS4DS3ListObjectsResponse<IAWS4DS3FacadeListObjects>;
+    function Response: IAWS4DS3ListObjectsResponse<IAWS4DS3FacadeListObjects>;
   end;
 
   IAWS4DS3FacadeObjectCreate = interface
