@@ -4,6 +4,7 @@ interface
 
 uses
   AWS4D.Core.Model.Types,
+  Data.Cloud.AmazonAPI,
   System.Classes;
 
 type
@@ -69,6 +70,37 @@ type
   IAWS4DS3ExistObjectResponse<I: IInterface> = interface
     ['{85B3E147-D4D2-4E88-B556-F3BF58B15296}']
     function Exist: Boolean;
+    function &End: I;
+  end;
+
+  IAWS4DS3GetObjectPropertiesRequest<I: IInterface> = interface
+    ['{7137E7A0-EA02-4DE6-9DC3-6B235910DB2B}']
+    function BucketName (Value: String): IAWS4DS3GetObjectPropertiesRequest<I>; overload;
+    function ObjectName (Value: String): IAWS4DS3GetObjectPropertiesRequest<I>; overload;
+    function ResponseContentType(Value: string): IAWS4DS3GetObjectPropertiesRequest<I>;
+    function ResponseContentLanguage(Value: string): IAWS4DS3GetObjectPropertiesRequest<I>;
+    function ResponseExpires(Value: string): IAWS4DS3GetObjectPropertiesRequest<I>;
+    function ResponseCacheControl(Value: string): IAWS4DS3GetObjectPropertiesRequest<I>;
+    function ResponseContentDisposition(Value: string): IAWS4DS3GetObjectPropertiesRequest<I>;
+    function ResponseContentEncoding(Value: string): IAWS4DS3GetObjectPropertiesRequest<I>;
+    function RangeStartByte(Value: Integer): IAWS4DS3GetObjectPropertiesRequest<I>;
+    function RangeEndByte(Value: Integer): IAWS4DS3GetObjectPropertiesRequest<I>;
+
+    function BucketName : string; overload;
+    function ObjectName : String; overload;
+    function OptionParams: TAmazonGetObjectOptionals;
+
+    function &End: I;
+  end;
+
+  IAWS4DS3GetObjectPropertiesResponse<I: IInterface> = interface
+    ['{543162FA-DC24-4557-B1C4-33B4DFD9D538}']
+    function Properties: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+    function MetaData: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+
+    function MetaDataValue(Key: String): string;
+    function PropertyValue(Key: String): string;
+
     function &End: I;
   end;
 

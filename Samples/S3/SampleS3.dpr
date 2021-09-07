@@ -32,7 +32,9 @@ uses
   AWS4D.S3.Facade.DownloadObject in '..\..\Source\S3\AWS4D.S3.Facade.DownloadObject.pas',
   AWS4D.S3.Model.ExistObject.Request in '..\..\Source\S3\AWS4D.S3.Model.ExistObject.Request.pas',
   AWS4D.S3.Model.ExistObject.Response in '..\..\Source\S3\AWS4D.S3.Model.ExistObject.Response.pas',
-  AWS4D.S3.Facade.ExistObject in '..\..\Source\S3\AWS4D.S3.Facade.ExistObject.pas';
+  AWS4D.S3.Facade.ExistObject in '..\..\Source\S3\AWS4D.S3.Facade.ExistObject.pas',
+  AWS4D.S3.Model.GetObjectProperties.Request in '..\..\Source\S3\AWS4D.S3.Model.GetObjectProperties.Request.pas',
+  AWS4D.S3.Model.GetObjectProperties.Response in '..\..\Source\S3\AWS4D.S3.Model.GetObjectProperties.Response.pas';
 
 {$R *.res}
 

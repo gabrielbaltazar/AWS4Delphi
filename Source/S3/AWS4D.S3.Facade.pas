@@ -9,6 +9,7 @@ uses
   AWS4D.S3.Facade.DeleteBucket,
   AWS4D.S3.Facade.DownloadObject,
   AWS4D.S3.Facade.ExistObject,
+  AWS4D.S3.Facade.GetObjectProperties,
   AWS4D.S3.Facade.ListBuckets,
   AWS4D.S3.Facade.ObjectCreate,
   AWS4D.S3.Facade.ObjectDelete,
@@ -30,6 +31,7 @@ type TAWS4DS3Facade = class(TInterfacedObject, IAWS4DS3Facade)
     FDownloadObject: IAWS4DS3FacadeDownloadObject;
     FExistBucket: IAWS4DS3FacadeExistBucket;
     FExistObject: IAWS4DS3FacadeExistObject;
+    FGetObjectProperties: IAWS4DS3FacadeGetObjectProperties;
     FListBuckets: IAWS4DS3FacadeListBuckets;
     FObjectCreate: IAWS4DS3FacadeObjectCreate;
     FObjectDelete: IAWS4DS3FacadeObjectDelete;
@@ -47,6 +49,7 @@ type TAWS4DS3Facade = class(TInterfacedObject, IAWS4DS3Facade)
     function DownloadObject: IAWS4DS3FacadeDownloadObject;
     function ExistObject: IAWS4DS3FacadeExistObject;
     function ExistBucket: IAWS4DS3FacadeExistBucket;
+    function GetObjectProperties: IAWS4DS3FacadeGetObjectProperties;
     function ListBuckets: IAWS4DS3FacadeListBuckets;
     function ObjectCreate: IAWS4DS3FacadeObjectCreate;
     function ObjectDelete: IAWS4DS3FacadeObjectDelete;
@@ -90,6 +93,19 @@ begin
   end;
 
   result := FExistObject;
+end;
+
+function TAWS4DS3Facade.GetObjectProperties: IAWS4DS3FacadeGetObjectProperties;
+var
+  service: IAWS4DS3Service<IAWS4DS3FacadeGetObjectProperties>;
+begin
+  if not Assigned(FGetObjectProperties) then
+  begin
+    service := Self.S3Service<IAWS4DS3FacadeGetObjectProperties>;
+    FGetObjectProperties := TAWS4DS3FacadeGetObjectProperties.New(service);
+  end;
+
+  result := FGetObjectProperties;
 end;
 
 constructor TAWS4DS3Facade.create;

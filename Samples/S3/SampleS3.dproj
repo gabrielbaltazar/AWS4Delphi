@@ -137,6 +137,8 @@
         <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.ExistObject.Request.pas"/>
         <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.ExistObject.Response.pas"/>
         <DCCReference Include="..\..\Source\S3\AWS4D.S3.Facade.ExistObject.pas"/>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.GetObjectProperties.Request.pas"/>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.GetObjectProperties.Response.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

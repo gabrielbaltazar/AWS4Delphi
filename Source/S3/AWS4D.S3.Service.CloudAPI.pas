@@ -9,6 +9,7 @@ uses
   AWS4D.S3.Model.DownloadObject.Response,
   AWS4D.S3.Model.ExistBucket.Response,
   AWS4D.S3.Model.ExistObject.Response,
+  AWS4D.S3.Model.GetObjectProperties.Response,
   AWS4D.S3.Model.ListBuckets.Response,
   Data.Cloud.CloudAPI,
   Data.Cloud.AmazonAPI,
@@ -49,6 +50,7 @@ type TAWS4DS3ServiceCloudAPI<I: IInterface> = class(TInterfacedObject, IAWS4DS3S
     procedure DeleteBucket(Request: IAWS4DS3DeleteBucketRequest<I>);
     function DownloadObject(Request: IAWS4DS3DownloadObjectRequest<I>): IAWS4DS3DownloadObjectResponse<I>;
     function ExistObject(Request: IAWS4DS3ExistObjectRequest<I>): IAWS4DS3ExistObjectResponse<I>;
+    function GetObjectProperties(Request: IAWS4DS3GetObjectPropertiesRequest<I>): IAWS4DS3GetObjectPropertiesResponse<I>;
     function ListBuckets: IAWS4DS3ListBucketsResponse<I>;
     procedure ObjectCreate(Request: IAWS4DS3ObjectCreateRequest<I>);
     procedure ObjectDelete(Request: IAWS4DS3ObjectDeleteRequest<I>);
@@ -192,6 +194,34 @@ begin
     result := fileReader.ReadBytes(AStream.Size);
   finally
     fileReader.Free;
+  end;
+end;
+
+function TAWS4DS3ServiceCloudAPI<I>.GetObjectProperties(Request: IAWS4DS3GetObjectPropertiesRequest<I>): IAWS4DS3GetObjectPropertiesResponse<I>;
+var
+  properties: TStrings;
+  metaData: TStrings;
+begin
+  properties := nil;
+  metaData := nil;
+  try
+    properties := TStringList.Create;
+    metaData := TStringList.Create;
+
+    if not FStorage.GetObjectProperties(
+        Request.BucketName,
+        Request.ObjectName,
+        Request.OptionParams,
+        properties,
+        metaData,
+        FCloudResponse)
+    then
+      RaiseException;
+
+      result := TAWS4S3GetObjectPropertiesResponse<I>.New(FParent, properties, metaData);
+  finally
+    properties.Free;
+    metaData.Free;
   end;
 end;
 

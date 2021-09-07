@@ -205,24 +205,34 @@ begin
 end;
 
 procedure TfrmSampleS3.btnGetObjectPropertiesClick(Sender: TObject);
-//var
-//  response: IAWS4DS3ModelGetObjectPropertiesResponse;
-//  i: Integer;
+var
+  i: Integer;
 begin
-//  for i := valueListMetaData.RowCount - 1 downto 0 do
-//    valueListMetaData.DeleteRow(i);
-//
-//  for i := ValueListProperties.RowCount - 1 downto 0 do
-//    ValueListProperties.DeleteRow(i);
-//
-//  response := CreateS3.GetObjectProperties(edtGetObjectPropertiesBucketName.Text,
-//                                           edtGetObjectPropertiesObjectName.Text);
-//
-//  for i := 0 to response.MetaDataCount - 1 do
-//    valueListMetaData.InsertRow(response.MetaDataKey(i), response.MetaDataValue(i), True);
-//
-//  for i := 0 to response.PropertyCount - 1 do
-//    valueListMetaData.InsertRow(response.PropertyKey(i), response.PropertyValue(i), True);
+  for i := valueListMetaData.RowCount - 1 downto 0 do
+    valueListMetaData.DeleteRow(i);
+
+  for i := ValueListProperties.RowCount - 1 downto 0 do
+    ValueListProperties.DeleteRow(i);
+
+  S3Initialize;
+  FS3.GetObjectProperties
+    .Request
+      .BucketName(edtGetObjectPropertiesBucketName.Text)
+      .ObjectName(edtGetObjectPropertiesObjectName.Text)
+    .&End
+    .Send;
+
+  while FS3.GetObjectProperties.Response.MetaData.HasNext do
+    valueListMetaData
+      .InsertRow(FS3.GetObjectProperties.Response.MetaData.Current.Key,
+                 FS3.GetObjectProperties.Response.MetaData.Current.Value,
+                 True);
+
+  while FS3.GetObjectProperties.Response.Properties.HasNext do
+    ValueListProperties
+      .InsertRow(FS3.GetObjectProperties.Response.Properties.Current.Key,
+                 FS3.GetObjectProperties.Response.Properties.Current.Value,
+                 True);
 end;
 
 procedure TfrmSampleS3.btnListBucketsClick(Sender: TObject);
