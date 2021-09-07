@@ -6,118 +6,133 @@ uses
   AWS4D.S3.Model.Interfaces,
   Data.Cloud.AmazonAPI;
 
-type TAWS4DS3ModelGetObjectPropertiesRequest = class(TInterfacedObject, IAWS4DS3ModelGetObjectPropertiesRequest)
+type TAWS4DS3GetObjectPropertiesRequest<I: IInterface> = class(TInterfacedObject, IAWS4DS3GetObjectPropertiesRequest<I>)
 
   private
+    [Weak]
+    FParent: I;
     FBucketName: string;
     FObjectName: String;
     FAmazonOptions: TAmazonGetObjectOptionals;
 
   protected
-    function BucketName (Value: String): IAWS4DS3ModelGetObjectPropertiesRequest; overload;
-    function ObjectName (Value: String): IAWS4DS3ModelGetObjectPropertiesRequest; overload;
-    function ResponseContentType(Value: string): IAWS4DS3ModelGetObjectPropertiesRequest;
-    function ResponseContentLanguage(Value: string): IAWS4DS3ModelGetObjectPropertiesRequest;
-    function ResponseExpires(Value: string): IAWS4DS3ModelGetObjectPropertiesRequest;
-    function ResponseCacheControl(Value: string): IAWS4DS3ModelGetObjectPropertiesRequest;
-    function ResponseContentDisposition(Value: string): IAWS4DS3ModelGetObjectPropertiesRequest;
-    function ResponseContentEncoding(Value: string): IAWS4DS3ModelGetObjectPropertiesRequest;
-    function RangeStartByte(Value: Integer): IAWS4DS3ModelGetObjectPropertiesRequest;
-    function RangeEndByte(Value: Integer): IAWS4DS3ModelGetObjectPropertiesRequest;
+    function BucketName (Value: String): IAWS4DS3GetObjectPropertiesRequest<I>; overload;
+    function ObjectName (Value: String): IAWS4DS3GetObjectPropertiesRequest<I>; overload;
+    function ResponseContentType(Value: string): IAWS4DS3GetObjectPropertiesRequest<I>;
+    function ResponseContentLanguage(Value: string): IAWS4DS3GetObjectPropertiesRequest<I>;
+    function ResponseExpires(Value: string): IAWS4DS3GetObjectPropertiesRequest<I>;
+    function ResponseCacheControl(Value: string): IAWS4DS3GetObjectPropertiesRequest<I>;
+    function ResponseContentDisposition(Value: string): IAWS4DS3GetObjectPropertiesRequest<I>;
+    function ResponseContentEncoding(Value: string): IAWS4DS3GetObjectPropertiesRequest<I>;
+    function RangeStartByte(Value: Integer): IAWS4DS3GetObjectPropertiesRequest<I>;
+    function RangeEndByte(Value: Integer): IAWS4DS3GetObjectPropertiesRequest<I>;
 
     function BucketName : string; overload;
     function ObjectName : String; overload;
     function OptionParams: TAmazonGetObjectOptionals;
 
+    function &End: I;
+
   public
-    constructor create;
-    class function New: IAWS4DS3ModelGetObjectPropertiesRequest;
+    constructor create(Parent: I);
+    class function New(Parent: I): IAWS4DS3GetObjectPropertiesRequest<I>;
+    destructor Destroy; override;
+
 end;
 
 implementation
 
-{ TAWS4DS3ModelGetObjectPropertiesRequest }
-
-function TAWS4DS3ModelGetObjectPropertiesRequest.BucketName(Value: String): IAWS4DS3ModelGetObjectPropertiesRequest;
+function TAWS4DS3GetObjectPropertiesRequest<I>.BucketName(Value: String): IAWS4DS3GetObjectPropertiesRequest<I>;
 begin
   result := Self;
   FBucketName := Value;
 end;
 
-function TAWS4DS3ModelGetObjectPropertiesRequest.BucketName: string;
+function TAWS4DS3GetObjectPropertiesRequest<I>.BucketName: string;
 begin
   result := FBucketName;
 end;
 
-constructor TAWS4DS3ModelGetObjectPropertiesRequest.create;
+constructor TAWS4DS3GetObjectPropertiesRequest<I>.create(Parent: I);
 begin
+  FParent := Parent;
   FAmazonOptions := TAmazonGetObjectOptionals.Create;
 end;
 
-class function TAWS4DS3ModelGetObjectPropertiesRequest.New: IAWS4DS3ModelGetObjectPropertiesRequest;
+destructor TAWS4DS3GetObjectPropertiesRequest<I>.Destroy;
 begin
-  result := Self.Create;
+  inherited;
 end;
 
-function TAWS4DS3ModelGetObjectPropertiesRequest.ObjectName(Value: String): IAWS4DS3ModelGetObjectPropertiesRequest;
+function TAWS4DS3GetObjectPropertiesRequest<I>.&End: I;
+begin
+  result := FParent;
+end;
+
+class function TAWS4DS3GetObjectPropertiesRequest<I>.New(Parent: I): IAWS4DS3GetObjectPropertiesRequest<I>;
+begin
+  result := Self.create(Parent);
+end;
+
+function TAWS4DS3GetObjectPropertiesRequest<I>.ObjectName: String;
+begin
+  result := FObjectName;
+end;
+
+function TAWS4DS3GetObjectPropertiesRequest<I>.ObjectName(Value: String): IAWS4DS3GetObjectPropertiesRequest<I>;
 begin
   result := Self;
   FObjectName := Value;
 end;
 
-function TAWS4DS3ModelGetObjectPropertiesRequest.ObjectName: String;
-begin
-  result := FObjectName;
-end;
-
-function TAWS4DS3ModelGetObjectPropertiesRequest.OptionParams: TAmazonGetObjectOptionals;
+function TAWS4DS3GetObjectPropertiesRequest<I>.OptionParams: TAmazonGetObjectOptionals;
 begin
   result := FAmazonOptions;
 end;
 
-function TAWS4DS3ModelGetObjectPropertiesRequest.RangeEndByte(Value: Integer): IAWS4DS3ModelGetObjectPropertiesRequest;
+function TAWS4DS3GetObjectPropertiesRequest<I>.RangeEndByte(Value: Integer): IAWS4DS3GetObjectPropertiesRequest<I>;
 begin
   Result := Self;
   FAmazonOptions.RangeEndByte := Value;
 end;
 
-function TAWS4DS3ModelGetObjectPropertiesRequest.RangeStartByte(Value: Integer): IAWS4DS3ModelGetObjectPropertiesRequest;
+function TAWS4DS3GetObjectPropertiesRequest<I>.RangeStartByte(Value: Integer): IAWS4DS3GetObjectPropertiesRequest<I>;
 begin
   Result := Self;
   FAmazonOptions.RangeStartByte := Value;
 end;
 
-function TAWS4DS3ModelGetObjectPropertiesRequest.ResponseCacheControl(Value: string): IAWS4DS3ModelGetObjectPropertiesRequest;
+function TAWS4DS3GetObjectPropertiesRequest<I>.ResponseCacheControl(Value: string): IAWS4DS3GetObjectPropertiesRequest<I>;
 begin
   Result := Self;
   FAmazonOptions.ResponseCacheControl := Value;
 end;
 
-function TAWS4DS3ModelGetObjectPropertiesRequest.ResponseContentDisposition(Value: string): IAWS4DS3ModelGetObjectPropertiesRequest;
+function TAWS4DS3GetObjectPropertiesRequest<I>.ResponseContentDisposition(Value: string): IAWS4DS3GetObjectPropertiesRequest<I>;
 begin
   Result := Self;
   FAmazonOptions.ResponseContentDisposition := Value;
 end;
 
-function TAWS4DS3ModelGetObjectPropertiesRequest.ResponseContentEncoding(Value: string): IAWS4DS3ModelGetObjectPropertiesRequest;
+function TAWS4DS3GetObjectPropertiesRequest<I>.ResponseContentEncoding(Value: string): IAWS4DS3GetObjectPropertiesRequest<I>;
 begin
   Result := Self;
   FAmazonOptions.ResponseContentEncoding := Value;
 end;
 
-function TAWS4DS3ModelGetObjectPropertiesRequest.ResponseContentLanguage(Value: string): IAWS4DS3ModelGetObjectPropertiesRequest;
+function TAWS4DS3GetObjectPropertiesRequest<I>.ResponseContentLanguage(Value: string): IAWS4DS3GetObjectPropertiesRequest<I>;
 begin
   Result := Self;
   FAmazonOptions.ResponseContentLanguage := Value;
 end;
 
-function TAWS4DS3ModelGetObjectPropertiesRequest.ResponseContentType(Value: string): IAWS4DS3ModelGetObjectPropertiesRequest;
+function TAWS4DS3GetObjectPropertiesRequest<I>.ResponseContentType(Value: string): IAWS4DS3GetObjectPropertiesRequest<I>;
 begin
   Result := Self;
   FAmazonOptions.ResponseContentType := Value;
 end;
 
-function TAWS4DS3ModelGetObjectPropertiesRequest.ResponseExpires(Value: string): IAWS4DS3ModelGetObjectPropertiesRequest;
+function TAWS4DS3GetObjectPropertiesRequest<I>.ResponseExpires(Value: string): IAWS4DS3GetObjectPropertiesRequest<I>;
 begin
   Result := Self;
   FAmazonOptions.ResponseExpires := Value;

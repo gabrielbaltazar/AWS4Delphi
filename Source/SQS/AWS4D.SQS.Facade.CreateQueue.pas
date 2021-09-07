@@ -58,6 +58,7 @@ begin
   FResponse := nil;
   try
     FResponse := FService.CreateQueue(FRequest);
+    result := FResponse;
   finally
     FRequest := nil;
   end;

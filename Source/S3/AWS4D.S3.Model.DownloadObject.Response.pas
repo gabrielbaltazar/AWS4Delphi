@@ -3,15 +3,19 @@ unit AWS4D.S3.Model.DownloadObject.Response;
 interface
 
 uses
-  AWS4D.Model.ResponseMetadata,
   AWS4D.S3.Model.Interfaces,
+  AWS4D.Core.Model.Types,
+  AWS4D.Core.Model.Iterator,
   System.Classes,
   System.SysUtils,
+  System.Generics.Collections,
   System.NetEncoding;
 
-type TAWS4DS3ModelDownloadObjectResponse = class(TAWS4DModelResponseMetadata, IAWS4DS3ModelDownloadObjectResponse)
+type TAWS4S3DownloadObjectResponse<I: IInterface> = class(TInterfacedObject, IAWS4DS3DownloadObjectResponse<I>)
 
   private
+    [Weak]
+    FParent: I;
     FStream: TMemoryStream;
 
   protected
@@ -19,17 +23,18 @@ type TAWS4DS3ModelDownloadObjectResponse = class(TAWS4DModelResponseMetadata, IA
     function Base64: string;
     procedure SaveToFile(AFileName: String);
 
+    function &End: I;
+
   public
-    constructor create(AStream: TMemoryStream);
-    class function New(AStream: TMemoryStream): IAWS4DS3ModelDownloadObjectResponse;
+    constructor create(Parent: I; AStream: TMemoryStream);
+    class function New(Parent: I; AStream: TMemoryStream): IAWS4DS3DownloadObjectResponse<I>;
     destructor Destroy; override;
+
 end;
 
 implementation
 
-{ TAWS4DS3ModelDownloadObjectResponse }
-
-function TAWS4DS3ModelDownloadObjectResponse.Base64: string;
+function TAWS4S3DownloadObjectResponse<I>.Base64: string;
 var
   stringStream: TStringStream;
 begin
@@ -44,28 +49,40 @@ begin
   end;
 end;
 
-constructor TAWS4DS3ModelDownloadObjectResponse.create(AStream: TMemoryStream);
+constructor TAWS4S3DownloadObjectResponse<I>.create(Parent: I; AStream: TMemoryStream);
 begin
-  FStream := AStream;
+  FParent := Parent;
+  FStream := TMemoryStream.Create;
+  try
+    FStream.LoadFromStream(AStream);
+  except
+    FStream.Free;
+    raise;
+  end;
 end;
 
-destructor TAWS4DS3ModelDownloadObjectResponse.Destroy;
+destructor TAWS4S3DownloadObjectResponse<I>.Destroy;
 begin
   FStream.Free;
   inherited;
 end;
 
-class function TAWS4DS3ModelDownloadObjectResponse.New(AStream: TMemoryStream): IAWS4DS3ModelDownloadObjectResponse;
+function TAWS4S3DownloadObjectResponse<I>.&End: I;
 begin
-  result := Self.create(AStream);
+  result := FParent;
 end;
 
-procedure TAWS4DS3ModelDownloadObjectResponse.SaveToFile(AFileName: String);
+class function TAWS4S3DownloadObjectResponse<I>.New(Parent: I; AStream: TMemoryStream): IAWS4DS3DownloadObjectResponse<I>;
+begin
+  result := Self.create(Parent, AStream);
+end;
+
+procedure TAWS4S3DownloadObjectResponse<I>.SaveToFile(AFileName: String);
 begin
   FStream.SaveToFile(AFileName);
 end;
 
-function TAWS4DS3ModelDownloadObjectResponse.Stream: TMemoryStream;
+function TAWS4S3DownloadObjectResponse<I>.Stream: TMemoryStream;
 begin
   Result := TMemoryStream.Create;
   try

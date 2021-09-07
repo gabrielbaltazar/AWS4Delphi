@@ -3,97 +3,106 @@ unit AWS4D.S3.Model.GetObjectProperties.Response;
 interface
 
 uses
-  AWS4D.Model.ResponseMetadata,
   AWS4D.S3.Model.Interfaces,
+  AWS4D.Core.Model.Types,
+  AWS4D.Core.Model.Iterator,
+  AWS4D.Core.Model.Tag,
   System.Classes,
-  System.SysUtils;
+  System.SysUtils,
+  System.Generics.Collections;
 
-type TAWS4DS3ModelGetObjectPropertiesResponse = class(TAWS4DModelResponseMetadata, IAWS4DS3ModelGetObjectPropertiesResponse)
+type TAWS4S3GetObjectPropertiesResponse<I: IInterface> = class(TInterfacedObject, IAWS4DS3GetObjectPropertiesResponse<I>)
 
   private
-    FMetaData: TStrings;
-    FProperties: TStrings;
+    [Weak]
+    FParent: I;
+    FProperties: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+    FMetaData: IAWS4DIterator<IAWS4DCoreModelAttribute>;
 
+    function GetIteratorValue(AIterator: IAWS4DIterator<IAWS4DCoreModelAttribute>; Key: string): string;
   protected
-    function PropertyValue(Key: String): string; overload;
-    function PropertyValue(Index: Integer): string; overload;
-    function PropertyKey(Index: Integer): string;
-    function MetaDataValue(Key: String): string; overload;
-    function MetaDataValue(Index: Integer): string; overload;
-    function MetaDataKey(Index: Integer): string;
+    function Properties: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+    function MetaData: IAWS4DIterator<IAWS4DCoreModelAttribute>;
 
-    function PropertyCount: Integer;
-    function MetaDataCount: Integer;
+    function MetaDataValue(Key: String): string;
+    function PropertyValue(Key: String): string;
+
+    function &End: I;
 
   public
-    constructor create(MetaData, Properties: TStrings);
-    class function New(MetaData, Properties: TStrings): IAWS4DS3ModelGetObjectPropertiesResponse;
+    constructor create(Parent: I; AProperties, AMetaData: TStrings);
+    class function New(Parent: I; AProperties, AMetaData: TStrings): IAWS4DS3GetObjectPropertiesResponse<I>;
     destructor Destroy; override;
+
 end;
 
 implementation
 
-{ TAWS4DS3ModelGetObjectPropertiesResponse }
-
-constructor TAWS4DS3ModelGetObjectPropertiesResponse.create(MetaData, Properties: TStrings);
+constructor TAWS4S3GetObjectPropertiesResponse<I>.create(Parent: I; AProperties, AMetaData: TStrings);
 begin
-  FProperties := TStringList.Create;
-  FMetaData := TStringList.Create;
-
-  FProperties.Text := Properties.Text;
-  FMetaData.Text := MetaData.Text;
+  FParent := Parent;
+  FProperties := TAWS4DCoreModelAttribute.NewIterator(AProperties);
+  FMetaData := TAWS4DCoreModelAttribute.NewIterator(AMetaData);
 end;
 
-destructor TAWS4DS3ModelGetObjectPropertiesResponse.Destroy;
+destructor TAWS4S3GetObjectPropertiesResponse<I>.Destroy;
 begin
-  FProperties.Free;
-  FMetaData.Free;
+
   inherited;
 end;
 
-function TAWS4DS3ModelGetObjectPropertiesResponse.MetaDataValue(Index: Integer): string;
+function TAWS4S3GetObjectPropertiesResponse<I>.&End: I;
 begin
-  result := FMetaData[Index];
+  result := FParent;
 end;
 
-function TAWS4DS3ModelGetObjectPropertiesResponse.MetaDataValue(Key: String): string;
+function TAWS4S3GetObjectPropertiesResponse<I>.GetIteratorValue(AIterator: IAWS4DIterator<IAWS4DCoreModelAttribute>; Key: string): string;
+var
+  currentIndex: Integer;
 begin
-  result := FMetaData.Values[Key];
+  Result := EmptyStr;
+  currentIndex := AIterator.Index;
+  try
+    AIterator.First;
+    while AIterator.HasNext do
+    begin
+      if AIterator.Current.Key = Key then
+        Exit(AIterator.Current.Value);
+    end;
+  finally
+    AIterator.First;
+    if currentIndex > 0 then
+    begin
+      repeat
+        AIterator.HasNext;
+      until (AIterator.Index = currentIndex);
+    end;
+  end;
 end;
 
-class function TAWS4DS3ModelGetObjectPropertiesResponse.New(MetaData, Properties: TStrings): IAWS4DS3ModelGetObjectPropertiesResponse;
+function TAWS4S3GetObjectPropertiesResponse<I>.MetaData: IAWS4DIterator<IAWS4DCoreModelAttribute>;
 begin
-  result := Self.create(MetaData, Properties);
+  result := FMetaData;
 end;
 
-function TAWS4DS3ModelGetObjectPropertiesResponse.PropertyValue(Index: Integer): string;
+function TAWS4S3GetObjectPropertiesResponse<I>.MetaDataValue(Key: String): string;
 begin
-  result := FProperties[Index];
+  result := GetIteratorValue(FMetaData, Key);
 end;
 
-function TAWS4DS3ModelGetObjectPropertiesResponse.PropertyValue(Key: String): string;
+class function TAWS4S3GetObjectPropertiesResponse<I>.New(Parent: I; AProperties, AMetaData: TStrings): IAWS4DS3GetObjectPropertiesResponse<I>;
 begin
-  result := FProperties.Values[Key];
+  result := Self.create(Parent, AProperties, AMetaData);
 end;
 
-function TAWS4DS3ModelGetObjectPropertiesResponse.MetaDataCount: Integer;
+function TAWS4S3GetObjectPropertiesResponse<I>.Properties: IAWS4DIterator<IAWS4DCoreModelAttribute>;
 begin
-  result := FMetaData.Count;
+  result := FProperties;
 end;
 
-function TAWS4DS3ModelGetObjectPropertiesResponse.MetaDataKey(Index: Integer): string;
+function TAWS4S3GetObjectPropertiesResponse<I>.PropertyValue(Key: String): string;
 begin
-  result := FMetaData.Names[Index];
-end;
-
-function TAWS4DS3ModelGetObjectPropertiesResponse.PropertyCount: Integer;
-begin
-  result := FProperties.Count;
-end;
-
-function TAWS4DS3ModelGetObjectPropertiesResponse.PropertyKey(Index: Integer): string;
-begin
-  result := FProperties.Names[Index];
+  result := GetIteratorValue(FProperties, Key);
 end;
 
 end.

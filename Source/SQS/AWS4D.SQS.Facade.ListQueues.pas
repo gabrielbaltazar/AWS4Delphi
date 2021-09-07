@@ -60,6 +60,7 @@ begin
   FResponse := nil;
   try
     FResponse := FService.ListQueues(FRequest);
+    result := FResponse;
   finally
     FRequest := nil;
   end;

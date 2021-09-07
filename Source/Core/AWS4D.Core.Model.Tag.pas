@@ -7,6 +7,7 @@ uses
   AWS4D.Core.Model.Iterator,
   AWS4D.Core.Helper.JSON,
   System.Generics.Collections,
+  System.Classes,
   System.JSON;
 
 type TAWS4DCoreModelAttribute = class(TInterfacedObject, IAWS4DCoreModelAttribute)
@@ -26,6 +27,7 @@ type TAWS4DCoreModelAttribute = class(TInterfacedObject, IAWS4DCoreModelAttribut
     class function New: IAWS4DCoreModelAttribute;
     class function NewIterator(JSONArray: TJSONArray): IAWS4DIterator<IAWS4DCoreModelAttribute>; overload;
     class function NewIterator(Values: TDictionary<string, String>): IAWS4DIterator<IAWS4DCoreModelAttribute>; overload;
+    class function NewIterator(Values: TStrings): IAWS4DIterator<IAWS4DCoreModelAttribute>; overload;
 end;
 
 implementation
@@ -46,6 +48,27 @@ end;
 class function TAWS4DCoreModelAttribute.New: IAWS4DCoreModelAttribute;
 begin
   result := Self.Create;
+end;
+
+class function TAWS4DCoreModelAttribute.NewIterator(Values: TStrings): IAWS4DIterator<IAWS4DCoreModelAttribute>;
+var
+  list: TList<IAWS4DCoreModelAttribute>;
+  i: Integer;
+begin
+  list := TList<IAWS4DCoreModelAttribute>.create;
+  try
+    result := TAWS4DCoreModelIterator<IAWS4DCoreModelAttribute>.New(list);
+    for i := 0 to Pred(Values.Count) do
+    begin
+      list.Add(TAWS4DCoreModelAttribute.New);
+      list.Last.Key(Values.Names[i]);
+      list.Last.Value(Values.ValueFromIndex[i]);
+    end;
+
+  except
+    list.Free;
+    raise;
+  end;
 end;
 
 class function TAWS4DCoreModelAttribute.NewIterator(Values: TDictionary<string, String>): IAWS4DIterator<IAWS4DCoreModelAttribute>;

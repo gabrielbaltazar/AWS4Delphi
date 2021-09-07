@@ -10,8 +10,12 @@ type
     ['{9D00D1BF-8A07-46DC-BD14-AC7D08662EE1}']
     function First: IAWS4DIterator<T>;
     function HasNext: Boolean;
-    function Index: Integer;
+    function Index: Integer; overload;
     function Current: T;
+    function Last: T;
+    function Count: Integer;
+
+    function Index(Value: Integer): IAWS4DIterator<T>; overload;
   end;
 
   IAWS4DCoreModelAttribute = interface

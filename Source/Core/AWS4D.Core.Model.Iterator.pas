@@ -16,8 +16,11 @@ type TAWS4DCoreModelIterator<T> = class(TInterfacedObject, IAWS4DIterator<T>)
   protected
     function First: IAWS4DIterator<T>;
     function HasNext: Boolean;
-    function Index: Integer;
+    function Index: Integer; overload;
     function Current: T;
+    function Last: T;
+    function Index(Value: Integer): IAWS4DIterator<T>; overload;
+    function Count: Integer;
 
   public
     constructor create(AList: TList<T>);
@@ -29,6 +32,11 @@ end;
 implementation
 
 { TAWS4DCoreModelIterator<T> }
+
+function TAWS4DCoreModelIterator<T>.Count: Integer;
+begin
+  result := FList.Count;
+end;
 
 constructor TAWS4DCoreModelIterator<T>.create(AList: TList<T>);
 begin
@@ -64,9 +72,21 @@ begin
   result := FList.Count > FIndex;
 end;
 
+function TAWS4DCoreModelIterator<T>.Index(Value: Integer): IAWS4DIterator<T>;
+begin
+  result := Self;
+  FIndex := Value;
+end;
+
 function TAWS4DCoreModelIterator<T>.Index: Integer;
 begin
   Result := FIndex;
+end;
+
+function TAWS4DCoreModelIterator<T>.Last: T;
+begin
+  result := FList.Last;
+  FIndex := FList.Count - 1;
 end;
 
 class function TAWS4DCoreModelIterator<T>.New(AList: TList<T>): IAWS4DIterator<T>;
