@@ -107,27 +107,6 @@
             <Form>frmSampleS3</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\Source\Base\AWS4D.Service.Base.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.Service.Interfaces.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.Utils.pas"/>
-        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Service.Interfaces.pas"/>
-        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Service.CloudAPI.pas"/>
-        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.Exceptions.pas"/>
-        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.Interfaces.pas"/>
-        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.CreateObject.Request.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.Model.Classes.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.Model.Exceptions.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.Model.Interfaces.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.Model.ResponseMetadata.pas"/>
-        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.Factory.pas"/>
-        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.ObjectInfo.pas"/>
-        <DCCReference Include="..\..\Source\Base\AWS4D.Helper.DateTime.pas"/>
-        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.DeleteObject.Request.pas"/>
-        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.ObjectExist.Request.pas"/>
-        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.DownloadObject.Request.pas"/>
-        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.DownloadObject.Response.pas"/>
-        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.GetObjectProperties.Request.pas"/>
-        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.GetObjectProperties.Response.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

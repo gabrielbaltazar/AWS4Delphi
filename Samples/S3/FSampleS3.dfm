@@ -389,7 +389,6 @@ object frmSampleS3: TfrmSampleS3
         Align = alLeft
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitLeft = 0
         object pnlMetaDataTitle: TPanel
           Left = 0
           Top = 0
@@ -399,9 +398,6 @@ object frmSampleS3: TfrmSampleS3
           BevelOuter = bvNone
           Caption = 'Properties'
           TabOrder = 0
-          ExplicitLeft = 1
-          ExplicitTop = 1
-          ExplicitWidth = 343
         end
         object ValueListProperties: TValueListEditor
           Left = 0
@@ -410,10 +406,6 @@ object frmSampleS3: TfrmSampleS3
           Height = 163
           Align = alClient
           TabOrder = 1
-          ExplicitLeft = 2
-          ExplicitTop = 26
-          ExplicitWidth = 343
-          ExplicitHeight = 161
           ColWidths = (
             150
             189)
@@ -427,7 +419,6 @@ object frmSampleS3: TfrmSampleS3
         Align = alLeft
         BevelOuter = bvNone
         TabOrder = 2
-        ExplicitLeft = 8
         object Panel5: TPanel
           Left = 0
           Top = 0
@@ -437,9 +428,6 @@ object frmSampleS3: TfrmSampleS3
           BevelOuter = bvNone
           Caption = 'MetaData'
           TabOrder = 0
-          ExplicitLeft = 1
-          ExplicitTop = 1
-          ExplicitWidth = 343
         end
         object valueListMetaData: TValueListEditor
           Left = 0
@@ -448,10 +436,6 @@ object frmSampleS3: TfrmSampleS3
           Height = 163
           Align = alClient
           TabOrder = 1
-          ExplicitLeft = 16
-          ExplicitTop = -56
-          ExplicitWidth = 306
-          ExplicitHeight = 300
           ColWidths = (
             150
             189)

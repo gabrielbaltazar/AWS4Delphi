@@ -8,8 +8,9 @@ uses
   Vcl.ComCtrls, System.IniFiles,
   System.Generics.Collections,
 
-  AWS4D.S3.Model.Interfaces,
-  AWS4D.S3.Service.Interfaces, Vcl.Grids, Vcl.ValEdit;
+//  AWS4D.S3.Model.Interfaces,
+//  AWS4D.S3.Service.Interfaces,
+  Vcl.Grids, Vcl.ValEdit;
 
 type
   TS3Config = class
@@ -101,7 +102,7 @@ type
     procedure SaveConfig;
     procedure LoadConfig;
 
-    function CreateS3: IAWS4DServiceS3;
+//    function CreateS3: IAWS4DServiceS3;
 
     procedure selectFileDialog(AEdit: TEdit);
     { Private declarations }
@@ -120,23 +121,23 @@ implementation
 
 procedure TfrmSampleS3.btnCreateBucketClick(Sender: TObject);
 begin
-  CreateS3.createBucket(edtBucketBucketName.Text);
+//  CreateS3.createBucket(edtBucketBucketName.Text);
   ShowMessage('Bucket created.');
 end;
 
 procedure TfrmSampleS3.btnCreateObjectClick(Sender: TObject);
-var
-  request: IAWS4DS3ModelCreateObjectRequest;
+//var
+//  request: IAWS4DS3ModelCreateObjectRequest;
 begin
-  request := S3ModelFactory.CreateObjectRequest;
-  request
-    .BucketName(edtCreateObjectBucketName.Text)
-    .FileName(edtCreateObjectFileName.Text)
-    .ObjectName(edtCreateObjectObjectName.Text)
-    .AddMetaInfo('meta-key', 'meta-value');
-
-  CreateS3.createObject(request);
-
+//  request := S3ModelFactory.CreateObjectRequest;
+//  request
+//    .BucketName(edtCreateObjectBucketName.Text)
+//    .FileName(edtCreateObjectFileName.Text)
+//    .ObjectName(edtCreateObjectObjectName.Text)
+//    .AddMetaInfo('meta-key', 'meta-value');
+//
+//  CreateS3.createObject(request);
+//
 end;
 
 procedure TfrmSampleS3.btnCreateObjectSelectFileClick(Sender: TObject);
@@ -146,121 +147,121 @@ end;
 
 procedure TfrmSampleS3.btnDeleteBucketClick(Sender: TObject);
 begin
-  CreateS3.DeleteBucket(edtBucketBucketName.Text);
+//  CreateS3.DeleteBucket(edtBucketBucketName.Text);
   ShowMessage('Bucket deleted.');
 end;
 
 procedure TfrmSampleS3.btnDeleteObjectClick(Sender: TObject);
-var
-  request: IAWS4DS3ModelDeleteObjectRequest;
+//var
+//  request: IAWS4DS3ModelDeleteObjectRequest;
 begin
-  request := S3ModelFactory.CreateDeleteObjectRequest;
-  request
-    .BucketName(edtListObjectsBucketName.Text)
-    .ObjectName(lstObjects.Items[lstObjects.ItemIndex]);
-
-  CreateS3.DeleteObject(request);
-  btnListObjects.Click;
+//  request := S3ModelFactory.CreateDeleteObjectRequest;
+//  request
+//    .BucketName(edtListObjectsBucketName.Text)
+//    .ObjectName(lstObjects.Items[lstObjects.ItemIndex]);
+//
+//  CreateS3.DeleteObject(request);
+//  btnListObjects.Click;
 end;
 
 procedure TfrmSampleS3.btnDownloadObjectClick(Sender: TObject);
-var
-  request: IAWS4DS3ModelDownloadObjectRequest;
-  response: IAWS4DS3ModelDownloadObjectResponse;
-  objectName: string;
+//var
+//  request: IAWS4DS3ModelDownloadObjectRequest;
+//  response: IAWS4DS3ModelDownloadObjectResponse;
+//  objectName: string;
 begin
-  objectName := edtListObjectObjectName.Text;
-  request := S3ModelFactory.CreateDownloadObjectRequest;
-  request
-    .BucketName(edtListObjectsBucketName.Text)
-    .ObjectName(objectName);
-
-  response := CreateS3.DownloadObject(request);
-  response.SaveToFile('testFile.txt');
+//  objectName := edtListObjectObjectName.Text;
+//  request := S3ModelFactory.CreateDownloadObjectRequest;
+//  request
+//    .BucketName(edtListObjectsBucketName.Text)
+//    .ObjectName(objectName);
+//
+//  response := CreateS3.DownloadObject(request);
+//  response.SaveToFile('testFile.txt');
 end;
 
 procedure TfrmSampleS3.btnExistBucketClick(Sender: TObject);
 begin
-  if CreateS3.ExistBucket(edtBucketBucketName.Text) then
-    ShowMessage('Bucket Exist.')
-  else
-    ShowMessage('Bucket Not Exist.')
+//  if CreateS3.ExistBucket(edtBucketBucketName.Text) then
+//    ShowMessage('Bucket Exist.')
+//  else
+//    ShowMessage('Bucket Not Exist.')
 end;
 
 procedure TfrmSampleS3.btnGetObjectPropertiesClick(Sender: TObject);
-var
-  response: IAWS4DS3ModelGetObjectPropertiesResponse;
-  i: Integer;
+//var
+//  response: IAWS4DS3ModelGetObjectPropertiesResponse;
+//  i: Integer;
 begin
-  for i := valueListMetaData.RowCount - 1 downto 0 do
-    valueListMetaData.DeleteRow(i);
-
-  for i := ValueListProperties.RowCount - 1 downto 0 do
-    ValueListProperties.DeleteRow(i);
-
-  response := CreateS3.GetObjectProperties(edtGetObjectPropertiesBucketName.Text,
-                                           edtGetObjectPropertiesObjectName.Text);
-
-  for i := 0 to response.MetaDataCount - 1 do
-    valueListMetaData.InsertRow(response.MetaDataKey(i), response.MetaDataValue(i), True);
-
-  for i := 0 to response.PropertyCount - 1 do
-    valueListMetaData.InsertRow(response.PropertyKey(i), response.PropertyValue(i), True);
+//  for i := valueListMetaData.RowCount - 1 downto 0 do
+//    valueListMetaData.DeleteRow(i);
+//
+//  for i := ValueListProperties.RowCount - 1 downto 0 do
+//    ValueListProperties.DeleteRow(i);
+//
+//  response := CreateS3.GetObjectProperties(edtGetObjectPropertiesBucketName.Text,
+//                                           edtGetObjectPropertiesObjectName.Text);
+//
+//  for i := 0 to response.MetaDataCount - 1 do
+//    valueListMetaData.InsertRow(response.MetaDataKey(i), response.MetaDataValue(i), True);
+//
+//  for i := 0 to response.PropertyCount - 1 do
+//    valueListMetaData.InsertRow(response.PropertyKey(i), response.PropertyValue(i), True);
 end;
 
 procedure TfrmSampleS3.btnListBucketsClick(Sender: TObject);
-var
-  buckets : TArray<string>;
-  i: Integer;
+//var
+//  buckets : TArray<string>;
+//  i: Integer;
 begin
-  buckets := CreateS3.ListBuckets;
-  mmoListBuckets.Lines.Clear;
-
-  for i := 0 to Pred(Length(buckets)) do
-    mmoListBuckets.Lines.Add(buckets[i]);
+//  buckets := CreateS3.ListBuckets;
+//  mmoListBuckets.Lines.Clear;
+//
+//  for i := 0 to Pred(Length(buckets)) do
+//    mmoListBuckets.Lines.Add(buckets[i]);
 end;
 
 procedure TfrmSampleS3.btnListObjectsClick(Sender: TObject);
-var
-  objects : TList<IAWS4DS3ModelObjectInfo>;
-  i: Integer;
+//var
+//  objects : TList<IAWS4DS3ModelObjectInfo>;
+//  i: Integer;
 begin
-  objects := CreateS3.ListObjects(edtListObjectsBucketName.Text, edtListObjectObjectName.Text);
-  try
-    lstObjects.Items.Clear;
-    for i := 0 to Pred(objects.Count) do
-      lstObjects.Items.Add(objects[i].Name);
-    ShowMessage(objects.Count.ToString);
-  finally
-    objects.Free;
-  end;
+//  objects := CreateS3.ListObjects(edtListObjectsBucketName.Text, edtListObjectObjectName.Text);
+//  try
+//    lstObjects.Items.Clear;
+//    for i := 0 to Pred(objects.Count) do
+//      lstObjects.Items.Add(objects[i].Name);
+//    ShowMessage(objects.Count.ToString);
+//  finally
+//    objects.Free;
+//  end;
 end;
 
 procedure TfrmSampleS3.btnObjectExistClick(Sender: TObject);
-var
-  request: IAWS4DS3ModelObjectExistRequest;
-  objectName: string;
+//var
+//  request: IAWS4DS3ModelObjectExistRequest;
+//  objectName: string;
 begin
-  objectName := edtListObjectObjectName.Text;
-  request := S3ModelFactory.CreateObjectExistRequest;
-  request
-    .BucketName(edtListObjectsBucketName.Text)
-    .ObjectName(objectName);
-
-  if CreateS3.ExistObject(request) then
-    ShowMessage('Exist')
-  else
-    ShowMessage('Not Exist');
+//  objectName := edtListObjectObjectName.Text;
+//  request := S3ModelFactory.CreateObjectExistRequest;
+//  request
+//    .BucketName(edtListObjectsBucketName.Text)
+//    .ObjectName(objectName);
+//
+//  if CreateS3.ExistObject(request) then
+//    ShowMessage('Exist')
+//  else
+//    ShowMessage('Not Exist');
 end;
 
-function TfrmSampleS3.CreateS3: IAWS4DServiceS3;
-begin
-  result := S3Service;
-  result
-    .AccessKeyID(edtAccessKey.Text)
-    .Region(edtRegion.Text)
-    .SecretKey(edtSecretKey.Text);
-end;
+//function TfrmSampleS3.CreateS3: IAWS4DServiceS3;
+//begin
+//  result := S3Service;
+//  result
+//    .AccessKeyID(edtAccessKey.Text)
+//    .Region(edtRegion.Text)
+//    .SecretKey(edtSecretKey.Text);
+//end;
 
 procedure TfrmSampleS3.edtCreateObjectFileNameChange(Sender: TObject);
 begin
