@@ -22,7 +22,9 @@ uses
   AWS4D.S3.Model.ExistBucket.Response in '..\..\Source\S3\AWS4D.S3.Model.ExistBucket.Response.pas',
   AWS4D.S3.Facade.ExistBucket in '..\..\Source\S3\AWS4D.S3.Facade.ExistBucket.pas',
   AWS4D.S3.Model.DeleteBucket.Request in '..\..\Source\S3\AWS4D.S3.Model.DeleteBucket.Request.pas',
-  AWS4D.S3.Facade.DeleteBucket in '..\..\Source\S3\AWS4D.S3.Facade.DeleteBucket.pas';
+  AWS4D.S3.Facade.DeleteBucket in '..\..\Source\S3\AWS4D.S3.Facade.DeleteBucket.pas',
+  AWS4D.S3.Model.ObjectCreate.Request in '..\..\Source\S3\AWS4D.S3.Model.ObjectCreate.Request.pas',
+  AWS4D.S3.Facade.ObjectCreate in '..\..\Source\S3\AWS4D.S3.Facade.ObjectCreate.pas';
 
 {$R *.res}
 

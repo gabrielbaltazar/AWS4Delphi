@@ -8,6 +8,7 @@ uses
   AWS4D.S3.Facade.CreateBucket,
   AWS4D.S3.Facade.DeleteBucket,
   AWS4D.S3.Facade.ListBuckets,
+  AWS4D.S3.Facade.ObjectCreate,
   AWS4D.S3.Service.Interfaces,
   AWS4D.S3.Service.CloudAPI,
   AWS4D.Core.Model.Types,
@@ -25,6 +26,7 @@ type TAWS4DS3Facade = class(TInterfacedObject, IAWS4DS3Facade)
     FDeleteBucket: IAWS4DS3FacadeDeleteBucket;
     FExistBucket: IAWS4DS3FacadeExistBucket;
     FListBuckets: IAWS4DS3FacadeListBuckets;
+    FObjectCreate: IAWS4DS3FacadeObjectCreate;
 
     function S3Service<I: IInterface>: IAWS4DS3Service<I>;
 
@@ -38,6 +40,7 @@ type TAWS4DS3Facade = class(TInterfacedObject, IAWS4DS3Facade)
     function DeleteBucket: IAWS4DS3FacadeDeleteBucket;
     function ExistBucket: IAWS4DS3FacadeExistBucket;
     function ListBuckets: IAWS4DS3FacadeListBuckets;
+    function ObjectCreate: IAWS4DS3FacadeObjectCreate;
 
   public
     constructor create;
@@ -114,6 +117,19 @@ end;
 class function TAWS4DS3Facade.New: IAWS4DS3Facade;
 begin
   result := Self.create;
+end;
+
+function TAWS4DS3Facade.ObjectCreate: IAWS4DS3FacadeObjectCreate;
+var
+  service: IAWS4DS3Service<IAWS4DS3FacadeObjectCreate>;
+begin
+  if not Assigned(FObjectCreate) then
+  begin
+    service := Self.S3Service<IAWS4DS3FacadeObjectCreate>;
+    FObjectCreate := TAWS4DS3FacadeObjectCreate.New(service);
+  end;
+
+  result := FObjectCreate;
 end;
 
 function TAWS4DS3Facade.Region(Value: String): IAWS4DS3Facade;

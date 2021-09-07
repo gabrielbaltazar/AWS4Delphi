@@ -135,18 +135,16 @@ begin
 end;
 
 procedure TfrmSampleS3.btnCreateObjectClick(Sender: TObject);
-//var
-//  request: IAWS4DS3ModelCreateObjectRequest;
 begin
-//  request := S3ModelFactory.CreateObjectRequest;
-//  request
-//    .BucketName(edtCreateObjectBucketName.Text)
-//    .FileName(edtCreateObjectFileName.Text)
-//    .ObjectName(edtCreateObjectObjectName.Text)
-//    .AddMetaInfo('meta-key', 'meta-value');
-//
-//  CreateS3.createObject(request);
-//
+  S3Initialize;
+  FS3.ObjectCreate
+    .Request
+      .BucketName(edtCreateObjectBucketName.Text)
+      .ObjectName(edtCreateObjectObjectName.Text)
+      .FileName(edtCreateObjectFileName.Text)
+      .AddMetaInfo('meta-key', 'meta-value')
+    .&End
+    .Send;
 end;
 
 procedure TfrmSampleS3.btnCreateObjectSelectFileClick(Sender: TObject);

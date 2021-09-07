@@ -34,6 +34,8 @@ type TAWS4DS3ServiceCloudAPI<I: IInterface> = class(TInterfacedObject, IAWS4DS3S
 
     procedure RaiseException;
 
+    function FileBytes(AStream: TStream): TBytes;
+
   protected
     function AccessKey(Value: String): IAWS4DS3Service<I>;
     function SecretKey(Value: String): IAWS4DS3Service<I>;
@@ -44,6 +46,7 @@ type TAWS4DS3ServiceCloudAPI<I: IInterface> = class(TInterfacedObject, IAWS4DS3S
     procedure CreateBucket(Request: IAWS4DS3CreateBucketRequest<I>);
     procedure DeleteBucket(Request: IAWS4DS3DeleteBucketRequest<I>);
     function ListBuckets: IAWS4DS3ListBucketsResponse<I>;
+    procedure ObjectCreate(Request: IAWS4DS3ObjectCreateRequest<I>);
 
     function Parent(Value: I): IAWS4DS3Service<I>;
     function &End: I;
@@ -135,6 +138,18 @@ begin
   result := FParent;
 end;
 
+function TAWS4DS3ServiceCloudAPI<I>.FileBytes(AStream: TStream): TBytes;
+var
+  fileReader: TBinaryReader;
+begin
+  fileReader := TBinaryReader.Create(AStream);
+  try
+    result := fileReader.ReadBytes(AStream.Size);
+  finally
+    fileReader.Free;
+  end;
+end;
+
 function TAWS4DS3ServiceCloudAPI<I>.AccessKey(Value: String): IAWS4DS3Service<I>;
 begin
   result := Self;
@@ -166,6 +181,24 @@ end;
 class function TAWS4DS3ServiceCloudAPI<I>.New: IAWS4DS3Service<I>;
 begin
   result := Self.create;
+end;
+
+procedure TAWS4DS3ServiceCloudAPI<I>.ObjectCreate(Request: IAWS4DS3ObjectCreateRequest<I>);
+begin
+  AWSComponentsCreate;
+  Request.FileStream.Position := 0;
+
+  if not FStorage.UploadObject(
+      Request.BucketName,
+      Request.ObjectName,
+      FileBytes(Request.FileStream),
+      False,
+      Request.MetaInfo,
+      nil,
+      amzbaPrivate,
+      FCloudResponse)
+  then
+    RaiseException;
 end;
 
 function TAWS4DS3ServiceCloudAPI<I>.Parent(Value: I): IAWS4DS3Service<I>;
