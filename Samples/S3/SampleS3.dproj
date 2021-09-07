@@ -107,6 +107,19 @@
             <Form>frmSampleS3</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.Interfaces.pas"/>
+        <DCCReference Include="..\..\Source\Core\AWS4D.Core.Helper.JSON.pas"/>
+        <DCCReference Include="..\..\Source\Core\AWS4D.Core.Model.Attribute.pas"/>
+        <DCCReference Include="..\..\Source\Core\AWS4D.Core.Model.Classes.pas"/>
+        <DCCReference Include="..\..\Source\Core\AWS4D.Core.Model.Iterator.pas"/>
+        <DCCReference Include="..\..\Source\Core\AWS4D.Core.Model.Tag.pas"/>
+        <DCCReference Include="..\..\Source\Core\AWS4D.Core.Model.Types.pas"/>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.ListBuckets.Response.pas"/>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Service.Interfaces.pas"/>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Service.CloudAPI.pas"/>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Facade.Interfaces.pas"/>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Facade.ListBuckets.pas"/>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Facade.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

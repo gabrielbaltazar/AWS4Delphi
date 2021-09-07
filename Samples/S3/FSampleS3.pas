@@ -8,6 +8,7 @@ uses
   Vcl.ComCtrls, System.IniFiles,
   System.Generics.Collections,
 
+  AWS4D.S3.Facade.Interfaces,
 //  AWS4D.S3.Model.Interfaces,
 //  AWS4D.S3.Service.Interfaces,
   Vcl.Grids, Vcl.ValEdit;
@@ -98,11 +99,13 @@ type
     procedure lstObjectsClick(Sender: TObject);
     procedure btnGetObjectPropertiesClick(Sender: TObject);
   private
+    FS3: IAWS4DS3Facade;
+
     function GetIniFile: TIniFile;
     procedure SaveConfig;
     procedure LoadConfig;
 
-//    function CreateS3: IAWS4DServiceS3;
+    procedure CreateS3;
 
     procedure selectFileDialog(AEdit: TEdit);
     { Private declarations }
@@ -210,15 +213,14 @@ begin
 end;
 
 procedure TfrmSampleS3.btnListBucketsClick(Sender: TObject);
-//var
-//  buckets : TArray<string>;
-//  i: Integer;
 begin
-//  buckets := CreateS3.ListBuckets;
-//  mmoListBuckets.Lines.Clear;
-//
-//  for i := 0 to Pred(Length(buckets)) do
-//    mmoListBuckets.Lines.Add(buckets[i]);
+  mmoListBuckets.Lines.Clear;
+
+  CreateS3;
+  FS3.ListBuckets.Send;
+
+  while FS3.ListBuckets.Response.Buckets.HasNext do
+    mmoListBuckets.Lines.Add(FS3.ListBuckets.Response.Buckets.Current);
 end;
 
 procedure TfrmSampleS3.btnListObjectsClick(Sender: TObject);
@@ -252,6 +254,14 @@ begin
 //    ShowMessage('Exist')
 //  else
 //    ShowMessage('Not Exist');
+end;
+
+procedure TfrmSampleS3.CreateS3;
+begin
+  FS3 := NewS3Facade;
+  FS3.AccessKey(edtAccessKey.Text)
+     .SecretKey(edtSecretKey.Text)
+     .Region(edtRegion.Text);
 end;
 
 //function TfrmSampleS3.CreateS3: IAWS4DServiceS3;
