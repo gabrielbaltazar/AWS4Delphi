@@ -15,7 +15,14 @@ uses
   AWS4D.S3.Service.CloudAPI in '..\..\Source\S3\AWS4D.S3.Service.CloudAPI.pas',
   AWS4D.S3.Facade.Interfaces in '..\..\Source\S3\AWS4D.S3.Facade.Interfaces.pas',
   AWS4D.S3.Facade.ListBuckets in '..\..\Source\S3\AWS4D.S3.Facade.ListBuckets.pas',
-  AWS4D.S3.Facade in '..\..\Source\S3\AWS4D.S3.Facade.pas';
+  AWS4D.S3.Facade in '..\..\Source\S3\AWS4D.S3.Facade.pas',
+  AWS4D.S3.Model.CreateBucket.Request in '..\..\Source\S3\AWS4D.S3.Model.CreateBucket.Request.pas',
+  AWS4D.S3.Facade.CreateBucket in '..\..\Source\S3\AWS4D.S3.Facade.CreateBucket.pas',
+  AWS4D.S3.Model.ExistBucket.Request in '..\..\Source\S3\AWS4D.S3.Model.ExistBucket.Request.pas',
+  AWS4D.S3.Model.ExistBucket.Response in '..\..\Source\S3\AWS4D.S3.Model.ExistBucket.Response.pas',
+  AWS4D.S3.Facade.ExistBucket in '..\..\Source\S3\AWS4D.S3.Facade.ExistBucket.pas',
+  AWS4D.S3.Model.DeleteBucket.Request in '..\..\Source\S3\AWS4D.S3.Model.DeleteBucket.Request.pas',
+  AWS4D.S3.Facade.DeleteBucket in '..\..\Source\S3\AWS4D.S3.Facade.DeleteBucket.pas';
 
 {$R *.res}
 

@@ -14,6 +14,9 @@ type
     function Region(Value: String): IAWS4DS3Service<I>; overload;
     function Region(Value: TAWS4DRegion): IAWS4DS3Service<I>; overload;
 
+    function BucketExist(Request: IAWS4DS3ExistBucketRequest<I>): IAWS4DS3ExistBucketResponse<I>;
+    procedure CreateBucket(Request: IAWS4DS3CreateBucketRequest<I>);
+    procedure DeleteBucket(Request: IAWS4DS3DeleteBucketRequest<I>);
     function ListBuckets: IAWS4DS3ListBucketsResponse<I>;
 
     function Parent(Value: I): IAWS4DS3Service<I>;

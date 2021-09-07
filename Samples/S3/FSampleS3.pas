@@ -105,7 +105,7 @@ type
     procedure SaveConfig;
     procedure LoadConfig;
 
-    procedure CreateS3;
+    procedure S3Initialize;
 
     procedure selectFileDialog(AEdit: TEdit);
     { Private declarations }
@@ -124,7 +124,13 @@ implementation
 
 procedure TfrmSampleS3.btnCreateBucketClick(Sender: TObject);
 begin
-//  CreateS3.createBucket(edtBucketBucketName.Text);
+  S3Initialize;
+  FS3.CreateBucket
+    .Request
+      .BucketName(edtBucketBucketName.Text)
+    .&End
+    .Send;
+
   ShowMessage('Bucket created.');
 end;
 
@@ -150,7 +156,13 @@ end;
 
 procedure TfrmSampleS3.btnDeleteBucketClick(Sender: TObject);
 begin
-//  CreateS3.DeleteBucket(edtBucketBucketName.Text);
+  S3Initialize;
+  FS3.DeleteBucket
+    .Request
+      .BucketName(edtBucketBucketName.Text)
+    .&End
+    .Send;
+
   ShowMessage('Bucket deleted.');
 end;
 
@@ -185,10 +197,17 @@ end;
 
 procedure TfrmSampleS3.btnExistBucketClick(Sender: TObject);
 begin
-//  if CreateS3.ExistBucket(edtBucketBucketName.Text) then
-//    ShowMessage('Bucket Exist.')
-//  else
-//    ShowMessage('Bucket Not Exist.')
+  S3Initialize;
+  FS3.ExistBucket
+    .Request
+      .BucketName(edtBucketBucketName.Text)
+    .&End
+    .Send;
+
+  if FS3.ExistBucket.Response.Exist then
+    ShowMessage('Bucket Exist.')
+  else
+    ShowMessage('Bucket Not Exist.')
 end;
 
 procedure TfrmSampleS3.btnGetObjectPropertiesClick(Sender: TObject);
@@ -216,7 +235,7 @@ procedure TfrmSampleS3.btnListBucketsClick(Sender: TObject);
 begin
   mmoListBuckets.Lines.Clear;
 
-  CreateS3;
+  S3Initialize;
   FS3.ListBuckets.Send;
 
   while FS3.ListBuckets.Response.Buckets.HasNext do
@@ -256,7 +275,7 @@ begin
 //    ShowMessage('Not Exist');
 end;
 
-procedure TfrmSampleS3.CreateS3;
+procedure TfrmSampleS3.S3Initialize;
 begin
   FS3 := NewS3Facade;
   FS3.AccessKey(edtAccessKey.Text)

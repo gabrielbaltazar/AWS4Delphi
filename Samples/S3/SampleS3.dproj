@@ -120,6 +120,13 @@
         <DCCReference Include="..\..\Source\S3\AWS4D.S3.Facade.Interfaces.pas"/>
         <DCCReference Include="..\..\Source\S3\AWS4D.S3.Facade.ListBuckets.pas"/>
         <DCCReference Include="..\..\Source\S3\AWS4D.S3.Facade.pas"/>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.CreateBucket.Request.pas"/>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Facade.CreateBucket.pas"/>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.ExistBucket.Request.pas"/>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.ExistBucket.Response.pas"/>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Facade.ExistBucket.pas"/>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Model.DeleteBucket.Request.pas"/>
+        <DCCReference Include="..\..\Source\S3\AWS4D.S3.Facade.DeleteBucket.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

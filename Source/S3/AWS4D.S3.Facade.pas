@@ -4,6 +4,9 @@ interface
 
 uses
   AWS4D.S3.Facade.Interfaces,
+  AWS4D.S3.Facade.ExistBucket,
+  AWS4D.S3.Facade.CreateBucket,
+  AWS4D.S3.Facade.DeleteBucket,
   AWS4D.S3.Facade.ListBuckets,
   AWS4D.S3.Service.Interfaces,
   AWS4D.S3.Service.CloudAPI,
@@ -18,6 +21,9 @@ type TAWS4DS3Facade = class(TInterfacedObject, IAWS4DS3Facade)
     FSecretKey: String;
     FRegion: TAWS4DRegion;
 
+    FCreateBucket: IAWS4DS3FacadeCreateBucket;
+    FDeleteBucket: IAWS4DS3FacadeDeleteBucket;
+    FExistBucket: IAWS4DS3FacadeExistBucket;
     FListBuckets: IAWS4DS3FacadeListBuckets;
 
     function S3Service<I: IInterface>: IAWS4DS3Service<I>;
@@ -28,6 +34,9 @@ type TAWS4DS3Facade = class(TInterfacedObject, IAWS4DS3Facade)
     function Region(Value: String): IAWS4DS3Facade; overload;
     function Region(Value: TAWS4DRegion): IAWS4DS3Facade; overload;
 
+    function CreateBucket: IAWS4DS3FacadeCreateBucket;
+    function DeleteBucket: IAWS4DS3FacadeDeleteBucket;
+    function ExistBucket: IAWS4DS3FacadeExistBucket;
     function ListBuckets: IAWS4DS3FacadeListBuckets;
 
   public
@@ -45,9 +54,48 @@ begin
   FAccessKey := Value;
 end;
 
+function TAWS4DS3Facade.ExistBucket: IAWS4DS3FacadeExistBucket;
+var
+  service: IAWS4DS3Service<IAWS4DS3FacadeExistBucket>;
+begin
+  if not Assigned(FExistBucket) then
+  begin
+    service := Self.S3Service<IAWS4DS3FacadeExistBucket>;
+    FExistBucket := TAWS4DS3FacadeExistBucket.New(service);
+  end;
+
+  result := FExistBucket;
+end;
+
 constructor TAWS4DS3Facade.create;
 begin
 
+end;
+
+function TAWS4DS3Facade.CreateBucket: IAWS4DS3FacadeCreateBucket;
+var
+  service: IAWS4DS3Service<IAWS4DS3FacadeCreateBucket>;
+begin
+  if not Assigned(FCreateBucket) then
+  begin
+    service := Self.S3Service<IAWS4DS3FacadeCreateBucket>;
+    FCreateBucket := TAWS4DS3FacadeCreateBucket.New(service);
+  end;
+
+  result := FCreateBucket;
+end;
+
+function TAWS4DS3Facade.DeleteBucket: IAWS4DS3FacadeDeleteBucket;
+var
+  service: IAWS4DS3Service<IAWS4DS3FacadeDeleteBucket>;
+begin
+  if not Assigned(FDeleteBucket) then
+  begin
+    service := Self.S3Service<IAWS4DS3FacadeDeleteBucket>;
+    FDeleteBucket := TAWS4DS3FacadeDeleteBucket.New(service);
+  end;
+
+  result := FDeleteBucket;
 end;
 
 function TAWS4DS3Facade.ListBuckets: IAWS4DS3FacadeListBuckets;
