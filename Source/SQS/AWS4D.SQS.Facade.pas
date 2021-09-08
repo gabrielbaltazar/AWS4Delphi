@@ -85,7 +85,7 @@ end;
 
 constructor TAWS4DSQSFacade.create;
 begin
-
+  FRegion := aws4dUSEast1;
 end;
 
 function TAWS4DSQSFacade.CreateQueue: IAWS4DSQSFacadeCreateQueue;
