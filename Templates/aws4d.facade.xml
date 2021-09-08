@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="aws4d.facade" invoke="manual">
+		<description>
+			Facade
+		</description>
+		<author>
+			Gabriel Baltazar
+		</author>
+         <point name="Service">
+             <text>
+                 Service
+             </text>
+             <hint>
+                 Service Name
+             </hint>
+         </point>
+          <point name="Action">
+              <text>
+                  Action
+              </text>
+              <hint>
+                  Action
+              </hint>
+          </point>
+		<code language="Delphi" delimiter="|" ><![CDATA[
+unit AWS4D.|Service|.Facade.|Action|;
+
+interface
+
+uses
+  AWS4D.|Service|.Facade.Interfaces,
+  AWS4D.|Service|.Service.Interfaces,
+  AWS4D.|Service|.Model.Interfaces,
+  AWS4D.|Service|.Model.|Action|.Request,
+  AWS4D.|Service|.Model.|Action|.Response;
+
+type TAWS4D|Service|Facade|Action| = class(TInterfacedObject, IAWS4D|Service|Facade|Action|)
+
+  private
+    FService: IAWS4D|Service|Service<IAWS4D|Service|Facade|Action|>;
+
+    FRequest: IAWS4D|Service||Action|Request<IAWS4D|Service|Facade|Action|>;
+    FResponse: IAWS4D|Service||Action|Response<IAWS4D|Service|Facade|Action|>;
+
+  protected
+    function Request: IAWS4D|Service||Action|Request<IAWS4D|Service|Facade|Action|>;
+    function Send: IAWS4D|Service||Action|Response<IAWS4D|Service|Facade|Action|>;
+    function Response: IAWS4D|Service||Action|Response<IAWS4D|Service|Facade|Action|>;
+
+  public
+    class function New(Service: IAWS4D|Service|Service<IAWS4D|Service|Facade|Action|>): IAWS4D|Service|Facade|Action|;
+    constructor create(Service: IAWS4D|Service|Service<IAWS4D|Service|Facade|Action|>);
+
+end;
+
+implementation
+
+constructor TAWS4D|Service|Facade|Action|.create(Service: IAWS4D|Service|Service<IAWS4D|Service|Facade|Action|>);
+begin
+  FService := Service;
+  FService.Parent(Self);
+end;
+
+class function TAWS4D|Service|Facade|Action|.New(Service: IAWS4D|Service|Service<IAWS4DSQSFacade|Action|>): IAWS4D|Service|Facade|Action|;
+begin
+  result := Self.create(Service);
+end;
+
+function TAWS4D|Service|Facade|Action|.Request: IAWS4D|Service||Action|Request<IAWS4D|Service|Facade|Action|>;
+begin
+  if not Assigned(FRequest) then
+    FRequest := TAWS4D|Service||Action|Request<IAWS4D|Service|Facade|Action|>.New(Self);
+  result := FRequest;
+end;
+
+function TAWS4D|Service|Facade|Action|.Response: IAWS4D|Service||Action|Response<IAWS4D|Service|Facade|Action|>;
+begin
+  result := FResponse;
+end;
+
+function TAWS4D|Service|Facade|Action|.Send: IAWS4D|Service||Action|Response<IAWS4D|Service|Facade|Action|>;
+begin
+  FResponse := nil;
+  try
+    FResponse := FService.|Action|(FRequest);
+  finally
+    FRequest := nil;
+  end;
+end;
+
+end.]]>
+		</code>
+	</template>
+</codetemplate>

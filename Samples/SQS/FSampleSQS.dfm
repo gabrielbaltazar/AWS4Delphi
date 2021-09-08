@@ -56,6 +56,13 @@ object Form2: TForm2
       Height = 13
       Caption = 'Region'
     end
+    object Label14: TLabel
+      Left = 551
+      Top = 9
+      Width = 62
+      Height = 13
+      Caption = 'Queue Name'
+    end
     object edtAccessKey: TEdit
       Left = 11
       Top = 24
@@ -77,13 +84,21 @@ object Form2: TForm2
       Height = 21
       TabOrder = 2
     end
+    object edtQueueName: TEdit
+      Left = 551
+      Top = 24
+      Width = 222
+      Height = 21
+      TabOrder = 3
+      Text = '451809183281/vendas'
+    end
   end
   object pgcSQS: TPageControl
     Left = 0
     Top = 97
     Width = 1171
     Height = 341
-    ActivePage = tsListQueueTags
+    ActivePage = tsCreateQueue
     Align = alClient
     TabOrder = 2
     object tsListQueues: TTabSheet
@@ -170,28 +185,13 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object Label7: TLabel
-          Left = 11
-          Top = 9
-          Width = 62
-          Height = 13
-          Caption = 'Queue Name'
-        end
-        object edtListQueueTagsQueueName: TEdit
-          Left = 11
-          Top = 24
-          Width = 222
-          Height = 21
-          TabOrder = 0
-          Text = '159521004132/Send-to-Email-Docfiscal-dev'
-        end
         object btnListQueueTags: TButton
-          Left = 239
-          Top = 22
+          Left = 7
+          Top = 14
           Width = 94
           Height = 25
           Caption = 'List Queues Tags'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnListQueueTagsClick
         end
       end
@@ -229,7 +229,7 @@ object Form2: TForm2
           Width = 222
           Height = 21
           TabOrder = 0
-          Text = 'Send-to-Email-Docfiscal-dev'
+          Text = 'vendas'
         end
         object btnGetQueueUrl: TButton
           Left = 239
@@ -262,60 +262,45 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object Label8: TLabel
-          Left = 11
-          Top = 9
-          Width = 62
-          Height = 13
-          Caption = 'Queue Name'
-        end
         object Label10: TLabel
-          Left = 239
+          Left = 3
           Top = 9
           Width = 123
           Height = 13
           Caption = 'Max Number of Messages'
         end
         object Label11: TLabel
-          Left = 383
+          Left = 147
           Top = 9
           Width = 78
           Height = 13
           Caption = 'Visibility Timeout'
         end
-        object edtReceiveMessageQueueName: TEdit
-          Left = 11
-          Top = 24
-          Width = 222
-          Height = 21
-          TabOrder = 0
-          Text = '159521004132/Send-to-Email-Docfiscal-dev'
-        end
         object btnReceiveMessage: TButton
-          Left = 562
+          Left = 291
           Top = 22
           Width = 94
           Height = 25
           Caption = 'Receive Message'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnReceiveMessageClick
         end
         object edtReceiveMessageMaxNumberMessages: TEdit
-          Left = 239
+          Left = 3
+          Top = 24
+          Width = 138
+          Height = 21
+          NumbersOnly = True
+          TabOrder = 1
+          Text = '0'
+        end
+        object edtReceiveMessageVisibilityTimeout: TEdit
+          Left = 147
           Top = 24
           Width = 138
           Height = 21
           NumbersOnly = True
           TabOrder = 2
-          Text = '0'
-        end
-        object edtReceiveMessageVisibilityTimeout: TEdit
-          Left = 383
-          Top = 24
-          Width = 138
-          Height = 21
-          NumbersOnly = True
-          TabOrder = 3
           Text = '0'
         end
       end
@@ -340,43 +325,28 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object Label12: TLabel
-          Left = 11
-          Top = 9
-          Width = 62
-          Height = 13
-          Caption = 'Queue Name'
-        end
         object Label13: TLabel
-          Left = 239
-          Top = 9
+          Left = 7
+          Top = 10
           Width = 69
           Height = 13
           Caption = 'Message Body'
         end
-        object edtSendMessageQueueName: TEdit
-          Left = 11
-          Top = 24
-          Width = 222
-          Height = 21
-          TabOrder = 0
-          Text = '159521004132/Send-to-Email-Docfiscal-dev'
-        end
         object btnSendMessage: TButton
-          Left = 562
-          Top = 22
+          Left = 330
+          Top = 23
           Width = 94
           Height = 25
           Caption = 'Send Message'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnSendMessageClick
         end
         object edtSendMessageMessageBody: TEdit
-          Left = 239
-          Top = 24
+          Left = 7
+          Top = 25
           Width = 302
           Height = 21
-          TabOrder = 2
+          TabOrder = 1
           Text = '0'
         end
       end
@@ -401,43 +371,28 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object Label14: TLabel
-          Left = 11
-          Top = 9
-          Width = 62
-          Height = 13
-          Caption = 'Queue Name'
-        end
         object Label15: TLabel
-          Left = 239
-          Top = 9
+          Left = 7
+          Top = 5
           Width = 72
           Height = 13
           Caption = 'Receipt Handle'
         end
-        object edtDeleteMessageQueueName: TEdit
-          Left = 11
-          Top = 24
-          Width = 222
-          Height = 21
-          TabOrder = 0
-          Text = '159521004132/Send-to-Email-Docfiscal-dev'
-        end
         object btnDeleteMessage: TButton
-          Left = 562
-          Top = 22
+          Left = 330
+          Top = 18
           Width = 94
           Height = 25
           Caption = 'Delete Message'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnDeleteMessageClick
         end
         object edtDeleteMessageReceiptHandle: TEdit
-          Left = 239
-          Top = 24
+          Left = 7
+          Top = 20
           Width = 302
           Height = 21
-          TabOrder = 2
+          TabOrder = 1
         end
       end
       object mmoDeleteMessage: TMemo
@@ -457,77 +412,88 @@ object Form2: TForm2
         Left = 0
         Top = 0
         Width = 1163
-        Height = 57
+        Height = 97
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object Label17: TLabel
-          Left = 11
+        object Label7: TLabel
+          Left = 7
           Top = 9
-          Width = 62
+          Width = 56
           Height = 13
-          Caption = 'Queue Name'
+          Caption = 'Message ID'
         end
-        object edtDeleteMessageBatchQueueName: TEdit
-          Left = 11
-          Top = 24
-          Width = 222
-          Height = 21
-          TabOrder = 0
-          Text = '159521004132/Send-to-Email-Docfiscal-dev'
+        object Label8: TLabel
+          Left = 218
+          Top = 9
+          Width = 72
+          Height = 13
+          Caption = 'Receipt Handle'
+        end
+        object Label12: TLabel
+          Left = 7
+          Top = 55
+          Width = 56
+          Height = 13
+          Caption = 'Message ID'
+        end
+        object Label17: TLabel
+          Left = 218
+          Top = 55
+          Width = 72
+          Height = 13
+          Caption = 'Receipt Handle'
         end
         object btnDeleteMessageBatch: TButton
-          Left = 239
+          Left = 639
           Top = 22
           Width = 130
           Height = 25
           Caption = 'Delete Messages Batch'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnDeleteMessageBatchClick
         end
-      end
-      object edtDeleteMessageBatchList: TValueListEditor
-        Left = 0
-        Top = 57
-        Width = 409
-        Height = 256
-        Align = alLeft
-        KeyOptions = [keyEdit, keyAdd, keyUnique]
-        Strings.Strings = (
-          
-            '5d2029d3-164c-4971-a74d-51b029a9e22e=AQEBir7lAsBOQihV7XgXNXz1TLV' +
-            'pkMrTIzRG+kRNiEj7lRS707+EgMaykzeErPy6BbACsqj2zR9sfm7UWLTyERAMo1o' +
-            'n+r6EMgVVVj3eH8z+v1BSHoFdFVT0v0UBgUj7z/JT3j+EEhjEK+/CAISulmvMQ8r' +
-            '9ACzt85P2GVdxZyWpqX29jZ8euX76kiCDSUF1PnyLjzoiIqn1w7F9BOTPS/9ODTW' +
-            'BAqeBGAoj+SKkGn5Mn4KZ1FckeGzWaXdtMdbEStkkgGvCPt0ybOdlV3YJxmpb5Qi' +
-            'v//Hop6NdtrxSaQvpgcBORMxC66IH+KS14/PC1qygirqqOTLwExZbj1hepK+b1zU' +
-            'S+KtmN5V3Ni+Vnops7EG+mMf8P4ZvmUiUJG+FBAPd3r6qlHKyhyOL8ZFLpkhhmQ=' +
-            '='
-          
-            'd2adf7d6-7c77-4c10-b1de-26b083a1464f=AQEBPJySvjo371XCDSAJKLdUUZe' +
-            'td6k7l3PKQG5BpQ+IsMdR+4IjaeMt3ZYIp5sb93y1TcjL3jMlJcLLYuzn696nssn' +
-            'Y1LeS/b1W4rH/OMVShbaGZlymI7uhdiSL4RGeO0+HlhYdEHobFAz+E2pWHtLmgjw' +
-            'XZ1lQXgDhlAZWPoz5F49ZXZS3U33qRDblEKjt+JHBF+Y0pKT1vXAcTmE+Pcp6PaB' +
-            '2bbQX1hFt0Ei0WUsDSVP2U2W0Nf1KWaloDeSIQRddClMiE7H3XlTUqbBzqp5rJxY' +
-            '8IFZLzn3R6NBl0V+qJhi8SzbCpC5PJx623j4XJpkNyhbjp0uQchyQI4S9L0qAP5B' +
-            'g8oQ1ikKtAIuP5rIjH4FmJ3XYY7igExAYWm2u+riw34HjsHwXy2tUeYdPoAos8A=' +
-            '=')
-        TabOrder = 1
-        TitleCaptions.Strings = (
-          'Message Id'
-          'Receipt Handle')
-        ColWidths = (
-          162
-          241)
+        object edtDeleteBatchMessageID1: TEdit
+          Left = 7
+          Top = 24
+          Width = 205
+          Height = 21
+          TabOrder = 1
+        end
+        object edtDeleteBatchReceiptHandle1: TEdit
+          Left = 218
+          Top = 24
+          Width = 415
+          Height = 21
+          TabOrder = 2
+        end
+        object edtDeleteBatchMessageID2: TEdit
+          Left = 7
+          Top = 70
+          Width = 205
+          Height = 21
+          TabOrder = 3
+        end
+        object edtDeleteBatchReceiptHandle2: TEdit
+          Left = 218
+          Top = 70
+          Width = 415
+          Height = 21
+          TabOrder = 4
+        end
       end
       object mmoDeleteMessageBatch: TMemo
-        Left = 409
-        Top = 57
-        Width = 754
-        Height = 256
+        Left = 0
+        Top = 97
+        Width = 1163
+        Height = 216
         Align = alClient
         ScrollBars = ssBoth
-        TabOrder = 2
+        TabOrder = 1
+        ExplicitLeft = 409
+        ExplicitTop = 57
+        ExplicitWidth = 754
+        ExplicitHeight = 256
       end
     end
     object tsCreateQueue: TTabSheet
@@ -587,28 +553,13 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object Label18: TLabel
-          Left = 11
-          Top = 9
-          Width = 48
-          Height = 13
-          Caption = 'Queue Url'
-        end
-        object edtGetQueueAttributesQueueName: TEdit
-          Left = 11
-          Top = 24
-          Width = 222
-          Height = 21
-          TabOrder = 0
-          Text = '159521004132/Send-to-Email-Docfiscal-dev'
-        end
         object btnGetQueueAttributes: TButton
-          Left = 239
-          Top = 22
+          Left = 7
+          Top = 14
           Width = 130
           Height = 25
           Caption = 'Get Queue Attributes'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnGetQueueAttributesClick
         end
       end
@@ -633,28 +584,13 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object Label19: TLabel
-          Left = 11
-          Top = 9
-          Width = 48
-          Height = 13
-          Caption = 'Queue Url'
-        end
-        object edtPurgeQueueQueueUrl: TEdit
-          Left = 11
-          Top = 24
-          Width = 222
-          Height = 21
-          TabOrder = 0
-          Text = '159521004132/Send-to-Email-Docfiscal-dev'
-        end
         object btnPurgeQueue: TButton
-          Left = 239
-          Top = 22
+          Left = 7
+          Top = 14
           Width = 94
           Height = 25
           Caption = 'Purge Queue'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnPurgeQueueClick
         end
       end
@@ -679,28 +615,13 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object Label20: TLabel
-          Left = 11
-          Top = 9
-          Width = 48
-          Height = 13
-          Caption = 'Queue Url'
-        end
-        object edtTagQueueQueueUrl: TEdit
-          Left = 11
-          Top = 24
-          Width = 222
-          Height = 21
-          TabOrder = 0
-          Text = '159521004132/Send-to-Email-Docfiscal-dev'
-        end
         object btnTagQueue: TButton
-          Left = 239
-          Top = 22
+          Left = 7
+          Top = 18
           Width = 90
           Height = 25
           Caption = 'Tag Queue'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnTagQueueClick
         end
       end
@@ -743,57 +664,42 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object Label21: TLabel
-          Left = 11
-          Top = 9
-          Width = 48
-          Height = 13
-          Caption = 'Queue Url'
-        end
         object Label22: TLabel
-          Left = 239
+          Left = 7
           Top = 9
           Width = 29
           Height = 13
           Caption = 'TAG 1'
         end
         object Label23: TLabel
-          Left = 351
+          Left = 119
           Top = 9
           Width = 29
           Height = 13
           Caption = 'TAG 2'
         end
-        object edtUntagQueueQueueUrl: TEdit
-          Left = 11
-          Top = 24
-          Width = 222
-          Height = 21
-          TabOrder = 0
-          Text = '159521004132/Send-to-Email-Docfiscal-dev'
-        end
         object btnUntagQueue: TButton
-          Left = 471
+          Left = 239
           Top = 22
           Width = 90
           Height = 25
           Caption = 'UnTag Queue'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnUntagQueueClick
         end
         object edtUntagQueueTag1: TEdit
-          Left = 239
+          Left = 7
+          Top = 24
+          Width = 106
+          Height = 21
+          TabOrder = 1
+        end
+        object edtUntagQueueTag2: TEdit
+          Left = 119
           Top = 24
           Width = 106
           Height = 21
           TabOrder = 2
-        end
-        object edtUntagQueueTag2: TEdit
-          Left = 351
-          Top = 24
-          Width = 106
-          Height = 21
-          TabOrder = 3
         end
       end
       object mmoUntagQueue: TMemo
@@ -817,28 +723,13 @@ object Form2: TForm2
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object Label24: TLabel
-          Left = 11
-          Top = 9
-          Width = 48
-          Height = 13
-          Caption = 'Queue Url'
-        end
-        object edtDeleteQueueQueueUrl: TEdit
-          Left = 11
-          Top = 24
-          Width = 222
-          Height = 21
-          TabOrder = 0
-          Text = '159521004132/Send-to-Email-Docfiscal-dev'
-        end
         object btnDeleteQueue: TButton
-          Left = 239
-          Top = 22
+          Left = 7
+          Top = 14
           Width = 90
           Height = 25
           Caption = 'Delete Queue'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnDeleteQueueClick
         end
       end

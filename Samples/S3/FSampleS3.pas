@@ -8,8 +8,10 @@ uses
   Vcl.ComCtrls, System.IniFiles,
   System.Generics.Collections,
 
-  AWS4D.S3.Model.Interfaces,
-  AWS4D.S3.Service.Interfaces;
+  AWS4D.S3.Facade.Interfaces,
+//  AWS4D.S3.Model.Interfaces,
+//  AWS4D.S3.Service.Interfaces,
+  Vcl.Grids, Vcl.ValEdit;
 
 type
   TS3Config = class
@@ -17,10 +19,12 @@ type
     FaccessKeyId: string;
     FsecretKey: string;
     Fregion: String;
+    Fbucket: String;
   public
     property accessKeyId: string read FaccessKeyId write FaccessKeyId;
     property secretKey: string read FsecretKey write FsecretKey;
     property region: String read Fregion write Fregion;
+    property bucket: String read Fbucket write Fbucket;
   end;
 
   TfrmSampleS3 = class(TForm)
@@ -66,6 +70,19 @@ type
     btnObjectExist: TButton;
     Label9: TLabel;
     edtListObjectObjectName: TEdit;
+    tsObjectProperties: TTabSheet;
+    pnl1: TPanel;
+    Label10: TLabel;
+    edtGetObjectPropertiesBucketName: TEdit;
+    Label11: TLabel;
+    edtGetObjectPropertiesObjectName: TEdit;
+    btnGetObjectProperties: TButton;
+    pnlMetaData: TPanel;
+    pnlMetaDataTitle: TPanel;
+    Panel4: TPanel;
+    Panel5: TPanel;
+    valueListMetaData: TValueListEditor;
+    ValueListProperties: TValueListEditor;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure btnCreateBucketClick(Sender: TObject);
@@ -80,12 +97,15 @@ type
     procedure btnDownloadObjectClick(Sender: TObject);
     procedure btnObjectExistClick(Sender: TObject);
     procedure lstObjectsClick(Sender: TObject);
+    procedure btnGetObjectPropertiesClick(Sender: TObject);
   private
+    FS3: IAWS4DS3Facade;
+
     function GetIniFile: TIniFile;
     procedure SaveConfig;
     procedure LoadConfig;
 
-    function CreateS3: IAWS4DServiceS3;
+    procedure S3Initialize;
 
     procedure selectFileDialog(AEdit: TEdit);
     { Private declarations }
@@ -104,22 +124,27 @@ implementation
 
 procedure TfrmSampleS3.btnCreateBucketClick(Sender: TObject);
 begin
-  CreateS3.createBucket(edtBucketBucketName.Text);
+  S3Initialize;
+  FS3.CreateBucket
+    .Request
+      .BucketName(edtBucketBucketName.Text)
+    .&End
+    .Send;
+
   ShowMessage('Bucket created.');
 end;
 
 procedure TfrmSampleS3.btnCreateObjectClick(Sender: TObject);
-var
-  request: IAWS4DS3ModelCreateObjectRequest;
 begin
-  request := S3ModelFactory.CreateObjectRequest;
-  request
-    .BucketName(edtCreateObjectBucketName.Text)
-    .FileName(edtCreateObjectFileName.Text)
-    .ObjectName(edtCreateObjectObjectName.Text);
-
-  CreateS3.createObject(request);
-
+  S3Initialize;
+  FS3.ObjectCreate
+    .Request
+      .BucketName(edtCreateObjectBucketName.Text)
+      .ObjectName(edtCreateObjectObjectName.Text)
+      .FileName(edtCreateObjectFileName.Text)
+      .AddMetaInfo('meta-key', 'meta-value')
+    .&End
+    .Send;
 end;
 
 procedure TfrmSampleS3.btnCreateObjectSelectFileClick(Sender: TObject);
@@ -129,98 +154,137 @@ end;
 
 procedure TfrmSampleS3.btnDeleteBucketClick(Sender: TObject);
 begin
-  CreateS3.DeleteBucket(edtBucketBucketName.Text);
+  S3Initialize;
+  FS3.DeleteBucket
+    .Request
+      .BucketName(edtBucketBucketName.Text)
+    .&End
+    .Send;
+
   ShowMessage('Bucket deleted.');
 end;
 
 procedure TfrmSampleS3.btnDeleteObjectClick(Sender: TObject);
-var
-  request: IAWS4DS3ModelDeleteObjectRequest;
 begin
-  request := S3ModelFactory.CreateDeleteObjectRequest;
-  request
-    .BucketName(edtListObjectsBucketName.Text)
-    .ObjectName(lstObjects.Items[lstObjects.ItemIndex]);
+  S3Initialize;
+  FS3.ObjectDelete
+    .Request
+      .BucketName(edtListObjectsBucketName.Text)
+      .ObjectName(lstObjects.Items[lstObjects.ItemIndex])
+    .&End
+    .Send;
 
-  CreateS3.DeleteObject(request);
   btnListObjects.Click;
 end;
 
 procedure TfrmSampleS3.btnDownloadObjectClick(Sender: TObject);
-var
-  request: IAWS4DS3ModelDownloadObjectRequest;
-  response: IAWS4DS3ModelDownloadObjectResponse;
-  objectName: string;
 begin
-  objectName := edtListObjectObjectName.Text;
-  request := S3ModelFactory.CreateDownloadObjectRequest;
-  request
-    .BucketName(edtListObjectsBucketName.Text)
-    .ObjectName(objectName);
-
-  response := CreateS3.DownloadObject(request);
-  response.SaveToFile('testFile.txt');
+  S3Initialize;
+  FS3.DownloadObject
+    .Request
+      .BucketName(edtListObjectsBucketName.Text)
+      .ObjectName(edtListObjectObjectName.Text)
+    .&End
+    .Send
+      .SaveToFile('test.txt');
 end;
 
 procedure TfrmSampleS3.btnExistBucketClick(Sender: TObject);
 begin
-  if CreateS3.ExistBucket(edtBucketBucketName.Text) then
+  S3Initialize;
+  FS3.ExistBucket
+    .Request
+      .BucketName(edtBucketBucketName.Text)
+    .&End
+    .Send;
+
+  if FS3.ExistBucket.Response.Exist then
     ShowMessage('Bucket Exist.')
   else
     ShowMessage('Bucket Not Exist.')
 end;
 
-procedure TfrmSampleS3.btnListBucketsClick(Sender: TObject);
+procedure TfrmSampleS3.btnGetObjectPropertiesClick(Sender: TObject);
 var
-  buckets : TArray<string>;
   i: Integer;
 begin
-  buckets := CreateS3.ListBuckets;
+  for i := valueListMetaData.RowCount - 2 downto 1 do
+    valueListMetaData.DeleteRow(i);
+
+  for i := ValueListProperties.RowCount - 2 downto 1 do
+    ValueListProperties.DeleteRow(i);
+
+  S3Initialize;
+  FS3.GetObjectProperties
+    .Request
+      .BucketName(edtGetObjectPropertiesBucketName.Text)
+      .ObjectName(edtGetObjectPropertiesObjectName.Text)
+    .&End
+    .Send;
+
+  while FS3.GetObjectProperties.Response.MetaData.HasNext do
+    valueListMetaData
+      .InsertRow(FS3.GetObjectProperties.Response.MetaData.Current.Key,
+                 FS3.GetObjectProperties.Response.MetaData.Current.Value,
+                 True);
+
+  while FS3.GetObjectProperties.Response.Properties.HasNext do
+    ValueListProperties
+      .InsertRow(FS3.GetObjectProperties.Response.Properties.Current.Key,
+                 FS3.GetObjectProperties.Response.Properties.Current.Value,
+                 True);
+end;
+
+procedure TfrmSampleS3.btnListBucketsClick(Sender: TObject);
+begin
   mmoListBuckets.Lines.Clear;
 
-  for i := 0 to Pred(Length(buckets)) do
-    mmoListBuckets.Lines.Add(buckets[i]);
+  S3Initialize;
+  FS3.ListBuckets.Send;
+
+  while FS3.ListBuckets.Response.Buckets.HasNext do
+    mmoListBuckets.Lines.Add(FS3.ListBuckets.Response.Buckets.Current);
 end;
 
 procedure TfrmSampleS3.btnListObjectsClick(Sender: TObject);
-var
-  objects : TList<IAWS4DS3ModelObjectInfo>;
-  i: Integer;
 begin
-  objects := CreateS3.ListObjects(edtListObjectsBucketName.Text);
-  try
-    lstObjects.Items.Clear;
-    for i := 0 to Pred(objects.Count) do
-      lstObjects.Items.Add(objects[i].Name);
-  finally
-    objects.Free;
-  end;
+  if not Assigned(FS3) then
+    S3Initialize;
+
+  FS3.ListObjects
+    .Request
+      .BucketName(edtListObjectsBucketName.Text)
+      .MaxKeys(10)
+      .Prefix('C/Users')
+    .&End
+    .Send;
+
+  while FS3.ListObjects.Response.Objects.HasNext do
+    lstObjects.Items.Add(FS3.ListObjects.Response.Objects.Current.Name);
 end;
 
 procedure TfrmSampleS3.btnObjectExistClick(Sender: TObject);
-var
-  request: IAWS4DS3ModelObjectExistRequest;
-  objectName: string;
 begin
-  objectName := edtListObjectObjectName.Text;
-  request := S3ModelFactory.CreateObjectExistRequest;
-  request
-    .BucketName(edtListObjectsBucketName.Text)
-    .ObjectName(objectName);
+  S3Initialize;
+  FS3.ExistObject
+    .Request
+      .BucketName(edtListObjectsBucketName.Text)
+      .ObjectName(edtListObjectObjectName.Text)
+    .&End
+    .Send;
 
-  if CreateS3.ExistObject(request) then
+  if FS3.ExistObject.Response.Exist then
     ShowMessage('Exist')
   else
     ShowMessage('Not Exist');
 end;
 
-function TfrmSampleS3.CreateS3: IAWS4DServiceS3;
+procedure TfrmSampleS3.S3Initialize;
 begin
-  result := S3Service;
-  result
-    .AccessKeyID(edtAccessKey.Text)
-    .Region(edtRegion.Text)
-    .SecretKey(edtSecretKey.Text);
+  FS3 := NewS3Facade;
+  FS3.AccessKey(edtAccessKey.Text)
+     .SecretKey(edtSecretKey.Text)
+     .Region(edtRegion.Text);
 end;
 
 procedure TfrmSampleS3.edtCreateObjectFileNameChange(Sender: TObject);
@@ -260,6 +324,7 @@ begin
     edtAccessKey.Text := iniFile.ReadString('S3', 'ACCESS_KEY', EmptyStr);
     edtSecretKey.Text := iniFile.ReadString('S3', 'SECRET_KEY', EmptyStr);
     edtRegion.Text    := iniFile.ReadString('S3', 'REGION', EmptyStr);
+    edtListObjectsBucketName.Text := iniFile.ReadString('S3', 'BUCKET', EmptyStr);
   finally
     iniFile.Free;
   end;

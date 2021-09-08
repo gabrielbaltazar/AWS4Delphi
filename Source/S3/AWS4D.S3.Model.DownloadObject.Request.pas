@@ -5,52 +5,73 @@ interface
 uses
   AWS4D.S3.Model.Interfaces;
 
-type TAWS4DS3ModelDownloadObjectRequest = class(TInterfacedObject, IAWS4DS3ModelDownloadObjectRequest)
+type TAWS4DS3DownloadObjectRequest<I: IInterface> = class(TInterfacedObject, IAWS4DS3DownloadObjectRequest<I>)
 
   private
-    FBucketName: string;
+    [Weak]
+    FParent: I;
+    FBucketName: String;
     FObjectName: String;
 
   protected
-    function BucketName (Value: String): IAWS4DS3ModelDownloadObjectRequest; overload;
-    function ObjectName (Value: String): IAWS4DS3ModelDownloadObjectRequest; overload;
+    function BucketName (Value: String): IAWS4DS3DownloadObjectRequest<I>; overload;
+    function ObjectName (Value: String): IAWS4DS3DownloadObjectRequest<I>; overload;
 
     function BucketName : string; overload;
     function ObjectName : String; overload;
 
+    function &End: I;
+
   public
-    class function New: IAWS4DS3ModelDownloadObjectRequest;
+    constructor create(Parent: I);
+    class function New(Parent: I): IAWS4DS3DownloadObjectRequest<I>;
+    destructor Destroy; override;
+
 end;
 
 implementation
 
-{ TAWS4DS3ModelDownloadObjectRequest }
-
-function TAWS4DS3ModelDownloadObjectRequest.BucketName(Value: String): IAWS4DS3ModelDownloadObjectRequest;
+function TAWS4DS3DownloadObjectRequest<I>.BucketName(Value: String): IAWS4DS3DownloadObjectRequest<I>;
 begin
   result := Self;
   FBucketName := Value;
 end;
 
-function TAWS4DS3ModelDownloadObjectRequest.BucketName: string;
+function TAWS4DS3DownloadObjectRequest<I>.BucketName: string;
 begin
   result := FBucketName;
 end;
 
-class function TAWS4DS3ModelDownloadObjectRequest.New: IAWS4DS3ModelDownloadObjectRequest;
+constructor TAWS4DS3DownloadObjectRequest<I>.create(Parent: I);
 begin
-  result := Self.Create;
+  FParent := Parent;
 end;
 
-function TAWS4DS3ModelDownloadObjectRequest.ObjectName(Value: String): IAWS4DS3ModelDownloadObjectRequest;
+destructor TAWS4DS3DownloadObjectRequest<I>.Destroy;
+begin
+
+  inherited;
+end;
+
+function TAWS4DS3DownloadObjectRequest<I>.&End: I;
+begin
+  result := FParent;
+end;
+
+class function TAWS4DS3DownloadObjectRequest<I>.New(Parent: I): IAWS4DS3DownloadObjectRequest<I>;
+begin
+  result := Self.create(Parent);
+end;
+
+function TAWS4DS3DownloadObjectRequest<I>.ObjectName(Value: String): IAWS4DS3DownloadObjectRequest<I>;
 begin
   result := Self;
   FObjectName := Value;
 end;
 
-function TAWS4DS3ModelDownloadObjectRequest.ObjectName: String;
+function TAWS4DS3DownloadObjectRequest<I>.ObjectName: String;
 begin
-  Result := FObjectName;
+  result := FObjectName;
 end;
 
 end.

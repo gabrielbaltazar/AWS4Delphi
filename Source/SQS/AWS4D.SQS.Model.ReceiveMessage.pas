@@ -4,98 +4,127 @@ interface
 
 uses
   AWS4D.SQS.Model.Interfaces,
-  System.JSON,
-  System.Generics.Collections;
+  AWS4D.Core.Model.Types,
+  AWS4D.Core.Model.Iterator,
+  AWS4D.Core.Model.Classes,
+  AWS4D.Core.Helper.JSON,
+  System.Generics.Collections,
+  System.JSON;
 
-type TAWS4DSQSModelReceiveMessage = class(TInterfacedObject, IAWS4DSQSModelReceiveMessage)
+type TAWS4SQSReceiveMessage = class(TInterfacedObject, IAWS4DSQSReceiveMessage)
 
   private
-    FMessageId: string;
-    FReceiptHandle: string;
-    FMD5OfBody: string;
     FBody: string;
-    FAttributes: TDictionary<String, String>;
+    FMD5OfBody: string;
+    FMD5OfMessageAttributes: String;
+    FMessageId: String;
+    FReceiptHandle: string;
+    FMessageAttributes: TList<IAWS4DCoreModelAttribute>;
+    FIteratorAttributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+    FIteratorMessageAttributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+
+    procedure FromJSON(Value: TJSONObject);
 
   protected
+    function Attributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+    function MessageAttribute: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+    function Body: string;
+    function MD5OfBody: string;
+    function MD5OfMessageAttributes: String;
     function MessageId: String;
     function ReceiptHandle: string;
-    function MD5OfBody: string;
-    function Body: string;
-    function Attributes: TDictionary<String, String>;
 
   public
-    constructor create(JSONObject: TJSONObject);
-    class function New(JSONObject: TJSONObject): IAWS4DSQSModelReceiveMessage;
+    constructor create(JSON: TJSONObject);
+    class function New(JSON: TJSONObject): IAWS4DSQSReceiveMessage;
     destructor Destroy; override;
+
 end;
 
 implementation
 
-{ TAWS4DSQSModelReceiveMessage }
-
-function TAWS4DSQSModelReceiveMessage.Attributes: TDictionary<String, String>;
+function TAWS4SQSReceiveMessage.Attributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
 begin
-  result := FAttributes;
+  result := FIteratorAttributes;
 end;
 
-function TAWS4DSQSModelReceiveMessage.Body: string;
+function TAWS4SQSReceiveMessage.Body: string;
 begin
   result := FBody;
 end;
 
-constructor TAWS4DSQSModelReceiveMessage.create(JSONObject: TJSONObject);
-var
-  i          : Integer;
-  Name       : String;
-  Value      : String;
-  LJSON      : TJSONObject;
-  LJSONArray : TJSONArray;
+constructor TAWS4SQSReceiveMessage.create(JSON: TJSONObject);
 begin
-  FAttributes := TDictionary<String, String>.create;
-  if not Assigned(JSONObject) then
-    exit;
+  FMessageAttributes := TList<IAWS4DCoreModelAttribute>.create;
+  FIteratorMessageAttributes := TAWS4DCoreModelIterator<IAWS4DCoreModelAttribute>.New(FMessageAttributes);
 
-  JSONObject.TryGetValue<String>('Body', Self.FBody);
-  JSONObject.TryGetValue<String>('MD5OfBody', Self.FMD5OfBody);
-  JSONObject.TryGetValue<String>('MessageId', Self.FMessageId);
-  JSONObject.TryGetValue<String>('ReceiptHandle', Self.FReceiptHandle);
-
-  LJSONArray := JSONObject.GetValue('Attributes') as TJSONArray;
-  if not Assigned(LJSONArray) then
-    exit;
-
-  for i := 0 to Pred(LJSONArray.Count) do
-  begin
-    LJSON := LJSONArray.Items[i] as TJSONObject;
-    LJSON.TryGetValue('Name', Name);
-    LJSON.TryGetValue('Value', Value);
-
-    FAttributes.Add(Name, Value);
-  end;
+  FromJSON(JSON);
 end;
 
-destructor TAWS4DSQSModelReceiveMessage.Destroy;
+destructor TAWS4SQSReceiveMessage.Destroy;
 begin
-  FAttributes.Free;
   inherited;
 end;
 
-function TAWS4DSQSModelReceiveMessage.MD5OfBody: string;
+procedure TAWS4SQSReceiveMessage.FromJSON(Value: TJSONObject);
+var
+  jsonAttributes: TJSONArray;
+  jsonValue: TJSONObject;
+  i: Integer;
 begin
-  Result := FMD5OfBody;
+  inherited;
+  if not Assigned(Value) then
+    Exit;
+
+  FBody := Value.ValueAsString('Body');
+  FMD5OfBody := Value.ValueAsString('MD5OfBody');
+  FMessageId := Value.ValueAsString('MessageId');
+  FReceiptHandle := Value.ValueAsString('ReceiptHandle');
+  FMD5OfMessageAttributes := Value.ValueAsString('MD5OfMessageAttributes');
+  FMD5OfBody := Value.ValueAsString('MD5OfBody');
+  FIteratorAttributes := TAWS4DCoreModelAttribute.NewIterator(Value.ValueAsJSONArray('Attributes'));
+
+  jsonAttributes := Value.ValueAsJSONArray('MessageAttributes');
+  if not Assigned(jsonAttributes) then
+    Exit;
+
+  for i := 0 to Pred(jsonAttributes.Count) do
+  begin
+    FMessageAttributes.Add(TAWS4DCoreModelAttribute.New);
+    FMessageAttributes.Last.Key(jsonAttributes.ItemAsString(i, 'Name'));
+    jsonValue := jsonAttributes.ItemAsJSONObject(i);
+    if Assigned(jsonValue) then
+      FMessageAttributes.Last.Value(jsonValue.ValueAsString('StringValue'));
+  end;
+
 end;
 
-function TAWS4DSQSModelReceiveMessage.MessageId: String;
+function TAWS4SQSReceiveMessage.MD5OfBody: string;
+begin
+  result := FMD5OfBody;
+end;
+
+function TAWS4SQSReceiveMessage.MD5OfMessageAttributes: String;
+begin
+  result := FMD5OfMessageAttributes;
+end;
+
+function TAWS4SQSReceiveMessage.MessageAttribute: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+begin
+  result := FIteratorMessageAttributes;
+end;
+
+function TAWS4SQSReceiveMessage.MessageId: String;
 begin
   result := FMessageId;
 end;
 
-class function TAWS4DSQSModelReceiveMessage.New(JSONObject: TJSONObject): IAWS4DSQSModelReceiveMessage;
+class function TAWS4SQSReceiveMessage.New(JSON: TJSONObject): IAWS4DSQSReceiveMessage;
 begin
-  result := Self.create(JSONObject);
+  result := Self.create(JSON);
 end;
 
-function TAWS4DSQSModelReceiveMessage.ReceiptHandle: string;
+function TAWS4SQSReceiveMessage.ReceiptHandle: string;
 begin
   result := FReceiptHandle;
 end;

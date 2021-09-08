@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<codetemplate	xmlns="http://schemas.borland.com/Delphi/2005/codetemplates"
+				version="1.0.0">
+	<template name="aws4d.model.request" invoke="manual">
+		<description>
+			Model Request
+		</description>
+		<author>
+			Gabriel Baltazar
+		</author>
+         <point name="Service">
+             <text>
+                 Service
+             </text>
+             <hint>
+                 Service Name
+             </hint>
+         </point>
+        <point name="Action">
+            <text>
+                Action
+            </text>
+            <hint>
+                Action Name
+            </hint>
+        </point>
+
+		<code language="Delphi" delimiter="|"><![CDATA[
+unit AWS4D.|Service|.Model.|Action|.Request;
+
+interface
+
+uses
+  AWS4D.|Service|.Model.Interfaces;
+
+type TAWS4D|Service||Action|Request<I: IInterface> = class(TInterfacedObject, IAWS4D|Service||Action|Request<I>)
+
+  private
+    [Weak]
+    FParent: I;
+
+  protected
+    |end|
+
+    function &End: I;
+
+  public
+    constructor create(Parent: I);
+    class function New(Parent: I): IAWS4D|Service||Action|Request<I>;
+    destructor Destroy; override;
+
+end;
+
+implementation
+
+constructor TAWS4D|Service||Action|Request<I>.create(Parent: I);
+begin
+  FParent := Parent;
+end;
+
+destructor TAWS4D|Service||Action|Request<I>.Destroy;
+begin
+
+  inherited;
+end;
+
+function TAWS4D|Service||Action|Request<I>.&End: I;
+begin
+  result := FParent;
+end;
+
+class function TAWS4D|Service||Action|Request<I>.New(Parent: I): IAWS4D|Service||Action|Request<I>;
+begin
+  result := Self.create(Parent);
+end;
+
+end.]]>
+		</code>
+	</template>
+</codetemplate>

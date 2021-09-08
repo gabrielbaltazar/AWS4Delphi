@@ -4,46 +4,46 @@ interface
 
 uses
   System.SysUtils,
+  System.DateUtils,
   AWS4D.S3.Model.Interfaces,
-  Data.Cloud.AmazonAPI,
-  AWS4D.Helper.DateTime;
+  Data.Cloud.AmazonAPI;
 
 type TAWS4DS3ModelObjectInfo = class(TInterfacedObject, IAWS4DS3ModelObjectInfo)
 
   private
-    FName            : string;
-    FLastModified    : TDateTime;
-    FETag            : String;
-    FOwnerID         : String;
+    FName: string;
+    FLastModified: TDateTime;
+    FETag: String;
+    FOwnerID: String;
     FOwnerDisplayName: String;
-    FVersionId       : String;
-    FStorageClass    : String;
-    FIsLatest        : Boolean;
-    FIsDeleted       : Boolean;
-    FSize            : Int64;
+    FVersionId: String;
+    FStorageClass: String;
+    FIsLatest: Boolean;
+    FIsDeleted: Boolean;
+    FSize: Int64;
 
   protected
-    function Name             (Value: string): IAWS4DS3ModelObjectInfo; overload;
-    function LastModified     (Value: TDateTime): IAWS4DS3ModelObjectInfo; overload;
-    function ETag             (Value: String): IAWS4DS3ModelObjectInfo; overload;
-    function OwnerID          (Value: String): IAWS4DS3ModelObjectInfo; overload;
-    function OwnerDisplayName (Value: String): IAWS4DS3ModelObjectInfo; overload;
-    function VersionId        (Value: String): IAWS4DS3ModelObjectInfo; overload;
-    function StorageClass     (Value: String): IAWS4DS3ModelObjectInfo; overload;
-    function IsLatest         (Value: Boolean): IAWS4DS3ModelObjectInfo; overload;
-    function IsDeleted        (Value: Boolean): IAWS4DS3ModelObjectInfo; overload;
-    function Size             (Value: Int64): IAWS4DS3ModelObjectInfo; overload;
+    function Name(Value: string): IAWS4DS3ModelObjectInfo; overload;
+    function LastModified(Value: TDateTime): IAWS4DS3ModelObjectInfo; overload;
+    function ETag(Value: String): IAWS4DS3ModelObjectInfo; overload;
+    function OwnerID(Value: String): IAWS4DS3ModelObjectInfo; overload;
+    function OwnerDisplayName(Value: String): IAWS4DS3ModelObjectInfo; overload;
+    function VersionId(Value: String): IAWS4DS3ModelObjectInfo; overload;
+    function StorageClass(Value: String): IAWS4DS3ModelObjectInfo; overload;
+    function IsLatest(Value: Boolean): IAWS4DS3ModelObjectInfo; overload;
+    function IsDeleted(Value: Boolean): IAWS4DS3ModelObjectInfo; overload;
+    function Size(Value: Int64): IAWS4DS3ModelObjectInfo; overload;
 
-    function Name            : string; overload;
-    function LastModified    : TDateTime; overload;
-    function ETag            : String; overload;
-    function OwnerID         : String; overload;
+    function Name: string; overload;
+    function LastModified: TDateTime; overload;
+    function ETag: String; overload;
+    function OwnerID: String; overload;
     function OwnerDisplayName: String; overload;
-    function VersionId       : String; overload;
-    function StorageClass    : String; overload;
-    function IsLatest        : Boolean; overload;
-    function IsDeleted       : Boolean; overload;
-    function Size            : Int64; overload;
+    function VersionId: String; overload;
+    function StorageClass: String; overload;
+    function IsLatest: Boolean; overload;
+    function IsDeleted: Boolean; overload;
+    function Size: Int64; overload;
 
   public
     class function New: IAWS4DS3ModelObjectInfo;
@@ -64,7 +64,7 @@ class function TAWS4DS3ModelObjectInfo.CreateFromObjectResult(Value: TAmazonObje
 var
   lastModified: TDateTime;
 begin
-  lastModified.fromIso8601ToDateTime(Value.LastModified);
+  lastModified := System.DateUtils.ISO8601ToDate(Value.LastModified);
   result := New;
   Result
     .Name(Value.Name)

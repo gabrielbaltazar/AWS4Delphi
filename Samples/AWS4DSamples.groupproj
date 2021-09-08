@@ -9,6 +9,9 @@
         <Projects Include="S3\SampleS3.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="SNS\SampleSNS.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -35,14 +38,23 @@
     <Target Name="SampleS3:Make">
         <MSBuild Projects="S3\SampleS3.dproj" Targets="Make"/>
     </Target>
+    <Target Name="SampleSNS">
+        <MSBuild Projects="SNS\SampleSNS.dproj"/>
+    </Target>
+    <Target Name="SampleSNS:Clean">
+        <MSBuild Projects="SNS\SampleSNS.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SampleSNS:Make">
+        <MSBuild Projects="SNS\SampleSNS.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="SampleSQS;SampleS3"/>
+        <CallTarget Targets="SampleSQS;SampleS3;SampleSNS"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="SampleSQS:Clean;SampleS3:Clean"/>
+        <CallTarget Targets="SampleSQS:Clean;SampleS3:Clean;SampleSNS:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="SampleSQS:Make;SampleS3:Make"/>
+        <CallTarget Targets="SampleSQS:Make;SampleS3:Make;SampleSNS:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

@@ -3,13 +3,16 @@ unit AWS4D.S3.Service.CloudAPI;
 interface
 
 uses
-  AWS4D.Service.Interfaces,
+  AWS4D.Core.Model.Types,
   AWS4D.S3.Service.Interfaces,
   AWS4D.S3.Model.Interfaces,
-  AWS4D.S3.Model.Exceptions,
-  AWS4D.S3.Model.ObjectInfo,
   AWS4D.S3.Model.DownloadObject.Response,
-  AWS4D.Service.Base,
+  AWS4D.S3.Model.ExistBucket.Response,
+  AWS4D.S3.Model.ExistObject.Response,
+  AWS4D.S3.Model.GetObjectProperties.Response,
+  AWS4D.S3.Model.ListBuckets.Response,
+  AWS4D.S3.Model.ListObjects.Response,
+  AWS4D.S3.Model.ObjectInfo,
   Data.Cloud.CloudAPI,
   Data.Cloud.AmazonAPI,
   System.Classes,
@@ -18,172 +21,175 @@ uses
   System.StrUtils,
   System.SysUtils;
 
-type TAWS4DS3ServiceCloudAPI = class(TAWS4DServiceBase, IAWS4DServiceS3)
+type TAWS4DS3ServiceCloudAPI<I: IInterface> = class(TInterfacedObject, IAWS4DS3Service<I>)
 
   private
+    [Weak]
+    FParent: I;
+    FAccessKey: String;
+    FSecretKey: String;
+    FRegion: TAWS4DRegion;
+
     FAmazonConnection: TAmazonConnectionInfo;
     FStorage: TAmazonStorageService;
+    FCloudResponse: TCloudResponseInfo;
 
+    procedure AWSComponentsCreate;
+    procedure AWSComponentsDestroy;
+
+    procedure RaiseException;
     function FileBytes(AStream: TStream): TBytes;
 
-    function GetRegion: TAmazonRegion;
-    function GetBucket(ABucketName: String): TAmazonBucketResult;
+    function GetBucket(ABucketName: String; AParams: TStrings = nil): TAmazonBucketResult;
 
-    function Storage: TAmazonStorageService;
-
-    function S3Exception(AResponseInfo: TCloudResponseInfo): EAWS4DS3ModelException;
-
-//    function
   protected
-    function ListBuckets: TArray<String>;
-    procedure CreateBucket(BucketName: String);
-    procedure DeleteBucket(BucketName: String);
-    function  ExistBucket(BucketName: String): Boolean;
+    function AccessKey(Value: String): IAWS4DS3Service<I>;
+    function SecretKey(Value: String): IAWS4DS3Service<I>;
+    function Region(Value: String): IAWS4DS3Service<I>; overload;
+    function Region(Value: TAWS4DRegion): IAWS4DS3Service<I>; overload;
 
-    function ListObjects(BucketName: String): TList<IAWS4DS3ModelObjectInfo>;
-    procedure CreateObject(Request: IAWS4DS3ModelCreateObjectRequest);
-    procedure DeleteObject(Request: IAWS4DS3ModelDeleteObjectRequest);
-    function ExistObject(Request: IAWS4DS3ModelObjectExistRequest): Boolean;
-    function DownloadObject(Request: IAWS4DS3ModelDownloadObjectRequest): IAWS4DS3ModelDownloadObjectResponse;
+    function BucketExist(Request: IAWS4DS3ExistBucketRequest<I>): IAWS4DS3ExistBucketResponse<I>;
+    procedure CreateBucket(Request: IAWS4DS3CreateBucketRequest<I>);
+    procedure DeleteBucket(Request: IAWS4DS3DeleteBucketRequest<I>);
+    function DownloadObject(Request: IAWS4DS3DownloadObjectRequest<I>): IAWS4DS3DownloadObjectResponse<I>;
+    function ExistObject(Request: IAWS4DS3ExistObjectRequest<I>): IAWS4DS3ExistObjectResponse<I>;
+    function GetObjectProperties(Request: IAWS4DS3GetObjectPropertiesRequest<I>): IAWS4DS3GetObjectPropertiesResponse<I>;
+    function ListBuckets: IAWS4DS3ListBucketsResponse<I>;
+    function ListObjects(Request: IAWS4DS3ListObjectsRequest<I>): IAWS4DS3ListObjectsResponse<I>;
+    procedure ObjectCreate(Request: IAWS4DS3CreateObjectRequest<I>);
+    procedure ObjectDelete(Request: IAWS4DS3DeleteObjectRequest<I>);
+
+    function Parent(Value: I): IAWS4DS3Service<I>;
+    function &End: I;
+
   public
     constructor create;
-    class function New: IAWS4DServiceS3;
+    class function New: IAWS4DS3Service<I>;
     destructor Destroy; override;
 end;
 
 implementation
 
-{ TAWS4DS3ServiceCloudAPI }
+{ TAWS4DS3ServiceCloudAPI<I> }
 
-constructor TAWS4DS3ServiceCloudAPI.create;
+procedure TAWS4DS3ServiceCloudAPI<I>.AWSComponentsCreate;
 begin
+  AWSComponentsDestroy;
+
   FAmazonConnection := TAmazonConnectionInfo.Create(nil);
+  FAmazonConnection.AccountName := FAccessKey;
+  FAmazonConnection.AccountKey := FSecretKey;
+  {$IF CompilerVersion >= 33.0}
+    FAmazonConnection.Region := FRegion.toString;
+  {$IFEND}
+
+  FStorage := TAmazonStorageService.Create(FAmazonConnection);
+  {$IF CompilerVersion < 33.0}
+    FAmazonConnection.StorageEndpoint := FStorage.GetEndpointFromRegion(FRegion.toString);
+  {$ENDIF}
+
+  FCloudResponse := TCloudResponseInfo.Create;
 end;
 
-procedure TAWS4DS3ServiceCloudAPI.createBucket(BucketName: String);
-var
-  response : TCloudResponseInfo;
+procedure TAWS4DS3ServiceCloudAPI<I>.AWSComponentsDestroy;
 begin
-  response := TCloudResponseInfo.Create;
-  try
-    if not Storage.CreateBucket(BucketName, amzbaPrivate, GetRegion, response) then
-      raise S3Exception(response);
-  finally
-    response.Free;
-  end;
+  FreeAndNil(FAmazonConnection);
+  FreeAndNil(FStorage);
+  FreeAndNil(FCloudResponse);
 end;
 
-procedure TAWS4DS3ServiceCloudAPI.createObject(Request: IAWS4DS3ModelCreateObjectRequest);
-var
-  response: TCloudResponseInfo;
-  metaInfo: TStrings;
-begin
-  metaInfo     := nil;
-  response := TCloudResponseInfo.Create;
-  try
-    metaInfo := TStringList.Create;
-    metaInfo.Add('Content-type=text/xml');
-
-    if not Storage.UploadObject(
-        Request.BucketName,
-        Request.ObjectName,
-        FileBytes(Request.FileStream),
-        False,
-        metaInfo,
-        nil,
-        amzbaPrivate,
-        response)
-    then
-      raise S3Exception(response);
-
-  finally
-    response.Free;
-    metaInfo.Free;
-  end;
-end;
-
-procedure TAWS4DS3ServiceCloudAPI.DeleteBucket(BucketName: String);
-var
-  response: TCloudResponseInfo;
-begin
-  response := TCloudResponseInfo.Create;
-  try
-    if not Storage.DeleteBucket(BucketName, response, GetRegion) then
-      raise S3Exception(response);
-  finally
-    response.Free;
-  end;
-end;
-
-procedure TAWS4DS3ServiceCloudAPI.DeleteObject(Request: IAWS4DS3ModelDeleteObjectRequest);
-var
-  response: TCloudResponseInfo;
-begin
-  response := TCloudResponseInfo.Create;
-  try
-    if not Storage.DeleteObject(Request.BucketName, Request.ObjectName, response) then
-      raise S3Exception(response);
-  finally
-    response.Free;
-  end;
-end;
-
-destructor TAWS4DS3ServiceCloudAPI.Destroy;
-begin
-  FAmazonConnection.Free;
-  FStorage.Free;
-  inherited;
-end;
-
-function TAWS4DS3ServiceCloudAPI.DownloadObject(Request: IAWS4DS3ModelDownloadObjectRequest): IAWS4DS3ModelDownloadObjectResponse;
-var
-  responseInfo: TCloudResponseInfo;
-  memory: TMemoryStream;
-begin
-  memory := TMemoryStream.Create;
-  try
-    responseInfo := TCloudResponseInfo.Create;
-    try
-      if not Storage.GetObject(Request.BucketName, Request.ObjectName, memory, responseInfo) then
-        raise S3Exception(responseInfo);
-
-      result := TAWS4DS3ModelDownloadObjectResponse.New(memory);
-    finally
-      responseInfo.Free;
-    end;
-  except
-    memory.Free;
-    raise;
-  end;
-end;
-
-function TAWS4DS3ServiceCloudAPI.ExistBucket(BucketName: String): Boolean;
+function TAWS4DS3ServiceCloudAPI<I>.BucketExist(Request: IAWS4DS3ExistBucketRequest<I>): IAWS4DS3ExistBucketResponse<I>;
 var
   bucket: TAmazonBucketResult;
+  exist: Boolean;
 begin
-  bucket := Storage.GetBucket(BucketName, nil, nil, GetRegion);
+  AWSComponentsCreate;
+  bucket := FStorage.GetBucket(Request.BucketName, nil, nil, FRegion.toString);
   try
-    result := Assigned(bucket);
+    exist := Assigned(bucket);
+    result := TAWS4S3ExistBucketResponse<I>.New(FParent, exist);
   finally
     bucket.Free;
   end;
 end;
 
-function TAWS4DS3ServiceCloudAPI.ExistObject(Request: IAWS4DS3ModelObjectExistRequest): Boolean;
-var
-  stream : TMemoryStream;
+constructor TAWS4DS3ServiceCloudAPI<I>.create;
 begin
+end;
+
+procedure TAWS4DS3ServiceCloudAPI<I>.CreateBucket(Request: IAWS4DS3CreateBucketRequest<I>);
+begin
+  AWSComponentsCreate;
+  if not FStorage.CreateBucket(Request.BucketName,
+                               amzbaPrivate,
+                               FRegion.toString,
+                               FCloudResponse)
+  then
+    RaiseException;
+end;
+
+procedure TAWS4DS3ServiceCloudAPI<I>.DeleteBucket(Request: IAWS4DS3DeleteBucketRequest<I>);
+begin
+  AWSComponentsCreate;
+  if not FStorage.DeleteBucket(Request.BucketName,
+                               FCloudResponse,
+                               FRegion.toString)
+  then
+    RaiseException;
+end;
+
+destructor TAWS4DS3ServiceCloudAPI<I>.Destroy;
+begin
+  AWSComponentsDestroy;
+  inherited;
+end;
+
+function TAWS4DS3ServiceCloudAPI<I>.DownloadObject(Request: IAWS4DS3DownloadObjectRequest<I>): IAWS4DS3DownloadObjectResponse<I>;
+var
+  stream: TMemoryStream;
+begin
+  AWSComponentsCreate;
   stream := TMemoryStream.Create;
   try
-    result := Storage.GetObject(Request.BucketName,
-                             Request.ObjectName,
-                             stream);
+    if not FStorage.GetObject(
+        Request.BucketName,
+        Request.ObjectName,
+        stream,
+        FCloudResponse,
+        FRegion.toString)
+    then
+      RaiseException;
+
+    result := TAWS4S3DownloadObjectResponse<I>.New(FParent, stream);
   finally
     stream.Free;
   end;
 end;
 
-function TAWS4DS3ServiceCloudAPI.FileBytes(AStream: TStream): TBytes;
+function TAWS4DS3ServiceCloudAPI<I>.&End: I;
+begin
+  result := FParent;
+end;
+
+function TAWS4DS3ServiceCloudAPI<I>.ExistObject(Request: IAWS4DS3ExistObjectRequest<I>): IAWS4DS3ExistObjectResponse<I>;
+var
+  exist: Boolean;
+  stream: TMemoryStream;
+begin
+  AWSComponentsCreate;
+  stream := TMemoryStream.Create;
+  try
+    exist := FStorage.GetObject(Request.BucketName,
+                                Request.ObjectName,
+                                stream);
+
+    result := TAWS4S3ExistObjectResponse<I>.New(FParent, exist);
+  finally
+    stream.Free;
+  end;
+end;
+
+function TAWS4DS3ServiceCloudAPI<I>.FileBytes(AStream: TStream): TBytes;
 var
   fileReader: TBinaryReader;
 begin
@@ -195,102 +201,171 @@ begin
   end;
 end;
 
-function TAWS4DS3ServiceCloudAPI.GetBucket(ABucketName: String): TAmazonBucketResult;
-var
-  response: TCloudResponseInfo;
+function TAWS4DS3ServiceCloudAPI<I>.GetBucket(ABucketName: String; AParams: TStrings): TAmazonBucketResult;
 begin
-  response := TCloudResponseInfo.Create;
+  AWSComponentsCreate;
+  result := FStorage.GetBucket(ABucketName, AParams, FCloudResponse, FRegion.toString);
+  if not Assigned(Result) then
+    raise EResNotFound.CreateFmt('Bucket %s not found', [ABucketName]);
+end;
+
+function TAWS4DS3ServiceCloudAPI<I>.GetObjectProperties(Request: IAWS4DS3GetObjectPropertiesRequest<I>): IAWS4DS3GetObjectPropertiesResponse<I>;
+var
+  properties: TStrings;
+  metaData: TStrings;
+begin
+  AWSComponentsCreate;
+  properties := nil;
+  metaData := nil;
   try
-    result := Storage.GetBucket(ABucketName, nil, response, GetRegion);
-    if not Assigned(Result) then
-      raise EResNotFound.CreateFmt('Bucket %s not found', [ABucketName]);
+    if not FStorage.GetObjectProperties(
+        Request.BucketName,
+        Request.ObjectName,
+        Request.OptionParams,
+        properties,
+        metaData,
+        FCloudResponse)
+    then
+      RaiseException;
+
+      result := TAWS4S3GetObjectPropertiesResponse<I>.New(FParent, properties, metaData);
   finally
-    response.Free;
+    properties.Free;
+    metaData.Free;
   end;
 end;
 
-function TAWS4DS3ServiceCloudAPI.GetRegion: TAmazonRegion;
+function TAWS4DS3ServiceCloudAPI<I>.AccessKey(Value: String): IAWS4DS3Service<I>;
 begin
-  Result := FStorage.GetRegionFromString(Region.toString);
+  result := Self;
+  FAccessKey := Value;
 end;
 
-function TAWS4DS3ServiceCloudAPI.ListBuckets: TArray<String>;
-var
-  listBuckets: TStrings;
-  response   : TCloudResponseInfo;
-  i: Integer;
+function TAWS4DS3ServiceCloudAPI<I>.Region(Value: String): IAWS4DS3Service<I>;
 begin
-  response := TCloudResponseInfo.Create;
+  result := Self;
+  FRegion.fromString(Value);
+end;
+
+function TAWS4DS3ServiceCloudAPI<I>.ListBuckets: IAWS4DS3ListBucketsResponse<I>;
+var
+  list: TStrings;
+begin
+  AWSComponentsCreate;
+  list := FStorage.ListBuckets(FCloudResponse);
   try
-    listBuckets := Storage.ListBuckets(response);
-    if listBuckets = nil then
-      raise S3Exception(response);
-    try
-      SetLength(result, listBuckets.Count);
-      for i := 0 to Pred(listBuckets.Count) do
-        Result[i] := listBuckets.Names[i];
-    finally
-      listBuckets.Free;
-    end;
+    if list = nil then
+      RaiseException;
+
+    result := TAWS4DS3ListBucketsResponse<I>.New(FParent, list);
   finally
-    response.Free;
+    list.Free;
   end;
 end;
 
-function TAWS4DS3ServiceCloudAPI.ListObjects(BucketName: String): TList<IAWS4DS3ModelObjectInfo>;
+function TAWS4DS3ServiceCloudAPI<I>.ListObjects(Request: IAWS4DS3ListObjectsRequest<I>): IAWS4DS3ListObjectsResponse<I>;
 var
+  params: TStrings;
   bucketInfo: TAmazonBucketResult;
   objectInfo: TAmazonObjectResult;
-  response  : TCloudResponseInfo;
+  list: TList<IAWS4DS3ModelObjectInfo>;
 begin
-  response := TCloudResponseInfo.Create;
+  AWSComponentsCreate;
+  params := TStringList.Create;
   try
-    bucketInfo := GetBucket(BucketName);
+    list := TList<IAWS4DS3ModelObjectInfo>.Create;
     try
-      result := TList<IAWS4DS3ModelObjectInfo>.Create;
+      params.Values['prefix'] := Request.Prefix;
+      params.Values['max-keys'] := Request.MaxKeys.ToString;
+      params.Values['marker'] := Request.Marker;
+      bucketInfo := GetBucket(Request.BucketName, params);
       try
         for objectInfo in bucketInfo.Objects do
           if objectInfo.Size > 0 then
-            result.Add(TAWS4DS3ModelObjectInfo.CreateFromObjectResult(objectInfo));
-      except
-        result.Free;
-        raise;
+            list.Add(TAWS4DS3ModelObjectInfo.CreateFromObjectResult(objectInfo));
+
+        while (bucketInfo.IsTruncated) and (Request.FullBucket) do
+        begin
+          params.Values['prefix'] := Request.Prefix;
+          params.Values['max-keys'] := Request.MaxKeys.ToString;
+          params.Values['marker'] := bucketInfo.Objects.Last.Name;
+          FreeAndNil(bucketInfo);
+          bucketInfo := GetBucket(Request.BucketName, params);
+
+          for objectInfo in bucketInfo.Objects do
+            if objectInfo.Size > 0 then
+              list.Add(TAWS4DS3ModelObjectInfo.CreateFromObjectResult(objectInfo));
+        end;
+
+        result := TAWS4S3ListObjectsResponse<I>.New(FParent, list);
+      finally
+        bucketInfo.Free;
       end;
-    finally
-      bucketInfo.Free;
+    except
+      list.Free;
+      raise;
     end;
   finally
-    response.Free;
+    params.Free;
   end;
 end;
 
-
-class function TAWS4DS3ServiceCloudAPI.New: IAWS4DServiceS3;
+class function TAWS4DS3ServiceCloudAPI<I>.New: IAWS4DS3Service<I>;
 begin
   result := Self.create;
 end;
 
-function TAWS4DS3ServiceCloudAPI.S3Exception(AResponseInfo: TCloudResponseInfo): EAWS4DS3ModelException;
+procedure TAWS4DS3ServiceCloudAPI<I>.ObjectCreate(Request: IAWS4DS3CreateObjectRequest<I>);
 begin
-  result := EAWS4DS3ModelException.create(AResponseInfo.StatusCode, AResponseInfo.StatusMessage);
+  AWSComponentsCreate;
+  Request.FileStream.Position := 0;
+
+  if not FStorage.UploadObject(
+      Request.BucketName,
+      Request.ObjectName,
+      FileBytes(Request.FileStream),
+      False,
+      Request.MetaInfo,
+      nil,
+      amzbaPrivate,
+      FCloudResponse)
+  then
+    RaiseException;
 end;
 
-function TAWS4DS3ServiceCloudAPI.Storage: TAmazonStorageService;
+procedure TAWS4DS3ServiceCloudAPI<I>.ObjectDelete(Request: IAWS4DS3DeleteObjectRequest<I>);
 begin
-  if not Assigned(FStorage) then
-  begin
-    FAmazonConnection.AccountName := Self.AccessKeyID;
-    FAmazonConnection.AccountKey  := Self.SecretKey;
-    {$IF CompilerVersion >= 33.0}
-      FAmazonConnection.Region := GetRegion;
-    {$IFEND}
+  AWSComponentsCreate;
+  if not FStorage.DeleteObject(
+      Request.BucketName,
+      Request.ObjectName,
+      FCloudResponse)
+  then
+    RaiseException;
+end;
 
-    FStorage := TAmazonStorageService.Create(FAmazonConnection);
-    {$IF CompilerVersion < 33.0}
-    FAmazonConnection.StorageEndpoint := FStorage.GetEndpointFromRegion(GetRegion)
-    {$ENDIF}
-  end;
-  result := FStorage;
+function TAWS4DS3ServiceCloudAPI<I>.Parent(Value: I): IAWS4DS3Service<I>;
+begin
+  result := Self;
+  FParent := Value;
+end;
+
+procedure TAWS4DS3ServiceCloudAPI<I>.RaiseException;
+begin
+  raise Exception.CreateFmt('%s: %s', [FCloudResponse.StatusCode.ToString,
+                                       FCloudResponse.StatusMessage]);
+end;
+
+function TAWS4DS3ServiceCloudAPI<I>.Region(Value: TAWS4DRegion): IAWS4DS3Service<I>;
+begin
+  result := Self;
+  FRegion := Value;
+end;
+
+function TAWS4DS3ServiceCloudAPI<I>.SecretKey(Value: String): IAWS4DS3Service<I>;
+begin
+  result := Self;
+  FSecretKey := Value;
 end;
 
 end.
