@@ -89,6 +89,10 @@ object frmSampleS3: TfrmSampleS3
     TabOrder = 2
     object tsListBucket: TTabSheet
       Caption = 'List Buckets'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel2: TPanel
         Left = 0
         Top = 0
@@ -120,6 +124,10 @@ object frmSampleS3: TfrmSampleS3
     end
     object tsCreateBucket: TTabSheet
       Caption = 'Bucket'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object pnlCreateBucket: TPanel
         Left = 0
         Top = 0
@@ -174,6 +182,10 @@ object frmSampleS3: TfrmSampleS3
     object tsCreateObject: TTabSheet
       Caption = 'Create Object'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel1: TPanel
         Left = 0
         Top = 0
@@ -335,6 +347,10 @@ object frmSampleS3: TfrmSampleS3
     object tsObjectProperties: TTabSheet
       Caption = 'Object Properties'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object pnl1: TPanel
         Left = 0
         Top = 0

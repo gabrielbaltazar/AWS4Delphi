@@ -27,15 +27,15 @@ type
     function Region(Value: TAWS4DRegion): IAWS4DS3Facade; overload;
 
     function CreateBucket: IAWS4DS3FacadeCreateBucket;
+    function CreateObject: IAWS4DS3FacadeCreateObject;
     function DeleteBucket: IAWS4DS3FacadeDeleteBucket;
+    function DeleteObject: IAWS4DS3FacadeDeleteObject;
     function DownloadObject: IAWS4DS3FacadeDownloadObject;
     function ExistBucket: IAWS4DS3FacadeExistBucket;
     function ExistObject: IAWS4DS3FacadeExistObject;
     function GetObjectProperties: IAWS4DS3FacadeGetObjectProperties;
     function ListBuckets: IAWS4DS3FacadeListBuckets;
     function ListObjects: IAWS4DS3FacadeListObjects;
-    function ObjectCreate: IAWS4DS3FacadeCreateObject;
-    function ObjectDelete: IAWS4DS3FacadeDeleteObject;
   end;
 
   IAWS4DS3FacadeCreateBucket = interface
