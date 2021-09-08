@@ -18,10 +18,39 @@ type
     function &End: I;
   end;
 
+  IAWS4DS3CreateObjectRequest<I: IInterface> = interface
+    ['{A0B0C2B1-2FF8-4422-8CCF-0848061D6CB7}']
+    function BucketName(Value: String): IAWS4DS3CreateObjectRequest<I>; overload;
+    function FileName(Value: String): IAWS4DS3CreateObjectRequest<I>; overload;
+    function FileStream(Value: TStream): IAWS4DS3CreateObjectRequest<I>; overload;
+    function ObjectName(Value: String): IAWS4DS3CreateObjectRequest<I>; overload;
+
+    function AddMetaInfo(Key, Value: String): IAWS4DS3CreateObjectRequest<I>;
+
+    function BucketName: string; overload;
+    function FileName: string; overload;
+    function ObjectName: String; overload;
+    function FileStream: TStream; overload;
+    function MetaInfo: TStrings;
+
+    function &End: I;
+  end;
+
   IAWS4DS3DeleteBucketRequest<I: IInterface> = interface
     ['{B8FB6B27-E75F-4DE6-A229-FB35723E39D7}']
     function BucketName(Value: String): IAWS4DS3DeleteBucketRequest<I>; overload;
     function BucketName: String; overload;
+
+    function &End: I;
+  end;
+
+  IAWS4DS3DeleteObjectRequest<I: IInterface> = interface
+    ['{4381BB8B-3B34-47BB-AB53-D41E94F85D89}']
+    function BucketName(Value: String): IAWS4DS3DeleteObjectRequest<I>; overload;
+    function ObjectName(Value: String): IAWS4DS3DeleteObjectRequest<I>; overload;
+
+    function BucketName: string; overload;
+    function ObjectName: String; overload;
 
     function &End: I;
   end;
@@ -132,35 +161,6 @@ type
   IAWS4DS3ListObjectsResponse<I: IInterface> = interface
     ['{8ADA4FED-0D86-4B92-9310-8BD0648E31C7}']
     function Objects: IAWS4DIterator<IAWS4DS3ModelObjectInfo>;
-    function &End: I;
-  end;
-
-  IAWS4DS3ObjectCreateRequest<I: IInterface> = interface
-    ['{A0B0C2B1-2FF8-4422-8CCF-0848061D6CB7}']
-    function BucketName(Value: String): IAWS4DS3ObjectCreateRequest<I>; overload;
-    function FileName(Value: String): IAWS4DS3ObjectCreateRequest<I>; overload;
-    function FileStream(Value: TStream): IAWS4DS3ObjectCreateRequest<I>; overload;
-    function ObjectName(Value: String): IAWS4DS3ObjectCreateRequest<I>; overload;
-
-    function AddMetaInfo(Key, Value: String): IAWS4DS3ObjectCreateRequest<I>;
-
-    function BucketName: string; overload;
-    function FileName: string; overload;
-    function ObjectName: String; overload;
-    function FileStream: TStream; overload;
-    function MetaInfo: TStrings;
-
-    function &End: I;
-  end;
-
-  IAWS4DS3ObjectDeleteRequest<I: IInterface> = interface
-    ['{4381BB8B-3B34-47BB-AB53-D41E94F85D89}']
-    function BucketName(Value: String): IAWS4DS3ObjectDeleteRequest<I>; overload;
-    function ObjectName(Value: String): IAWS4DS3ObjectDeleteRequest<I>; overload;
-
-    function BucketName: string; overload;
-    function ObjectName: String; overload;
-
     function &End: I;
   end;
 

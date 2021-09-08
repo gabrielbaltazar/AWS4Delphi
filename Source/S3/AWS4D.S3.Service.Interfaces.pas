@@ -22,8 +22,8 @@ type
     function GetObjectProperties(Request: IAWS4DS3GetObjectPropertiesRequest<I>): IAWS4DS3GetObjectPropertiesResponse<I>;
     function ListBuckets: IAWS4DS3ListBucketsResponse<I>;
     function ListObjects(Request: IAWS4DS3ListObjectsRequest<I>): IAWS4DS3ListObjectsResponse<I>;
-    procedure ObjectCreate(Request: IAWS4DS3ObjectCreateRequest<I>);
-    procedure ObjectDelete(Request: IAWS4DS3ObjectDeleteRequest<I>);
+    procedure ObjectCreate(Request: IAWS4DS3CreateObjectRequest<I>);
+    procedure ObjectDelete(Request: IAWS4DS3DeleteObjectRequest<I>);
 
     function Parent(Value: I): IAWS4DS3Service<I>;
     function &End: I;

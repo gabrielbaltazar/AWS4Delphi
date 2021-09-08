@@ -56,8 +56,8 @@ type TAWS4DS3ServiceCloudAPI<I: IInterface> = class(TInterfacedObject, IAWS4DS3S
     function GetObjectProperties(Request: IAWS4DS3GetObjectPropertiesRequest<I>): IAWS4DS3GetObjectPropertiesResponse<I>;
     function ListBuckets: IAWS4DS3ListBucketsResponse<I>;
     function ListObjects(Request: IAWS4DS3ListObjectsRequest<I>): IAWS4DS3ListObjectsResponse<I>;
-    procedure ObjectCreate(Request: IAWS4DS3ObjectCreateRequest<I>);
-    procedure ObjectDelete(Request: IAWS4DS3ObjectDeleteRequest<I>);
+    procedure ObjectCreate(Request: IAWS4DS3CreateObjectRequest<I>);
+    procedure ObjectDelete(Request: IAWS4DS3DeleteObjectRequest<I>);
 
     function Parent(Value: I): IAWS4DS3Service<I>;
     function &End: I;
@@ -315,7 +315,7 @@ begin
   result := Self.create;
 end;
 
-procedure TAWS4DS3ServiceCloudAPI<I>.ObjectCreate(Request: IAWS4DS3ObjectCreateRequest<I>);
+procedure TAWS4DS3ServiceCloudAPI<I>.ObjectCreate(Request: IAWS4DS3CreateObjectRequest<I>);
 begin
   AWSComponentsCreate;
   Request.FileStream.Position := 0;
@@ -333,7 +333,7 @@ begin
     RaiseException;
 end;
 
-procedure TAWS4DS3ServiceCloudAPI<I>.ObjectDelete(Request: IAWS4DS3ObjectDeleteRequest<I>);
+procedure TAWS4DS3ServiceCloudAPI<I>.ObjectDelete(Request: IAWS4DS3DeleteObjectRequest<I>);
 begin
   AWSComponentsCreate;
   if not FStorage.DeleteObject(

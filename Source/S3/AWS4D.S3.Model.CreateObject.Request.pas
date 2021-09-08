@@ -1,4 +1,4 @@
-unit AWS4D.S3.Model.ObjectCreate.Request;
+unit AWS4D.S3.Model.CreateObject.Request;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   System.SysUtils,
   System.Classes;
 
-type TAWS4DS3ObjectCreateRequest<I: IInterface> = class(TInterfacedObject, IAWS4DS3ObjectCreateRequest<I>)
+type TAWS4DS3CreateObjectRequest<I: IInterface> = class(TInterfacedObject, IAWS4DS3CreateObjectRequest<I>)
 
   private
     [Weak]
@@ -21,12 +21,12 @@ type TAWS4DS3ObjectCreateRequest<I: IInterface> = class(TInterfacedObject, IAWS4
 
 
   protected
-    function BucketName(Value: String): IAWS4DS3ObjectCreateRequest<I>; overload;
-    function FileName(Value: String): IAWS4DS3ObjectCreateRequest<I>; overload;
-    function FileStream(Value: TStream): IAWS4DS3ObjectCreateRequest<I>; overload;
-    function ObjectName(Value: String): IAWS4DS3ObjectCreateRequest<I>; overload;
+    function BucketName(Value: String): IAWS4DS3CreateObjectRequest<I>; overload;
+    function FileName(Value: String): IAWS4DS3CreateObjectRequest<I>; overload;
+    function FileStream(Value: TStream): IAWS4DS3CreateObjectRequest<I>; overload;
+    function ObjectName(Value: String): IAWS4DS3CreateObjectRequest<I>; overload;
 
-    function AddMetaInfo(Key, Value: String): IAWS4DS3ObjectCreateRequest<I>;
+    function AddMetaInfo(Key, Value: String): IAWS4DS3CreateObjectRequest<I>;
 
     function BucketName: string; overload;
     function FileName: string; overload;
@@ -38,31 +38,31 @@ type TAWS4DS3ObjectCreateRequest<I: IInterface> = class(TInterfacedObject, IAWS4
 
   public
     constructor create(Parent: I);
-    class function New(Parent: I): IAWS4DS3ObjectCreateRequest<I>;
+    class function New(Parent: I): IAWS4DS3CreateObjectRequest<I>;
     destructor Destroy; override;
 
 end;
 
 implementation
 
-function TAWS4DS3ObjectCreateRequest<I>.AddMetaInfo(Key, Value: String): IAWS4DS3ObjectCreateRequest<I>;
+function TAWS4DS3CreateObjectRequest<I>.AddMetaInfo(Key, Value: String): IAWS4DS3CreateObjectRequest<I>;
 begin
   result := Self;
   FMetaInfo.Values[Key] := Value;
 end;
 
-function TAWS4DS3ObjectCreateRequest<I>.BucketName(Value: String): IAWS4DS3ObjectCreateRequest<I>;
+function TAWS4DS3CreateObjectRequest<I>.BucketName(Value: String): IAWS4DS3CreateObjectRequest<I>;
 begin
   result := Self;
   FBucketName := Value;
 end;
 
-function TAWS4DS3ObjectCreateRequest<I>.BucketName: string;
+function TAWS4DS3CreateObjectRequest<I>.BucketName: string;
 begin
   Result := FBucketName;
 end;
 
-constructor TAWS4DS3ObjectCreateRequest<I>.create(Parent: I);
+constructor TAWS4DS3CreateObjectRequest<I>.create(Parent: I);
 begin
   FParent := Parent;
   FOwnerStream := False;
@@ -70,7 +70,7 @@ begin
   FMetaInfo.Values['Content-type'] := 'text/xml';
 end;
 
-destructor TAWS4DS3ObjectCreateRequest<I>.Destroy;
+destructor TAWS4DS3CreateObjectRequest<I>.Destroy;
 begin
   FMetaInfo.Free;
   if FOwnerStream then
@@ -78,12 +78,12 @@ begin
   inherited;
 end;
 
-function TAWS4DS3ObjectCreateRequest<I>.&End: I;
+function TAWS4DS3CreateObjectRequest<I>.&End: I;
 begin
   result := FParent;
 end;
 
-function TAWS4DS3ObjectCreateRequest<I>.FileName(Value: String): IAWS4DS3ObjectCreateRequest<I>;
+function TAWS4DS3CreateObjectRequest<I>.FileName(Value: String): IAWS4DS3CreateObjectRequest<I>;
 begin
   result := Self;
   FFileName := Value;
@@ -102,12 +102,12 @@ begin
   end;
 end;
 
-function TAWS4DS3ObjectCreateRequest<I>.FileName: string;
+function TAWS4DS3CreateObjectRequest<I>.FileName: string;
 begin
   result := FFileName;
 end;
 
-function TAWS4DS3ObjectCreateRequest<I>.FileStream(Value: TStream): IAWS4DS3ObjectCreateRequest<I>;
+function TAWS4DS3CreateObjectRequest<I>.FileStream(Value: TStream): IAWS4DS3CreateObjectRequest<I>;
 begin
   result := Self;
   FreeAndNil(FFileStream);
@@ -115,28 +115,28 @@ begin
   FFileStream  := Value;
 end;
 
-function TAWS4DS3ObjectCreateRequest<I>.FileStream: TStream;
+function TAWS4DS3CreateObjectRequest<I>.FileStream: TStream;
 begin
   result := FFileStream;
 end;
 
-function TAWS4DS3ObjectCreateRequest<I>.MetaInfo: TStrings;
+function TAWS4DS3CreateObjectRequest<I>.MetaInfo: TStrings;
 begin
   Result := FMetaInfo;
 end;
 
-class function TAWS4DS3ObjectCreateRequest<I>.New(Parent: I): IAWS4DS3ObjectCreateRequest<I>;
+class function TAWS4DS3CreateObjectRequest<I>.New(Parent: I): IAWS4DS3CreateObjectRequest<I>;
 begin
   result := Self.create(Parent);
 end;
 
-function TAWS4DS3ObjectCreateRequest<I>.ObjectName(Value: String): IAWS4DS3ObjectCreateRequest<I>;
+function TAWS4DS3CreateObjectRequest<I>.ObjectName(Value: String): IAWS4DS3CreateObjectRequest<I>;
 begin
   result := Self;
   FObjectName := Value;
 end;
 
-function TAWS4DS3ObjectCreateRequest<I>.ObjectName: String;
+function TAWS4DS3CreateObjectRequest<I>.ObjectName: String;
 begin
   result := FObjectName;
 end;
