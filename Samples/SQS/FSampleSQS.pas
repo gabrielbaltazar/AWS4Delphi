@@ -210,7 +210,9 @@ procedure TForm2.btnListQueuesClick(Sender: TObject);
 begin
   FSQS.ListQueues
     .Request
-      .MaxResults(5)
+      .MaxResults(StrToIntDef(edtListQueuesMaxResult.Text, 0))
+      .QueueNamePrefix(edtListQueuesQueuePrefix.Text)
+      .NextToken(edtListQueuesNextToken.Text)
     .&End
     .Send;
 

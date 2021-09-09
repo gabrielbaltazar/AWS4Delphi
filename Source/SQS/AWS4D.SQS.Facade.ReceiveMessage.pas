@@ -25,6 +25,7 @@ type TAWS4DSQSFacadeReceiveMessage = class(TInterfacedObject, IAWS4DSQSFacadeRec
   public
     class function New(Service: IAWS4DSQSService<IAWS4DSQSFacadeReceiveMessage>): IAWS4DSQSFacadeReceiveMessage;
     constructor create(Service: IAWS4DSQSService<IAWS4DSQSFacadeReceiveMessage>);
+    destructor Destroy; override;
 
 end;
 
@@ -34,6 +35,12 @@ constructor TAWS4DSQSFacadeReceiveMessage.create(Service: IAWS4DSQSService<IAWS4
 begin
   FService := Service;
   FService.Parent(Self);
+end;
+
+destructor TAWS4DSQSFacadeReceiveMessage.Destroy;
+begin
+
+  inherited;
 end;
 
 class function TAWS4DSQSFacadeReceiveMessage.New(Service: IAWS4DSQSService<IAWS4DSQSFacadeReceiveMessage>): IAWS4DSQSFacadeReceiveMessage;
