@@ -70,6 +70,7 @@ type TAWS4DSQSFacade = class(TInterfacedObject, IAWS4DSQSFacade)
   public
     constructor create;
     class function New: IAWS4DSQSFacade;
+    destructor Destroy; override;
 
 end;
 
@@ -85,7 +86,7 @@ end;
 
 constructor TAWS4DSQSFacade.create;
 begin
-
+  FRegion := aws4dUSEast1;
 end;
 
 function TAWS4DSQSFacade.CreateQueue: IAWS4DSQSFacadeCreateQueue;
@@ -141,6 +142,12 @@ begin
   end;
 
   result := FDeleteQueue;
+end;
+
+destructor TAWS4DSQSFacade.Destroy;
+begin
+
+  inherited;
 end;
 
 function TAWS4DSQSFacade.GetQueueAttributes: IAWS4DSQSFacadeGetQueueAttributes;

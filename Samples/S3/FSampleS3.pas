@@ -137,7 +137,7 @@ end;
 procedure TfrmSampleS3.btnCreateObjectClick(Sender: TObject);
 begin
   S3Initialize;
-  FS3.ObjectCreate
+  FS3.CreateObject
     .Request
       .BucketName(edtCreateObjectBucketName.Text)
       .ObjectName(edtCreateObjectObjectName.Text)
@@ -167,7 +167,7 @@ end;
 procedure TfrmSampleS3.btnDeleteObjectClick(Sender: TObject);
 begin
   S3Initialize;
-  FS3.ObjectDelete
+  FS3.DeleteObject
     .Request
       .BucketName(edtListObjectsBucketName.Text)
       .ObjectName(lstObjects.Items[lstObjects.ItemIndex])

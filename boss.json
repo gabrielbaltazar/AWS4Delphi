@@ -1,0 +1,11 @@
+{
+	"name": "AWS4Delphi",
+	"description": "",
+	"version": "1.0.0",
+	"homepage": "",
+	"mainsrc": "Source",
+	"projects": [],
+	"dependencies": {
+		"github.com/gabrielbaltazar/GBClient": "2.0.1"
+	}
+}

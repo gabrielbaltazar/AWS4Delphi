@@ -98,7 +98,7 @@ object Form2: TForm2
     Top = 97
     Width = 1171
     Height = 341
-    ActivePage = tsCreateQueue
+    ActivePage = tsListQueues
     Align = alClient
     TabOrder = 2
     object tsListQueues: TTabSheet
@@ -490,10 +490,6 @@ object Form2: TForm2
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitLeft = 409
-        ExplicitTop = 57
-        ExplicitWidth = 754
-        ExplicitHeight = 256
       end
     end
     object tsCreateQueue: TTabSheet

@@ -28,7 +28,8 @@ type
   end;
 
   /// <summary>Regions which can be used with Amazon Services.</summary>
-  TAWS4DRegion = (aws4dEUWest1,
+  TAWS4DRegion = (aws4dNotEspecified,
+                  aws4dEUWest1,
                   aws4dEUCentral1,
                   aws4dUSEast1,
                   aws4dUSWest1,
@@ -37,7 +38,9 @@ type
                   aws4dAPSoutheast2,
                   aws4dAPNortheast1,
                   aws4dAPNortheast2,
-                  aws4dSAEast1);
+                  aws4dSAEast1,
+                  aws4dUSClassic,
+                  aws4dEU);
 
   TAWS4DRegionHelper = record helper for TAWS4DRegion
   public

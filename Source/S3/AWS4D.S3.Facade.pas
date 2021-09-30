@@ -28,15 +28,15 @@ type TAWS4DS3Facade = class(TInterfacedObject, IAWS4DS3Facade)
     FRegion: TAWS4DRegion;
 
     FCreateBucket: IAWS4DS3FacadeCreateBucket;
+    FCreateObject: IAWS4DS3FacadeCreateObject;
     FDeleteBucket: IAWS4DS3FacadeDeleteBucket;
+    FDeleteObject: IAWS4DS3FacadeDeleteObject;
     FDownloadObject: IAWS4DS3FacadeDownloadObject;
     FExistBucket: IAWS4DS3FacadeExistBucket;
     FExistObject: IAWS4DS3FacadeExistObject;
     FGetObjectProperties: IAWS4DS3FacadeGetObjectProperties;
     FListBuckets: IAWS4DS3FacadeListBuckets;
     FListObjects: IAWS4DS3FacadeListObjects;
-    FObjectCreate: IAWS4DS3FacadeCreateObject;
-    FObjectDelete: IAWS4DS3FacadeDeleteObject;
 
     function S3Service<I: IInterface>: IAWS4DS3Service<I>;
 
@@ -47,15 +47,15 @@ type TAWS4DS3Facade = class(TInterfacedObject, IAWS4DS3Facade)
     function Region(Value: TAWS4DRegion): IAWS4DS3Facade; overload;
 
     function CreateBucket: IAWS4DS3FacadeCreateBucket;
+    function CreateObject: IAWS4DS3FacadeCreateObject;
     function DeleteBucket: IAWS4DS3FacadeDeleteBucket;
+    function DeleteObject: IAWS4DS3FacadeDeleteObject;
     function DownloadObject: IAWS4DS3FacadeDownloadObject;
     function ExistObject: IAWS4DS3FacadeExistObject;
     function ExistBucket: IAWS4DS3FacadeExistBucket;
     function GetObjectProperties: IAWS4DS3FacadeGetObjectProperties;
     function ListBuckets: IAWS4DS3FacadeListBuckets;
     function ListObjects: IAWS4DS3FacadeListObjects;
-    function ObjectCreate: IAWS4DS3FacadeCreateObject;
-    function ObjectDelete: IAWS4DS3FacadeDeleteObject;
 
   public
     constructor create;
@@ -113,7 +113,7 @@ end;
 
 constructor TAWS4DS3Facade.create;
 begin
-
+  FRegion := aws4dUSEast1;
 end;
 
 function TAWS4DS3Facade.CreateBucket: IAWS4DS3FacadeCreateBucket;
@@ -186,30 +186,30 @@ begin
   result := Self.create;
 end;
 
-function TAWS4DS3Facade.ObjectCreate: IAWS4DS3FacadeCreateObject;
+function TAWS4DS3Facade.CreateObject: IAWS4DS3FacadeCreateObject;
 var
   service: IAWS4DS3Service<IAWS4DS3FacadeCreateObject>;
 begin
-  if not Assigned(FObjectCreate) then
+  if not Assigned(FCreateObject) then
   begin
     service := Self.S3Service<IAWS4DS3FacadeCreateObject>;
-    FObjectCreate := TAWS4DS3FacadeCreateObject.New(service);
+    FCreateObject := TAWS4DS3FacadeCreateObject.New(service);
   end;
 
-  result := FObjectCreate;
+  result := FCreateObject;
 end;
 
-function TAWS4DS3Facade.ObjectDelete: IAWS4DS3FacadeDeleteObject;
+function TAWS4DS3Facade.DeleteObject: IAWS4DS3FacadeDeleteObject;
 var
   service: IAWS4DS3Service<IAWS4DS3FacadeDeleteObject>;
 begin
-  if not Assigned(FObjectDelete) then
+  if not Assigned(FDeleteObject) then
   begin
     service := Self.S3Service<IAWS4DS3FacadeDeleteObject>;
-    FObjectDelete := TAWS4DS3FacadeDeleteObject.New(service);
+    FDeleteObject := TAWS4DS3FacadeDeleteObject.New(service);
   end;
 
-  result := FObjectDelete;
+  result := FDeleteObject;
 end;
 
 function TAWS4DS3Facade.Region(Value: String): IAWS4DS3Facade;

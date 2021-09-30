@@ -40,6 +40,7 @@ type TAWS4DS3ServiceCloudAPI<I: IInterface> = class(TInterfacedObject, IAWS4DS3S
     procedure RaiseException;
     function FileBytes(AStream: TStream): TBytes;
 
+    function GetAmazonRegion: {$IF CompilerVersion <= 33.0} TAmazonRegion; {$ELSE} String; {$ENDIF}
     function GetBucket(ABucketName: String; AParams: TStrings = nil): TAmazonBucketResult;
 
   protected
@@ -80,12 +81,12 @@ begin
   FAmazonConnection.AccountName := FAccessKey;
   FAmazonConnection.AccountKey := FSecretKey;
   {$IF CompilerVersion >= 33.0}
-    FAmazonConnection.Region := FRegion.toString;
+    FAmazonConnection.Region := GetAmazonRegion;
   {$IFEND}
 
   FStorage := TAmazonStorageService.Create(FAmazonConnection);
   {$IF CompilerVersion < 33.0}
-    FAmazonConnection.StorageEndpoint := FStorage.GetEndpointFromRegion(FRegion.toString);
+    FAmazonConnection.StorageEndpoint := FStorage.GetEndpointFromRegion(TAmazonRegion(Integer(FRegion)));
   {$ENDIF}
 
   FCloudResponse := TCloudResponseInfo.Create;
@@ -104,7 +105,10 @@ var
   exist: Boolean;
 begin
   AWSComponentsCreate;
-  bucket := FStorage.GetBucket(Request.BucketName, nil, nil, FRegion.toString);
+  bucket := FStorage.GetBucket(Request.BucketName,
+                               nil,
+                               nil,
+                               GetAmazonRegion);
   try
     exist := Assigned(bucket);
     result := TAWS4S3ExistBucketResponse<I>.New(FParent, exist);
@@ -115,6 +119,7 @@ end;
 
 constructor TAWS4DS3ServiceCloudAPI<I>.create;
 begin
+  FRegion := aws4dUSEast1;
 end;
 
 procedure TAWS4DS3ServiceCloudAPI<I>.CreateBucket(Request: IAWS4DS3CreateBucketRequest<I>);
@@ -122,7 +127,7 @@ begin
   AWSComponentsCreate;
   if not FStorage.CreateBucket(Request.BucketName,
                                amzbaPrivate,
-                               FRegion.toString,
+                               GetAmazonRegion,
                                FCloudResponse)
   then
     RaiseException;
@@ -133,7 +138,7 @@ begin
   AWSComponentsCreate;
   if not FStorage.DeleteBucket(Request.BucketName,
                                FCloudResponse,
-                               FRegion.toString)
+                               GetAmazonRegion)
   then
     RaiseException;
 end;
@@ -155,8 +160,12 @@ begin
         Request.BucketName,
         Request.ObjectName,
         stream,
-        FCloudResponse,
-        FRegion.toString)
+        FCloudResponse
+        {$IF CompilerVersion >= 33.0}
+        , GetAmazonRegion)
+        {$ELSE}
+        )
+        {$ENDIF}
     then
       RaiseException;
 
@@ -201,10 +210,22 @@ begin
   end;
 end;
 
+function TAWS4DS3ServiceCloudAPI<I>.GetAmazonRegion: {$IF CompilerVersion <= 33.0} TAmazonRegion; {$ELSE} String; {$ENDIF}
+begin
+  {$IF CompilerVersion <= 33.0}
+    result := TAmazonRegion(Integer(FRegion));
+  {$ELSE}
+    result := FRegion.toString;
+  {$ENDIF}
+end;
+
 function TAWS4DS3ServiceCloudAPI<I>.GetBucket(ABucketName: String; AParams: TStrings): TAmazonBucketResult;
 begin
   AWSComponentsCreate;
-  result := FStorage.GetBucket(ABucketName, AParams, FCloudResponse, FRegion.toString);
+  result := FStorage.GetBucket(ABucketName,
+                               AParams,
+                               FCloudResponse,
+                               GetAmazonRegion);
   if not Assigned(Result) then
     raise EResNotFound.CreateFmt('Bucket %s not found', [ABucketName]);
 end;
