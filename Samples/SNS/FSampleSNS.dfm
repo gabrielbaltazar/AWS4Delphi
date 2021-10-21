@@ -11,7 +11,6 @@ object Form1: TForm1
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
@@ -25,7 +24,6 @@ object Form1: TForm1
     BevelOuter = bvNone
     Caption = 'SNS'
     TabOrder = 0
-    ExplicitWidth = 645
   end
   object pnlHeader: TPanel
     Left = 0
@@ -35,9 +33,6 @@ object Form1: TForm1
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitLeft = -526
-    ExplicitTop = 41
-    ExplicitWidth = 1171
     object Label1: TLabel
       Left = 11
       Top = 9
@@ -89,9 +84,6 @@ object Form1: TForm1
     ActivePage = tsListSubscriptions
     Align = alClient
     TabOrder = 2
-    ExplicitTop = 97
-    ExplicitWidth = 645
-    ExplicitHeight = 239
     object tsListSubscriptions: TTabSheet
       Caption = 'List Subscriptions'
       object Panel1: TPanel

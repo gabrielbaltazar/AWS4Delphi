@@ -6,8 +6,9 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
 
-  AWS4D.SNS.Service.Interfaces,
-  AWS4D.SNS.Service, Vcl.ComCtrls;
+  System.IniFiles,
+  AWS4D.SNS.Facade.Interfaces,
+  Vcl.ComCtrls;
 
 type
   TForm1 = class(TForm)
@@ -26,7 +27,13 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnListSubscriptionClick(Sender: TObject);
   private
-    FService: IAWS4DServiceSNS;
+    FSNSFacade: IAWS4DSNSFacade;
+
+    procedure InitializeSNS;
+
+    function GetIniFile: TIniFile;
+    procedure SaveConfig;
+    procedure LoadConfig;
     { Private declarations }
   public
     { Public declarations }
@@ -41,16 +48,62 @@ implementation
 
 procedure TForm1.btnListSubscriptionClick(Sender: TObject);
 begin
-  FService.ListSubscriptions;
+  InitializeSNS;
+  FSNSFacade.ListTopics
+    .Send;
+
+  while FSNSFacade.ListTopics.Response.Topics.HasNext do
+    ShowMessage(FSNSFacade.ListTopics.Response.Topics.Current);
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  FService := TAWS4DSNSService.New;
-  FService
-    .AccessKey('AKIAJFMGZYXJAZPC7B6Q')
-    .SecretKey('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')
-    .Region('us-east-1');
+  LoadConfig;
+end;
+
+function TForm1.GetIniFile: TIniFile;
+var
+  path : String;
+begin
+  path := ExtractFilePath(GetModuleName(HInstance)) + 'SampleSNS.ini';
+  result := TIniFile.Create(path);
+end;
+
+procedure TForm1.InitializeSNS;
+begin
+  FSNSFacade := NewSNSFacade;
+  FSNSFacade
+    .AccessKey(edtAccessKey.Text)
+    .SecretKey(edtSecretKey.Text)
+    .Region(edtRegion.Text);
+end;
+
+procedure TForm1.LoadConfig;
+var
+  iniFile: TIniFile;
+begin
+  iniFile := GetIniFile;
+  try
+    edtAccessKey.Text := iniFile.ReadString('SNS', 'ACCESS_KEY', EmptyStr);
+    edtSecretKey.Text := iniFile.ReadString('SNS', 'SECRET_KEY', EmptyStr);
+    edtRegion.Text := iniFile.ReadString('SNS', 'REGION', EmptyStr);
+  finally
+    iniFile.Free;
+  end;
+end;
+
+procedure TForm1.SaveConfig;
+var
+  iniFile: TIniFile;
+begin
+  iniFile := GetIniFile;
+  try
+    iniFile.WriteString('SNS', 'ACCESS_KEY', edtAccessKey.Text);
+    iniFile.WriteString('SNS', 'SECRET_KEY', edtSecretKey.Text);
+    iniFile.WriteString('SNS', 'REGION', edtRegion.Text);
+  finally
+    iniFile.Free;
+  end;
 end;
 
 end.
