@@ -86,23 +86,96 @@ object Form1: TForm1
     TabOrder = 2
     object tsListSubscriptions: TTabSheet
       Caption = 'List Subscriptions'
-      object Panel1: TPanel
+      object Panel3: TPanel
         Left = 0
         Top = 0
         Width = 737
-        Height = 49
+        Height = 56
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object btnListSubscription: TButton
-          Left = 328
-          Top = 16
-          Width = 93
-          Height = 25
-          Caption = 'List Subscription'
-          TabOrder = 0
-          OnClick = btnListSubscriptionClick
+        ExplicitTop = 8
+        object Label4: TLabel
+          Left = 7
+          Top = 7
+          Width = 55
+          Height = 13
+          Caption = 'Next Token'
         end
+        object edtListSubscriptions: TEdit
+          Left = 7
+          Top = 22
+          Width = 258
+          Height = 21
+          TabOrder = 0
+        end
+        object btnListSubscriptions: TButton
+          Left = 272
+          Top = 20
+          Width = 94
+          Height = 25
+          Caption = 'List Subscriptions'
+          TabOrder = 1
+        end
+      end
+      object Memo1: TMemo
+        Left = 0
+        Top = 56
+        Width = 737
+        Height = 226
+        Align = alClient
+        ScrollBars = ssBoth
+        TabOrder = 1
+        ExplicitWidth = 1163
+        ExplicitHeight = 257
+      end
+    end
+    object tsListTopics: TTabSheet
+      Caption = 'List Topics'
+      ImageIndex = 1
+      object Panel2: TPanel
+        Left = 0
+        Top = 0
+        Width = 737
+        Height = 56
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitTop = 8
+        object Label6: TLabel
+          Left = 7
+          Top = 7
+          Width = 55
+          Height = 13
+          Caption = 'Next Token'
+        end
+        object edtListTopicsNextToken: TEdit
+          Left = 7
+          Top = 22
+          Width = 258
+          Height = 21
+          TabOrder = 0
+        end
+        object btnListTopics: TButton
+          Left = 272
+          Top = 20
+          Width = 94
+          Height = 25
+          Caption = 'List Topics'
+          TabOrder = 1
+          OnClick = btnListTopicsClick
+        end
+      end
+      object mmoListTopics: TMemo
+        Left = 0
+        Top = 56
+        Width = 737
+        Height = 226
+        Align = alClient
+        ScrollBars = ssBoth
+        TabOrder = 1
+        ExplicitWidth = 1163
+        ExplicitHeight = 257
       end
     end
   end

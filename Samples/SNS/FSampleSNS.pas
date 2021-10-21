@@ -22,10 +22,19 @@ type
     edtRegion: TEdit;
     pgcSNS: TPageControl;
     tsListSubscriptions: TTabSheet;
-    Panel1: TPanel;
-    btnListSubscription: TButton;
+    tsListTopics: TTabSheet;
+    Panel2: TPanel;
+    Label6: TLabel;
+    edtListTopicsNextToken: TEdit;
+    btnListTopics: TButton;
+    mmoListTopics: TMemo;
+    Panel3: TPanel;
+    Label4: TLabel;
+    edtListSubscriptions: TEdit;
+    btnListSubscriptions: TButton;
+    Memo1: TMemo;
     procedure FormCreate(Sender: TObject);
-    procedure btnListSubscriptionClick(Sender: TObject);
+    procedure btnListTopicsClick(Sender: TObject);
   private
     FSNSFacade: IAWS4DSNSFacade;
 
@@ -46,14 +55,15 @@ implementation
 
 {$R *.dfm}
 
-procedure TForm1.btnListSubscriptionClick(Sender: TObject);
+procedure TForm1.btnListTopicsClick(Sender: TObject);
 begin
   InitializeSNS;
   FSNSFacade.ListTopics
     .Send;
 
+  mmoListTopics.Lines.Clear;
   while FSNSFacade.ListTopics.Response.Topics.HasNext do
-    ShowMessage(FSNSFacade.ListTopics.Response.Topics.Current);
+    mmoListTopics.Lines.Add(FSNSFacade.ListTopics.Response.Topics.Current);
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
