@@ -16,7 +16,10 @@ uses
   AWS4D.Core.Model.Types in '..\..\Source\Core\AWS4D.Core.Model.Types.pas',
   AWS4D.SNS.Facade.Interfaces in '..\..\Source\SNS\AWS4D.SNS.Facade.Interfaces.pas',
   AWS4D.SNS.Facade.ListTopics in '..\..\Source\SNS\AWS4D.SNS.Facade.ListTopics.pas',
-  AWS4D.SNS.Facade in '..\..\Source\SNS\AWS4D.SNS.Facade.pas';
+  AWS4D.SNS.Facade in '..\..\Source\SNS\AWS4D.SNS.Facade.pas',
+  AWS4D.SNS.Model.ListSubscriptions.Request in '..\..\Source\SNS\AWS4D.SNS.Model.ListSubscriptions.Request.pas',
+  AWS4D.SNS.Model.ListSubscriptions.Response in '..\..\Source\SNS\AWS4D.SNS.Model.ListSubscriptions.Response.pas',
+  AWS4D.SNS.Facade.ListSubscriptions in '..\..\Source\SNS\AWS4D.SNS.Facade.ListSubscriptions.pas';
 
 {$R *.res}
 

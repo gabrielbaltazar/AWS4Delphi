@@ -6,6 +6,7 @@ uses
   AWS4D.SNS.Facade.Interfaces,
   AWS4D.SNS.Service.Interfaces,
   AWS4D.SNS.Model.Interfaces,
+  AWS4D.SNS.Facade.ListSubscriptions,
   AWS4D.SNS.Facade.ListTopics,
   AWS4D.SNS.Service,
   AWS4D.Core.Model.Types;
@@ -16,6 +17,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     FAccessKey: String;
     FSecretKey: String;
     FRegion: TAWS4DRegion;
+    FListSubsctiptions: IAWS4DSNSFacadeListSubscriptions;
     FListTopics: IAWS4DSNSFacadeListTopics;
 
     function SNSService<I: IInterface>: IAWS4DSNSService<I>;
@@ -26,6 +28,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     function Region(Value: String): IAWS4DSNSFacade; overload;
     function Region(Value: TAWS4DRegion): IAWS4DSNSFacade; overload;
 
+    function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
   public
     constructor create;
@@ -53,6 +56,19 @@ destructor TAWS4DSNSFacade.Destroy;
 begin
 
   inherited;
+end;
+
+function TAWS4DSNSFacade.ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
+var
+  service: IAWS4DSNSService<IAWS4DSNSFacadeListSubscriptions>;
+begin
+  if not Assigned(FListSubsctiptions) then
+  begin
+    service := Self.SNSService<IAWS4DSNSFacadeListSubscriptions>;
+    FListSubsctiptions := TAWS4DSNSFacadeListSubscriptions.New(service);
+  end;
+
+  result := FListSubsctiptions;
 end;
 
 function TAWS4DSNSFacade.ListTopics: IAWS4DSNSFacadeListTopics;

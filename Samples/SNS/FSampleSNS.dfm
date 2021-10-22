@@ -94,7 +94,6 @@ object Form1: TForm1
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
         object Label4: TLabel
           Left = 7
           Top = 7
@@ -102,7 +101,7 @@ object Form1: TForm1
           Height = 13
           Caption = 'Next Token'
         end
-        object edtListSubscriptions: TEdit
+        object edtListSubscriptionsNextToken: TEdit
           Left = 7
           Top = 22
           Width = 258
@@ -116,9 +115,10 @@ object Form1: TForm1
           Height = 25
           Caption = 'List Subscriptions'
           TabOrder = 1
+          OnClick = btnListSubscriptionsClick
         end
       end
-      object Memo1: TMemo
+      object mmoListSubscriptions: TMemo
         Left = 0
         Top = 56
         Width = 737
@@ -126,8 +126,6 @@ object Form1: TForm1
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 1163
-        ExplicitHeight = 257
       end
     end
     object tsListTopics: TTabSheet
@@ -141,7 +139,6 @@ object Form1: TForm1
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
         object Label6: TLabel
           Left = 7
           Top = 7
@@ -174,8 +171,6 @@ object Form1: TForm1
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 1163
-        ExplicitHeight = 257
       end
     end
   end

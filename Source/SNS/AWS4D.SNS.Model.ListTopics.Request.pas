@@ -15,7 +15,6 @@ type TAWS4DSNSModelListTopicsRequest<I: IInterface> = class(TInterfacedObject, I
 
   protected
     function NextToken(Value: String): IAWS4DSNSListTopicsRequest<I>; overload;
-
     function NextToken: String; overload;
 
     function &End: I;

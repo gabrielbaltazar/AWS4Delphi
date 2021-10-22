@@ -4,6 +4,7 @@ interface
 
 uses
   AWS4D.SNS.Model.Interfaces,
+  AWS4D.SNS.Model.ListSubscriptions.Response,
   AWS4D.SNS.Model.ListTopics.Request,
   AWS4D.SNS.Model.ListTopics.Response,
   AWS4D.SNS.Service.Interfaces,
@@ -31,6 +32,7 @@ type TAWS4DSNSService<I: IInterface> = class(TInterfacedObject, IAWS4DSNSService
     function Region(Value: String): IAWS4DSNSService<I>; overload;
     function Region(Value: TAWS4DRegion): IAWS4DSNSService<I>; overload;
 
+    function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
 
     function Parent(Value: I): IAWS4DSNSService<I>;
@@ -71,6 +73,20 @@ end;
 function TAWS4DSNSService<I>.Host: string;
 begin
   Result := Format('https://sns.%s.amazonaws.com', [FRegion.toString]);
+end;
+
+function TAWS4DSNSService<I>.ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
+var
+  restRequest: IGBClientRequest;
+  json: TJSONObject;
+begin
+  restRequest := NewGETRequest('ListSubscriptions');
+
+  if Request.NextToken.Trim <> EmptyStr then
+    restRequest.Params.QueryAddOrSet('NextToken', Request.NextToken);
+
+  json := restRequest.Send.GetJSONObject;
+  result := TAWS4DSNSModelListSubscriptionsResponse<I>.New(FParent, json);
 end;
 
 function TAWS4DSNSService<I>.ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;

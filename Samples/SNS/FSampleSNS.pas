@@ -7,6 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
 
   System.IniFiles,
+  AWS4D.SNS.Model.Interfaces,
   AWS4D.SNS.Facade.Interfaces,
   Vcl.ComCtrls;
 
@@ -30,11 +31,12 @@ type
     mmoListTopics: TMemo;
     Panel3: TPanel;
     Label4: TLabel;
-    edtListSubscriptions: TEdit;
+    edtListSubscriptionsNextToken: TEdit;
     btnListSubscriptions: TButton;
-    Memo1: TMemo;
+    mmoListSubscriptions: TMemo;
     procedure FormCreate(Sender: TObject);
     procedure btnListTopicsClick(Sender: TObject);
+    procedure btnListSubscriptionsClick(Sender: TObject);
   private
     FSNSFacade: IAWS4DSNSFacade;
 
@@ -54,6 +56,28 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TForm1.btnListSubscriptionsClick(Sender: TObject);
+var
+  subcription: IAWS4DSNSSubscription;
+begin
+  InitializeSNS;
+  FSNSFacade.ListSubscriptions.Send;
+
+  mmoListSubscriptions.Lines.Clear;
+  while FSNSFacade.ListSubscriptions.Response.Subscriptions.HasNext do
+  begin
+    subcription := FSNSFacade.ListSubscriptions.Response.Subscriptions.Current;
+    mmoListSubscriptions.Lines.Add(EmptyStr);
+    mmoListSubscriptions.Lines.Add('Endpoint: ' + subcription.Endpoint);
+    mmoListSubscriptions.Lines.Add('Owner: ' + subcription.Owner);
+    mmoListSubscriptions.Lines.Add('Protocol: ' + subcription.Protocol);
+    mmoListSubscriptions.Lines.Add('SubscriptionArn: ' + subcription.SubscriptionArn);
+    mmoListSubscriptions.Lines.Add('TopicArn: ' + subcription.TopicArn);
+  end;
+
+  edtListSubscriptionsNextToken.Text := FSNSFacade.ListSubscriptions.Response.NextToken;
+end;
 
 procedure TForm1.btnListTopicsClick(Sender: TObject);
 begin
