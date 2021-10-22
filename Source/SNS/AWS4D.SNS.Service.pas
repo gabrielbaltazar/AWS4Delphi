@@ -8,6 +8,7 @@ uses
   AWS4D.SNS.Model.ListSubscriptions.Response,
   AWS4D.SNS.Model.ListTopics.Request,
   AWS4D.SNS.Model.ListTopics.Response,
+  AWS4D.SNS.Model.Subscribe.Response,
   AWS4D.SNS.Service.Interfaces,
   AWS4D.Core.Model.Types,
   GBClient.Interfaces,
@@ -41,6 +42,7 @@ type TAWS4DSNSService<I: IInterface> = class(TInterfacedObject, IAWS4DSNSService
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListSubscriptionsByTopic(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
+    function Subscribe(Request: IAWS4DSNSSubscribeRequest<I>): IAWS4DSNSSubscribeResponse<I>;
 
     function Parent(Value: I): IAWS4DSNSService<I>;
     function &End: I;
@@ -203,40 +205,6 @@ begin
   result := TAWS4DSNSModelListTopicsResponse<I>.New(FParent, json);
 end;
 
-//function TAWS4DSNSService<I>.ListSubscriptions: IAWS4DServiceSNS<I>;
-//var
-//  request: IGBClientRequest;
-//  json: string;
-//begin
-//  result := Self;
-//  request := NewClientRequest;
-//  request
-//    .GET
-//    .BaseURL(Host)
-//    .Accept('application/json')
-//    .Authorization
-//      .AWSv4
-//        .AccessKey(FAccessKey)
-//        .SecretKey(FSecretKey)
-//        .Region(FRegion.toString)
-//        .Service(FService)
-//    .&End
-//    .Params
-//      .QueryAddOrSet('Action', 'ListSubscriptions')
-//      .HeaderAddOrSet('Accept', 'application/json', False)
-//    .&End
-//    .Send;
-//
-//  json := request.Response.GetText;
-//  with TStringList.Create do
-//  try
-//    Text := json;
-//    SaveToFile('test.json');
-//  finally
-//    Free;
-//  end;
-//end;
-
 class function TAWS4DSNSService<I>.New: IAWS4DSNSService<I>;
 begin
   result := Self.create;
@@ -283,6 +251,38 @@ function TAWS4DSNSService<I>.SecretKey(Value: String): IAWS4DSNSService<I>;
 begin
   result := Self;
   FSecretKey := Value;
+end;
+
+function TAWS4DSNSService<I>.Subscribe(Request: IAWS4DSNSSubscribeRequest<I>): IAWS4DSNSSubscribeResponse<I>;
+var
+  LRestRequest: IGBClientRequest;
+  LJson: TJSONObject;
+  LCount: Integer;
+begin
+  LCount := 0;
+  LRestRequest := NewGETRequest('Subscribe');
+
+  AddQueryAttribute(LRestRequest, 'DeliveryPolicy', Request.DeliveryPolicy, LCount);
+  AddQueryAttribute(LRestRequest, 'FilterPolicy', Request.FilterPolicy, LCount);
+  AddQueryAttribute(LRestRequest, 'RawMessageDelivery', Request.RawMessageDelivery, LCount);
+  AddQueryAttribute(LRestRequest, 'SubscriptionRoleArn', Request.SubscriptionRoleArn, LCount);
+  if Request.RedrivePolicy then
+    AddQueryAttribute(LRestRequest, 'RedrivePolicy', 'true', LCount);
+
+  if Request.Endpoint.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('Endpoint', Request.Endpoint);
+
+  if Request.Protocol.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('Protocol', Request.Protocol);
+
+  if Request.ReturnSubscriptionArn then
+    LRestRequest.Params.QueryAddOrSet('ReturnSubscriptionArn', 'true');
+
+  if Request.TopicArn.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('TopicArn', Request.TopicArn);
+
+  LJson := LRestRequest.Send.GetJSONObject;
+  result := TAWS4DSNSModelSubscribeResponse<I>.New(FParent, LJson);
 end;
 
 end.

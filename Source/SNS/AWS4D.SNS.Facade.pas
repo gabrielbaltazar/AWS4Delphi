@@ -10,6 +10,7 @@ uses
   AWS4D.SNS.Facade.DeleteTopic,
   AWS4D.SNS.Facade.ListSubscriptions,
   AWS4D.SNS.Facade.ListTopics,
+  AWS4D.SNS.Facade.Subscribe,
   AWS4D.SNS.Service,
   AWS4D.Core.Model.Types;
 
@@ -24,6 +25,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     FDeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     FListSubsctiptions: IAWS4DSNSFacadeListSubscriptions;
     FListTopics: IAWS4DSNSFacadeListTopics;
+    FSubscribe: IAWS4DSNSFacadeSubscribe;
 
     function SNSService<I: IInterface>: IAWS4DSNSService<I>;
 
@@ -37,6 +39,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     function DeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
+    function Subscribe: IAWS4DSNSFacadeSubscribe;
   public
     constructor create;
     class function New: IAWS4DSNSFacade;
@@ -147,6 +150,19 @@ begin
     .AccessKey(FAccessKey)
     .SecretKey(FSecretKey)
     .Region(FRegion);
+end;
+
+function TAWS4DSNSFacade.Subscribe: IAWS4DSNSFacadeSubscribe;
+var
+  service: IAWS4DSNSService<IAWS4DSNSFacadeSubscribe>;
+begin
+  if not Assigned(FSubscribe) then
+  begin
+    service := Self.SNSService<IAWS4DSNSFacadeSubscribe>;
+    FSubscribe := TAWS4DSNSFacadeSubscribe.New(service);
+  end;
+
+  result := FSubscribe;
 end;
 
 end.

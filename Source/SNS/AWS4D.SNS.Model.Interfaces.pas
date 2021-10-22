@@ -3,10 +3,14 @@ unit AWS4D.SNS.Model.Interfaces;
 interface
 
 uses
-  AWS4D.Core.Model.Types;
+  System.JSON,
+  AWS4D.Core.Model.Types,
+  AWS4D.SNS.Model.Types;
 
 type
   IAWS4DSNSListSubscriptionsResponse<I: IInterface> = interface;
+
+  TAWS4DSNSProtocol = AWS4D.SNS.Model.Types.TAWS4DSNSProtocol;
 
   IAWS4DSNSCreateTopicRequest<I: IInterface> = interface
     ['{503C3822-F05A-4DF3-B765-846E1D8F5651}']
@@ -57,6 +61,75 @@ type
 
     function TopicArn(Value: String): IAWS4DSNSListSubscriptionsRequest<I>; overload;
     function TopicArn: String; overload;
+
+    function &End: I;
+  end;
+
+  IAWS4DSNSPublishRequest<I: IInterface> = interface
+    ['{36BF1D73-D01C-4EB3-9F82-4C3AB83CC662}']
+    function JSON(Value: TJSONObject): IAWS4DSNSListSubscriptionsRequest<I>; overload;
+    function JSON: TJSONObject; overload;
+
+    function MessageDeduplicationId(Value: String): IAWS4DSNSListSubscriptionsRequest<I>; overload;
+    function MessageDeduplicationId: String; overload;
+
+    function MessageGroupId(Value: String): IAWS4DSNSListSubscriptionsRequest<I>; overload;
+    function MessageGroupId: String; overload;
+
+    function PhoneNumber(Value: String): IAWS4DSNSListSubscriptionsRequest<I>; overload;
+    function PhoneNumber: String; overload;
+
+    function Subject(Value: String): IAWS4DSNSListSubscriptionsRequest<I>; overload;
+    function Subject: String; overload;
+
+    function TargetArn(Value: String): IAWS4DSNSListSubscriptionsRequest<I>; overload;
+    function TargetArn: String; overload;
+
+    function TopicArn(Value: String): IAWS4DSNSListSubscriptionsRequest<I>; overload;
+    function TopicArn: String; overload;
+
+    function Attributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+    function AddAttributes(Key, Value: String): IAWS4DSNSListSubscriptionsRequest<I>;
+
+    function &End: I;
+  end;
+
+  IAWS4DSNSSubscribeRequest<I: IInterface> = interface
+    ['{6DD4277E-B605-45D3-870B-854A60B2D80D}']
+    function DeliveryPolicy(Value: String): IAWS4DSNSSubscribeRequest<I>; overload;
+    function DeliveryPolicy: String; overload;
+
+    function FilterPolicy(Value: String): IAWS4DSNSSubscribeRequest<I>; overload;
+    function FilterPolicy: String; overload;
+
+    function RawMessageDelivery(Value: String): IAWS4DSNSSubscribeRequest<I>; overload;
+    function RawMessageDelivery: String; overload;
+
+    function RedrivePolicy(Value: Boolean): IAWS4DSNSSubscribeRequest<I>; overload;
+    function RedrivePolicy: Boolean; overload;
+
+    function SubscriptionRoleArn(Value: String): IAWS4DSNSSubscribeRequest<I>; overload;
+    function SubscriptionRoleArn: String; overload;
+
+    function Endpoint(Value: String): IAWS4DSNSSubscribeRequest<I>; overload;
+    function Endpoint: String; overload;
+
+    function Protocol(Value: String): IAWS4DSNSSubscribeRequest<I>; overload;
+    function Protocol(Value: TAWS4DSNSProtocol): IAWS4DSNSSubscribeRequest<I>; overload;
+    function Protocol: String; overload;
+
+    function ReturnSubscriptionArn(Value: Boolean): IAWS4DSNSSubscribeRequest<I>; overload;
+    function ReturnSubscriptionArn: Boolean; overload;
+
+    function TopicArn(Value: String): IAWS4DSNSSubscribeRequest<I>; overload;
+    function TopicArn: String; overload;
+
+    function &End: I;
+  end;
+
+  IAWS4DSNSSubscribeResponse<I: IInterface> = interface
+    ['{9719EFE8-D0C1-4274-8978-4066BEEDFD28}']
+    function SubscriptionArn: String;
 
     function &End: I;
   end;

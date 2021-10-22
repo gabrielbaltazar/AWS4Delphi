@@ -47,11 +47,22 @@ type
     Label9: TLabel;
     btnDeleteTopic: TButton;
     edtDeleteTopicTopicArn: TEdit;
+    tsSubscribe: TTabSheet;
+    Panel5: TPanel;
+    Label8: TLabel;
+    btnSubscribe: TButton;
+    edtSubscribeTopicArn: TEdit;
+    mmoSubscribe: TMemo;
+    edtSubscribeEndpoint: TEdit;
+    Label10: TLabel;
+    edtSubscribeProtocol: TEdit;
+    lbl1: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnListTopicsClick(Sender: TObject);
     procedure btnListSubscriptionsClick(Sender: TObject);
     procedure btnCreateTopicClick(Sender: TObject);
     procedure btnDeleteTopicClick(Sender: TObject);
+    procedure btnSubscribeClick(Sender: TObject);
   private
     FSNSFacade: IAWS4DSNSFacade;
 
@@ -129,6 +140,20 @@ begin
   mmoListTopics.Lines.Clear;
   while FSNSFacade.ListTopics.Response.Topics.HasNext do
     mmoListTopics.Lines.Add(FSNSFacade.ListTopics.Response.Topics.Current);
+end;
+
+procedure TForm1.btnSubscribeClick(Sender: TObject);
+begin
+  InitializeSNS;
+  FSNSFacade.Subscribe
+    .Request
+      .TopicArn(edtSubscribeTopicArn.Text)
+      .Endpoint(edtSubscribeEndpoint.Text)
+      .Protocol(edtSubscribeProtocol.Text)
+    .&End
+    .Send;
+
+  mmoSubscribe.Lines.Text := FSNSFacade.Subscribe.Response.SubscriptionArn;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);

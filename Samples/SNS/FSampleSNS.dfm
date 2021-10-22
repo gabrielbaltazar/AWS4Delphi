@@ -81,7 +81,7 @@ object Form1: TForm1
     Top = 91
     Width = 745
     Height = 310
-    ActivePage = tsDeleteTopic
+    ActivePage = tsSubscribe
     Align = alClient
     TabOrder = 2
     object tsListSubscriptions: TTabSheet
@@ -243,7 +243,6 @@ object Form1: TForm1
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
         object Label9: TLabel
           Left = 7
           Top = 7
@@ -267,6 +266,82 @@ object Form1: TForm1
           Height = 21
           TabOrder = 1
         end
+      end
+    end
+    object tsSubscribe: TTabSheet
+      Caption = 'Subscribe'
+      ImageIndex = 4
+      object Panel5: TPanel
+        Left = 0
+        Top = 0
+        Width = 737
+        Height = 89
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        object Label8: TLabel
+          Left = 7
+          Top = 7
+          Width = 45
+          Height = 13
+          Caption = 'Topic Arn'
+        end
+        object Label10: TLabel
+          Left = 271
+          Top = 7
+          Width = 42
+          Height = 13
+          Caption = 'Endpoint'
+        end
+        object lbl1: TLabel
+          Left = 535
+          Top = 7
+          Width = 39
+          Height = 13
+          Caption = 'Protocol'
+        end
+        object btnSubscribe: TButton
+          Left = 7
+          Top = 49
+          Width = 94
+          Height = 25
+          Caption = 'Subscribe'
+          TabOrder = 0
+          OnClick = btnSubscribeClick
+        end
+        object edtSubscribeTopicArn: TEdit
+          Left = 7
+          Top = 22
+          Width = 258
+          Height = 21
+          TabOrder = 1
+        end
+        object edtSubscribeEndpoint: TEdit
+          Left = 271
+          Top = 22
+          Width = 258
+          Height = 21
+          TabOrder = 2
+        end
+        object edtSubscribeProtocol: TEdit
+          Left = 535
+          Top = 22
+          Width = 149
+          Height = 21
+          TabOrder = 3
+          Text = 'email'
+        end
+      end
+      object mmoSubscribe: TMemo
+        Left = 0
+        Top = 89
+        Width = 737
+        Height = 193
+        Align = alClient
+        ScrollBars = ssBoth
+        TabOrder = 1
+        ExplicitTop = 56
+        ExplicitHeight = 226
       end
     end
   end

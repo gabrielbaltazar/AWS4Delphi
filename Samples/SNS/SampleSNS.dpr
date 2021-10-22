@@ -24,7 +24,10 @@ uses
   AWS4D.SNS.Model.CreateTopic.Request in '..\..\Source\SNS\AWS4D.SNS.Model.CreateTopic.Request.pas',
   AWS4D.SNS.Facade.CreateTopic in '..\..\Source\SNS\AWS4D.SNS.Facade.CreateTopic.pas',
   AWS4D.SNS.Model.DeleteTopic.Request in '..\..\Source\SNS\AWS4D.SNS.Model.DeleteTopic.Request.pas',
-  AWS4D.SNS.Facade.DeleteTopic in '..\..\Source\SNS\AWS4D.SNS.Facade.DeleteTopic.pas';
+  AWS4D.SNS.Facade.DeleteTopic in '..\..\Source\SNS\AWS4D.SNS.Facade.DeleteTopic.pas',
+  AWS4D.SNS.Model.Types in '..\..\Source\SNS\AWS4D.SNS.Model.Types.pas',
+  AWS4D.SNS.Model.Subscribe.Request in '..\..\Source\SNS\AWS4D.SNS.Model.Subscribe.Request.pas',
+  AWS4D.SNS.Model.Subscribe.Response in '..\..\Source\SNS\AWS4D.SNS.Model.Subscribe.Response.pas';
 
 {$R *.res}
 
