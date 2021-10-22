@@ -19,7 +19,10 @@ uses
   AWS4D.SNS.Facade in '..\..\Source\SNS\AWS4D.SNS.Facade.pas',
   AWS4D.SNS.Model.ListSubscriptions.Request in '..\..\Source\SNS\AWS4D.SNS.Model.ListSubscriptions.Request.pas',
   AWS4D.SNS.Model.ListSubscriptions.Response in '..\..\Source\SNS\AWS4D.SNS.Model.ListSubscriptions.Response.pas',
-  AWS4D.SNS.Facade.ListSubscriptions in '..\..\Source\SNS\AWS4D.SNS.Facade.ListSubscriptions.pas';
+  AWS4D.SNS.Facade.ListSubscriptions in '..\..\Source\SNS\AWS4D.SNS.Facade.ListSubscriptions.pas',
+  AWS4D.SNS.Model.CreateTopic.Response in '..\..\Source\SNS\AWS4D.SNS.Model.CreateTopic.Response.pas',
+  AWS4D.SNS.Model.CreateTopic.Request in '..\..\Source\SNS\AWS4D.SNS.Model.CreateTopic.Request.pas',
+  AWS4D.SNS.Facade.CreateTopic in '..\..\Source\SNS\AWS4D.SNS.Facade.CreateTopic.pas';
 
 {$R *.res}
 

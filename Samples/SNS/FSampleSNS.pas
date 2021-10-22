@@ -36,9 +36,16 @@ type
     mmoListSubscriptions: TMemo;
     edtListSubscriptionsTopicArn: TEdit;
     Label5: TLabel;
+    tsCreateTopic: TTabSheet;
+    Panel1: TPanel;
+    Label7: TLabel;
+    edtCreateTopicName: TEdit;
+    btnCreateTopic: TButton;
+    mmoCreateTopic: TMemo;
     procedure FormCreate(Sender: TObject);
     procedure btnListTopicsClick(Sender: TObject);
     procedure btnListSubscriptionsClick(Sender: TObject);
+    procedure btnCreateTopicClick(Sender: TObject);
   private
     FSNSFacade: IAWS4DSNSFacade;
 
@@ -58,6 +65,18 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TForm1.btnCreateTopicClick(Sender: TObject);
+begin
+  InitializeSNS;
+  FSNSFacade.CreateTopic
+    .Request
+      .Name(edtCreateTopicName.Text)
+    .&End
+    .Send;
+
+  mmoCreateTopic.Lines.Text := FSNSFacade.CreateTopic.Response.TopicArn;
+end;
 
 procedure TForm1.btnListSubscriptionsClick(Sender: TObject);
 var

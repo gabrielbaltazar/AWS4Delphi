@@ -81,7 +81,7 @@ object Form1: TForm1
     Top = 91
     Width = 745
     Height = 310
-    ActivePage = tsListSubscriptions
+    ActivePage = tsCreateTopic
     Align = alClient
     TabOrder = 2
     object tsListSubscriptions: TTabSheet
@@ -178,6 +178,52 @@ object Form1: TForm1
         end
       end
       object mmoListTopics: TMemo
+        Left = 0
+        Top = 56
+        Width = 737
+        Height = 226
+        Align = alClient
+        ScrollBars = ssBoth
+        TabOrder = 1
+      end
+    end
+    object tsCreateTopic: TTabSheet
+      Caption = 'Create Topic'
+      ImageIndex = 2
+      object Panel1: TPanel
+        Left = 0
+        Top = 0
+        Width = 737
+        Height = 56
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitTop = 8
+        object Label7: TLabel
+          Left = 7
+          Top = 7
+          Width = 27
+          Height = 13
+          Caption = 'Name'
+        end
+        object edtCreateTopicName: TEdit
+          Left = 7
+          Top = 22
+          Width = 258
+          Height = 21
+          TabOrder = 0
+        end
+        object btnCreateTopic: TButton
+          Left = 271
+          Top = 20
+          Width = 94
+          Height = 25
+          Caption = 'Create Topic'
+          TabOrder = 1
+          OnClick = btnCreateTopicClick
+        end
+      end
+      object mmoCreateTopic: TMemo
         Left = 0
         Top = 56
         Width = 737

@@ -7,6 +7,7 @@ uses
   AWS4D.SNS.Model.Interfaces;
 
 type
+  IAWS4DSNSFacadeCreateTopic = interface;
   IAWS4DSNSFacadeListSubscriptions = interface;
   IAWS4DSNSFacadeListTopics = interface;
 
@@ -17,8 +18,16 @@ type
     function Region(Value: String): IAWS4DSNSFacade; overload;
     function Region(Value: TAWS4DRegion): IAWS4DSNSFacade; overload;
 
+    function CreateTopic: IAWS4DSNSFacadeCreateTopic;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
+  end;
+
+  IAWS4DSNSFacadeCreateTopic = interface
+    ['{E9CE8CFB-4E07-44D8-B6CB-30E2D2B1FCF1}']
+    function Request: IAWS4DSNSCreateTopicRequest<IAWS4DSNSFacadeCreateTopic>;
+    function Send: IAWS4DSNSCreateTopicResponse<IAWS4DSNSFacadeCreateTopic>;
+    function Response: IAWS4DSNSCreateTopicResponse<IAWS4DSNSFacadeCreateTopic>;
   end;
 
   IAWS4DSNSFacadeListSubscriptions = interface

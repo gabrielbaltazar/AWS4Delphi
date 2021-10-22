@@ -6,6 +6,7 @@ uses
   AWS4D.SNS.Facade.Interfaces,
   AWS4D.SNS.Service.Interfaces,
   AWS4D.SNS.Model.Interfaces,
+  AWS4D.SNS.Facade.CreateTopic,
   AWS4D.SNS.Facade.ListSubscriptions,
   AWS4D.SNS.Facade.ListTopics,
   AWS4D.SNS.Service,
@@ -19,6 +20,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     FRegion: TAWS4DRegion;
     FListSubsctiptions: IAWS4DSNSFacadeListSubscriptions;
     FListTopics: IAWS4DSNSFacadeListTopics;
+    FCreateTopic: IAWS4DSNSFacadeCreateTopic;
 
     function SNSService<I: IInterface>: IAWS4DSNSService<I>;
 
@@ -28,6 +30,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     function Region(Value: String): IAWS4DSNSFacade; overload;
     function Region(Value: TAWS4DRegion): IAWS4DSNSFacade; overload;
 
+    function CreateTopic: IAWS4DSNSFacadeCreateTopic;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
   public
@@ -50,6 +53,19 @@ end;
 constructor TAWS4DSNSFacade.create;
 begin
   FRegion := aws4dUSEast1;
+end;
+
+function TAWS4DSNSFacade.CreateTopic: IAWS4DSNSFacadeCreateTopic;
+var
+  service: IAWS4DSNSService<IAWS4DSNSFacadeCreateTopic>;
+begin
+  if not Assigned(FCreateTopic) then
+  begin
+    service := Self.SNSService<IAWS4DSNSFacadeCreateTopic>;
+    FCreateTopic := TAWS4DSNSFacadeCreateTopic.New(service);
+  end;
+
+  result := FCreateTopic;
 end;
 
 destructor TAWS4DSNSFacade.Destroy;

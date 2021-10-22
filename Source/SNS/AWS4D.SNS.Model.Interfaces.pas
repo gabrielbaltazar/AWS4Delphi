@@ -8,6 +8,40 @@ uses
 type
   IAWS4DSNSListSubscriptionsResponse<I: IInterface> = interface;
 
+  IAWS4DSNSCreateTopicRequest<I: IInterface> = interface
+    ['{503C3822-F05A-4DF3-B765-846E1D8F5651}']
+    function Name(Value: String): IAWS4DSNSCreateTopicRequest<I>; overload;
+    function Name: String; overload;
+
+    function DeliveryPolicy(Value: String): IAWS4DSNSCreateTopicRequest<I>; overload;
+    function DeliveryPolicy: String; overload;
+
+    function DisplayName(Value: String): IAWS4DSNSCreateTopicRequest<I>; overload;
+    function DisplayName: String; overload;
+
+    function FifoTopic(Value: Boolean): IAWS4DSNSCreateTopicRequest<I>; overload;
+    function FifoTopic: Boolean; overload;
+
+    function Policy(Value: String): IAWS4DSNSCreateTopicRequest<I>; overload;
+    function Policy: String; overload;
+
+    function KmsMasterKeyId(Value: String): IAWS4DSNSCreateTopicRequest<I>; overload;
+    function KmsMasterKeyId: String; overload;
+
+    function ContentBasedDeduplication(Value: Boolean): IAWS4DSNSCreateTopicRequest<I>; overload;
+    function ContentBasedDeduplication: Boolean; overload;
+
+    function Tags: IAWS4DIterator<IAWS4DCoreModelAttribute>;
+    function AddTag(Key, Value: String): IAWS4DSNSCreateTopicRequest<I>;
+
+    function &End: I;
+  end;
+
+  IAWS4DSNSCreateTopicResponse<I: IInterface> = interface
+    ['{4D50A95F-74D7-4539-951B-ABFAC0964827}']
+    function TopicArn: string;
+  end;
+
   IAWS4DSNSListSubscriptionsRequest<I: IInterface> = interface
     ['{3BCC7E93-2749-4B9B-8147-06EFC5EC5EDB}']
     function NextToken(Value: String): IAWS4DSNSListSubscriptionsRequest<I>; overload;

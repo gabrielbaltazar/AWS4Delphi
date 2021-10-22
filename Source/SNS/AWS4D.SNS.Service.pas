@@ -4,6 +4,7 @@ interface
 
 uses
   AWS4D.SNS.Model.Interfaces,
+  AWS4D.SNS.Model.CreateTopic.Response,
   AWS4D.SNS.Model.ListSubscriptions.Response,
   AWS4D.SNS.Model.ListTopics.Request,
   AWS4D.SNS.Model.ListTopics.Response,
@@ -26,12 +27,16 @@ type TAWS4DSNSService<I: IInterface> = class(TInterfacedObject, IAWS4DSNSService
     function Host: string;
     function NewGETRequest(Action: String): IGBClientRequest;
 
+    procedure AddQueryAttribute(Request: IGBClientRequest; Key, Value: String; var Count: Integer);
+    procedure AddTagAttribute(Request: IGBClientRequest; Key, Value: String; var Count: Integer);
+
   protected
     function AccessKey(Value: String): IAWS4DSNSService<I>;
     function SecretKey(Value: String): IAWS4DSNSService<I>;
     function Region(Value: String): IAWS4DSNSService<I>; overload;
     function Region(Value: TAWS4DRegion): IAWS4DSNSService<I>; overload;
 
+    function CreateTopic(Request: IAWS4DSNSCreateTopicRequest<I>): IAWS4DSNSCreateTopicResponse<I>;
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListSubscriptionsByTopic(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
@@ -60,9 +65,69 @@ begin
   FAccessKey := Value;
 end;
 
+procedure TAWS4DSNSService<I>.AddQueryAttribute(Request: IGBClientRequest; Key, Value: String; var Count: Integer);
+begin
+  if Value.Trim <> EmptyStr then
+  begin
+    Request.Params
+      .QueryAddOrSet(Format('Attributes.entry.%s.key', [Count.ToString]), Key);
+    Request.Params
+      .QueryAddOrSet(Format('Attributes.entry.%s.value', [Count.ToString]), Value);
+
+    Inc(Count);
+  end;
+end;
+
+procedure TAWS4DSNSService<I>.AddTagAttribute(Request: IGBClientRequest; Key, Value: String; var Count: Integer);
+begin
+  if Value.Trim <> EmptyStr then
+  begin
+    Request.Params
+      .QueryAddOrSet(Format('Tag.%s.Name', [Count.ToString]), Key);
+    Request.Params
+      .QueryAddOrSet(Format('Tag.%s.value', [Count.ToString]), Value);
+
+    Inc(Count);
+  end;
+end;
+
 constructor TAWS4DSNSService<I>.create;
 begin
   FRegion := aws4dUSEast1;
+end;
+
+function TAWS4DSNSService<I>.CreateTopic(Request: IAWS4DSNSCreateTopicRequest<I>): IAWS4DSNSCreateTopicResponse<I>;
+var
+  LRestRequest: IGBClientRequest;
+  LJson: TJSONObject;
+  LCount: Integer;
+begin
+  LCount := 0;
+  LRestRequest := NewGETRequest('CreateTopic');
+
+  AddQueryAttribute(LRestRequest, 'DeliveryPolicy', Request.DeliveryPolicy, LCount);
+  AddQueryAttribute(LRestRequest, 'DisplayName', Request.DisplayName, LCount);
+  AddQueryAttribute(LRestRequest, 'DeliveryPolicy', Request.DeliveryPolicy, LCount);
+
+  if Request.FifoTopic then
+  begin
+    AddQueryAttribute(LRestRequest, 'FifoTopic', 'true', LCount);
+    if Request.ContentBasedDeduplication then
+      AddQueryAttribute(LRestRequest, 'ContentBasedDeduplication', 'true', LCount);
+  end;
+
+  AddQueryAttribute(LRestRequest, 'Policy', Request.Policy, LCount);
+  AddQueryAttribute(LRestRequest, 'KmsMasterKeyId', Request.KmsMasterKeyId, LCount);
+
+  if Request.Name.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('Name', Request.Name);
+
+  LCount := 0;
+  while Request.Tags.HasNext do
+    AddTagAttribute(LRestRequest, Request.Tags.Current.Key, Request.Tags.Current.Value, LCount);
+
+  LJson := LRestRequest.Send.GetJSONObject;
+  result := TAWS4DSNSModelCreateTopicResponse<I>.New(FParent, LJson);
 end;
 
 destructor TAWS4DSNSService<I>.Destroy;
