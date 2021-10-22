@@ -57,12 +57,18 @@ type
     Label10: TLabel;
     edtSubscribeProtocol: TEdit;
     lbl1: TLabel;
+    tsUnsubscribe: TTabSheet;
+    Panel6: TPanel;
+    Label11: TLabel;
+    btnUnsubscribe: TButton;
+    edtUnsubscribeSubscriptionArn: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnListTopicsClick(Sender: TObject);
     procedure btnListSubscriptionsClick(Sender: TObject);
     procedure btnCreateTopicClick(Sender: TObject);
     procedure btnDeleteTopicClick(Sender: TObject);
     procedure btnSubscribeClick(Sender: TObject);
+    procedure btnUnsubscribeClick(Sender: TObject);
   private
     FSNSFacade: IAWS4DSNSFacade;
 
@@ -154,6 +160,16 @@ begin
     .Send;
 
   mmoSubscribe.Lines.Text := FSNSFacade.Subscribe.Response.SubscriptionArn;
+end;
+
+procedure TForm1.btnUnsubscribeClick(Sender: TObject);
+begin
+  InitializeSNS;
+  FSNSFacade.Unsubscribe
+    .Request
+      .SubscriptionArn(edtUnsubscribeSubscriptionArn.Text)
+    .&End
+    .Send;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);

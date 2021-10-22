@@ -81,7 +81,7 @@ object Form1: TForm1
     Top = 91
     Width = 745
     Height = 310
-    ActivePage = tsSubscribe
+    ActivePage = tsUnsubscribe
     Align = alClient
     TabOrder = 2
     object tsListSubscriptions: TTabSheet
@@ -342,6 +342,43 @@ object Form1: TForm1
         TabOrder = 1
         ExplicitTop = 56
         ExplicitHeight = 226
+      end
+    end
+    object tsUnsubscribe: TTabSheet
+      Caption = 'Unsubscribe'
+      ImageIndex = 5
+      object Panel6: TPanel
+        Left = 0
+        Top = 0
+        Width = 737
+        Height = 89
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitTop = 8
+        object Label11: TLabel
+          Left = 7
+          Top = 7
+          Width = 78
+          Height = 13
+          Caption = 'Subscription Arn'
+        end
+        object btnUnsubscribe: TButton
+          Left = 346
+          Top = 20
+          Width = 94
+          Height = 25
+          Caption = 'Unsubscribe'
+          TabOrder = 0
+          OnClick = btnUnsubscribeClick
+        end
+        object edtUnsubscribeSubscriptionArn: TEdit
+          Left = 7
+          Top = 22
+          Width = 330
+          Height = 21
+          TabOrder = 1
+        end
       end
     end
   end

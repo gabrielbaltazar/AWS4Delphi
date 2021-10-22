@@ -43,6 +43,7 @@ type TAWS4DSNSService<I: IInterface> = class(TInterfacedObject, IAWS4DSNSService
     function ListSubscriptionsByTopic(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
     function Subscribe(Request: IAWS4DSNSSubscribeRequest<I>): IAWS4DSNSSubscribeResponse<I>;
+    procedure Unsubscribe(Request: IAWS4DSNSUnsubscribeRequest<I>);
 
     function Parent(Value: I): IAWS4DSNSService<I>;
     function &End: I;
@@ -283,6 +284,17 @@ begin
 
   LJson := LRestRequest.Send.GetJSONObject;
   result := TAWS4DSNSModelSubscribeResponse<I>.New(FParent, LJson);
+end;
+
+procedure TAWS4DSNSService<I>.Unsubscribe(Request: IAWS4DSNSUnsubscribeRequest<I>);
+var
+  LRestRequest: IGBClientRequest;
+begin
+  LRestRequest := NewGETRequest('Unsubscribe');
+  LRestRequest.Params
+    .QueryAddOrSet('SubscriptionArn', Request.SubscriptionArn);
+
+  LRestRequest.Send;
 end;
 
 end.

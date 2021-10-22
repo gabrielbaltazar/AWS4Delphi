@@ -128,6 +128,9 @@
         <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Model.Types.pas"/>
         <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Model.Subscribe.Request.pas"/>
         <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Model.Subscribe.Response.pas"/>
+        <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Facade.Subscribe.pas"/>
+        <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Model.Unsubscribe.Request.pas"/>
+        <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Facade.Unsubscribe.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

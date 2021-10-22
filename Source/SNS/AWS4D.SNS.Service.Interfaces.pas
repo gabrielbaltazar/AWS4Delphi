@@ -19,6 +19,7 @@ type
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
     function Subscribe(Request: IAWS4DSNSSubscribeRequest<I>): IAWS4DSNSSubscribeResponse<I>;
+    procedure Unsubscribe(Request: IAWS4DSNSUnsubscribeRequest<I>);
 
     function Parent(Value: I): IAWS4DSNSService<I>;
     function &End: I;

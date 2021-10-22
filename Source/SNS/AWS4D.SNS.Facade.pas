@@ -11,6 +11,7 @@ uses
   AWS4D.SNS.Facade.ListSubscriptions,
   AWS4D.SNS.Facade.ListTopics,
   AWS4D.SNS.Facade.Subscribe,
+  AWS4D.SNS.Facade.Unsubscribe,
   AWS4D.SNS.Service,
   AWS4D.Core.Model.Types;
 
@@ -26,6 +27,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     FListSubsctiptions: IAWS4DSNSFacadeListSubscriptions;
     FListTopics: IAWS4DSNSFacadeListTopics;
     FSubscribe: IAWS4DSNSFacadeSubscribe;
+    FUnsubscribe: IAWS4DSNSFacadeUnsubscribe;
 
     function SNSService<I: IInterface>: IAWS4DSNSService<I>;
 
@@ -40,6 +42,8 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
     function Subscribe: IAWS4DSNSFacadeSubscribe;
+    function Unsubscribe: IAWS4DSNSFacadeUnsubscribe;
+
   public
     constructor create;
     class function New: IAWS4DSNSFacade;
@@ -163,6 +167,19 @@ begin
   end;
 
   result := FSubscribe;
+end;
+
+function TAWS4DSNSFacade.Unsubscribe: IAWS4DSNSFacadeUnsubscribe;
+var
+  service: IAWS4DSNSService<IAWS4DSNSFacadeUnsubscribe>;
+begin
+  if not Assigned(FUnsubscribe) then
+  begin
+    service := Self.SNSService<IAWS4DSNSFacadeUnsubscribe>;
+    FUnsubscribe := TAWS4DSNSFacadeUnsubscribe.New(service);
+  end;
+
+  result := FUnsubscribe;
 end;
 
 end.

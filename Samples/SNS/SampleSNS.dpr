@@ -27,7 +27,10 @@ uses
   AWS4D.SNS.Facade.DeleteTopic in '..\..\Source\SNS\AWS4D.SNS.Facade.DeleteTopic.pas',
   AWS4D.SNS.Model.Types in '..\..\Source\SNS\AWS4D.SNS.Model.Types.pas',
   AWS4D.SNS.Model.Subscribe.Request in '..\..\Source\SNS\AWS4D.SNS.Model.Subscribe.Request.pas',
-  AWS4D.SNS.Model.Subscribe.Response in '..\..\Source\SNS\AWS4D.SNS.Model.Subscribe.Response.pas';
+  AWS4D.SNS.Model.Subscribe.Response in '..\..\Source\SNS\AWS4D.SNS.Model.Subscribe.Response.pas',
+  AWS4D.SNS.Facade.Subscribe in '..\..\Source\SNS\AWS4D.SNS.Facade.Subscribe.pas',
+  AWS4D.SNS.Model.Unsubscribe.Request in '..\..\Source\SNS\AWS4D.SNS.Model.Unsubscribe.Request.pas',
+  AWS4D.SNS.Facade.Unsubscribe in '..\..\Source\SNS\AWS4D.SNS.Facade.Unsubscribe.pas';
 
 {$R *.res}
 

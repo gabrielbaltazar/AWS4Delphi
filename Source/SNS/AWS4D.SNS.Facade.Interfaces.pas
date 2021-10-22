@@ -12,6 +12,7 @@ type
   IAWS4DSNSFacadeListSubscriptions = interface;
   IAWS4DSNSFacadeListTopics = interface;
   IAWS4DSNSFacadeSubscribe = interface;
+  IAWS4DSNSFacadeUnsubscribe = interface;
 
   IAWS4DSNSFacade = interface
     ['{0D47D22F-3793-498D-AAA2-A40D48B72F12}']
@@ -25,6 +26,7 @@ type
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
     function Subscribe: IAWS4DSNSFacadeSubscribe;
+    function Unsubscribe: IAWS4DSNSFacadeUnsubscribe;
   end;
 
   IAWS4DSNSFacadeCreateTopic = interface
@@ -59,6 +61,12 @@ type
     function Request: IAWS4DSNSSubscribeRequest<IAWS4DSNSFacadeSubscribe>;
     function Send: IAWS4DSNSSubscribeResponse<IAWS4DSNSFacadeSubscribe>;
     function Response: IAWS4DSNSSubscribeResponse<IAWS4DSNSFacadeSubscribe>;
+  end;
+
+  IAWS4DSNSFacadeUnsubscribe = interface
+    ['{8FDFEDB8-4180-4867-8C45-35F25AE3F0A4}']
+    function Request: IAWS4DSNSUnsubscribeRequest<IAWS4DSNSFacadeUnsubscribe>;
+    function Send: IAWS4DSNSUnsubscribeRequest<IAWS4DSNSFacadeUnsubscribe>;
   end;
 
 function NewSNSFacade: IAWS4DSNSFacade;

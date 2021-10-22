@@ -94,6 +94,37 @@ type
     function &End: I;
   end;
 
+  IAWS4DSNSSubscription = interface
+    ['{54A16395-9D34-4B7A-A710-B650BC2446C8}']
+    function Endpoint: String;
+    function Owner: string;
+    function Protocol: String;
+    function SubscriptionArn: String;
+    function TopicArn: string;
+  end;
+
+  IAWS4DSNSListSubscriptionsResponse<I: IInterface> = interface
+    ['{C17BDB10-C92B-41FF-BD83-6869669BF4D9}']
+    function NextToken: string;
+    function Subscriptions: IAWS4DIterator<IAWS4DSNSSubscription>;
+
+    function &End: I;
+  end;
+
+  IAWS4DSNSListTopicsRequest<I: IInterface> = interface
+    ['{E011D208-1C63-4DC0-96DF-78EE8BA4C92A}']
+    function NextToken(Value: String): IAWS4DSNSListTopicsRequest<I>; overload;
+    function NextToken: String; overload;
+
+    function &End: I;
+  end;
+
+  IAWS4DSNSListTopicsResponse<I> = interface
+    ['{A44CCB8A-FBDA-448F-BF34-6F9D7256FCF4}']
+    function NextToken: String;
+    function Topics: IAWS4DIterator<String>;
+  end;
+
   IAWS4DSNSSubscribeRequest<I: IInterface> = interface
     ['{6DD4277E-B605-45D3-870B-854A60B2D80D}']
     function DeliveryPolicy(Value: String): IAWS4DSNSSubscribeRequest<I>; overload;
@@ -134,35 +165,12 @@ type
     function &End: I;
   end;
 
-  IAWS4DSNSSubscription = interface
-    ['{54A16395-9D34-4B7A-A710-B650BC2446C8}']
-    function Endpoint: String;
-    function Owner: string;
-    function Protocol: String;
-    function SubscriptionArn: String;
-    function TopicArn: string;
-  end;
-
-  IAWS4DSNSListSubscriptionsResponse<I: IInterface> = interface
-    ['{C17BDB10-C92B-41FF-BD83-6869669BF4D9}']
-    function NextToken: string;
-    function Subscriptions: IAWS4DIterator<IAWS4DSNSSubscription>;
+  IAWS4DSNSUnsubscribeRequest<I: IInterface> = interface
+    ['{BD8B2FAF-4EC6-4FA1-8D16-B306B57C0C7D}']
+    function SubscriptionArn(Value: string): IAWS4DSNSUnsubscribeRequest<I>; overload;
+    function SubscriptionArn: string; overload;
 
     function &End: I;
-  end;
-
-  IAWS4DSNSListTopicsRequest<I: IInterface> = interface
-    ['{E011D208-1C63-4DC0-96DF-78EE8BA4C92A}']
-    function NextToken(Value: String): IAWS4DSNSListTopicsRequest<I>; overload;
-    function NextToken: String; overload;
-
-    function &End: I;
-  end;
-
-  IAWS4DSNSListTopicsResponse<I> = interface
-    ['{A44CCB8A-FBDA-448F-BF34-6F9D7256FCF4}']
-    function NextToken: String;
-    function Topics: IAWS4DIterator<String>;
   end;
 
 implementation
