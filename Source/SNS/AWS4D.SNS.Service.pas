@@ -33,6 +33,7 @@ type TAWS4DSNSService<I: IInterface> = class(TInterfacedObject, IAWS4DSNSService
     function Region(Value: TAWS4DRegion): IAWS4DSNSService<I>; overload;
 
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
+    function ListSubscriptionsByTopic(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
 
     function Parent(Value: I): IAWS4DSNSService<I>;
@@ -80,10 +81,33 @@ var
   restRequest: IGBClientRequest;
   json: TJSONObject;
 begin
+  if Request.TopicArn.Trim <> EmptyStr then
+  begin
+    result := ListSubscriptionsByTopic(Request);
+    exit;
+  end;
+
   restRequest := NewGETRequest('ListSubscriptions');
 
   if Request.NextToken.Trim <> EmptyStr then
     restRequest.Params.QueryAddOrSet('NextToken', Request.NextToken);
+
+  json := restRequest.Send.GetJSONObject;
+  result := TAWS4DSNSModelListSubscriptionsResponse<I>.New(FParent, json);
+end;
+
+function TAWS4DSNSService<I>.ListSubscriptionsByTopic(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
+var
+  restRequest: IGBClientRequest;
+  json: TJSONObject;
+begin
+  restRequest := NewGETRequest('ListSubscriptionsByTopic');
+
+  if Request.NextToken.Trim <> EmptyStr then
+    restRequest.Params.QueryAddOrSet('NextToken', Request.NextToken);
+
+  if Request.TopicArn.Trim <> EmptyStr then
+    restRequest.Params.QueryAddOrSet('TopicArn', Request.TopicArn);
 
   json := restRequest.Send.GetJSONObject;
   result := TAWS4DSNSModelListSubscriptionsResponse<I>.New(FParent, json);

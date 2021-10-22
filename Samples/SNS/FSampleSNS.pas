@@ -34,6 +34,8 @@ type
     edtListSubscriptionsNextToken: TEdit;
     btnListSubscriptions: TButton;
     mmoListSubscriptions: TMemo;
+    edtListSubscriptionsTopicArn: TEdit;
+    Label5: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnListTopicsClick(Sender: TObject);
     procedure btnListSubscriptionsClick(Sender: TObject);
@@ -62,7 +64,11 @@ var
   subcription: IAWS4DSNSSubscription;
 begin
   InitializeSNS;
-  FSNSFacade.ListSubscriptions.Send;
+  FSNSFacade.ListSubscriptions
+    .Request
+      .TopicArn(edtListSubscriptionsTopicArn.Text)
+    .&End
+    .Send;
 
   mmoListSubscriptions.Lines.Clear;
   while FSNSFacade.ListSubscriptions.Response.Subscriptions.HasNext do

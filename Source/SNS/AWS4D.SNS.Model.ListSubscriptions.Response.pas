@@ -132,8 +132,8 @@ begin
   if not Assigned(Value) then
     Exit;
 
-  json := Value.ValueAsJSONObject('ListSubscriptionsResponse')
-               .ValueAsJSONObject('ListSubscriptionsResult');
+  json := TJSONObject (Value.Get(0).JsonValue);
+  json := TJSONObject (json.Get(0).JsonValue);
 
   FNextToken := json.ValueAsString('NextToken');
   subscriptions := TList<IAWS4DSNSSubscription>.Create;

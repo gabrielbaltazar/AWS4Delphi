@@ -12,6 +12,11 @@ type
     ['{3BCC7E93-2749-4B9B-8147-06EFC5EC5EDB}']
     function NextToken(Value: String): IAWS4DSNSListSubscriptionsRequest<I>; overload;
     function NextToken: String; overload;
+
+    function TopicArn(Value: String): IAWS4DSNSListSubscriptionsRequest<I>; overload;
+    function TopicArn: String; overload;
+
+    function &End: I;
   end;
 
   IAWS4DSNSSubscription = interface

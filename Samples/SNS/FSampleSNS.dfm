@@ -101,6 +101,13 @@ object Form1: TForm1
           Height = 13
           Caption = 'Next Token'
         end
+        object Label5: TLabel
+          Left = 271
+          Top = 7
+          Width = 45
+          Height = 13
+          Caption = 'Topic Arn'
+        end
         object edtListSubscriptionsNextToken: TEdit
           Left = 7
           Top = 22
@@ -109,13 +116,20 @@ object Form1: TForm1
           TabOrder = 0
         end
         object btnListSubscriptions: TButton
-          Left = 272
+          Left = 544
           Top = 20
           Width = 94
           Height = 25
           Caption = 'List Subscriptions'
           TabOrder = 1
           OnClick = btnListSubscriptionsClick
+        end
+        object edtListSubscriptionsTopicArn: TEdit
+          Left = 271
+          Top = 22
+          Width = 258
+          Height = 21
+          TabOrder = 2
         end
       end
       object mmoListSubscriptions: TMemo

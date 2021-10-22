@@ -12,10 +12,14 @@ type TAWS4DSNSModelListSubscriptionsRequest<I: IInterface> = class(TInterfacedOb
     [Weak]
     FParent: I;
     FNextToken: string;
+    FTopicArn: string;
 
   protected
     function NextToken(Value: String): IAWS4DSNSListSubscriptionsRequest<I>; overload;
     function NextToken: String; overload;
+
+    function TopicArn(Value: String): IAWS4DSNSListSubscriptionsRequest<I>; overload;
+    function TopicArn: String; overload;
 
     function &End: I;
 
@@ -60,6 +64,17 @@ end;
 function TAWS4DSNSModelListSubscriptionsRequest<I>.NextToken: String;
 begin
   result := FNextToken;
+end;
+
+function TAWS4DSNSModelListSubscriptionsRequest<I>.TopicArn: String;
+begin
+  result := FTopicArn;
+end;
+
+function TAWS4DSNSModelListSubscriptionsRequest<I>.TopicArn(Value: String): IAWS4DSNSListSubscriptionsRequest<I>;
+begin
+  result := Self;
+  FTopicArn := Value;
 end;
 
 end.
