@@ -67,29 +67,64 @@ type
 
   IAWS4DSNSPublishRequest<I: IInterface> = interface
     ['{36BF1D73-D01C-4EB3-9F82-4C3AB83CC662}']
-    function JSON(Value: TJSONObject): IAWS4DSNSListSubscriptionsRequest<I>; overload;
-    function JSON: TJSONObject; overload;
+    function Message(Value: String): IAWS4DSNSPublishRequest<I>; overload;
+    function Message: String; overload;
 
-    function MessageDeduplicationId(Value: String): IAWS4DSNSListSubscriptionsRequest<I>; overload;
+    function MessageDefault(Value: String): IAWS4DSNSPublishRequest<I>; overload;
+    function MessageDefault: String; overload;
+
+    function MessageEmail(Value: String): IAWS4DSNSPublishRequest<I>; overload;
+    function MessageEmail: String; overload;
+
+    function MessageSqs(Value: String): IAWS4DSNSPublishRequest<I>; overload;
+    function MessageSqs: String; overload;
+
+    function MessageLambda(Value: String): IAWS4DSNSPublishRequest<I>; overload;
+    function MessageLambda: String; overload;
+
+    function MessageHttp(Value: String): IAWS4DSNSPublishRequest<I>; overload;
+    function MessageHttp: String; overload;
+
+    function MessageHttps(Value: String): IAWS4DSNSPublishRequest<I>; overload;
+    function MessageHttps: String; overload;
+
+    function MessageSms(Value: String): IAWS4DSNSPublishRequest<I>; overload;
+    function MessageSms: String; overload;
+
+    function MessageFirehouse(Value: String): IAWS4DSNSPublishRequest<I>; overload;
+    function MessageFirehouse: String; overload;
+
+    function MessageDeduplicationId(Value: String): IAWS4DSNSPublishRequest<I>; overload;
     function MessageDeduplicationId: String; overload;
 
-    function MessageGroupId(Value: String): IAWS4DSNSListSubscriptionsRequest<I>; overload;
+    function MessageGroupId(Value: String): IAWS4DSNSPublishRequest<I>; overload;
     function MessageGroupId: String; overload;
 
-    function PhoneNumber(Value: String): IAWS4DSNSListSubscriptionsRequest<I>; overload;
+    function MessageStructure(Value: String): IAWS4DSNSPublishRequest<I>; overload;
+    function MessageStructure: String; overload;
+
+    function PhoneNumber(Value: String): IAWS4DSNSPublishRequest<I>; overload;
     function PhoneNumber: String; overload;
 
-    function Subject(Value: String): IAWS4DSNSListSubscriptionsRequest<I>; overload;
+    function Subject(Value: String): IAWS4DSNSPublishRequest<I>; overload;
     function Subject: String; overload;
 
-    function TargetArn(Value: String): IAWS4DSNSListSubscriptionsRequest<I>; overload;
+    function TargetArn(Value: String): IAWS4DSNSPublishRequest<I>; overload;
     function TargetArn: String; overload;
 
-    function TopicArn(Value: String): IAWS4DSNSListSubscriptionsRequest<I>; overload;
+    function TopicArn(Value: String): IAWS4DSNSPublishRequest<I>; overload;
     function TopicArn: String; overload;
 
     function Attributes: IAWS4DIterator<IAWS4DCoreModelAttribute>;
-    function AddAttributes(Key, Value: String): IAWS4DSNSListSubscriptionsRequest<I>;
+    function AddAttribute(Key, Value: String): IAWS4DSNSPublishRequest<I>;
+
+    function &End: I;
+  end;
+
+  IAWS4DSNSPublishResponse<I: IInterface> = interface
+    ['{4A568410-B4A4-443E-A3AA-1AA35E49E72E}']
+    function MessageId: String;
+    function SequenceNumber: String;
 
     function &End: I;
   end;

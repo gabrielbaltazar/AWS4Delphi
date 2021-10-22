@@ -3,8 +3,8 @@ object Form1: TForm1
   Top = 0
   BorderStyle = bsDialog
   Caption = 'SNS'
-  ClientHeight = 401
-  ClientWidth = 745
+  ClientHeight = 478
+  ClientWidth = 887
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,21 +18,23 @@ object Form1: TForm1
   object pnlTop: TPanel
     Left = 0
     Top = 0
-    Width = 745
+    Width = 887
     Height = 35
     Align = alTop
     BevelOuter = bvNone
     Caption = 'SNS'
     TabOrder = 0
+    ExplicitWidth = 745
   end
   object pnlHeader: TPanel
     Left = 0
     Top = 35
-    Width = 745
+    Width = 887
     Height = 56
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitWidth = 745
     object Label1: TLabel
       Left = 11
       Top = 9
@@ -79,21 +81,24 @@ object Form1: TForm1
   object pgcSNS: TPageControl
     Left = 0
     Top = 91
-    Width = 745
-    Height = 310
-    ActivePage = tsUnsubscribe
+    Width = 887
+    Height = 387
+    ActivePage = tsPublish
     Align = alClient
     TabOrder = 2
+    ExplicitWidth = 745
+    ExplicitHeight = 310
     object tsListSubscriptions: TTabSheet
       Caption = 'List Subscriptions'
       object Panel3: TPanel
         Left = 0
         Top = 0
-        Width = 737
+        Width = 879
         Height = 56
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 737
         object Label4: TLabel
           Left = 7
           Top = 7
@@ -135,11 +140,13 @@ object Form1: TForm1
       object mmoListSubscriptions: TMemo
         Left = 0
         Top = 56
-        Width = 737
-        Height = 226
+        Width = 879
+        Height = 303
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
+        ExplicitWidth = 737
+        ExplicitHeight = 226
       end
     end
     object tsListTopics: TTabSheet
@@ -148,11 +155,12 @@ object Form1: TForm1
       object Panel2: TPanel
         Left = 0
         Top = 0
-        Width = 737
+        Width = 879
         Height = 56
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 737
         object Label6: TLabel
           Left = 7
           Top = 7
@@ -180,11 +188,13 @@ object Form1: TForm1
       object mmoListTopics: TMemo
         Left = 0
         Top = 56
-        Width = 737
-        Height = 226
+        Width = 879
+        Height = 303
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
+        ExplicitWidth = 737
+        ExplicitHeight = 226
       end
     end
     object tsCreateTopic: TTabSheet
@@ -193,11 +203,12 @@ object Form1: TForm1
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 737
+        Width = 879
         Height = 56
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 737
         object Label7: TLabel
           Left = 7
           Top = 7
@@ -225,11 +236,13 @@ object Form1: TForm1
       object mmoCreateTopic: TMemo
         Left = 0
         Top = 56
-        Width = 737
-        Height = 226
+        Width = 879
+        Height = 303
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
+        ExplicitWidth = 737
+        ExplicitHeight = 226
       end
     end
     object tsDeleteTopic: TTabSheet
@@ -238,11 +251,12 @@ object Form1: TForm1
       object Panel4: TPanel
         Left = 0
         Top = 0
-        Width = 737
+        Width = 879
         Height = 56
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 737
         object Label9: TLabel
           Left = 7
           Top = 7
@@ -274,11 +288,12 @@ object Form1: TForm1
       object Panel5: TPanel
         Left = 0
         Top = 0
-        Width = 737
+        Width = 879
         Height = 89
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 737
         object Label8: TLabel
           Left = 7
           Top = 7
@@ -335,13 +350,13 @@ object Form1: TForm1
       object mmoSubscribe: TMemo
         Left = 0
         Top = 89
-        Width = 737
-        Height = 193
+        Width = 879
+        Height = 270
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitTop = 56
-        ExplicitHeight = 226
+        ExplicitWidth = 737
+        ExplicitHeight = 193
       end
     end
     object tsUnsubscribe: TTabSheet
@@ -350,12 +365,12 @@ object Form1: TForm1
       object Panel6: TPanel
         Left = 0
         Top = 0
-        Width = 737
+        Width = 879
         Height = 89
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
+        ExplicitWidth = 737
         object Label11: TLabel
           Left = 7
           Top = 7
@@ -378,6 +393,226 @@ object Form1: TForm1
           Width = 330
           Height = 21
           TabOrder = 1
+        end
+      end
+    end
+    object tsPublish: TTabSheet
+      Caption = 'Publish'
+      ImageIndex = 6
+      object Panel7: TPanel
+        Left = 0
+        Top = 0
+        Width = 879
+        Height = 359
+        Align = alClient
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitWidth = 737
+        ExplicitHeight = 305
+        object Label12: TLabel
+          Left = 15
+          Top = 149
+          Width = 80
+          Height = 13
+          Caption = 'Message Default'
+        end
+        object Label16: TLabel
+          Left = 15
+          Top = 189
+          Width = 65
+          Height = 13
+          Caption = 'Message SQS'
+        end
+        object Label17: TLabel
+          Left = 15
+          Top = 274
+          Width = 65
+          Height = 13
+          Caption = 'Message SMS'
+        end
+        object Label18: TLabel
+          Left = 15
+          Top = 234
+          Width = 66
+          Height = 13
+          Caption = 'Message Http'
+        end
+        object Label19: TLabel
+          Left = 401
+          Top = 149
+          Width = 69
+          Height = 13
+          Caption = 'Message Email'
+        end
+        object Label20: TLabel
+          Left = 401
+          Top = 189
+          Width = 82
+          Height = 13
+          Caption = 'Message Lambda'
+        end
+        object Label21: TLabel
+          Left = 401
+          Top = 234
+          Width = 71
+          Height = 13
+          Caption = 'Message Https'
+        end
+        object Label22: TLabel
+          Left = 401
+          Top = 274
+          Width = 92
+          Height = 13
+          Caption = 'Message Firehouse'
+        end
+        object lbl2: TLabel
+          Left = 15
+          Top = 109
+          Width = 42
+          Height = 13
+          Caption = 'Message'
+        end
+        object Label14: TLabel
+          Left = 15
+          Top = 55
+          Width = 49
+          Height = 13
+          Caption = 'TargetArn'
+        end
+        object Label15: TLabel
+          Left = 15
+          Top = 13
+          Width = 42
+          Height = 13
+          Caption = 'TopicArn'
+        end
+        object Label23: TLabel
+          Left = 401
+          Top = 13
+          Width = 70
+          Height = 13
+          Caption = 'Phone Number'
+        end
+        object Label13: TLabel
+          Left = 401
+          Top = 55
+          Width = 36
+          Height = 13
+          Caption = 'Subject'
+        end
+        object lbl3: TLabel
+          Left = 401
+          Top = 319
+          Width = 56
+          Height = 13
+          Caption = 'Message ID'
+        end
+        object btnPublish: TButton
+          Left = 15
+          Top = 330
+          Width = 94
+          Height = 25
+          Caption = 'Publish'
+          TabOrder = 13
+          OnClick = btnPublishClick
+        end
+        object edtPublishMessageDefault: TEdit
+          Left = 15
+          Top = 164
+          Width = 380
+          Height = 21
+          TabOrder = 5
+        end
+        object edtPublishMessageSqs: TEdit
+          Left = 15
+          Top = 204
+          Width = 380
+          Height = 21
+          TabOrder = 7
+        end
+        object edtPublishMessageSms: TEdit
+          Left = 15
+          Top = 289
+          Width = 380
+          Height = 21
+          TabOrder = 11
+        end
+        object edtPublishMessageHttp: TEdit
+          Left = 15
+          Top = 249
+          Width = 380
+          Height = 21
+          TabOrder = 9
+        end
+        object edtPublishMessageEmail: TEdit
+          Left = 401
+          Top = 164
+          Width = 380
+          Height = 21
+          TabOrder = 6
+        end
+        object edtPublishMessageLambda: TEdit
+          Left = 401
+          Top = 204
+          Width = 380
+          Height = 21
+          TabOrder = 8
+        end
+        object edtPublishMessageHttps: TEdit
+          Left = 401
+          Top = 249
+          Width = 380
+          Height = 21
+          TabOrder = 10
+        end
+        object edtPublishMessageFirehouse: TEdit
+          Left = 401
+          Top = 289
+          Width = 380
+          Height = 21
+          TabOrder = 12
+        end
+        object edtPublishMessage: TEdit
+          Left = 15
+          Top = 124
+          Width = 380
+          Height = 21
+          TabOrder = 4
+        end
+        object edtPublishTargetArn: TEdit
+          Left = 15
+          Top = 70
+          Width = 380
+          Height = 21
+          TabOrder = 2
+        end
+        object edtPublishTopicArn: TEdit
+          Left = 15
+          Top = 28
+          Width = 380
+          Height = 21
+          TabOrder = 0
+        end
+        object edtPublishPhoneNumber: TEdit
+          Left = 401
+          Top = 28
+          Width = 380
+          Height = 21
+          TabOrder = 1
+        end
+        object edtPublishSubject: TEdit
+          Left = 401
+          Top = 70
+          Width = 380
+          Height = 21
+          TabOrder = 3
+        end
+        object edtPublishMessageId: TEdit
+          Left = 401
+          Top = 334
+          Width = 380
+          Height = 21
+          TabOrder = 14
         end
       end
     end

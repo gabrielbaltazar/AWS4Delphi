@@ -18,6 +18,7 @@ type
     procedure DeleteTopic(Request: IAWS4DSNSDeleteTopicRequest<I>);
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
+    function Publish(Request: IAWS4DSNSPublishRequest<I>): IAWS4DSNSPublishResponse<I>;
     procedure SetSubscriptionAttributes(Request: IAWS4DSNSSetSubscriptionAttributesRequest<I>);
     procedure SetTopicAttributes(Request: IAWS4DSNSSetTopicAttributesRequest<I>);
     function Subscribe(Request: IAWS4DSNSSubscribeRequest<I>): IAWS4DSNSSubscribeResponse<I>;

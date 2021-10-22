@@ -10,6 +10,7 @@ uses
   AWS4D.SNS.Facade.DeleteTopic,
   AWS4D.SNS.Facade.ListSubscriptions,
   AWS4D.SNS.Facade.ListTopics,
+  AWS4D.SNS.Facade.Publish,
   AWS4D.SNS.Facade.SetSubscriptionAttributes,
   AWS4D.SNS.Facade.SetTopicAttributes,
   AWS4D.SNS.Facade.Subscribe,
@@ -28,6 +29,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     FDeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     FListSubsctiptions: IAWS4DSNSFacadeListSubscriptions;
     FListTopics: IAWS4DSNSFacadeListTopics;
+    FPublish: IAWS4DSNSFacadePublish;
     FSetSubscriptionsAttributes: IAWS4DSNSFacadeSetSubscriptionAttributes;
     FSetTopicAttributes: IAWS4DSNSFacadeSetTopicAttributes;
     FSubscribe: IAWS4DSNSFacadeSubscribe;
@@ -45,6 +47,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     function DeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
+    function Publish: IAWS4DSNSFacadePublish;
     function SetSubscriptionsAttributes: IAWS4DSNSFacadeSetSubscriptionAttributes;
     function SetTopicAttributes: IAWS4DSNSFacadeSetTopicAttributes;
     function Subscribe: IAWS4DSNSFacadeSubscribe;
@@ -133,6 +136,19 @@ end;
 class function TAWS4DSNSFacade.New: IAWS4DSNSFacade;
 begin
   result := Self.create;
+end;
+
+function TAWS4DSNSFacade.Publish: IAWS4DSNSFacadePublish;
+var
+  service: IAWS4DSNSService<IAWS4DSNSFacadePublish>;
+begin
+  if not Assigned(FPublish) then
+  begin
+    service := Self.SNSService<IAWS4DSNSFacadePublish>;
+    FPublish := TAWS4DSNSFacadePublish.New(service);
+  end;
+
+  result := FPublish;
 end;
 
 function TAWS4DSNSFacade.Region(Value: String): IAWS4DSNSFacade;

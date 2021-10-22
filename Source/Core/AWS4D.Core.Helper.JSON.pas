@@ -24,6 +24,8 @@ type
 
     function ValueAsJSONObject(Name: String): TJSONObject;
     function ValueAsJSONArray (Name: String): TJSONArray;
+
+    function SetValue(Name, Value: String): TJSONObject;
   end;
 
   TAWS4DCoreHelperJSONArray = class helper for TJSONArray
@@ -45,6 +47,15 @@ type
 implementation
 
 { TAWS4DCoreHelperJSONObject }
+
+function TAWS4DCoreHelperJSONObject.SetValue(Name, Value: String): TJSONObject;
+begin
+  result := Self;
+  if GetValue(Name) <> nil then
+    Self.RemovePair(Name).Free;
+
+  Self.AddPair(Name, Value);
+end;
 
 function TAWS4DCoreHelperJSONObject.ValueAsBoolean(Name: string; Default: Boolean): Boolean;
 var

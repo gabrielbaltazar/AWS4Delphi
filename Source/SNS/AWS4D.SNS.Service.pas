@@ -8,6 +8,7 @@ uses
   AWS4D.SNS.Model.ListSubscriptions.Response,
   AWS4D.SNS.Model.ListTopics.Request,
   AWS4D.SNS.Model.ListTopics.Response,
+  AWS4D.SNS.Model.Publish.Response,
   AWS4D.SNS.Model.Subscribe.Response,
   AWS4D.SNS.Service.Interfaces,
   AWS4D.Core.Model.Types,
@@ -42,6 +43,7 @@ type TAWS4DSNSService<I: IInterface> = class(TInterfacedObject, IAWS4DSNSService
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListSubscriptionsByTopic(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
+    function Publish(Request: IAWS4DSNSPublishRequest<I>): IAWS4DSNSPublishResponse<I>;
     procedure SetSubscriptionAttributes(Request: IAWS4DSNSSetSubscriptionAttributesRequest<I>);
     procedure SetTopicAttributes(Request: IAWS4DSNSSetTopicAttributesRequest<I>);
     function Subscribe(Request: IAWS4DSNSSubscribeRequest<I>): IAWS4DSNSSubscribeResponse<I>;
@@ -236,6 +238,51 @@ function TAWS4DSNSService<I>.Parent(Value: I): IAWS4DSNSService<I>;
 begin
   result := Self;
   FParent := Value;
+end;
+
+function TAWS4DSNSService<I>.Publish(Request: IAWS4DSNSPublishRequest<I>): IAWS4DSNSPublishResponse<I>;
+var
+  LRestRequest: IGBClientRequest;
+  LJSON: TJSONObject;
+  LCount: Integer;
+begin
+  LCount := 0;
+  LRestRequest := NewGETRequest('Publish');
+
+  LRestRequest.Params.QueryAddOrSet('Message', Request.Message);
+
+  while Request.Attributes.HasNext do
+  begin
+    Inc(LCount);
+    LRestRequest.Params.QueryAddOrSet(Format('MessageAttributes.%s.Name', [LCount.ToString]),
+              Request.Attributes.Current.Key);
+    LRestRequest.Params.QueryAddOrSet(Format('MessageAttributes.%s.Value', [LCount.ToString]),
+              Request.Attributes.Current.Value);
+  end;
+
+  if Request.MessageDeduplicationId.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('MessageDeduplicationId', Request.MessageDeduplicationId);
+
+  if Request.MessageGroupId.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('MessageGroupId', Request.MessageGroupId);
+
+  if Request.MessageStructure.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('MessageStructure', Request.MessageStructure);
+
+  if Request.PhoneNumber.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('PhoneNumber', Request.PhoneNumber);
+
+  if Request.Subject.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('Subject', Request.Subject);
+
+  if Request.TargetArn.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('TargetArn', Request.TargetArn);
+
+  if Request.TopicArn.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('TopicArn', Request.TopicArn);
+
+  LJSON := LRestRequest.Send.GetJSONObject;
+  Result := TAWS4DSNSModelPublishResponse<I>.New(FParent, LJSON);
 end;
 
 function TAWS4DSNSService<I>.Region(Value: String): IAWS4DSNSService<I>;

@@ -62,6 +62,37 @@ type
     Label11: TLabel;
     btnUnsubscribe: TButton;
     edtUnsubscribeSubscriptionArn: TEdit;
+    tsPublish: TTabSheet;
+    Panel7: TPanel;
+    Label12: TLabel;
+    btnPublish: TButton;
+    edtPublishMessageDefault: TEdit;
+    Label16: TLabel;
+    edtPublishMessageSqs: TEdit;
+    Label17: TLabel;
+    edtPublishMessageSms: TEdit;
+    edtPublishMessageHttp: TEdit;
+    Label18: TLabel;
+    edtPublishMessageEmail: TEdit;
+    edtPublishMessageLambda: TEdit;
+    edtPublishMessageHttps: TEdit;
+    edtPublishMessageFirehouse: TEdit;
+    Label19: TLabel;
+    Label20: TLabel;
+    Label21: TLabel;
+    Label22: TLabel;
+    edtPublishMessage: TEdit;
+    lbl2: TLabel;
+    Label14: TLabel;
+    edtPublishTargetArn: TEdit;
+    Label15: TLabel;
+    edtPublishTopicArn: TEdit;
+    Label23: TLabel;
+    edtPublishPhoneNumber: TEdit;
+    Label13: TLabel;
+    edtPublishSubject: TEdit;
+    edtPublishMessageId: TEdit;
+    lbl3: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnListTopicsClick(Sender: TObject);
     procedure btnListSubscriptionsClick(Sender: TObject);
@@ -69,6 +100,7 @@ type
     procedure btnDeleteTopicClick(Sender: TObject);
     procedure btnSubscribeClick(Sender: TObject);
     procedure btnUnsubscribeClick(Sender: TObject);
+    procedure btnPublishClick(Sender: TObject);
   private
     FSNSFacade: IAWS4DSNSFacade;
 
@@ -146,6 +178,30 @@ begin
   mmoListTopics.Lines.Clear;
   while FSNSFacade.ListTopics.Response.Topics.HasNext do
     mmoListTopics.Lines.Add(FSNSFacade.ListTopics.Response.Topics.Current);
+end;
+
+procedure TForm1.btnPublishClick(Sender: TObject);
+begin
+  InitializeSNS;
+  FSNSFacade.Publish
+    .Request
+      .TopicArn(edtPublishTopicArn.Text)
+      .TargetArn(edtPublishTargetArn.Text)
+      .Subject(edtPublishSubject.Text)
+      .PhoneNumber(edtPublishPhoneNumber.Text)
+      .Message(edtPublishMessage.Text)
+      .MessageDefault(edtPublishMessageDefault.Text)
+      .MessageEmail(edtPublishMessageEmail.Text)
+      .MessageSqs(edtPublishMessageSqs.Text)
+      .MessageLambda(edtPublishMessageLambda.Text)
+      .MessageHttp(edtPublishMessageHttp.Text)
+      .MessageHttps(edtPublishMessageHttps.Text)
+      .MessageFirehouse(edtPublishMessageFirehouse.Text)
+      .MessageSms(edtPublishMessageSms.Text)
+    .&End
+    .Send;
+
+  edtPublishMessageId.Text := FSNSFacade.Publish.Response.MessageId;
 end;
 
 procedure TForm1.btnSubscribeClick(Sender: TObject);
