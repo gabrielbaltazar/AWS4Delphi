@@ -10,6 +10,7 @@ uses
   AWS4D.SNS.Facade.DeleteTopic,
   AWS4D.SNS.Facade.ListSubscriptions,
   AWS4D.SNS.Facade.ListTopics,
+  AWS4D.SNS.Facade.SetTopicAttributes,
   AWS4D.SNS.Facade.Subscribe,
   AWS4D.SNS.Facade.Unsubscribe,
   AWS4D.SNS.Service,
@@ -26,6 +27,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     FDeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     FListSubsctiptions: IAWS4DSNSFacadeListSubscriptions;
     FListTopics: IAWS4DSNSFacadeListTopics;
+    FSetTopicAttributes: IAWS4DSNSFacadeSetTopicAttributes;
     FSubscribe: IAWS4DSNSFacadeSubscribe;
     FUnsubscribe: IAWS4DSNSFacadeUnsubscribe;
 
@@ -41,6 +43,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     function DeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
+    function SetTopicAttributes: IAWS4DSNSFacadeSetTopicAttributes;
     function Subscribe: IAWS4DSNSFacadeSubscribe;
     function Unsubscribe: IAWS4DSNSFacadeUnsubscribe;
 
@@ -145,6 +148,19 @@ function TAWS4DSNSFacade.SecretKey(Value: String): IAWS4DSNSFacade;
 begin
   result := Self;
   FSecretKey := Value;
+end;
+
+function TAWS4DSNSFacade.SetTopicAttributes: IAWS4DSNSFacadeSetTopicAttributes;
+var
+  service: IAWS4DSNSService<IAWS4DSNSFacadeSetTopicAttributes>;
+begin
+  if not Assigned(FSetTopicAttributes) then
+  begin
+    service := Self.SNSService<IAWS4DSNSFacadeSetTopicAttributes>;
+    FSetTopicAttributes := TAWS4DSNSFacadeSetTopicAttributes.New(service);
+  end;
+
+  result := FSetTopicAttributes;
 end;
 
 function TAWS4DSNSFacade.SNSService<I>: IAWS4DSNSService<I>;

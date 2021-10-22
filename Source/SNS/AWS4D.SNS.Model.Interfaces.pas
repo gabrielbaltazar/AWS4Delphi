@@ -125,6 +125,20 @@ type
     function Topics: IAWS4DIterator<String>;
   end;
 
+  IAWS4DSNSSetTopicAttributesRequest<I> = interface
+    ['{2D0EED3C-7B71-4775-AB72-07AD9C68EC5E}']
+    function AttributeName(Value: string): IAWS4DSNSSetTopicAttributesRequest<I>; overload;
+    function AttributeName: String; overload;
+
+    function AttributeValue(Value: string): IAWS4DSNSSetTopicAttributesRequest<I>; overload;
+    function AttributeValue: String; overload;
+
+    function TopicArn(Value: String): IAWS4DSNSSetTopicAttributesRequest<I>; overload;
+    function TopicArn: String; overload;
+
+    function &End: I;
+  end;
+
   IAWS4DSNSSubscribeRequest<I: IInterface> = interface
     ['{6DD4277E-B605-45D3-870B-854A60B2D80D}']
     function DeliveryPolicy(Value: String): IAWS4DSNSSubscribeRequest<I>; overload;

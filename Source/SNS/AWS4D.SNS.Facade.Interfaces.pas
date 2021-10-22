@@ -11,6 +11,7 @@ type
   IAWS4DSNSFacadeDeleteTopic = interface;
   IAWS4DSNSFacadeListSubscriptions = interface;
   IAWS4DSNSFacadeListTopics = interface;
+  IAWS4DSNSFacadeSetTopicAttributes = interface;
   IAWS4DSNSFacadeSubscribe = interface;
   IAWS4DSNSFacadeUnsubscribe = interface;
 
@@ -25,6 +26,7 @@ type
     function DeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
+    function SetTopicAttributes: IAWS4DSNSFacadeSetTopicAttributes;
     function Subscribe: IAWS4DSNSFacadeSubscribe;
     function Unsubscribe: IAWS4DSNSFacadeUnsubscribe;
   end;
@@ -54,6 +56,12 @@ type
     function Request: IAWS4DSNSListTopicsRequest<IAWS4DSNSFacadeListTopics>;
     function Send: IAWS4DSNSListTopicsResponse<IAWS4DSNSFacadeListTopics>;
     function Response: IAWS4DSNSListTopicsResponse<IAWS4DSNSFacadeListTopics>;
+  end;
+
+  IAWS4DSNSFacadeSetTopicAttributes = interface
+    ['{9AD81947-C339-459D-AD49-EBFEB2776890}']
+    function Request: IAWS4DSNSSetTopicAttributesRequest<IAWS4DSNSFacadeSetTopicAttributes>;
+    function Send: IAWS4DSNSSetTopicAttributesRequest<IAWS4DSNSFacadeSetTopicAttributes>;
   end;
 
   IAWS4DSNSFacadeSubscribe = interface

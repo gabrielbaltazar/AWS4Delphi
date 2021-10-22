@@ -42,6 +42,7 @@ type TAWS4DSNSService<I: IInterface> = class(TInterfacedObject, IAWS4DSNSService
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListSubscriptionsByTopic(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
+    procedure SetTopicAttributes(Request: IAWS4DSNSSetTopicAttributesRequest<I>);
     function Subscribe(Request: IAWS4DSNSSubscribeRequest<I>): IAWS4DSNSSubscribeResponse<I>;
     procedure Unsubscribe(Request: IAWS4DSNSUnsubscribeRequest<I>);
 
@@ -252,6 +253,19 @@ function TAWS4DSNSService<I>.SecretKey(Value: String): IAWS4DSNSService<I>;
 begin
   result := Self;
   FSecretKey := Value;
+end;
+
+procedure TAWS4DSNSService<I>.SetTopicAttributes(Request: IAWS4DSNSSetTopicAttributesRequest<I>);
+var
+  LRestRequest: IGBClientRequest;
+begin
+  LRestRequest := NewGETRequest('SetTopicAttributes');
+  LRestRequest.Params
+    .QueryAddOrSet('AttributeName', Request.AttributeName)
+    .QueryAddOrSet('AttributeValue', Request.AttributeValue)
+    .QueryAddOrSet('TopicArn', Request.TopicArn);
+
+  LRestRequest.Send;
 end;
 
 function TAWS4DSNSService<I>.Subscribe(Request: IAWS4DSNSSubscribeRequest<I>): IAWS4DSNSSubscribeResponse<I>;

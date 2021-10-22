@@ -30,7 +30,9 @@ uses
   AWS4D.SNS.Model.Subscribe.Response in '..\..\Source\SNS\AWS4D.SNS.Model.Subscribe.Response.pas',
   AWS4D.SNS.Facade.Subscribe in '..\..\Source\SNS\AWS4D.SNS.Facade.Subscribe.pas',
   AWS4D.SNS.Model.Unsubscribe.Request in '..\..\Source\SNS\AWS4D.SNS.Model.Unsubscribe.Request.pas',
-  AWS4D.SNS.Facade.Unsubscribe in '..\..\Source\SNS\AWS4D.SNS.Facade.Unsubscribe.pas';
+  AWS4D.SNS.Facade.Unsubscribe in '..\..\Source\SNS\AWS4D.SNS.Facade.Unsubscribe.pas',
+  AWS4D.SNS.Model.SetTopicAttributes.Request in '..\..\Source\SNS\AWS4D.SNS.Model.SetTopicAttributes.Request.pas',
+  AWS4D.SNS.Facade.SetTopicAttributes in '..\..\Source\SNS\AWS4D.SNS.Facade.SetTopicAttributes.pas';
 
 {$R *.res}
 
