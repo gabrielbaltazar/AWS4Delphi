@@ -37,6 +37,7 @@ type TAWS4DSNSService<I: IInterface> = class(TInterfacedObject, IAWS4DSNSService
     function Region(Value: TAWS4DRegion): IAWS4DSNSService<I>; overload;
 
     function CreateTopic(Request: IAWS4DSNSCreateTopicRequest<I>): IAWS4DSNSCreateTopicResponse<I>;
+    procedure DeleteTopic(Request: IAWS4DSNSDeleteTopicRequest<I>);
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListSubscriptionsByTopic(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
@@ -128,6 +129,16 @@ begin
 
   LJson := LRestRequest.Send.GetJSONObject;
   result := TAWS4DSNSModelCreateTopicResponse<I>.New(FParent, LJson);
+end;
+
+procedure TAWS4DSNSService<I>.DeleteTopic(Request: IAWS4DSNSDeleteTopicRequest<I>);
+var
+  LRestRequest: IGBClientRequest;
+begin
+  LRestRequest := NewGETRequest('DeleteTopic');
+  LRestRequest.Params.QueryAddOrSet('TopicArn', Request.TopicArn);
+
+  LRestRequest.Send;
 end;
 
 destructor TAWS4DSNSService<I>.Destroy;

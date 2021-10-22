@@ -37,6 +37,14 @@ type
     function &End: I;
   end;
 
+  IAWS4DSNSDeleteTopicRequest<I: IInterface> = interface
+    ['{AC92EF1C-EBAD-4172-9B63-C9571D8CB289}']
+    function TopicArn(Value: String): IAWS4DSNSDeleteTopicRequest<I>; overload;
+    function TopicArn: string; overload;
+
+    function &End: I;
+  end;
+
   IAWS4DSNSCreateTopicResponse<I: IInterface> = interface
     ['{4D50A95F-74D7-4539-951B-ABFAC0964827}']
     function TopicArn: string;

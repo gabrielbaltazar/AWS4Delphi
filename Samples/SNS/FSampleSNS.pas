@@ -42,10 +42,16 @@ type
     edtCreateTopicName: TEdit;
     btnCreateTopic: TButton;
     mmoCreateTopic: TMemo;
+    tsDeleteTopic: TTabSheet;
+    Panel4: TPanel;
+    Label9: TLabel;
+    btnDeleteTopic: TButton;
+    edtDeleteTopicTopicArn: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnListTopicsClick(Sender: TObject);
     procedure btnListSubscriptionsClick(Sender: TObject);
     procedure btnCreateTopicClick(Sender: TObject);
+    procedure btnDeleteTopicClick(Sender: TObject);
   private
     FSNSFacade: IAWS4DSNSFacade;
 
@@ -76,6 +82,16 @@ begin
     .Send;
 
   mmoCreateTopic.Lines.Text := FSNSFacade.CreateTopic.Response.TopicArn;
+end;
+
+procedure TForm1.btnDeleteTopicClick(Sender: TObject);
+begin
+  InitializeSNS;
+  FSNSFacade.DeleteTopic
+    .Request
+      .TopicArn(edtDeleteTopicTopicArn.Text)
+    .&End
+    .Send;
 end;
 
 procedure TForm1.btnListSubscriptionsClick(Sender: TObject);

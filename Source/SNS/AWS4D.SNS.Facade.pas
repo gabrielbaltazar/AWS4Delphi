@@ -7,6 +7,7 @@ uses
   AWS4D.SNS.Service.Interfaces,
   AWS4D.SNS.Model.Interfaces,
   AWS4D.SNS.Facade.CreateTopic,
+  AWS4D.SNS.Facade.DeleteTopic,
   AWS4D.SNS.Facade.ListSubscriptions,
   AWS4D.SNS.Facade.ListTopics,
   AWS4D.SNS.Service,
@@ -18,9 +19,11 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     FAccessKey: String;
     FSecretKey: String;
     FRegion: TAWS4DRegion;
+
+    FCreateTopic: IAWS4DSNSFacadeCreateTopic;
+    FDeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     FListSubsctiptions: IAWS4DSNSFacadeListSubscriptions;
     FListTopics: IAWS4DSNSFacadeListTopics;
-    FCreateTopic: IAWS4DSNSFacadeCreateTopic;
 
     function SNSService<I: IInterface>: IAWS4DSNSService<I>;
 
@@ -31,6 +34,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     function Region(Value: TAWS4DRegion): IAWS4DSNSFacade; overload;
 
     function CreateTopic: IAWS4DSNSFacadeCreateTopic;
+    function DeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
   public
@@ -66,6 +70,19 @@ begin
   end;
 
   result := FCreateTopic;
+end;
+
+function TAWS4DSNSFacade.DeleteTopic: IAWS4DSNSFacadeDeleteTopic;
+var
+  service: IAWS4DSNSService<IAWS4DSNSFacadeDeleteTopic>;
+begin
+  if not Assigned(FDeleteTopic) then
+  begin
+    service := Self.SNSService<IAWS4DSNSFacadeDeleteTopic>;
+    FDeleteTopic := TAWS4DSNSFacadeDeleteTopic.New(service);
+  end;
+
+  result := FDeleteTopic;
 end;
 
 destructor TAWS4DSNSFacade.Destroy;

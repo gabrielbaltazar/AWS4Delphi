@@ -81,7 +81,7 @@ object Form1: TForm1
     Top = 91
     Width = 745
     Height = 310
-    ActivePage = tsCreateTopic
+    ActivePage = tsDeleteTopic
     Align = alClient
     TabOrder = 2
     object tsListSubscriptions: TTabSheet
@@ -198,7 +198,6 @@ object Form1: TForm1
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
         object Label7: TLabel
           Left = 7
           Top = 7
@@ -231,6 +230,43 @@ object Form1: TForm1
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
+      end
+    end
+    object tsDeleteTopic: TTabSheet
+      Caption = 'Delete Topic'
+      ImageIndex = 3
+      object Panel4: TPanel
+        Left = 0
+        Top = 0
+        Width = 737
+        Height = 56
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitTop = 8
+        object Label9: TLabel
+          Left = 7
+          Top = 7
+          Width = 45
+          Height = 13
+          Caption = 'Topic Arn'
+        end
+        object btnDeleteTopic: TButton
+          Left = 280
+          Top = 20
+          Width = 94
+          Height = 25
+          Caption = 'Delete Topic'
+          TabOrder = 0
+          OnClick = btnDeleteTopicClick
+        end
+        object edtDeleteTopicTopicArn: TEdit
+          Left = 7
+          Top = 22
+          Width = 258
+          Height = 21
+          TabOrder = 1
+        end
       end
     end
   end

@@ -8,6 +8,7 @@ uses
 
 type
   IAWS4DSNSFacadeCreateTopic = interface;
+  IAWS4DSNSFacadeDeleteTopic = interface;
   IAWS4DSNSFacadeListSubscriptions = interface;
   IAWS4DSNSFacadeListTopics = interface;
 
@@ -19,6 +20,7 @@ type
     function Region(Value: TAWS4DRegion): IAWS4DSNSFacade; overload;
 
     function CreateTopic: IAWS4DSNSFacadeCreateTopic;
+    function DeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
   end;
@@ -28,6 +30,12 @@ type
     function Request: IAWS4DSNSCreateTopicRequest<IAWS4DSNSFacadeCreateTopic>;
     function Send: IAWS4DSNSCreateTopicResponse<IAWS4DSNSFacadeCreateTopic>;
     function Response: IAWS4DSNSCreateTopicResponse<IAWS4DSNSFacadeCreateTopic>;
+  end;
+
+  IAWS4DSNSFacadeDeleteTopic = interface
+    ['{8FDFEDB8-4180-4867-8C45-35F25AE3F0A4}']
+    function Request: IAWS4DSNSDeleteTopicRequest<IAWS4DSNSFacadeDeleteTopic>;
+    function Send: IAWS4DSNSDeleteTopicRequest<IAWS4DSNSFacadeDeleteTopic>;
   end;
 
   IAWS4DSNSFacadeListSubscriptions = interface
