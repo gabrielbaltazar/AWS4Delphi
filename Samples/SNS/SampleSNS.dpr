@@ -43,7 +43,10 @@ uses
   AWS4D.SNS.Model.SetEndpointAttributes.Request in '..\..\Source\SNS\AWS4D.SNS.Model.SetEndpointAttributes.Request.pas',
   AWS4D.SNS.Facade.SetEndpointAttributes in '..\..\Source\SNS\AWS4D.SNS.Facade.SetEndpointAttributes.pas',
   AWS4D.SNS.Model.AddPermission.Request in '..\..\Source\SNS\AWS4D.SNS.Model.AddPermission.Request.pas',
-  AWS4D.SNS.Facade.AddPermission in '..\..\Source\SNS\AWS4D.SNS.Facade.AddPermission.pas';
+  AWS4D.SNS.Facade.AddPermission in '..\..\Source\SNS\AWS4D.SNS.Facade.AddPermission.pas',
+  AWS4D.SNS.Model.CheckIfPhoneNumberIsOptedOut.Request in '..\..\Source\SNS\AWS4D.SNS.Model.CheckIfPhoneNumberIsOptedOut.Request.pas',
+  AWS4D.SNS.Model.CheckIfPhoneNumberIsOptedOut.Response in '..\..\Source\SNS\AWS4D.SNS.Model.CheckIfPhoneNumberIsOptedOut.Response.pas',
+  AWS4D.SNS.Facade.CheckIfPhoneNumberIsOptedOut in '..\..\Source\SNS\AWS4D.SNS.Facade.CheckIfPhoneNumberIsOptedOut.pas';
 
 {$R *.res}
 

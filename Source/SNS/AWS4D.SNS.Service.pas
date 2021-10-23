@@ -4,6 +4,7 @@ interface
 
 uses
   AWS4D.SNS.Model.Interfaces,
+  AWS4D.SNS.Model.CheckIfPhoneNumberIsOptedOut.Response,
   AWS4D.SNS.Model.CreateTopic.Response,
   AWS4D.SNS.Model.ListSubscriptions.Response,
   AWS4D.SNS.Model.ListTopics.Request,
@@ -39,6 +40,7 @@ type TAWS4DSNSService<I: IInterface> = class(TInterfacedObject, IAWS4DSNSService
     function Region(Value: TAWS4DRegion): IAWS4DSNSService<I>; overload;
 
     procedure AddPermission(Request: IAWS4DSNSAddPermissionRequest<I>);
+    function CheckIfPhoneNumberIsOptedOut(Request: IAWS4DSNSCheckIfPhoneNumberIsOptedOutRequest<I>): IAWS4DSNSCheckIfPhoneNumberIsOptedOutResponse<I>;
     function CreateTopic(Request: IAWS4DSNSCreateTopicRequest<I>): IAWS4DSNSCreateTopicResponse<I>;
     procedure DeleteTopic(Request: IAWS4DSNSDeleteTopicRequest<I>);
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
@@ -126,6 +128,18 @@ begin
 
     Inc(Count);
   end;
+end;
+
+function TAWS4DSNSService<I>.CheckIfPhoneNumberIsOptedOut(Request: IAWS4DSNSCheckIfPhoneNumberIsOptedOutRequest<I>): IAWS4DSNSCheckIfPhoneNumberIsOptedOutResponse<I>;
+var
+  LRestRequest: IGBClientRequest;
+  LJSON: TJSONObject;
+begin
+  LRestRequest := NewGETRequest('CheckIfPhoneNumberIsOptedOut');
+  LRestRequest.Params.QueryAddOrSet('phoneNumber', Request.PhoneNumber);
+
+  LJSON := LRestRequest.Send.GetJSONObject;
+  result := TAWS4DSNSModelCheckIfPhoneNumberIsOptedOutResponse<I>.New(FParent, LJSON);
 end;
 
 constructor TAWS4DSNSService<I>.create;

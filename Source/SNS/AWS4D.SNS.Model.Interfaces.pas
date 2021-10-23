@@ -29,6 +29,21 @@ type
     function &End: I;
   end;
 
+  IAWS4DSNSCheckIfPhoneNumberIsOptedOutRequest<I: IInterface> = interface
+    ['{27D2F895-91B6-4925-BB6C-63348A976B4E}']
+    function PhoneNumber(Value: String): IAWS4DSNSCheckIfPhoneNumberIsOptedOutRequest<I>; overload;
+    function PhoneNumber: String; overload;
+
+    function &End: I;
+  end;
+
+  IAWS4DSNSCheckIfPhoneNumberIsOptedOutResponse<I: IInterface> = interface
+    ['{70D1CBB8-7B61-40D0-B8F5-8E19B05E97EF}']
+    function IsOptedOut: Boolean;
+
+    function &End: I;
+  end;
+
   IAWS4DSNSCreateTopicRequest<I: IInterface> = interface
     ['{503C3822-F05A-4DF3-B765-846E1D8F5651}']
     function Name(Value: String): IAWS4DSNSCreateTopicRequest<I>; overload;

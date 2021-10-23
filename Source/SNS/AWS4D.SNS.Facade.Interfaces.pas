@@ -8,6 +8,7 @@ uses
 
 type
   IAWS4DSNSFacadeAddPermission = interface;
+  IAWS4DSNSFacadeCheckIfPhoneNumberIsOptedOut = interface;
   IAWS4DSNSFacadeCreateTopic = interface;
   IAWS4DSNSFacadeDeleteTopic = interface;
   IAWS4DSNSFacadeListSubscriptions = interface;
@@ -28,6 +29,7 @@ type
     function Region(Value: TAWS4DRegion): IAWS4DSNSFacade; overload;
 
     function AddPermission: IAWS4DSNSFacadeAddPermission;
+    function CheckIfPhoneNumberIsOptedOut: IAWS4DSNSFacadeCheckIfPhoneNumberIsOptedOut;
     function CreateTopic: IAWS4DSNSFacadeCreateTopic;
     function DeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
@@ -45,6 +47,13 @@ type
     ['{56C85C18-5210-4918-A3C8-E62552BC7821}']
     function Request: IAWS4DSNSAddPermissionRequest<IAWS4DSNSFacadeAddPermission>;
     function Send: IAWS4DSNSAddPermissionRequest<IAWS4DSNSFacadeAddPermission>;
+  end;
+
+  IAWS4DSNSFacadeCheckIfPhoneNumberIsOptedOut = interface
+    ['{AC81E4B0-BB37-45A4-9773-360CFFA8E879}']
+    function Request: IAWS4DSNSCheckIfPhoneNumberIsOptedOutRequest<IAWS4DSNSFacadeCheckIfPhoneNumberIsOptedOut>;
+    function Send: IAWS4DSNSCheckIfPhoneNumberIsOptedOutResponse<IAWS4DSNSFacadeCheckIfPhoneNumberIsOptedOut>;
+    function Response: IAWS4DSNSCheckIfPhoneNumberIsOptedOutResponse<IAWS4DSNSFacadeCheckIfPhoneNumberIsOptedOut>;
   end;
 
   IAWS4DSNSFacadeCreateTopic = interface
