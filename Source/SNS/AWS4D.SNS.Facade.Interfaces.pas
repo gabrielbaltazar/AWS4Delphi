@@ -7,6 +7,7 @@ uses
   AWS4D.SNS.Model.Interfaces;
 
 type
+  IAWS4DSNSFacadeAddPermission = interface;
   IAWS4DSNSFacadeCreateTopic = interface;
   IAWS4DSNSFacadeDeleteTopic = interface;
   IAWS4DSNSFacadeListSubscriptions = interface;
@@ -26,6 +27,7 @@ type
     function Region(Value: String): IAWS4DSNSFacade; overload;
     function Region(Value: TAWS4DRegion): IAWS4DSNSFacade; overload;
 
+    function AddPermission: IAWS4DSNSFacadeAddPermission;
     function CreateTopic: IAWS4DSNSFacadeCreateTopic;
     function DeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
@@ -37,6 +39,12 @@ type
     function SetTopicAttributes: IAWS4DSNSFacadeSetTopicAttributes;
     function Subscribe: IAWS4DSNSFacadeSubscribe;
     function Unsubscribe: IAWS4DSNSFacadeUnsubscribe;
+  end;
+
+  IAWS4DSNSFacadeAddPermission = interface
+    ['{56C85C18-5210-4918-A3C8-E62552BC7821}']
+    function Request: IAWS4DSNSAddPermissionRequest<IAWS4DSNSFacadeAddPermission>;
+    function Send: IAWS4DSNSAddPermissionRequest<IAWS4DSNSFacadeAddPermission>;
   end;
 
   IAWS4DSNSFacadeCreateTopic = interface

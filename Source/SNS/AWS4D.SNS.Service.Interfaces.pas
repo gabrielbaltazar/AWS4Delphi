@@ -14,6 +14,7 @@ type
     function Region(Value: String): IAWS4DSNSService<I>; overload;
     function Region(Value: TAWS4DRegion): IAWS4DSNSService<I>; overload;
 
+    procedure AddPermission(Request: IAWS4DSNSAddPermissionRequest<I>);
     function CreateTopic(Request: IAWS4DSNSCreateTopicRequest<I>): IAWS4DSNSCreateTopicResponse<I>;
     procedure DeleteTopic(Request: IAWS4DSNSDeleteTopicRequest<I>);
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;

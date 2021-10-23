@@ -41,7 +41,9 @@ uses
   AWS4D.SNS.Model.SetPlatformApplicationAttributes.Request in '..\..\Source\SNS\AWS4D.SNS.Model.SetPlatformApplicationAttributes.Request.pas',
   AWS4D.SNS.Facade.SetPlatformApplicationAttributes in '..\..\Source\SNS\AWS4D.SNS.Facade.SetPlatformApplicationAttributes.pas',
   AWS4D.SNS.Model.SetEndpointAttributes.Request in '..\..\Source\SNS\AWS4D.SNS.Model.SetEndpointAttributes.Request.pas',
-  AWS4D.SNS.Facade.SetEndpointAttributes in '..\..\Source\SNS\AWS4D.SNS.Facade.SetEndpointAttributes.pas';
+  AWS4D.SNS.Facade.SetEndpointAttributes in '..\..\Source\SNS\AWS4D.SNS.Facade.SetEndpointAttributes.pas',
+  AWS4D.SNS.Model.AddPermission.Request in '..\..\Source\SNS\AWS4D.SNS.Model.AddPermission.Request.pas',
+  AWS4D.SNS.Facade.AddPermission in '..\..\Source\SNS\AWS4D.SNS.Facade.AddPermission.pas';
 
 {$R *.res}
 

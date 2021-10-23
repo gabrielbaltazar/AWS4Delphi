@@ -6,6 +6,7 @@ uses
   AWS4D.SNS.Facade.Interfaces,
   AWS4D.SNS.Service.Interfaces,
   AWS4D.SNS.Model.Interfaces,
+  AWS4D.SNS.Facade.AddPermission,
   AWS4D.SNS.Facade.CreateTopic,
   AWS4D.SNS.Facade.DeleteTopic,
   AWS4D.SNS.Facade.ListSubscriptions,
@@ -27,6 +28,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     FSecretKey: String;
     FRegion: TAWS4DRegion;
 
+    FAddPermission: IAWS4DSNSFacadeAddPermission;
     FCreateTopic: IAWS4DSNSFacadeCreateTopic;
     FDeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     FListSubsctiptions: IAWS4DSNSFacadeListSubscriptions;
@@ -47,6 +49,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     function Region(Value: String): IAWS4DSNSFacade; overload;
     function Region(Value: TAWS4DRegion): IAWS4DSNSFacade; overload;
 
+    function AddPermission: IAWS4DSNSFacadeAddPermission;
     function CreateTopic: IAWS4DSNSFacadeCreateTopic;
     function DeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
@@ -74,6 +77,19 @@ function TAWS4DSNSFacade.AccessKey(Value: String): IAWS4DSNSFacade;
 begin
   result := Self;
   FAccessKey := Value;
+end;
+
+function TAWS4DSNSFacade.AddPermission: IAWS4DSNSFacadeAddPermission;
+var
+  service: IAWS4DSNSService<IAWS4DSNSFacadeAddPermission>;
+begin
+  if not Assigned(FAddPermission) then
+  begin
+    service := Self.SNSService<IAWS4DSNSFacadeAddPermission>;
+    FAddPermission := TAWS4DSNSFacadeAddPermission.New(service);
+  end;
+
+  result := FAddPermission;
 end;
 
 constructor TAWS4DSNSFacade.create;

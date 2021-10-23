@@ -12,6 +12,23 @@ type
 
   TAWS4DSNSProtocol = AWS4D.SNS.Model.Types.TAWS4DSNSProtocol;
 
+  IAWS4DSNSAddPermissionRequest<I: IInterface> = interface
+    ['{E3B463CD-78DA-4F73-8891-BACFF4C06BD5}']
+    function AddActionName(Value: String): IAWS4DSNSAddPermissionRequest<I>;
+    function AWSAccountId(Value: String): IAWS4DSNSAddPermissionRequest<I>;
+
+    function &Label(Value: String): IAWS4DSNSAddPermissionRequest<I>; overload;
+    function &Label: String; overload;
+
+    function TopicArn(Value: String): IAWS4DSNSAddPermissionRequest<I>; overload;
+    function TopicArn: String; overload;
+
+    function ActionsName: IAWS4DIterator<String>;
+    function AWSAccountsId: IAWS4DIterator<String>;
+
+    function &End: I;
+  end;
+
   IAWS4DSNSCreateTopicRequest<I: IInterface> = interface
     ['{503C3822-F05A-4DF3-B765-846E1D8F5651}']
     function Name(Value: String): IAWS4DSNSCreateTopicRequest<I>; overload;

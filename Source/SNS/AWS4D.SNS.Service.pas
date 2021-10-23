@@ -38,6 +38,7 @@ type TAWS4DSNSService<I: IInterface> = class(TInterfacedObject, IAWS4DSNSService
     function Region(Value: String): IAWS4DSNSService<I>; overload;
     function Region(Value: TAWS4DRegion): IAWS4DSNSService<I>; overload;
 
+    procedure AddPermission(Request: IAWS4DSNSAddPermissionRequest<I>);
     function CreateTopic(Request: IAWS4DSNSCreateTopicRequest<I>): IAWS4DSNSCreateTopicResponse<I>;
     procedure DeleteTopic(Request: IAWS4DSNSDeleteTopicRequest<I>);
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
@@ -73,6 +74,32 @@ function TAWS4DSNSService<I>.AccessKey(Value: String): IAWS4DSNSService<I>;
 begin
   result := Self;
   FAccessKey := Value;
+end;
+
+procedure TAWS4DSNSService<I>.AddPermission(Request: IAWS4DSNSAddPermissionRequest<I>);
+var
+  LRestRequest: IGBClientRequest;
+  LCount: Integer;
+begin
+  LRestRequest := NewGETRequest('AddPermission');
+
+  LCount := 0;
+  while Request.ActionsName.HasNext do
+  begin
+    Inc(LCount);
+    LRestRequest.Params
+      .QueryAddOrSet(Format('ActionName.member.%s', [LCount.ToString]), Request.ActionsName.Current);
+  end;
+
+  LCount := 0;
+  while Request.AWSAccountsId.HasNext do
+  begin
+    Inc(LCount);
+    LRestRequest.Params
+      .QueryAddOrSet(Format('AWSAccountId.member.%s', [LCount.ToString]), Request.AWSAccountsId.Current);
+  end;
+
+  LRestRequest.Send;
 end;
 
 procedure TAWS4DSNSService<I>.AddQueryAttribute(Request: IGBClientRequest; Key, Value: String; var Count: Integer);
