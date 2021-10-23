@@ -46,7 +46,10 @@ uses
   AWS4D.SNS.Facade.AddPermission in '..\..\Source\SNS\AWS4D.SNS.Facade.AddPermission.pas',
   AWS4D.SNS.Model.CheckIfPhoneNumberIsOptedOut.Request in '..\..\Source\SNS\AWS4D.SNS.Model.CheckIfPhoneNumberIsOptedOut.Request.pas',
   AWS4D.SNS.Model.CheckIfPhoneNumberIsOptedOut.Response in '..\..\Source\SNS\AWS4D.SNS.Model.CheckIfPhoneNumberIsOptedOut.Response.pas',
-  AWS4D.SNS.Facade.CheckIfPhoneNumberIsOptedOut in '..\..\Source\SNS\AWS4D.SNS.Facade.CheckIfPhoneNumberIsOptedOut.pas';
+  AWS4D.SNS.Facade.CheckIfPhoneNumberIsOptedOut in '..\..\Source\SNS\AWS4D.SNS.Facade.CheckIfPhoneNumberIsOptedOut.pas',
+  AWS4D.SNS.Model.ConfirmSubscription.Request in '..\..\Source\SNS\AWS4D.SNS.Model.ConfirmSubscription.Request.pas',
+  AWS4D.SNS.Model.ConfirmSubscription.Response in '..\..\Source\SNS\AWS4D.SNS.Model.ConfirmSubscription.Response.pas',
+  AWS4D.SNS.Facade.ConfirmSubscription in '..\..\Source\SNS\AWS4D.SNS.Facade.ConfirmSubscription.pas';
 
 {$R *.res}
 

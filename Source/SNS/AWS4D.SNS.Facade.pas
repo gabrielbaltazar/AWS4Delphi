@@ -8,6 +8,7 @@ uses
   AWS4D.SNS.Model.Interfaces,
   AWS4D.SNS.Facade.AddPermission,
   AWS4D.SNS.Facade.CheckIfPhoneNumberIsOptedOut,
+  AWS4D.SNS.Facade.ConfirmSubscription,
   AWS4D.SNS.Facade.CreateTopic,
   AWS4D.SNS.Facade.DeleteTopic,
   AWS4D.SNS.Facade.ListSubscriptions,
@@ -31,6 +32,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
 
     FAddPermission: IAWS4DSNSFacadeAddPermission;
     FCheckIfPhoneNumberIsOptedOut: IAWS4DSNSFacadeCheckIfPhoneNumberIsOptedOut;
+    FConfirmSubscription: IAWS4DSNSFacadeConfirmSubscription;
     FCreateTopic: IAWS4DSNSFacadeCreateTopic;
     FDeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     FListSubsctiptions: IAWS4DSNSFacadeListSubscriptions;
@@ -53,6 +55,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
 
     function AddPermission: IAWS4DSNSFacadeAddPermission;
     function CheckIfPhoneNumberIsOptedOut: IAWS4DSNSFacadeCheckIfPhoneNumberIsOptedOut;
+    function ConfirmSubscription: IAWS4DSNSFacadeConfirmSubscription;
     function CreateTopic: IAWS4DSNSFacadeCreateTopic;
     function DeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
@@ -106,6 +109,19 @@ begin
   end;
 
   result := FCheckIfPhoneNumberIsOptedOut;
+end;
+
+function TAWS4DSNSFacade.ConfirmSubscription: IAWS4DSNSFacadeConfirmSubscription;
+var
+  service: IAWS4DSNSService<IAWS4DSNSFacadeConfirmSubscription>;
+begin
+  if not Assigned(FConfirmSubscription) then
+  begin
+    service := Self.SNSService<IAWS4DSNSFacadeConfirmSubscription>;
+    FConfirmSubscription := TAWS4DSNSFacadeConfirmSubscription.New(service);
+  end;
+
+  result := FConfirmSubscription;
 end;
 
 constructor TAWS4DSNSFacade.create;

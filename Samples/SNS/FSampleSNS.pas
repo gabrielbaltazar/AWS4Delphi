@@ -93,6 +93,15 @@ type
     edtPublishSubject: TEdit;
     edtPublishMessageId: TEdit;
     lbl3: TLabel;
+    tsConfirmSubscription: TTabSheet;
+    Panel8: TPanel;
+    Label24: TLabel;
+    Label25: TLabel;
+    edtConfirmSubscriptionToken: TEdit;
+    btnConfirmSubscription: TButton;
+    edtConfirmSubscriptionTopicArn: TEdit;
+    Label26: TLabel;
+    edtConfirmSubscriptionSubscriptionArn: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnListTopicsClick(Sender: TObject);
     procedure btnListSubscriptionsClick(Sender: TObject);
@@ -101,6 +110,7 @@ type
     procedure btnSubscribeClick(Sender: TObject);
     procedure btnUnsubscribeClick(Sender: TObject);
     procedure btnPublishClick(Sender: TObject);
+    procedure btnConfirmSubscriptionClick(Sender: TObject);
   private
     FSNSFacade: IAWS4DSNSFacade;
 
@@ -120,6 +130,20 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TForm1.btnConfirmSubscriptionClick(Sender: TObject);
+begin
+  InitializeSNS;
+  FSNSFacade.ConfirmSubscription
+    .Request
+      .Token(edtConfirmSubscriptionToken.Text)
+      .TopicArn(edtConfirmSubscriptionTopicArn.Text)
+    .&End
+    .Send;
+
+  edtConfirmSubscriptionSubscriptionArn.Text :=
+    FSNSFacade.ConfirmSubscription.Response.SubscriptionArn;
+end;
 
 procedure TForm1.btnCreateTopicClick(Sender: TObject);
 begin

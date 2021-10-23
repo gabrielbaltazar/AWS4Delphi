@@ -44,6 +44,27 @@ type
     function &End: I;
   end;
 
+  IAWS4DSNSConfirmSubscriptionRequest<I: IInterface> = interface
+    ['{B24B5329-8006-4BCD-B71A-777365B0BFAB}']
+    function AuthenticateOnUnsubscribe(Value: Boolean): IAWS4DSNSConfirmSubscriptionRequest<I>; overload;
+    function AuthenticateOnUnsubscribe: Boolean; overload;
+
+    function Token(Value: String): IAWS4DSNSConfirmSubscriptionRequest<I>; overload;
+    function Token: string; overload;
+
+    function TopicArn(Value: String): IAWS4DSNSConfirmSubscriptionRequest<I>; overload;
+    function TopicArn: string; overload;
+
+    function &End: I;
+  end;
+
+  IAWS4DSNSConfirmSubscriptionResponse<I: IInterface> = interface
+    ['{B24B5329-8006-4BCD-B71A-777365B0BFAB}']
+    function SubscriptionArn: string;
+
+    function &End: I;
+  end;
+
   IAWS4DSNSCreateTopicRequest<I: IInterface> = interface
     ['{503C3822-F05A-4DF3-B765-846E1D8F5651}']
     function Name(Value: String): IAWS4DSNSCreateTopicRequest<I>; overload;

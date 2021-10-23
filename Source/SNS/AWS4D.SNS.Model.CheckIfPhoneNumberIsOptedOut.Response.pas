@@ -51,16 +51,16 @@ end;
 
 procedure TAWS4DSNSModelCheckIfPhoneNumberIsOptedOutResponse<I>.FromJSON(Value: TJSONObject);
 var
-  json: TJSONObject;
+  LJSON: TJSONObject;
 begin
   inherited;
   if not Assigned(Value) then
     Exit;
 
-  json := Value.ValueAsJSONObject('CheckIfPhoneNumberIsOptedOutResponse')
+  LJSON := Value.ValueAsJSONObject('CheckIfPhoneNumberIsOptedOutResponse')
                .ValueAsJSONObject('CheckIfPhoneNumberIsOptedOutResult');
 
-  FIsOptedOut := json.ValueAsBoolean('isOptedOut', False);
+  FIsOptedOut := LJSON.ValueAsBoolean('isOptedOut', False);
 
 end;
 

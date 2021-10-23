@@ -16,6 +16,7 @@ type
 
     procedure AddPermission(Request: IAWS4DSNSAddPermissionRequest<I>);
     function CheckIfPhoneNumberIsOptedOut(Request: IAWS4DSNSCheckIfPhoneNumberIsOptedOutRequest<I>): IAWS4DSNSCheckIfPhoneNumberIsOptedOutResponse<I>;
+    function ConfirmSubscription(Request: IAWS4DSNSConfirmSubscriptionRequest<I>): IAWS4DSNSConfirmSubscriptionResponse<I>;
     function CreateTopic(Request: IAWS4DSNSCreateTopicRequest<I>): IAWS4DSNSCreateTopicResponse<I>;
     procedure DeleteTopic(Request: IAWS4DSNSDeleteTopicRequest<I>);
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;

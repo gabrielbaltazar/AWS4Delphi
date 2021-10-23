@@ -147,6 +147,9 @@
         <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Model.CheckIfPhoneNumberIsOptedOut.Request.pas"/>
         <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Model.CheckIfPhoneNumberIsOptedOut.Response.pas"/>
         <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Facade.CheckIfPhoneNumberIsOptedOut.pas"/>
+        <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Model.ConfirmSubscription.Request.pas"/>
+        <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Model.ConfirmSubscription.Response.pas"/>
+        <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Facade.ConfirmSubscription.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

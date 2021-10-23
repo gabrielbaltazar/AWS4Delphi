@@ -24,7 +24,6 @@ object Form1: TForm1
     BevelOuter = bvNone
     Caption = 'SNS'
     TabOrder = 0
-    ExplicitWidth = 745
   end
   object pnlHeader: TPanel
     Left = 0
@@ -34,7 +33,6 @@ object Form1: TForm1
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitWidth = 745
     object Label1: TLabel
       Left = 11
       Top = 9
@@ -83,11 +81,9 @@ object Form1: TForm1
     Top = 91
     Width = 887
     Height = 387
-    ActivePage = tsPublish
+    ActivePage = tsConfirmSubscription
     Align = alClient
     TabOrder = 2
-    ExplicitWidth = 745
-    ExplicitHeight = 310
     object tsListSubscriptions: TTabSheet
       Caption = 'List Subscriptions'
       object Panel3: TPanel
@@ -98,7 +94,6 @@ object Form1: TForm1
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 737
         object Label4: TLabel
           Left = 7
           Top = 7
@@ -145,8 +140,6 @@ object Form1: TForm1
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 737
-        ExplicitHeight = 226
       end
     end
     object tsListTopics: TTabSheet
@@ -160,7 +153,6 @@ object Form1: TForm1
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 737
         object Label6: TLabel
           Left = 7
           Top = 7
@@ -193,8 +185,6 @@ object Form1: TForm1
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 737
-        ExplicitHeight = 226
       end
     end
     object tsCreateTopic: TTabSheet
@@ -208,7 +198,6 @@ object Form1: TForm1
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 737
         object Label7: TLabel
           Left = 7
           Top = 7
@@ -241,8 +230,6 @@ object Form1: TForm1
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 737
-        ExplicitHeight = 226
       end
     end
     object tsDeleteTopic: TTabSheet
@@ -256,7 +243,6 @@ object Form1: TForm1
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 737
         object Label9: TLabel
           Left = 7
           Top = 7
@@ -293,7 +279,6 @@ object Form1: TForm1
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 737
         object Label8: TLabel
           Left = 7
           Top = 7
@@ -355,8 +340,6 @@ object Form1: TForm1
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 1
-        ExplicitWidth = 737
-        ExplicitHeight = 193
       end
     end
     object tsUnsubscribe: TTabSheet
@@ -370,7 +353,6 @@ object Form1: TForm1
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 737
         object Label11: TLabel
           Left = 7
           Top = 7
@@ -407,8 +389,6 @@ object Form1: TForm1
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 737
-        ExplicitHeight = 305
         object Label12: TLabel
           Left = 15
           Top = 149
@@ -613,6 +593,70 @@ object Form1: TForm1
           Width = 380
           Height = 21
           TabOrder = 14
+        end
+      end
+    end
+    object tsConfirmSubscription: TTabSheet
+      Caption = 'Confirm Subscription'
+      ImageIndex = 7
+      object Panel8: TPanel
+        Left = 0
+        Top = 0
+        Width = 879
+        Height = 97
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        object Label24: TLabel
+          Left = 7
+          Top = 7
+          Width = 29
+          Height = 13
+          Caption = 'Token'
+        end
+        object Label25: TLabel
+          Left = 7
+          Top = 55
+          Width = 45
+          Height = 13
+          Caption = 'Topic Arn'
+        end
+        object Label26: TLabel
+          Left = 427
+          Top = 57
+          Width = 78
+          Height = 13
+          Caption = 'Subscription Arn'
+        end
+        object edtConfirmSubscriptionToken: TEdit
+          Left = 7
+          Top = 22
+          Width = 858
+          Height = 21
+          TabOrder = 0
+        end
+        object btnConfirmSubscription: TButton
+          Left = 280
+          Top = 68
+          Width = 121
+          Height = 25
+          Caption = 'Confirm Subscription'
+          TabOrder = 1
+          OnClick = btnConfirmSubscriptionClick
+        end
+        object edtConfirmSubscriptionTopicArn: TEdit
+          Left = 7
+          Top = 70
+          Width = 258
+          Height = 21
+          TabOrder = 2
+        end
+        object edtConfirmSubscriptionSubscriptionArn: TEdit
+          Left = 427
+          Top = 70
+          Width = 258
+          Height = 21
+          TabOrder = 3
         end
       end
     end
