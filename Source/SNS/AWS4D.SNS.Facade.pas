@@ -9,6 +9,7 @@ uses
   AWS4D.SNS.Facade.AddPermission,
   AWS4D.SNS.Facade.CheckIfPhoneNumberIsOptedOut,
   AWS4D.SNS.Facade.ConfirmSubscription,
+  AWS4D.SNS.Facade.CreateSMSSandboxPhoneNumber,
   AWS4D.SNS.Facade.CreateTopic,
   AWS4D.SNS.Facade.DeleteTopic,
   AWS4D.SNS.Facade.ListSubscriptions,
@@ -33,6 +34,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     FAddPermission: IAWS4DSNSFacadeAddPermission;
     FCheckIfPhoneNumberIsOptedOut: IAWS4DSNSFacadeCheckIfPhoneNumberIsOptedOut;
     FConfirmSubscription: IAWS4DSNSFacadeConfirmSubscription;
+    FCreateSMSSandboxPhoneNumber: IAWS4DSNSFacadeCreateSMSSandboxPhoneNumber;
     FCreateTopic: IAWS4DSNSFacadeCreateTopic;
     FDeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     FListSubsctiptions: IAWS4DSNSFacadeListSubscriptions;
@@ -56,6 +58,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     function AddPermission: IAWS4DSNSFacadeAddPermission;
     function CheckIfPhoneNumberIsOptedOut: IAWS4DSNSFacadeCheckIfPhoneNumberIsOptedOut;
     function ConfirmSubscription: IAWS4DSNSFacadeConfirmSubscription;
+    function CreateSMSSandboxPhoneNumber: IAWS4DSNSFacadeCreateSMSSandboxPhoneNumber;
     function CreateTopic: IAWS4DSNSFacadeCreateTopic;
     function DeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
@@ -127,6 +130,19 @@ end;
 constructor TAWS4DSNSFacade.create;
 begin
   FRegion := aws4dUSEast1;
+end;
+
+function TAWS4DSNSFacade.CreateSMSSandboxPhoneNumber: IAWS4DSNSFacadeCreateSMSSandboxPhoneNumber;
+var
+  service: IAWS4DSNSService<IAWS4DSNSFacadeCreateSMSSandboxPhoneNumber>;
+begin
+  if not Assigned(FCreateSMSSandboxPhoneNumber) then
+  begin
+    service := Self.SNSService<IAWS4DSNSFacadeCreateSMSSandboxPhoneNumber>;
+    FCreateSMSSandboxPhoneNumber := TAWS4DSNSFacadeCreateSMSSandboxPhoneNumber.New(service);
+  end;
+
+  result := FCreateSMSSandboxPhoneNumber;
 end;
 
 function TAWS4DSNSFacade.CreateTopic: IAWS4DSNSFacadeCreateTopic;

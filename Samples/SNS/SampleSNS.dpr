@@ -49,7 +49,9 @@ uses
   AWS4D.SNS.Facade.CheckIfPhoneNumberIsOptedOut in '..\..\Source\SNS\AWS4D.SNS.Facade.CheckIfPhoneNumberIsOptedOut.pas',
   AWS4D.SNS.Model.ConfirmSubscription.Request in '..\..\Source\SNS\AWS4D.SNS.Model.ConfirmSubscription.Request.pas',
   AWS4D.SNS.Model.ConfirmSubscription.Response in '..\..\Source\SNS\AWS4D.SNS.Model.ConfirmSubscription.Response.pas',
-  AWS4D.SNS.Facade.ConfirmSubscription in '..\..\Source\SNS\AWS4D.SNS.Facade.ConfirmSubscription.pas';
+  AWS4D.SNS.Facade.ConfirmSubscription in '..\..\Source\SNS\AWS4D.SNS.Facade.ConfirmSubscription.pas',
+  AWS4D.SNS.Model.CreateSMSSandboxPhoneNumber.Request in '..\..\Source\SNS\AWS4D.SNS.Model.CreateSMSSandboxPhoneNumber.Request.pas',
+  AWS4D.SNS.Facade.CreateSMSSandboxPhoneNumber in '..\..\Source\SNS\AWS4D.SNS.Facade.CreateSMSSandboxPhoneNumber.pas';
 
 {$R *.res}
 

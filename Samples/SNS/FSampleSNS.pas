@@ -102,6 +102,11 @@ type
     edtConfirmSubscriptionTopicArn: TEdit;
     Label26: TLabel;
     edtConfirmSubscriptionSubscriptionArn: TEdit;
+    tsCreateSMSSandboxPhoneNumber: TTabSheet;
+    Panel9: TPanel;
+    Label27: TLabel;
+    edtCreateSMSSandboxPhoneNumber: TEdit;
+    btnCreateSMSSandboxPhoneNumber: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnListTopicsClick(Sender: TObject);
     procedure btnListSubscriptionsClick(Sender: TObject);
@@ -111,6 +116,7 @@ type
     procedure btnUnsubscribeClick(Sender: TObject);
     procedure btnPublishClick(Sender: TObject);
     procedure btnConfirmSubscriptionClick(Sender: TObject);
+    procedure btnCreateSMSSandboxPhoneNumberClick(Sender: TObject);
   private
     FSNSFacade: IAWS4DSNSFacade;
 
@@ -143,6 +149,16 @@ begin
 
   edtConfirmSubscriptionSubscriptionArn.Text :=
     FSNSFacade.ConfirmSubscription.Response.SubscriptionArn;
+end;
+
+procedure TForm1.btnCreateSMSSandboxPhoneNumberClick(Sender: TObject);
+begin
+  InitializeSNS;
+  FSNSFacade.CreateSMSSandboxPhoneNumber
+    .Request
+      .PhoneNumber(edtCreateSMSSandboxPhoneNumber.Text)
+    .&End
+    .Send;
 end;
 
 procedure TForm1.btnCreateTopicClick(Sender: TObject);

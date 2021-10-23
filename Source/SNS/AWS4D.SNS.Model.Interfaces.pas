@@ -65,6 +65,17 @@ type
     function &End: I;
   end;
 
+  IAWS4DSNSCreateSMSSandboxPhoneNumberRequest<I: IInterface> = interface
+    ['{F001803F-69F1-470D-A53E-7FBF01DD92AE}']
+    function LanguageCode(Value: String): IAWS4DSNSCreateSMSSandboxPhoneNumberRequest<I>; overload;
+    function LanguageCode: String; overload;
+
+    function PhoneNumber(Value: String): IAWS4DSNSCreateSMSSandboxPhoneNumberRequest<I>; overload;
+    function PhoneNumber: String; overload;
+
+    function &End: I;
+  end;
+
   IAWS4DSNSCreateTopicRequest<I: IInterface> = interface
     ['{503C3822-F05A-4DF3-B765-846E1D8F5651}']
     function Name(Value: String): IAWS4DSNSCreateTopicRequest<I>; overload;

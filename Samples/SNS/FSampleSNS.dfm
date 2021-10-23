@@ -81,7 +81,7 @@ object Form1: TForm1
     Top = 91
     Width = 887
     Height = 387
-    ActivePage = tsConfirmSubscription
+    ActivePage = tsCreateSMSSandboxPhoneNumber
     Align = alClient
     TabOrder = 2
     object tsListSubscriptions: TTabSheet
@@ -657,6 +657,43 @@ object Form1: TForm1
           Width = 258
           Height = 21
           TabOrder = 3
+        end
+      end
+    end
+    object tsCreateSMSSandboxPhoneNumber: TTabSheet
+      Caption = 'Create SMS Sandbox PhoneNumber'
+      ImageIndex = 8
+      object Panel9: TPanel
+        Left = 0
+        Top = 0
+        Width = 879
+        Height = 56
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitTop = 8
+        object Label27: TLabel
+          Left = 7
+          Top = 7
+          Width = 70
+          Height = 13
+          Caption = 'Phone Number'
+        end
+        object edtCreateSMSSandboxPhoneNumber: TEdit
+          Left = 7
+          Top = 22
+          Width = 258
+          Height = 21
+          TabOrder = 0
+        end
+        object btnCreateSMSSandboxPhoneNumber: TButton
+          Left = 272
+          Top = 20
+          Width = 201
+          Height = 25
+          Caption = 'Create SMS Sandbox PhoneNumber'
+          TabOrder = 1
+          OnClick = btnCreateSMSSandboxPhoneNumberClick
         end
       end
     end

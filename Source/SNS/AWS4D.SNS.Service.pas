@@ -43,6 +43,7 @@ type TAWS4DSNSService<I: IInterface> = class(TInterfacedObject, IAWS4DSNSService
     procedure AddPermission(Request: IAWS4DSNSAddPermissionRequest<I>);
     function CheckIfPhoneNumberIsOptedOut(Request: IAWS4DSNSCheckIfPhoneNumberIsOptedOutRequest<I>): IAWS4DSNSCheckIfPhoneNumberIsOptedOutResponse<I>;
     function ConfirmSubscription(Request: IAWS4DSNSConfirmSubscriptionRequest<I>): IAWS4DSNSConfirmSubscriptionResponse<I>;
+    procedure CreateSMSSandboxPhoneNumber(Request: IAWS4DSNSCreateSMSSandboxPhoneNumberRequest<I>);
     function CreateTopic(Request: IAWS4DSNSCreateTopicRequest<I>): IAWS4DSNSCreateTopicResponse<I>;
     procedure DeleteTopic(Request: IAWS4DSNSDeleteTopicRequest<I>);
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
@@ -163,6 +164,19 @@ end;
 constructor TAWS4DSNSService<I>.create;
 begin
   FRegion := aws4dUSEast1;
+end;
+
+procedure TAWS4DSNSService<I>.CreateSMSSandboxPhoneNumber(Request: IAWS4DSNSCreateSMSSandboxPhoneNumberRequest<I>);
+var
+  LRestRequest: IGBClientRequest;
+  LJson: TJSONObject;
+begin
+  LRestRequest := NewGETRequest('CreateSMSSandboxPhoneNumber');
+  if Request.LanguageCode.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('LanguageCode', Request.LanguageCode);
+
+  LRestRequest.Params.QueryAddOrSet('PhoneNumber', Request.PhoneNumber);
+  LRestRequest.Send;
 end;
 
 function TAWS4DSNSService<I>.CreateTopic(Request: IAWS4DSNSCreateTopicRequest<I>): IAWS4DSNSCreateTopicResponse<I>;

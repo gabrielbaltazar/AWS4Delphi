@@ -10,6 +10,7 @@ type
   IAWS4DSNSFacadeAddPermission = interface;
   IAWS4DSNSFacadeCheckIfPhoneNumberIsOptedOut = interface;
   IAWS4DSNSFacadeConfirmSubscription = interface;
+  IAWS4DSNSFacadeCreateSMSSandboxPhoneNumber = interface;
   IAWS4DSNSFacadeCreateTopic = interface;
   IAWS4DSNSFacadeDeleteTopic = interface;
   IAWS4DSNSFacadeListSubscriptions = interface;
@@ -32,6 +33,7 @@ type
     function AddPermission: IAWS4DSNSFacadeAddPermission;
     function CheckIfPhoneNumberIsOptedOut: IAWS4DSNSFacadeCheckIfPhoneNumberIsOptedOut;
     function ConfirmSubscription: IAWS4DSNSFacadeConfirmSubscription;
+    function CreateSMSSandboxPhoneNumber: IAWS4DSNSFacadeCreateSMSSandboxPhoneNumber;
     function CreateTopic: IAWS4DSNSFacadeCreateTopic;
     function DeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
@@ -63,6 +65,12 @@ type
     function Request: IAWS4DSNSConfirmSubscriptionRequest<IAWS4DSNSFacadeConfirmSubscription>;
     function Send: IAWS4DSNSConfirmSubscriptionResponse<IAWS4DSNSFacadeConfirmSubscription>;
     function Response: IAWS4DSNSConfirmSubscriptionResponse<IAWS4DSNSFacadeConfirmSubscription>;
+  end;
+
+  IAWS4DSNSFacadeCreateSMSSandboxPhoneNumber = interface
+    ['{1265DAEA-59F1-4650-9AE8-C99CC26E79F5}']
+    function Request: IAWS4DSNSCreateSMSSandboxPhoneNumberRequest<IAWS4DSNSFacadeCreateSMSSandboxPhoneNumber>;
+    function Send: IAWS4DSNSCreateSMSSandboxPhoneNumberRequest<IAWS4DSNSFacadeCreateSMSSandboxPhoneNumber>;
   end;
 
   IAWS4DSNSFacadeCreateTopic = interface
