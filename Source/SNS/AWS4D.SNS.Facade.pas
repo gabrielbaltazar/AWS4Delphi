@@ -11,6 +11,7 @@ uses
   AWS4D.SNS.Facade.ListSubscriptions,
   AWS4D.SNS.Facade.ListTopics,
   AWS4D.SNS.Facade.Publish,
+  AWS4D.SNS.Facade.SetPlatformApplicationAttributes,
   AWS4D.SNS.Facade.SetSubscriptionAttributes,
   AWS4D.SNS.Facade.SetTopicAttributes,
   AWS4D.SNS.Facade.Subscribe,
@@ -30,6 +31,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     FListSubsctiptions: IAWS4DSNSFacadeListSubscriptions;
     FListTopics: IAWS4DSNSFacadeListTopics;
     FPublish: IAWS4DSNSFacadePublish;
+    FSetPlatformApplicationAttributes: IAWS4DSNSFacadeSetPlatformApplicationAttributes;
     FSetSubscriptionsAttributes: IAWS4DSNSFacadeSetSubscriptionAttributes;
     FSetTopicAttributes: IAWS4DSNSFacadeSetTopicAttributes;
     FSubscribe: IAWS4DSNSFacadeSubscribe;
@@ -48,6 +50,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
     function Publish: IAWS4DSNSFacadePublish;
+    function SetPlatformApplicationAttributes: IAWS4DSNSFacadeSetPlatformApplicationAttributes;
     function SetSubscriptionsAttributes: IAWS4DSNSFacadeSetSubscriptionAttributes;
     function SetTopicAttributes: IAWS4DSNSFacadeSetTopicAttributes;
     function Subscribe: IAWS4DSNSFacadeSubscribe;
@@ -167,6 +170,19 @@ function TAWS4DSNSFacade.SecretKey(Value: String): IAWS4DSNSFacade;
 begin
   result := Self;
   FSecretKey := Value;
+end;
+
+function TAWS4DSNSFacade.SetPlatformApplicationAttributes: IAWS4DSNSFacadeSetPlatformApplicationAttributes;
+var
+  service: IAWS4DSNSService<IAWS4DSNSFacadeSetPlatformApplicationAttributes>;
+begin
+  if not Assigned(FSetPlatformApplicationAttributes) then
+  begin
+    service := Self.SNSService<IAWS4DSNSFacadeSetPlatformApplicationAttributes>;
+    FSetPlatformApplicationAttributes := TAWS4DSNSFacadeSetPlatformApplicationAttributes.New(service);
+  end;
+
+  result := FSetPlatformApplicationAttributes;
 end;
 
 function TAWS4DSNSFacade.SetSubscriptionsAttributes: IAWS4DSNSFacadeSetSubscriptionAttributes;

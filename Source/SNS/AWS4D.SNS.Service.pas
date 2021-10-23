@@ -44,6 +44,7 @@ type TAWS4DSNSService<I: IInterface> = class(TInterfacedObject, IAWS4DSNSService
     function ListSubscriptionsByTopic(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
     function Publish(Request: IAWS4DSNSPublishRequest<I>): IAWS4DSNSPublishResponse<I>;
+    procedure SetPlatformApplicationAttributes(Request: IAWS4DSNSSetPlatformApplicationAttributesRequest<I>);
     procedure SetSubscriptionAttributes(Request: IAWS4DSNSSetSubscriptionAttributesRequest<I>);
     procedure SetTopicAttributes(Request: IAWS4DSNSSetTopicAttributesRequest<I>);
     function Subscribe(Request: IAWS4DSNSSubscribeRequest<I>): IAWS4DSNSSubscribeResponse<I>;
@@ -78,9 +79,9 @@ begin
   if Value.Trim <> EmptyStr then
   begin
     Request.Params
-      .QueryAddOrSet(Format('Attributes.entry.%s.key', [Count.ToString]), Key);
+      .QueryAddOrSet(Format('Attributes.%s.key', [Count.ToString]), Key);
     Request.Params
-      .QueryAddOrSet(Format('Attributes.entry.%s.value', [Count.ToString]), Value);
+      .QueryAddOrSet(Format('Attributes.%s.value', [Count.ToString]), Value);
 
     Inc(Count);
   end;
@@ -301,6 +302,30 @@ function TAWS4DSNSService<I>.SecretKey(Value: String): IAWS4DSNSService<I>;
 begin
   result := Self;
   FSecretKey := Value;
+end;
+
+procedure TAWS4DSNSService<I>.SetPlatformApplicationAttributes(Request: IAWS4DSNSSetPlatformApplicationAttributesRequest<I>);
+var
+  LRestRequest: IGBClientRequest;
+  LCount: Integer;
+begin
+  LCount := 0;
+  LRestRequest := NewGETRequest('SetPlatformApplicationAttributes');
+
+  AddQueryAttribute(LRestRequest, 'PlatformCredential', Request.PlatformCredential, LCount);
+  AddQueryAttribute(LRestRequest, 'PlatformPrincipal', Request.PlatformPrincipal, LCount);
+  AddQueryAttribute(LRestRequest, 'EventEndpointCreated', Request.EventEndpointCreated, LCount);
+  AddQueryAttribute(LRestRequest, 'EventEndpointDeleted', Request.EventEndpointDeleted, LCount);
+  AddQueryAttribute(LRestRequest, 'EventEndpointUpdated', Request.EventEndpointUpdated, LCount);
+  AddQueryAttribute(LRestRequest, 'EventDeliveryFailure', Request.EventDeliveryFailure, LCount);
+  AddQueryAttribute(LRestRequest, 'SuccessFeedbackRoleArn', Request.SuccessFeedbackRoleArn, LCount);
+  AddQueryAttribute(LRestRequest, 'FailureFeedbackRoleArn', Request.FailureFeedbackRoleArn, LCount);
+  AddQueryAttribute(LRestRequest, 'SuccessFeedbackSampleRate', Request.SuccessFeedbackSampleRate.ToString, LCount);
+
+  LRestRequest.Params
+    .QueryAddOrSet('PlatformApplicationArn', Request.PlatformApplicationArn);
+
+  LRestRequest.Send;
 end;
 
 procedure TAWS4DSNSService<I>.SetSubscriptionAttributes(Request: IAWS4DSNSSetSubscriptionAttributesRequest<I>);

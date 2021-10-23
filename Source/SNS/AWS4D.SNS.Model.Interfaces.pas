@@ -160,6 +160,41 @@ type
     function Topics: IAWS4DIterator<String>;
   end;
 
+  IAWS4DSNSSetPlatformApplicationAttributesRequest<I> = interface
+    ['{4E8C5E0B-6881-4FC5-879E-B8DBE3D94456}']
+    function PlatformCredential(Value: String): IAWS4DSNSSetPlatformApplicationAttributesRequest<I>; overload;
+    function PlatformCredential: String; overload;
+
+    function PlatformPrincipal(Value: String): IAWS4DSNSSetPlatformApplicationAttributesRequest<I>; overload;
+    function PlatformPrincipal: String; overload;
+
+    function EventEndpointCreated(Value: String): IAWS4DSNSSetPlatformApplicationAttributesRequest<I>; overload;
+    function EventEndpointCreated: String; overload;
+
+    function EventEndpointDeleted(Value: String): IAWS4DSNSSetPlatformApplicationAttributesRequest<I>; overload;
+    function EventEndpointDeleted: String; overload;
+
+    function EventEndpointUpdated(Value: String): IAWS4DSNSSetPlatformApplicationAttributesRequest<I>; overload;
+    function EventEndpointUpdated: String; overload;
+
+    function EventDeliveryFailure(Value: String): IAWS4DSNSSetPlatformApplicationAttributesRequest<I>; overload;
+    function EventDeliveryFailure: String; overload;
+
+    function SuccessFeedbackRoleArn(Value: String): IAWS4DSNSSetPlatformApplicationAttributesRequest<I>; overload;
+    function SuccessFeedbackRoleArn: String; overload;
+
+    function FailureFeedbackRoleArn(Value: String): IAWS4DSNSSetPlatformApplicationAttributesRequest<I>; overload;
+    function FailureFeedbackRoleArn: String; overload;
+
+    function SuccessFeedbackSampleRate(Value: Integer): IAWS4DSNSSetPlatformApplicationAttributesRequest<I>; overload;
+    function SuccessFeedbackSampleRate: Integer; overload;
+
+    function PlatformApplicationArn(Value: String): IAWS4DSNSSetPlatformApplicationAttributesRequest<I>; overload;
+    function PlatformApplicationArn: String; overload;
+
+    function &End: I;
+  end;
+
   IAWS4DSNSSetSubscriptionAttributesRequest<I> = interface
     ['{0D212BB5-2A52-4FE7-98A1-DF338BDAD796}']
     function AttributeName(Value: string): IAWS4DSNSSetSubscriptionAttributesRequest<I>; overload;
