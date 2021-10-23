@@ -11,6 +11,7 @@ uses
   AWS4D.SNS.Facade.ListSubscriptions,
   AWS4D.SNS.Facade.ListTopics,
   AWS4D.SNS.Facade.Publish,
+  AWS4D.SNS.Facade.SetEndpointAttributes,
   AWS4D.SNS.Facade.SetPlatformApplicationAttributes,
   AWS4D.SNS.Facade.SetSubscriptionAttributes,
   AWS4D.SNS.Facade.SetTopicAttributes,
@@ -31,6 +32,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     FListSubsctiptions: IAWS4DSNSFacadeListSubscriptions;
     FListTopics: IAWS4DSNSFacadeListTopics;
     FPublish: IAWS4DSNSFacadePublish;
+    FSetEndpointAttributes: IAWS4DSNSFacadeSetEndpointAttributes;
     FSetPlatformApplicationAttributes: IAWS4DSNSFacadeSetPlatformApplicationAttributes;
     FSetSubscriptionsAttributes: IAWS4DSNSFacadeSetSubscriptionAttributes;
     FSetTopicAttributes: IAWS4DSNSFacadeSetTopicAttributes;
@@ -50,6 +52,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
     function Publish: IAWS4DSNSFacadePublish;
+    function SetEndpointAttributes: IAWS4DSNSFacadeSetEndpointAttributes;
     function SetPlatformApplicationAttributes: IAWS4DSNSFacadeSetPlatformApplicationAttributes;
     function SetSubscriptionsAttributes: IAWS4DSNSFacadeSetSubscriptionAttributes;
     function SetTopicAttributes: IAWS4DSNSFacadeSetTopicAttributes;
@@ -170,6 +173,19 @@ function TAWS4DSNSFacade.SecretKey(Value: String): IAWS4DSNSFacade;
 begin
   result := Self;
   FSecretKey := Value;
+end;
+
+function TAWS4DSNSFacade.SetEndpointAttributes: IAWS4DSNSFacadeSetEndpointAttributes;
+var
+  service: IAWS4DSNSService<IAWS4DSNSFacadeSetEndpointAttributes>;
+begin
+  if not Assigned(FSetEndpointAttributes) then
+  begin
+    service := Self.SNSService<IAWS4DSNSFacadeSetEndpointAttributes>;
+    FSetEndpointAttributes := TAWS4DSNSFacadeSetEndpointAttributes.New(service);
+  end;
+
+  result := FSetEndpointAttributes;
 end;
 
 function TAWS4DSNSFacade.SetPlatformApplicationAttributes: IAWS4DSNSFacadeSetPlatformApplicationAttributes;

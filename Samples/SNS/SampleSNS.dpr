@@ -39,7 +39,9 @@ uses
   AWS4D.SNS.Model.Publish.Response in '..\..\Source\SNS\AWS4D.SNS.Model.Publish.Response.pas',
   AWS4D.SNS.Facade.Publish in '..\..\Source\SNS\AWS4D.SNS.Facade.Publish.pas',
   AWS4D.SNS.Model.SetPlatformApplicationAttributes.Request in '..\..\Source\SNS\AWS4D.SNS.Model.SetPlatformApplicationAttributes.Request.pas',
-  AWS4D.SNS.Facade.SetPlatformApplicationAttributes in '..\..\Source\SNS\AWS4D.SNS.Facade.SetPlatformApplicationAttributes.pas';
+  AWS4D.SNS.Facade.SetPlatformApplicationAttributes in '..\..\Source\SNS\AWS4D.SNS.Facade.SetPlatformApplicationAttributes.pas',
+  AWS4D.SNS.Model.SetEndpointAttributes.Request in '..\..\Source\SNS\AWS4D.SNS.Model.SetEndpointAttributes.Request.pas',
+  AWS4D.SNS.Facade.SetEndpointAttributes in '..\..\Source\SNS\AWS4D.SNS.Facade.SetEndpointAttributes.pas';
 
 {$R *.res}
 

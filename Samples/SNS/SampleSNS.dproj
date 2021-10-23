@@ -140,6 +140,8 @@
         <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Facade.Publish.pas"/>
         <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Model.SetPlatformApplicationAttributes.Request.pas"/>
         <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Facade.SetPlatformApplicationAttributes.pas"/>
+        <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Model.SetEndpointAttributes.Request.pas"/>
+        <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Facade.SetEndpointAttributes.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

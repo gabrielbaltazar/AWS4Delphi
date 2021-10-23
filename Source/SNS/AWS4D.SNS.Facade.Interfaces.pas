@@ -12,6 +12,7 @@ type
   IAWS4DSNSFacadeListSubscriptions = interface;
   IAWS4DSNSFacadeListTopics = interface;
   IAWS4DSNSFacadePublish = interface;
+  IAWS4DSNSFacadeSetEndpointAttributes = interface;
   IAWS4DSNSFacadeSetPlatformApplicationAttributes = interface;
   IAWS4DSNSFacadeSetSubscriptionAttributes = interface;
   IAWS4DSNSFacadeSetTopicAttributes = interface;
@@ -30,6 +31,7 @@ type
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
     function Publish: IAWS4DSNSFacadePublish;
+    function SetEndpointAttributes: IAWS4DSNSFacadeSetEndpointAttributes;
     function SetPlatformApplicationAttributes: IAWS4DSNSFacadeSetPlatformApplicationAttributes;
     function SetSubscriptionsAttributes: IAWS4DSNSFacadeSetSubscriptionAttributes;
     function SetTopicAttributes: IAWS4DSNSFacadeSetTopicAttributes;
@@ -69,6 +71,12 @@ type
     function Request: IAWS4DSNSPublishRequest<IAWS4DSNSFacadePublish>;
     function Send: IAWS4DSNSPublishResponse<IAWS4DSNSFacadePublish>;
     function Response: IAWS4DSNSPublishResponse<IAWS4DSNSFacadePublish>;
+  end;
+
+  IAWS4DSNSFacadeSetEndpointAttributes = interface
+    ['{AA296D4E-F321-4E76-8FF8-A45080AA509F}']
+    function Request: IAWS4DSNSSetEndpointAttributesRequest<IAWS4DSNSFacadeSetEndpointAttributes>;
+    function Send: IAWS4DSNSSetEndpointAttributesRequest<IAWS4DSNSFacadeSetEndpointAttributes>;
   end;
 
   IAWS4DSNSFacadeSetPlatformApplicationAttributes = interface

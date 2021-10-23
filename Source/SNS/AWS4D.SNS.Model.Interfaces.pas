@@ -160,6 +160,23 @@ type
     function Topics: IAWS4DIterator<String>;
   end;
 
+  IAWS4DSNSSetEndpointAttributesRequest<I: IInterface> = interface
+    ['{584B4BA4-B993-475D-84D3-FE5AD7A29DC3}']
+    function CustomUserData(Value: string): IAWS4DSNSSetEndpointAttributesRequest<I>; overload;
+    function CustomUserData: string; overload;
+
+    function Enabled(Value: Boolean): IAWS4DSNSSetEndpointAttributesRequest<I>; overload;
+    function Enabled: Boolean; overload;
+
+    function Token(Value: string): IAWS4DSNSSetEndpointAttributesRequest<I>; overload;
+    function Token: string; overload;
+
+    function EndpointArn(Value: string): IAWS4DSNSSetEndpointAttributesRequest<I>; overload;
+    function EndpointArn: string; overload;
+
+    function &End: I;
+  end;
+
   IAWS4DSNSSetPlatformApplicationAttributesRequest<I> = interface
     ['{4E8C5E0B-6881-4FC5-879E-B8DBE3D94456}']
     function PlatformCredential(Value: String): IAWS4DSNSSetPlatformApplicationAttributesRequest<I>; overload;
