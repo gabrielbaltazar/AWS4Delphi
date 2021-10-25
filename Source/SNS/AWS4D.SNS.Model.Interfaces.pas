@@ -137,6 +137,13 @@ type
     function &End: I;
   end;
 
+  IAWS4DSNSGetSMSSandboxAccountStatusResponse<I: IInterface> = interface
+    ['{C3823EAA-821E-4F9D-B8B3-A43551AEFBEF}']
+    function IsInSandbox: Boolean; overload;
+
+    function &End: I;
+  end;
+
   IAWS4DSNSPublishRequest<I: IInterface> = interface
     ['{36BF1D73-D01C-4EB3-9F82-4C3AB83CC662}']
     function Message(Value: String): IAWS4DSNSPublishRequest<I>; overload;

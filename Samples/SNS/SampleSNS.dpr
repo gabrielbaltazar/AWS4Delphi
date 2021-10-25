@@ -53,7 +53,9 @@ uses
   AWS4D.SNS.Model.CreateSMSSandboxPhoneNumber.Request in '..\..\Source\SNS\AWS4D.SNS.Model.CreateSMSSandboxPhoneNumber.Request.pas',
   AWS4D.SNS.Facade.CreateSMSSandboxPhoneNumber in '..\..\Source\SNS\AWS4D.SNS.Facade.CreateSMSSandboxPhoneNumber.pas',
   AWS4D.SNS.Model.DeleteSMSSandboxPhoneNumber.Request in '..\..\Source\SNS\AWS4D.SNS.Model.DeleteSMSSandboxPhoneNumber.Request.pas',
-  AWS4D.SNS.Facade.DeleteSMSSandboxPhoneNumber in '..\..\Source\SNS\AWS4D.SNS.Facade.DeleteSMSSandboxPhoneNumber.pas';
+  AWS4D.SNS.Facade.DeleteSMSSandboxPhoneNumber in '..\..\Source\SNS\AWS4D.SNS.Facade.DeleteSMSSandboxPhoneNumber.pas',
+  AWS4D.SNS.Model.GetSMSSandboxAccountStatus.Response in '..\..\Source\SNS\AWS4D.SNS.Model.GetSMSSandboxAccountStatus.Response.pas',
+  AWS4D.SNS.Facade.GetSMSSandboxAccountStatus in '..\..\Source\SNS\AWS4D.SNS.Facade.GetSMSSandboxAccountStatus.pas';
 
 {$R *.res}
 

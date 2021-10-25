@@ -154,6 +154,8 @@
         <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Facade.CreateSMSSandboxPhoneNumber.pas"/>
         <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Model.DeleteSMSSandboxPhoneNumber.Request.pas"/>
         <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Facade.DeleteSMSSandboxPhoneNumber.pas"/>
+        <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Model.GetSMSSandboxAccountStatus.Response.pas"/>
+        <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Facade.GetSMSSandboxAccountStatus.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
