@@ -661,7 +661,7 @@ object Form1: TForm1
       end
     end
     object tsCreateSMSSandboxPhoneNumber: TTabSheet
-      Caption = 'Create SMS Sandbox PhoneNumber'
+      Caption = 'SMS Sandbox PhoneNumber'
       ImageIndex = 8
       object Panel9: TPanel
         Left = 0
@@ -671,7 +671,6 @@ object Form1: TForm1
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
         object Label27: TLabel
           Left = 7
           Top = 7
@@ -679,7 +678,7 @@ object Form1: TForm1
           Height = 13
           Caption = 'Phone Number'
         end
-        object edtCreateSMSSandboxPhoneNumber: TEdit
+        object edtSMSSandboxPhoneNumber: TEdit
           Left = 7
           Top = 22
           Width = 258
@@ -694,6 +693,15 @@ object Form1: TForm1
           Caption = 'Create SMS Sandbox PhoneNumber'
           TabOrder = 1
           OnClick = btnCreateSMSSandboxPhoneNumberClick
+        end
+        object btnDeleteSMSSandBoxPhoneNumber: TButton
+          Left = 479
+          Top = 20
+          Width = 201
+          Height = 25
+          Caption = 'Delete SMS Sandbox PhoneNumber'
+          TabOrder = 2
+          OnClick = btnDeleteSMSSandBoxPhoneNumberClick
         end
       end
     end

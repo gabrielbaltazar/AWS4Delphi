@@ -105,8 +105,9 @@ type
     tsCreateSMSSandboxPhoneNumber: TTabSheet;
     Panel9: TPanel;
     Label27: TLabel;
-    edtCreateSMSSandboxPhoneNumber: TEdit;
+    edtSMSSandboxPhoneNumber: TEdit;
     btnCreateSMSSandboxPhoneNumber: TButton;
+    btnDeleteSMSSandBoxPhoneNumber: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnListTopicsClick(Sender: TObject);
     procedure btnListSubscriptionsClick(Sender: TObject);
@@ -117,6 +118,7 @@ type
     procedure btnPublishClick(Sender: TObject);
     procedure btnConfirmSubscriptionClick(Sender: TObject);
     procedure btnCreateSMSSandboxPhoneNumberClick(Sender: TObject);
+    procedure btnDeleteSMSSandBoxPhoneNumberClick(Sender: TObject);
   private
     FSNSFacade: IAWS4DSNSFacade;
 
@@ -156,7 +158,7 @@ begin
   InitializeSNS;
   FSNSFacade.CreateSMSSandboxPhoneNumber
     .Request
-      .PhoneNumber(edtCreateSMSSandboxPhoneNumber.Text)
+      .PhoneNumber(edtSMSSandboxPhoneNumber.Text)
     .&End
     .Send;
 end;
@@ -171,6 +173,16 @@ begin
     .Send;
 
   mmoCreateTopic.Lines.Text := FSNSFacade.CreateTopic.Response.TopicArn;
+end;
+
+procedure TForm1.btnDeleteSMSSandBoxPhoneNumberClick(Sender: TObject);
+begin
+  InitializeSNS;
+  FSNSFacade.DeleteSMSSandboxPhoneNumber
+    .Request
+      .PhoneNumber(edtSMSSandboxPhoneNumber.Text)
+    .&End
+    .Send;
 end;
 
 procedure TForm1.btnDeleteTopicClick(Sender: TObject);

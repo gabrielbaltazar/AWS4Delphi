@@ -113,6 +113,14 @@ type
     function &End: I;
   end;
 
+  IAWS4DSNSDeleteSMSSandboxPhoneNumberRequest<I: IInterface> = interface
+    ['{A4C115A9-6DA2-40A8-8EBE-244EC4929795}']
+    function PhoneNumber(Value: String): IAWS4DSNSDeleteSMSSandboxPhoneNumberRequest<I>; overload;
+    function PhoneNumber: String; overload;
+
+    function &End: I;
+  end;
+
   IAWS4DSNSCreateTopicResponse<I: IInterface> = interface
     ['{4D50A95F-74D7-4539-951B-ABFAC0964827}']
     function TopicArn: string;

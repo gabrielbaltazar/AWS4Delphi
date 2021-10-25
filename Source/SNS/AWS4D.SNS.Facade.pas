@@ -12,6 +12,7 @@ uses
   AWS4D.SNS.Facade.CreateSMSSandboxPhoneNumber,
   AWS4D.SNS.Facade.CreateTopic,
   AWS4D.SNS.Facade.DeleteTopic,
+  AWS4D.SNS.Facade.DeleteSMSSandboxPhoneNumber,
   AWS4D.SNS.Facade.ListSubscriptions,
   AWS4D.SNS.Facade.ListTopics,
   AWS4D.SNS.Facade.Publish,
@@ -37,6 +38,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     FCreateSMSSandboxPhoneNumber: IAWS4DSNSFacadeCreateSMSSandboxPhoneNumber;
     FCreateTopic: IAWS4DSNSFacadeCreateTopic;
     FDeleteTopic: IAWS4DSNSFacadeDeleteTopic;
+    FDeleteSMSSandboxPhoneNumber: IAWS4DSNSFacadeDeleteSMSSandboxPhoneNumber;
     FListSubsctiptions: IAWS4DSNSFacadeListSubscriptions;
     FListTopics: IAWS4DSNSFacadeListTopics;
     FPublish: IAWS4DSNSFacadePublish;
@@ -61,6 +63,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     function CreateSMSSandboxPhoneNumber: IAWS4DSNSFacadeCreateSMSSandboxPhoneNumber;
     function CreateTopic: IAWS4DSNSFacadeCreateTopic;
     function DeleteTopic: IAWS4DSNSFacadeDeleteTopic;
+    function DeleteSMSSandboxPhoneNumber: IAWS4DSNSFacadeDeleteSMSSandboxPhoneNumber;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
     function Publish: IAWS4DSNSFacadePublish;
@@ -156,6 +159,19 @@ begin
   end;
 
   result := FCreateTopic;
+end;
+
+function TAWS4DSNSFacade.DeleteSMSSandboxPhoneNumber: IAWS4DSNSFacadeDeleteSMSSandboxPhoneNumber;
+var
+  service: IAWS4DSNSService<IAWS4DSNSFacadeDeleteSMSSandboxPhoneNumber>;
+begin
+  if not Assigned(FDeleteSMSSandboxPhoneNumber) then
+  begin
+    service := Self.SNSService<IAWS4DSNSFacadeDeleteSMSSandboxPhoneNumber>;
+    FDeleteSMSSandboxPhoneNumber := TAWS4DSNSFacadeDeleteSMSSandboxPhoneNumber.New(service);
+  end;
+
+  result := FDeleteSMSSandboxPhoneNumber;
 end;
 
 function TAWS4DSNSFacade.DeleteTopic: IAWS4DSNSFacadeDeleteTopic;

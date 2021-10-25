@@ -46,6 +46,7 @@ type TAWS4DSNSService<I: IInterface> = class(TInterfacedObject, IAWS4DSNSService
     procedure CreateSMSSandboxPhoneNumber(Request: IAWS4DSNSCreateSMSSandboxPhoneNumberRequest<I>);
     function CreateTopic(Request: IAWS4DSNSCreateTopicRequest<I>): IAWS4DSNSCreateTopicResponse<I>;
     procedure DeleteTopic(Request: IAWS4DSNSDeleteTopicRequest<I>);
+    procedure DeleteSMSSandboxPhoneNumber(Request: IAWS4DSNSDeleteSMSSandboxPhoneNumberRequest<I>);
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListSubscriptionsByTopic(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
@@ -211,6 +212,16 @@ begin
 
   LJson := LRestRequest.Send.GetJSONObject;
   result := TAWS4DSNSModelCreateTopicResponse<I>.New(FParent, LJson);
+end;
+
+procedure TAWS4DSNSService<I>.DeleteSMSSandboxPhoneNumber(Request: IAWS4DSNSDeleteSMSSandboxPhoneNumberRequest<I>);
+var
+  LRestRequest: IGBClientRequest;
+begin
+  LRestRequest := NewGETRequest('DeleteSMSSandboxPhoneNumber');
+  LRestRequest.Params.QueryAddOrSet('PhoneNumber', Request.PhoneNumber);
+
+  LRestRequest.Send;
 end;
 
 procedure TAWS4DSNSService<I>.DeleteTopic(Request: IAWS4DSNSDeleteTopicRequest<I>);
