@@ -60,7 +60,11 @@ uses
   AWS4D.SNS.Model.GetSubscriptionAttributes.Response in '..\..\Source\SNS\AWS4D.SNS.Model.GetSubscriptionAttributes.Response.pas',
   AWS4D.SNS.Facade.GetSubscriptionAttributes in '..\..\Source\SNS\AWS4D.SNS.Facade.GetSubscriptionAttributes.pas',
   AWS4D.SNS.Model.GetTopicAttributes.Request in '..\..\Source\SNS\AWS4D.SNS.Model.GetTopicAttributes.Request.pas',
-  AWS4D.SNS.Model.GetTopicAttributes.Response in '..\..\Source\SNS\AWS4D.SNS.Model.GetTopicAttributes.Response.pas';
+  AWS4D.SNS.Model.GetTopicAttributes.Response in '..\..\Source\SNS\AWS4D.SNS.Model.GetTopicAttributes.Response.pas',
+  AWS4D.SNS.Facade.GetTopicAttributes in '..\..\Source\SNS\AWS4D.SNS.Facade.GetTopicAttributes.pas',
+  AWS4D.SNS.Model.ListSMSSandboxPhoneNumbers.Request in '..\..\Source\SNS\AWS4D.SNS.Model.ListSMSSandboxPhoneNumbers.Request.pas',
+  AWS4D.SNS.Model.ListSMSSandboxPhoneNumbers.Response in '..\..\Source\SNS\AWS4D.SNS.Model.ListSMSSandboxPhoneNumbers.Response.pas',
+  AWS4D.SNS.Facade.ListSMSSandboxPhoneNumbers in '..\..\Source\SNS\AWS4D.SNS.Facade.ListSMSSandboxPhoneNumbers.pas';
 
 {$R *.res}
 

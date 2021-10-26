@@ -11,6 +11,7 @@ uses
   AWS4D.SNS.Model.GetSubscriptionAttributes.Response,
   AWS4D.SNS.Model.GetTopicAttributes.Response,
   AWS4D.SNS.Model.ListSubscriptions.Response,
+  AWS4D.SNS.Model.ListSMSSandboxPhoneNumbers.Response,
   AWS4D.SNS.Model.ListTopics.Request,
   AWS4D.SNS.Model.ListTopics.Response,
   AWS4D.SNS.Model.Publish.Response,
@@ -53,6 +54,7 @@ type TAWS4DSNSService<I: IInterface> = class(TInterfacedObject, IAWS4DSNSService
     function GetSMSSandboxAccountStatus: IAWS4DSNSGetSMSSandboxAccountStatusResponse<I>;
     function GetSubscriptionAttributes(Request: IAWS4DSNSGetSubscriptionAttributesRequest<I>): IAWS4DSNSGetSubscriptionAttributesResponse<I>;
     function GetTopicAttributes(Request: IAWS4DSNSGetTopicAttributesRequest<I>): IAWS4DSNSGetTopicAttributesResponse<I>;
+    function ListSMSSandboxPhoneNumbers(Request: IAWS4DSNSListSMSSandboxPhoneNumbersRequest<I>): IAWS4DSNSListSMSSandboxPhoneNumbersResponse<I>;
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListSubscriptionsByTopic(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
@@ -281,6 +283,23 @@ end;
 function TAWS4DSNSService<I>.Host: string;
 begin
   Result := Format('https://sns.%s.amazonaws.com', [FRegion.toString]);
+end;
+
+function TAWS4DSNSService<I>.ListSMSSandboxPhoneNumbers(Request: IAWS4DSNSListSMSSandboxPhoneNumbersRequest<I>): IAWS4DSNSListSMSSandboxPhoneNumbersResponse<I>;
+var
+  LRestRequest: IGBClientRequest;
+  LJson: TJSONObject;
+begin
+  LRestRequest := NewGETRequest('ListSMSSandboxPhoneNumbers');
+
+  if Request.MaxResults > 0 then
+    LRestRequest.Params.QueryAddOrSet('MaxResults', Request.MaxResults.ToString);
+
+  if Request.NextToken.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('NextToken', Request.NextToken);
+
+  LJson := LRestRequest.Send.GetJSONObject;
+  result := TAWS4DSNSModelListSMSSandboxPhoneNumbersResponse<I>.New(FParent, LJson);
 end;
 
 function TAWS4DSNSService<I>.ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;

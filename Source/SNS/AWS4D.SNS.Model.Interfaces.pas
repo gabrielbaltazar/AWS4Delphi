@@ -218,6 +218,31 @@ type
     function &End: I;
   end;
 
+  IAWS4DSNSSMSSandboxPhoneNumber = interface
+    ['{A35603EB-B743-42C7-B22A-E3BE71C06D7C}']
+    function PhoneNumber: string; overload;
+    function Status: string; overload;
+  end;
+
+  IAWS4DSNSListSMSSandboxPhoneNumbersRequest<I: IInterface> = interface
+    ['{815CDFEA-9503-4847-978D-23631A0B6667}']
+    function MaxResults(Value: Integer): IAWS4DSNSListSMSSandboxPhoneNumbersRequest<I>; overload;
+    function MaxResults: Integer; overload;
+
+    function NextToken(Value: String): IAWS4DSNSListSMSSandboxPhoneNumbersRequest<I>; overload;
+    function NextToken: String; overload;
+
+    function &End: I;
+  end;
+
+  IAWS4DSNSListSMSSandboxPhoneNumbersResponse<I: IInterface> = interface
+    ['{547450B1-5F3B-43B3-AAC2-93DEAC538C26}']
+    function NextToken: String; overload;
+    function PhoneNumbers: IAWS4DIterator<IAWS4DSNSSMSSandboxPhoneNumber>;
+
+    function &End: I;
+  end;
+
   IAWS4DSNSPublishRequest<I: IInterface> = interface
     ['{36BF1D73-D01C-4EB3-9F82-4C3AB83CC662}']
     function Message(Value: String): IAWS4DSNSPublishRequest<I>; overload;
