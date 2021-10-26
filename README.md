@@ -8,7 +8,13 @@
 
 ## ⚙️ Installation 
 
+### For install in your project using [boss](https://github.com/HashLoad/boss): 
+``` sh  
+ $ boss install github.com/gabrielbaltazar/AWS4Delphi
+ ```
+
 *Prerequisites*: [**GBClient**](https://github.com/gabrielbaltazar/GBClient) - This is a SDK to work with rest requests
+
 
 ## ⚡️ Quickstart S3
 
