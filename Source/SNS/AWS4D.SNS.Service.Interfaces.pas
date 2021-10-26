@@ -22,6 +22,7 @@ type
     procedure DeleteTopic(Request: IAWS4DSNSDeleteTopicRequest<I>);
     procedure DeleteSMSSandboxPhoneNumber(Request: IAWS4DSNSDeleteSMSSandboxPhoneNumberRequest<I>);
     function GetSMSSandboxAccountStatus: IAWS4DSNSGetSMSSandboxAccountStatusResponse<I>;
+    function GetSubscriptionAttributes(Request: IAWS4DSNSGetSubscriptionAttributesRequest<I>): IAWS4DSNSGetSubscriptionAttributesResponse<I>;
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
     function Publish(Request: IAWS4DSNSPublishRequest<I>): IAWS4DSNSPublishResponse<I>;

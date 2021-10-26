@@ -55,7 +55,10 @@ uses
   AWS4D.SNS.Model.DeleteSMSSandboxPhoneNumber.Request in '..\..\Source\SNS\AWS4D.SNS.Model.DeleteSMSSandboxPhoneNumber.Request.pas',
   AWS4D.SNS.Facade.DeleteSMSSandboxPhoneNumber in '..\..\Source\SNS\AWS4D.SNS.Facade.DeleteSMSSandboxPhoneNumber.pas',
   AWS4D.SNS.Model.GetSMSSandboxAccountStatus.Response in '..\..\Source\SNS\AWS4D.SNS.Model.GetSMSSandboxAccountStatus.Response.pas',
-  AWS4D.SNS.Facade.GetSMSSandboxAccountStatus in '..\..\Source\SNS\AWS4D.SNS.Facade.GetSMSSandboxAccountStatus.pas';
+  AWS4D.SNS.Facade.GetSMSSandboxAccountStatus in '..\..\Source\SNS\AWS4D.SNS.Facade.GetSMSSandboxAccountStatus.pas',
+  AWS4D.SNS.Model.GetSubscriptionAttributes.Request in '..\..\Source\SNS\AWS4D.SNS.Model.GetSubscriptionAttributes.Request.pas',
+  AWS4D.SNS.Model.GetSubscriptionAttributes.Response in '..\..\Source\SNS\AWS4D.SNS.Model.GetSubscriptionAttributes.Response.pas',
+  AWS4D.SNS.Facade.GetSubscriptionAttributes in '..\..\Source\SNS\AWS4D.SNS.Facade.GetSubscriptionAttributes.pas';
 
 {$R *.res}
 

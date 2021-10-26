@@ -14,6 +14,7 @@ uses
   AWS4D.SNS.Facade.DeleteTopic,
   AWS4D.SNS.Facade.DeleteSMSSandboxPhoneNumber,
   AWS4D.SNS.Facade.GetSMSSandboxAccountStatus,
+  AWS4D.SNS.Facade.GetSubscriptionAttributes,
   AWS4D.SNS.Facade.ListSubscriptions,
   AWS4D.SNS.Facade.ListTopics,
   AWS4D.SNS.Facade.Publish,
@@ -41,6 +42,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     FDeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     FDeleteSMSSandboxPhoneNumber: IAWS4DSNSFacadeDeleteSMSSandboxPhoneNumber;
     FGetSMSSandboxAccountStatus: IAWS4DSNSFacadeGetSMSSandboxAccountStatus;
+    FGetSubscriptionAttributes: IAWS4DSNSFacadeGetSubscriptionAttributes;
     FListSubsctiptions: IAWS4DSNSFacadeListSubscriptions;
     FListTopics: IAWS4DSNSFacadeListTopics;
     FPublish: IAWS4DSNSFacadePublish;
@@ -67,6 +69,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     function DeleteTopic: IAWS4DSNSFacadeDeleteTopic;
     function DeleteSMSSandboxPhoneNumber: IAWS4DSNSFacadeDeleteSMSSandboxPhoneNumber;
     function GetSMSSandboxAccountStatus: IAWS4DSNSFacadeGetSMSSandboxAccountStatus;
+    function GetSubscriptionAttributes: IAWS4DSNSFacadeGetSubscriptionAttributes;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
     function Publish: IAWS4DSNSFacadePublish;
@@ -207,6 +210,19 @@ begin
   end;
 
   result := FGetSMSSandboxAccountStatus;
+end;
+
+function TAWS4DSNSFacade.GetSubscriptionAttributes: IAWS4DSNSFacadeGetSubscriptionAttributes;
+var
+  service: IAWS4DSNSService<IAWS4DSNSFacadeGetSubscriptionAttributes>;
+begin
+  if not Assigned(FGetSubscriptionAttributes) then
+  begin
+    service := Self.SNSService<IAWS4DSNSFacadeGetSubscriptionAttributes>;
+    FGetSubscriptionAttributes := TAWS4DSNSFacadeGetSubscriptionAttributes.New(service);
+  end;
+
+  result := FGetSubscriptionAttributes;
 end;
 
 function TAWS4DSNSFacade.ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;

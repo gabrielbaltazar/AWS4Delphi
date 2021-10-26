@@ -8,6 +8,7 @@ uses
   AWS4D.SNS.Model.ConfirmSubscription.Response,
   AWS4D.SNS.Model.CreateTopic.Response,
   AWS4D.SNS.Model.GetSMSSandboxAccountStatus.Response,
+  AWS4D.SNS.Model.GetSubscriptionAttributes.Response,
   AWS4D.SNS.Model.ListSubscriptions.Response,
   AWS4D.SNS.Model.ListTopics.Request,
   AWS4D.SNS.Model.ListTopics.Response,
@@ -49,6 +50,7 @@ type TAWS4DSNSService<I: IInterface> = class(TInterfacedObject, IAWS4DSNSService
     procedure DeleteTopic(Request: IAWS4DSNSDeleteTopicRequest<I>);
     procedure DeleteSMSSandboxPhoneNumber(Request: IAWS4DSNSDeleteSMSSandboxPhoneNumberRequest<I>);
     function GetSMSSandboxAccountStatus: IAWS4DSNSGetSMSSandboxAccountStatusResponse<I>;
+    function GetSubscriptionAttributes(Request: IAWS4DSNSGetSubscriptionAttributesRequest<I>): IAWS4DSNSGetSubscriptionAttributesResponse<I>;
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListSubscriptionsByTopic(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
@@ -86,6 +88,17 @@ begin
   LRestRequest := NewGETRequest('GetSMSSandboxAccountStatus');
   LJSON := LRestRequest.Send.GetJSONObject;
   result := TAWS4DSNSModelGetSMSSandboxAccountStatusResponse<I>.New(FParent, LJSON);
+end;
+
+function TAWS4DSNSService<I>.GetSubscriptionAttributes(Request: IAWS4DSNSGetSubscriptionAttributesRequest<I>): IAWS4DSNSGetSubscriptionAttributesResponse<I>;
+var
+  LRestRequest: IGBClientRequest;
+  LJSON: TJSONObject;
+begin
+  LRestRequest := NewGETRequest('GetSubscriptionAttributes');
+  LRestRequest.Params.QueryAddOrSet('SubscriptionArn', Request.SubscriptionArn);
+  LJSON := LRestRequest.Send.GetJSONObject;
+  result :=  TAWS4DSNSModelGetSubscriptionAttributesResponse<I>.New(FParent, LJSON);
 end;
 
 function TAWS4DSNSService<I>.AccessKey(Value: String): IAWS4DSNSService<I>;

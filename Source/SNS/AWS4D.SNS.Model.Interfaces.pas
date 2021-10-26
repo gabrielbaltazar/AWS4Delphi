@@ -144,6 +144,43 @@ type
     function &End: I;
   end;
 
+  IAWS4DSNSGetSubscriptionAttributesRequest<I: IInterface> = interface
+    ['{23923B5B-1CEE-484A-8807-A8B1BBD147F1}']
+    function SubscriptionArn(Value: String): IAWS4DSNSGetSubscriptionAttributesRequest<I>; overload;
+    function SubscriptionArn: string; overload;
+
+    function &End: I;
+  end;
+
+  IAWS4DSNSGetSubscriptionAttributesResponse<I: IInterface> = interface
+    ['{45C68FB1-5DED-45C5-A7AA-032C4BE6D89A}']
+    function ConfirmationWasAuthenticated(Value: Boolean): IAWS4DSNSGetSubscriptionAttributesResponse<I>; overload;
+    function ConfirmationWasAuthenticated: Boolean; overload;
+
+    function Endpoint(Value: String): IAWS4DSNSGetSubscriptionAttributesResponse<I>; overload;
+    function Endpoint: string; overload;
+
+    function Owner(Value: String): IAWS4DSNSGetSubscriptionAttributesResponse<I>; overload;
+    function Owner: string; overload;
+
+    function PendingConfirmation(Value: Boolean): IAWS4DSNSGetSubscriptionAttributesResponse<I>; overload;
+    function PendingConfirmation: Boolean; overload;
+
+    function Protocol(Value: String): IAWS4DSNSGetSubscriptionAttributesResponse<I>; overload;
+    function Protocol: string; overload;
+
+    function RawMessageDelivery(Value: Boolean): IAWS4DSNSGetSubscriptionAttributesResponse<I>; overload;
+    function RawMessageDelivery: Boolean; overload;
+
+    function SubscriptionArn(Value: String): IAWS4DSNSGetSubscriptionAttributesResponse<I>; overload;
+    function SubscriptionArn: string; overload;
+
+    function TopicArn(Value: String): IAWS4DSNSGetSubscriptionAttributesResponse<I>; overload;
+    function TopicArn: string; overload;
+
+    function &End: I;
+  end;
+
   IAWS4DSNSPublishRequest<I: IInterface> = interface
     ['{36BF1D73-D01C-4EB3-9F82-4C3AB83CC662}']
     function Message(Value: String): IAWS4DSNSPublishRequest<I>; overload;
