@@ -243,6 +243,14 @@ type
     function &End: I;
   end;
 
+  IAWS4DSNSOptInPhoneNumberRequest<I: IInterface> = interface
+    ['{48AF0844-2B05-429C-BA72-ED0A2E3A01E5}']
+    function PhoneNumber(Value: String): IAWS4DSNSOptInPhoneNumberRequest<I>; overload;
+    function PhoneNumber: string; overload;
+
+    function &End: I;
+  end;
+
   IAWS4DSNSPublishRequest<I: IInterface> = interface
     ['{36BF1D73-D01C-4EB3-9F82-4C3AB83CC662}']
     function Message(Value: String): IAWS4DSNSPublishRequest<I>; overload;

@@ -58,6 +58,7 @@ type TAWS4DSNSService<I: IInterface> = class(TInterfacedObject, IAWS4DSNSService
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListSubscriptionsByTopic(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
+    procedure OptInPhoneNumber(Request: IAWS4DSNSOptInPhoneNumberRequest<I>);
     function Publish(Request: IAWS4DSNSPublishRequest<I>): IAWS4DSNSPublishResponse<I>;
     procedure SetEndpointAttributes(Request: IAWS4DSNSSetEndpointAttributesRequest<I>);
     procedure SetPlatformApplicationAttributes(Request: IAWS4DSNSSetPlatformApplicationAttributesRequest<I>);
@@ -375,6 +376,16 @@ begin
     .&End
     .Params
       .QueryAddOrSet('Action', Action);
+end;
+
+procedure TAWS4DSNSService<I>.OptInPhoneNumber(Request: IAWS4DSNSOptInPhoneNumberRequest<I>);
+var
+  LRestRequest: IGBClientRequest;
+begin
+  LRestRequest := NewGETRequest('OptInPhoneNumber');
+  LRestRequest.Params.QueryAddOrSet('phoneNumber', Request.PhoneNumber);
+
+  LRestRequest.Send;
 end;
 
 function TAWS4DSNSService<I>.Parent(Value: I): IAWS4DSNSService<I>;

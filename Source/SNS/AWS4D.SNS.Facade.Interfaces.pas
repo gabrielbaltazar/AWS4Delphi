@@ -20,6 +20,7 @@ type
   IAWS4DSNSFacadeListSMSSandboxPhoneNumbers = interface;
   IAWS4DSNSFacadeListSubscriptions = interface;
   IAWS4DSNSFacadeListTopics = interface;
+  IAWS4DSNSFacadeOptInPhoneNumber = interface;
   IAWS4DSNSFacadePublish = interface;
   IAWS4DSNSFacadeSetEndpointAttributes = interface;
   IAWS4DSNSFacadeSetPlatformApplicationAttributes = interface;
@@ -48,6 +49,7 @@ type
     function ListSMSSandboxPhoneNumbers: IAWS4DSNSFacadeListSMSSandboxPhoneNumbers;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
+    function OptInPhoneNumber: IAWS4DSNSFacadeOptInPhoneNumber;
     function Publish: IAWS4DSNSFacadePublish;
     function SetEndpointAttributes: IAWS4DSNSFacadeSetEndpointAttributes;
     function SetPlatformApplicationAttributes: IAWS4DSNSFacadeSetPlatformApplicationAttributes;
@@ -141,6 +143,12 @@ type
     function Request: IAWS4DSNSListTopicsRequest<IAWS4DSNSFacadeListTopics>;
     function Send: IAWS4DSNSListTopicsResponse<IAWS4DSNSFacadeListTopics>;
     function Response: IAWS4DSNSListTopicsResponse<IAWS4DSNSFacadeListTopics>;
+  end;
+
+  IAWS4DSNSFacadeOptInPhoneNumber = interface
+    ['{9EC43CC1-268E-43C5-81E8-10E1675BACBD}']
+    function Request: IAWS4DSNSOptInPhoneNumberRequest<IAWS4DSNSFacadeOptInPhoneNumber>;
+    function Send: IAWS4DSNSOptInPhoneNumberRequest<IAWS4DSNSFacadeOptInPhoneNumber>;
   end;
 
   IAWS4DSNSFacadePublish = interface

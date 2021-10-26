@@ -165,6 +165,8 @@
         <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Model.ListSMSSandboxPhoneNumbers.Request.pas"/>
         <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Model.ListSMSSandboxPhoneNumbers.Response.pas"/>
         <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Facade.ListSMSSandboxPhoneNumbers.pas"/>
+        <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Model.OptInPhoneNumber.Request.pas"/>
+        <DCCReference Include="..\..\Source\SNS\AWS4D.SNS.Facade.OptInPhoneNumber.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

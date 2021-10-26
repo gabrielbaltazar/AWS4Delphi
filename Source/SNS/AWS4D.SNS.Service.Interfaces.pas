@@ -27,6 +27,7 @@ type
     function ListSMSSandboxPhoneNumbers(Request: IAWS4DSNSListSMSSandboxPhoneNumbersRequest<I>): IAWS4DSNSListSMSSandboxPhoneNumbersResponse<I>;
     function ListSubscriptions(Request: IAWS4DSNSListSubscriptionsRequest<I>): IAWS4DSNSListSubscriptionsResponse<I>;
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
+    procedure OptInPhoneNumber(Request: IAWS4DSNSOptInPhoneNumberRequest<I>);
     function Publish(Request: IAWS4DSNSPublishRequest<I>): IAWS4DSNSPublishResponse<I>;
     procedure SetEndpointAttributes(Request: IAWS4DSNSSetEndpointAttributesRequest<I>);
     procedure SetPlatformApplicationAttributes(Request: IAWS4DSNSSetPlatformApplicationAttributesRequest<I>);

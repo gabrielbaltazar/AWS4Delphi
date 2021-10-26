@@ -19,6 +19,7 @@ uses
   AWS4D.SNS.Facade.ListSMSSandboxPhoneNumbers,
   AWS4D.SNS.Facade.ListSubscriptions,
   AWS4D.SNS.Facade.ListTopics,
+  AWS4D.SNS.Facade.OptInPhoneNumber,
   AWS4D.SNS.Facade.Publish,
   AWS4D.SNS.Facade.SetEndpointAttributes,
   AWS4D.SNS.Facade.SetPlatformApplicationAttributes,
@@ -49,6 +50,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     FListSMSSandboxPhoneNumbers: IAWS4DSNSFacadeListSMSSandboxPhoneNumbers;
     FListSubsctiptions: IAWS4DSNSFacadeListSubscriptions;
     FListTopics: IAWS4DSNSFacadeListTopics;
+    FOptInPhoneNumber: IAWS4DSNSFacadeOptInPhoneNumber;
     FPublish: IAWS4DSNSFacadePublish;
     FSetEndpointAttributes: IAWS4DSNSFacadeSetEndpointAttributes;
     FSetPlatformApplicationAttributes: IAWS4DSNSFacadeSetPlatformApplicationAttributes;
@@ -78,6 +80,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     function ListSMSSandboxPhoneNumbers: IAWS4DSNSFacadeListSMSSandboxPhoneNumbers;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
+    function OptInPhoneNumber: IAWS4DSNSFacadeOptInPhoneNumber;
     function Publish: IAWS4DSNSFacadePublish;
     function SetEndpointAttributes: IAWS4DSNSFacadeSetEndpointAttributes;
     function SetPlatformApplicationAttributes: IAWS4DSNSFacadeSetPlatformApplicationAttributes;
@@ -286,6 +289,19 @@ end;
 class function TAWS4DSNSFacade.New: IAWS4DSNSFacade;
 begin
   result := Self.create;
+end;
+
+function TAWS4DSNSFacade.OptInPhoneNumber: IAWS4DSNSFacadeOptInPhoneNumber;
+var
+  service: IAWS4DSNSService<IAWS4DSNSFacadeOptInPhoneNumber>;
+begin
+  if not Assigned(FOptInPhoneNumber) then
+  begin
+    service := Self.SNSService<IAWS4DSNSFacadeOptInPhoneNumber>;
+    FOptInPhoneNumber := TAWS4DSNSFacadeOptInPhoneNumber.New(service);
+  end;
+
+  result := FOptInPhoneNumber;
 end;
 
 function TAWS4DSNSFacade.Publish: IAWS4DSNSFacadePublish;
