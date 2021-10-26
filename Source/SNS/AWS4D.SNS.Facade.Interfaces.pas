@@ -16,6 +16,7 @@ type
   IAWS4DSNSFacadeDeleteSMSSandboxPhoneNumber = interface;
   IAWS4DSNSFacadeGetSMSSandboxAccountStatus = interface;
   IAWS4DSNSFacadeGetSubscriptionAttributes = interface;
+  IAWS4DSNSFacadeGetTopicAttributes = interface;
   IAWS4DSNSFacadeListSubscriptions = interface;
   IAWS4DSNSFacadeListTopics = interface;
   IAWS4DSNSFacadePublish = interface;
@@ -42,6 +43,7 @@ type
     function DeleteSMSSandboxPhoneNumber: IAWS4DSNSFacadeDeleteSMSSandboxPhoneNumber;
     function GetSMSSandboxAccountStatus: IAWS4DSNSFacadeGetSMSSandboxAccountStatus;
     function GetSubscriptionAttributes: IAWS4DSNSFacadeGetSubscriptionAttributes;
+    function GetTopicAttributes: IAWS4DSNSFacadeGetTopicAttributes;
     function ListSubscriptions: IAWS4DSNSFacadeListSubscriptions;
     function ListTopics: IAWS4DSNSFacadeListTopics;
     function Publish: IAWS4DSNSFacadePublish;
@@ -109,6 +111,13 @@ type
     function Request: IAWS4DSNSGetSubscriptionAttributesRequest<IAWS4DSNSFacadeGetSubscriptionAttributes>;
     function Send: IAWS4DSNSGetSubscriptionAttributesResponse<IAWS4DSNSFacadeGetSubscriptionAttributes>;
     function Response: IAWS4DSNSGetSubscriptionAttributesResponse<IAWS4DSNSFacadeGetSubscriptionAttributes>;
+  end;
+
+  IAWS4DSNSFacadeGetTopicAttributes = interface
+    ['{7334D6A6-AED3-4B50-B6D5-1973F80AE767}']
+    function Request: IAWS4DSNSGetTopicAttributesRequest<IAWS4DSNSFacadeGetTopicAttributes>;
+    function Send: IAWS4DSNSGetTopicAttributesResponse<IAWS4DSNSFacadeGetTopicAttributes>;
+    function Response: IAWS4DSNSGetTopicAttributesResponse<IAWS4DSNSFacadeGetTopicAttributes>;
   end;
 
   IAWS4DSNSFacadeListSubscriptions = interface

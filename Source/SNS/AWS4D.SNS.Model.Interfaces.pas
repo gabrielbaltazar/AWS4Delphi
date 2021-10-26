@@ -181,6 +181,43 @@ type
     function &End: I;
   end;
 
+  IAWS4DSNSGetTopicAttributesRequest<I: IInterface> = interface
+    ['{0F79D547-E232-4262-A83F-CB43377599A5}']
+    function TopicArn(Value: String): IAWS4DSNSGetTopicAttributesRequest<I>; overload;
+    function TopicArn: String; overload;
+
+    function &End: I;
+  end;
+
+  IAWS4DSNSGetTopicAttributesResponse<I: IInterface> = interface
+    ['{0F79D547-E232-4262-A83F-CB43377599A5}']
+    function DisplayName(Value: String): IAWS4DSNSGetTopicAttributesResponse<I>; overload;
+    function DisplayName: String; overload;
+
+    function EffectiveDeliveryPolicy(Value: String): IAWS4DSNSGetTopicAttributesResponse<I>; overload;
+    function EffectiveDeliveryPolicy: String; overload;
+
+    function Owner(Value: String): IAWS4DSNSGetTopicAttributesResponse<I>; overload;
+    function Owner: String; overload;
+
+    function Policy(Value: String): IAWS4DSNSGetTopicAttributesResponse<I>; overload;
+    function Policy: String; overload;
+
+    function SubscriptionsConfirmed(Value: Integer): IAWS4DSNSGetTopicAttributesResponse<I>; overload;
+    function SubscriptionsConfirmed: Integer; overload;
+
+    function SubscriptionsDeleted(Value: Integer): IAWS4DSNSGetTopicAttributesResponse<I>; overload;
+    function SubscriptionsDeleted: Integer; overload;
+
+    function SubscriptionsPending(Value: Integer): IAWS4DSNSGetTopicAttributesResponse<I>; overload;
+    function SubscriptionsPending: Integer; overload;
+
+    function TopicArn(Value: String): IAWS4DSNSGetTopicAttributesResponse<I>; overload;
+    function TopicArn: String; overload;
+
+    function &End: I;
+  end;
+
   IAWS4DSNSPublishRequest<I: IInterface> = interface
     ['{36BF1D73-D01C-4EB3-9F82-4C3AB83CC662}']
     function Message(Value: String): IAWS4DSNSPublishRequest<I>; overload;

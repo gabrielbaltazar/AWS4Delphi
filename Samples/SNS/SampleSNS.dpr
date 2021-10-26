@@ -58,7 +58,9 @@ uses
   AWS4D.SNS.Facade.GetSMSSandboxAccountStatus in '..\..\Source\SNS\AWS4D.SNS.Facade.GetSMSSandboxAccountStatus.pas',
   AWS4D.SNS.Model.GetSubscriptionAttributes.Request in '..\..\Source\SNS\AWS4D.SNS.Model.GetSubscriptionAttributes.Request.pas',
   AWS4D.SNS.Model.GetSubscriptionAttributes.Response in '..\..\Source\SNS\AWS4D.SNS.Model.GetSubscriptionAttributes.Response.pas',
-  AWS4D.SNS.Facade.GetSubscriptionAttributes in '..\..\Source\SNS\AWS4D.SNS.Facade.GetSubscriptionAttributes.pas';
+  AWS4D.SNS.Facade.GetSubscriptionAttributes in '..\..\Source\SNS\AWS4D.SNS.Facade.GetSubscriptionAttributes.pas',
+  AWS4D.SNS.Model.GetTopicAttributes.Request in '..\..\Source\SNS\AWS4D.SNS.Model.GetTopicAttributes.Request.pas',
+  AWS4D.SNS.Model.GetTopicAttributes.Response in '..\..\Source\SNS\AWS4D.SNS.Model.GetTopicAttributes.Response.pas';
 
 {$R *.res}
 
