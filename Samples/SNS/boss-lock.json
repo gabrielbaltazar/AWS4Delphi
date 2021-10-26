@@ -4,8 +4,8 @@
 	"installedModules": {
 		"github.com/git@github.com:gabrielbaltazar/gbclient": {
 			"name": "gbclient",
-			"version": "2.0.0",
-			"hash": "95f1d172e34b318b449c257ecd513d21",
+			"version": "2.0.1",
+			"hash": "0401e2d28e29a770391c9911f0da9b84",
 			"artifacts": {},
 			"failed": false,
 			"changed": false

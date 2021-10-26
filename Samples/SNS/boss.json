@@ -6,6 +6,6 @@
 	"mainsrc": "./",
 	"projects": [],
 	"dependencies": {
-		"github.com/git@github.com:gabrielbaltazar/gbclient": "2.0.0"
+		"github.com/git@github.com:gabrielbaltazar/gbclient": "2.0.1"
 	}
 }

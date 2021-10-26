@@ -7,9 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.ValEdit,
   Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls,
   System.IniFiles,
-  AWS4D.Core.Model.Types,
   AWS4D.SQS.Facade.Interfaces,
-  AWS4D.SQS.Facade,
   REST.Json,
   System.JSON;
 
@@ -139,6 +137,7 @@ type
     FSQS: IAWS4DSQSFacade;
 
     { Private declarations }
+    procedure SQSInitialize;
     function GetIniFile: TIniFile;
     procedure SaveConfig;
     procedure LoadConfig;
@@ -158,6 +157,7 @@ implementation
 
 procedure TForm2.btnCreateQueueClick(Sender: TObject);
 begin
+  SQSInitialize;
   FSQS.CreateQueue
     .Request
       .QueueName(edtCreateQueueQueueName.Text)
@@ -169,6 +169,7 @@ end;
 
 procedure TForm2.btnDeleteMessageBatchClick(Sender: TObject);
 begin
+  SQSInitialize;
   FSQS.DeleteMessageBatch
     .Request
       .QueueUrl(edtQueueName.Text)
@@ -180,6 +181,7 @@ end;
 
 procedure TForm2.btnDeleteMessageClick(Sender: TObject);
 begin
+  SQSInitialize;
   FSQS.DeleteMessage
     .Request
       .QueueName(edtQueueName.Text)
@@ -190,6 +192,7 @@ end;
 
 procedure TForm2.btnDeleteQueueClick(Sender: TObject);
 begin
+  SQSInitialize;
   FSQS.DeleteQueue
     .Request
       .QueueUrl(edtQueueName.Text)
@@ -199,6 +202,7 @@ end;
 
 procedure TForm2.btnGetQueueAttributesClick(Sender: TObject);
 begin
+  SQSInitialize;
   FSQS.GetQueueAttributes
     .Request
       .QueueUrl(edtQueueName.Text)
@@ -208,6 +212,7 @@ end;
 
 procedure TForm2.btnListQueuesClick(Sender: TObject);
 begin
+  SQSInitialize;
   FSQS.ListQueues
     .Request
       .MaxResults(StrToIntDef(edtListQueuesMaxResult.Text, 0))
@@ -224,6 +229,7 @@ end;
 
 procedure TForm2.btnListQueueTagsClick(Sender: TObject);
 begin
+  SQSInitialize;
   mmoListQueueTags.Lines.Clear;
 
   FSQS.ListQueueTags
@@ -243,6 +249,7 @@ end;
 
 procedure TForm2.btnPurgeQueueClick(Sender: TObject);
 begin
+  SQSInitialize;
   FSQS.PurgeQueue
     .Request
       .QueueUrl(edtQueueName.Text)
@@ -252,6 +259,7 @@ end;
 
 procedure TForm2.btnQueueURLClick(Sender: TObject);
 begin
+  SQSInitialize;
   FSQS.GetQueueUrl
     .Request
       .QueueName(edtGetQueueUrlQueueName.Text)
@@ -263,12 +271,12 @@ end;
 
 procedure TForm2.btnReceiveMessageClick(Sender: TObject);
 begin
+  SQSInitialize;
   FSQS.ReceiveMessage
     .Request
       .MaxNumberOfMessages(StrToIntDef(edtReceiveMessageMaxNumberMessages.Text, 0))
       .VisibilityTimeout(StrToIntDef(edtReceiveMessageVisibilityTimeout.Text, 0))
       .QueueUrl(edtQueueName.Text)
-      .AddMessageAttribute('aaa')
     .&End
     .Send;
 
@@ -295,6 +303,7 @@ end;
 
 procedure TForm2.btnSendMessageClick(Sender: TObject);
 begin
+  SQSInitialize;
   FSQS.SendMessage
     .Request
       .QueueUrl(edtQueueName.Text)
@@ -309,6 +318,7 @@ procedure TForm2.btnTagQueueClick(Sender: TObject);
 var
   i: Integer;
 begin
+  SQSInitialize;
   FSQS.TagQueue
     .Request
       .QueueUrl(edtQueueName.Text);
@@ -323,6 +333,7 @@ end;
 
 procedure TForm2.btnUntagQueueClick(Sender: TObject);
 begin
+  SQSInitialize;
   FSQS.UnTagQueue
     .Request
       .QueueUrl(edtQueueName.Text)
@@ -342,11 +353,7 @@ begin
   ReportMemoryLeaksOnShutdown := True;
   LoadConfig;
 
-  FSQS := TAWS4DSQSFacade.New;
-  FSQS
-    .AccessKey(edtAccessKey.Text)
-    .SecretKey(edtSecretKey.Text)
-    .Region(edtRegion.Text);
+  SQSInitialize;
 
   edtSendMessageMessageBody.Text := Format('Message Test %s', [FormatDateTime('dd/MM/yyyy hh:mm:ss', Now)]);
 end;
@@ -385,6 +392,15 @@ begin
   finally
     iniFile.Free;
   end;
+end;
+
+procedure TForm2.SQSInitialize;
+begin
+  FSQS := NewSQSFacade;
+  FSQS
+    .AccessKey(edtAccessKey.Text)
+    .SecretKey(edtSecretKey.Text)
+    .Region(edtRegion.Text);
 end;
 
 end.

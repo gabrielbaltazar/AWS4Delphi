@@ -9,8 +9,6 @@ uses
   System.Generics.Collections,
 
   AWS4D.S3.Facade.Interfaces,
-//  AWS4D.S3.Model.Interfaces,
-//  AWS4D.S3.Service.Interfaces,
   Vcl.Grids, Vcl.ValEdit;
 
 type

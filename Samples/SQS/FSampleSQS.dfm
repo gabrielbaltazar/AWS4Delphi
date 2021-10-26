@@ -11,7 +11,6 @@ object Form2: TForm2
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
@@ -98,7 +97,7 @@ object Form2: TForm2
     Top = 97
     Width = 1171
     Height = 341
-    ActivePage = tsListQueues
+    ActivePage = tsReceiveMessage
     Align = alClient
     TabOrder = 2
     object tsListQueues: TTabSheet
