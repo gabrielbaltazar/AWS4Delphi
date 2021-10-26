@@ -29,6 +29,7 @@ type
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
     procedure OptInPhoneNumber(Request: IAWS4DSNSOptInPhoneNumberRequest<I>);
     function Publish(Request: IAWS4DSNSPublishRequest<I>): IAWS4DSNSPublishResponse<I>;
+    procedure RemovePermission(Request: IAWS4DSNSRemovePermissionRequest<I>);
     procedure SetEndpointAttributes(Request: IAWS4DSNSSetEndpointAttributesRequest<I>);
     procedure SetPlatformApplicationAttributes(Request: IAWS4DSNSSetPlatformApplicationAttributesRequest<I>);
     procedure SetSubscriptionAttributes(Request: IAWS4DSNSSetSubscriptionAttributesRequest<I>);

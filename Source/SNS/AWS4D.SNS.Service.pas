@@ -60,6 +60,7 @@ type TAWS4DSNSService<I: IInterface> = class(TInterfacedObject, IAWS4DSNSService
     function ListTopics(Request: IAWS4DSNSListTopicsRequest<I>): IAWS4DSNSListTopicsResponse<I>;
     procedure OptInPhoneNumber(Request: IAWS4DSNSOptInPhoneNumberRequest<I>);
     function Publish(Request: IAWS4DSNSPublishRequest<I>): IAWS4DSNSPublishResponse<I>;
+    procedure RemovePermission(Request: IAWS4DSNSRemovePermissionRequest<I>);
     procedure SetEndpointAttributes(Request: IAWS4DSNSSetEndpointAttributesRequest<I>);
     procedure SetPlatformApplicationAttributes(Request: IAWS4DSNSSetPlatformApplicationAttributesRequest<I>);
     procedure SetSubscriptionAttributes(Request: IAWS4DSNSSetSubscriptionAttributesRequest<I>);
@@ -449,6 +450,21 @@ function TAWS4DSNSService<I>.Region(Value: TAWS4DRegion): IAWS4DSNSService<I>;
 begin
   result := Self;
   FRegion := Value;
+end;
+
+procedure TAWS4DSNSService<I>.RemovePermission(Request: IAWS4DSNSRemovePermissionRequest<I>);
+var
+  LRestRequest: IGBClientRequest;
+begin
+  LRestRequest := NewGETRequest('RemovePermission');
+
+  if Request.&Label.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('Label', Request.&Label);
+
+  if Request.TopicArn.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('TopicArn', Request.TopicArn);
+
+  LRestRequest.Send;
 end;
 
 function TAWS4DSNSService<I>.SecretKey(Value: String): IAWS4DSNSService<I>;

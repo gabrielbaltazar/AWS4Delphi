@@ -21,6 +21,7 @@ uses
   AWS4D.SNS.Facade.ListTopics,
   AWS4D.SNS.Facade.OptInPhoneNumber,
   AWS4D.SNS.Facade.Publish,
+  AWS4D.SNS.Facade.RemovePermission,
   AWS4D.SNS.Facade.SetEndpointAttributes,
   AWS4D.SNS.Facade.SetPlatformApplicationAttributes,
   AWS4D.SNS.Facade.SetSubscriptionAttributes,
@@ -52,6 +53,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     FListTopics: IAWS4DSNSFacadeListTopics;
     FOptInPhoneNumber: IAWS4DSNSFacadeOptInPhoneNumber;
     FPublish: IAWS4DSNSFacadePublish;
+    FRemovePersmission: IAWS4DSNSFacadeRemovePermission;
     FSetEndpointAttributes: IAWS4DSNSFacadeSetEndpointAttributes;
     FSetPlatformApplicationAttributes: IAWS4DSNSFacadeSetPlatformApplicationAttributes;
     FSetSubscriptionsAttributes: IAWS4DSNSFacadeSetSubscriptionAttributes;
@@ -82,6 +84,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     function ListTopics: IAWS4DSNSFacadeListTopics;
     function OptInPhoneNumber: IAWS4DSNSFacadeOptInPhoneNumber;
     function Publish: IAWS4DSNSFacadePublish;
+    function RemovePersmission: IAWS4DSNSFacadeRemovePermission;
     function SetEndpointAttributes: IAWS4DSNSFacadeSetEndpointAttributes;
     function SetPlatformApplicationAttributes: IAWS4DSNSFacadeSetPlatformApplicationAttributes;
     function SetSubscriptionsAttributes: IAWS4DSNSFacadeSetSubscriptionAttributes;
@@ -327,6 +330,19 @@ function TAWS4DSNSFacade.Region(Value: TAWS4DRegion): IAWS4DSNSFacade;
 begin
   result := Self;
   FRegion := Value;
+end;
+
+function TAWS4DSNSFacade.RemovePersmission: IAWS4DSNSFacadeRemovePermission;
+var
+  service: IAWS4DSNSService<IAWS4DSNSFacadeRemovePermission>;
+begin
+  if not Assigned(FRemovePersmission) then
+  begin
+    service := Self.SNSService<IAWS4DSNSFacadeRemovePermission>;
+    FRemovePersmission := TAWS4DSNSFacadeRemovePermission.New(service);
+  end;
+
+  result := FRemovePersmission;
 end;
 
 function TAWS4DSNSFacade.SecretKey(Value: String): IAWS4DSNSFacade;

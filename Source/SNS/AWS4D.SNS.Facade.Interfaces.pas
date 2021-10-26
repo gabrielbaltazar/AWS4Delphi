@@ -22,6 +22,7 @@ type
   IAWS4DSNSFacadeListTopics = interface;
   IAWS4DSNSFacadeOptInPhoneNumber = interface;
   IAWS4DSNSFacadePublish = interface;
+  IAWS4DSNSFacadeRemovePermission = interface;
   IAWS4DSNSFacadeSetEndpointAttributes = interface;
   IAWS4DSNSFacadeSetPlatformApplicationAttributes = interface;
   IAWS4DSNSFacadeSetSubscriptionAttributes = interface;
@@ -51,6 +52,7 @@ type
     function ListTopics: IAWS4DSNSFacadeListTopics;
     function OptInPhoneNumber: IAWS4DSNSFacadeOptInPhoneNumber;
     function Publish: IAWS4DSNSFacadePublish;
+    function RemovePersmission: IAWS4DSNSFacadeRemovePermission;
     function SetEndpointAttributes: IAWS4DSNSFacadeSetEndpointAttributes;
     function SetPlatformApplicationAttributes: IAWS4DSNSFacadeSetPlatformApplicationAttributes;
     function SetSubscriptionsAttributes: IAWS4DSNSFacadeSetSubscriptionAttributes;
@@ -156,6 +158,12 @@ type
     function Request: IAWS4DSNSPublishRequest<IAWS4DSNSFacadePublish>;
     function Send: IAWS4DSNSPublishResponse<IAWS4DSNSFacadePublish>;
     function Response: IAWS4DSNSPublishResponse<IAWS4DSNSFacadePublish>;
+  end;
+
+  IAWS4DSNSFacadeRemovePermission = interface
+    ['{6EF74451-B164-4A27-AC05-B240C1CCC8E7}']
+    function Request: IAWS4DSNSRemovePermissionRequest<IAWS4DSNSFacadeRemovePermission>;
+    function Send: IAWS4DSNSRemovePermissionRequest<IAWS4DSNSFacadeRemovePermission>;
   end;
 
   IAWS4DSNSFacadeSetEndpointAttributes = interface

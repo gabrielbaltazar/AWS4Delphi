@@ -315,6 +315,17 @@ type
     function &End: I;
   end;
 
+  IAWS4DSNSRemovePermissionRequest<I: IInterface> = interface
+    ['{AD7A7ADD-131A-46A4-A66D-6B368669DC1A}']
+    function &Label(Value: String): IAWS4DSNSRemovePermissionRequest<I>; overload;
+    function &Label: String; overload;
+
+    function TopicArn(Value: String): IAWS4DSNSRemovePermissionRequest<I>; overload;
+    function TopicArn: String; overload;
+
+    function &End: I;
+  end;
+
   IAWS4DSNSSubscription = interface
     ['{54A16395-9D34-4B7A-A710-B650BC2446C8}']
     function Endpoint: String;
