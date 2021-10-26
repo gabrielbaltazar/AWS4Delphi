@@ -36,6 +36,7 @@ type
     procedure SetTopicAttributes(Request: IAWS4DSNSSetTopicAttributesRequest<I>);
     function Subscribe(Request: IAWS4DSNSSubscribeRequest<I>): IAWS4DSNSSubscribeResponse<I>;
     procedure Unsubscribe(Request: IAWS4DSNSUnsubscribeRequest<I>);
+    procedure VerifySMSSandboxPhoneNumber(Request: IAWS4DSNSVerifySMSSandboxPhoneNumberRequest<I>);
 
     function Parent(Value: I): IAWS4DSNSService<I>;
     function &End: I;

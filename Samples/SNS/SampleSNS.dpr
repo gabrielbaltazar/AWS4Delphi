@@ -67,7 +67,10 @@ uses
   AWS4D.SNS.Facade.ListSMSSandboxPhoneNumbers in '..\..\Source\SNS\AWS4D.SNS.Facade.ListSMSSandboxPhoneNumbers.pas',
   AWS4D.SNS.Model.OptInPhoneNumber.Request in '..\..\Source\SNS\AWS4D.SNS.Model.OptInPhoneNumber.Request.pas',
   AWS4D.SNS.Facade.OptInPhoneNumber in '..\..\Source\SNS\AWS4D.SNS.Facade.OptInPhoneNumber.pas',
-  AWS4D.SNS.Model.RemovePermission.Request in '..\..\Source\SNS\AWS4D.SNS.Model.RemovePermission.Request.pas';
+  AWS4D.SNS.Model.RemovePermission.Request in '..\..\Source\SNS\AWS4D.SNS.Model.RemovePermission.Request.pas',
+  AWS4D.SNS.Facade.RemovePermission in '..\..\Source\SNS\AWS4D.SNS.Facade.RemovePermission.pas',
+  AWS4D.SNS.Model.VerifySMSSandboxPhoneNumber.Request in '..\..\Source\SNS\AWS4D.SNS.Model.VerifySMSSandboxPhoneNumber.Request.pas',
+  AWS4D.SNS.Facade.VerifySMSSandboxPhoneNumber in '..\..\Source\SNS\AWS4D.SNS.Facade.VerifySMSSandboxPhoneNumber.pas';
 
 {$R *.res}
 

@@ -28,6 +28,7 @@ uses
   AWS4D.SNS.Facade.SetTopicAttributes,
   AWS4D.SNS.Facade.Subscribe,
   AWS4D.SNS.Facade.Unsubscribe,
+  AWS4D.SNS.Facade.VerifySMSSandboxPhoneNumber,
   AWS4D.SNS.Service,
   AWS4D.Core.Model.Types;
 
@@ -60,6 +61,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     FSetTopicAttributes: IAWS4DSNSFacadeSetTopicAttributes;
     FSubscribe: IAWS4DSNSFacadeSubscribe;
     FUnsubscribe: IAWS4DSNSFacadeUnsubscribe;
+    FVerifySMSSandboxPhoneNumber: IAWS4DSNSFacadeVerifySMSSandboxPhoneNumber;
 
     function SNSService<I: IInterface>: IAWS4DSNSService<I>;
 
@@ -91,6 +93,7 @@ type TAWS4DSNSFacade = class(TInterfacedObject, IAWS4DSNSFacade)
     function SetTopicAttributes: IAWS4DSNSFacadeSetTopicAttributes;
     function Subscribe: IAWS4DSNSFacadeSubscribe;
     function Unsubscribe: IAWS4DSNSFacadeUnsubscribe;
+    function VerifySMSSandboxPhoneNumber: IAWS4DSNSFacadeVerifySMSSandboxPhoneNumber;
 
   public
     constructor create;
@@ -436,6 +439,19 @@ begin
   end;
 
   result := FUnsubscribe;
+end;
+
+function TAWS4DSNSFacade.VerifySMSSandboxPhoneNumber: IAWS4DSNSFacadeVerifySMSSandboxPhoneNumber;
+var
+  service: IAWS4DSNSService<IAWS4DSNSFacadeVerifySMSSandboxPhoneNumber>;
+begin
+  if not Assigned(FVerifySMSSandboxPhoneNumber) then
+  begin
+    service := Self.SNSService<IAWS4DSNSFacadeVerifySMSSandboxPhoneNumber>;
+    FVerifySMSSandboxPhoneNumber := TAWS4DSNSFacadeVerifySMSSandboxPhoneNumber.New(service);
+  end;
+
+  result := FVerifySMSSandboxPhoneNumber;
 end;
 
 end.

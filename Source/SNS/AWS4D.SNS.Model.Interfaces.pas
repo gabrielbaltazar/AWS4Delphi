@@ -485,6 +485,17 @@ type
     function &End: I;
   end;
 
+  IAWS4DSNSVerifySMSSandboxPhoneNumberRequest<I: IInterface> = interface
+    ['{4B0B15D7-40D7-44E0-A9C8-783C93044E5B}']
+    function OneTimePassword(Value: string): IAWS4DSNSVerifySMSSandboxPhoneNumberRequest<I>; overload;
+    function OneTimePassword: string; overload;
+
+    function PhoneNumber(Value: string): IAWS4DSNSVerifySMSSandboxPhoneNumberRequest<I>; overload;
+    function PhoneNumber: string; overload;
+
+    function &End: I;
+  end;
+
 implementation
 
 end.

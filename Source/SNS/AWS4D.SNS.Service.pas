@@ -67,6 +67,7 @@ type TAWS4DSNSService<I: IInterface> = class(TInterfacedObject, IAWS4DSNSService
     procedure SetTopicAttributes(Request: IAWS4DSNSSetTopicAttributesRequest<I>);
     function Subscribe(Request: IAWS4DSNSSubscribeRequest<I>): IAWS4DSNSSubscribeResponse<I>;
     procedure Unsubscribe(Request: IAWS4DSNSUnsubscribeRequest<I>);
+    procedure VerifySMSSandboxPhoneNumber(Request: IAWS4DSNSVerifySMSSandboxPhoneNumberRequest<I>);
 
     function Parent(Value: I): IAWS4DSNSService<I>;
     function &End: I;
@@ -579,6 +580,20 @@ begin
   LRestRequest := NewGETRequest('Unsubscribe');
   LRestRequest.Params
     .QueryAddOrSet('SubscriptionArn', Request.SubscriptionArn);
+
+  LRestRequest.Send;
+end;
+
+procedure TAWS4DSNSService<I>.VerifySMSSandboxPhoneNumber(Request: IAWS4DSNSVerifySMSSandboxPhoneNumberRequest<I>);
+var
+  LRestRequest: IGBClientRequest;
+begin
+  LRestRequest := NewGETRequest('VerifySMSSandboxPhoneNumber');
+  if Request.OneTimePassword.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('OneTimePassword', Request.OneTimePassword);
+
+  if Request.PhoneNumber.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('PhoneNumber', Request.PhoneNumber);
 
   LRestRequest.Send;
 end;

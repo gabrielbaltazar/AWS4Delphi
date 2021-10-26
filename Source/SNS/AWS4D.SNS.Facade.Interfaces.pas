@@ -29,6 +29,7 @@ type
   IAWS4DSNSFacadeSetTopicAttributes = interface;
   IAWS4DSNSFacadeSubscribe = interface;
   IAWS4DSNSFacadeUnsubscribe = interface;
+  IAWS4DSNSFacadeVerifySMSSandboxPhoneNumber = interface;
 
   IAWS4DSNSFacade = interface
     ['{0D47D22F-3793-498D-AAA2-A40D48B72F12}']
@@ -59,6 +60,7 @@ type
     function SetTopicAttributes: IAWS4DSNSFacadeSetTopicAttributes;
     function Subscribe: IAWS4DSNSFacadeSubscribe;
     function Unsubscribe: IAWS4DSNSFacadeUnsubscribe;
+    function VerifySMSSandboxPhoneNumber: IAWS4DSNSFacadeVerifySMSSandboxPhoneNumber;
   end;
 
   IAWS4DSNSFacadeAddPermission = interface
@@ -201,6 +203,12 @@ type
     ['{8FDFEDB8-4180-4867-8C45-35F25AE3F0A4}']
     function Request: IAWS4DSNSUnsubscribeRequest<IAWS4DSNSFacadeUnsubscribe>;
     function Send: IAWS4DSNSUnsubscribeRequest<IAWS4DSNSFacadeUnsubscribe>;
+  end;
+
+  IAWS4DSNSFacadeVerifySMSSandboxPhoneNumber = interface
+    ['{63165F25-B6F3-4345-861D-7EDE1CAE7F87}']
+    function Request: IAWS4DSNSVerifySMSSandboxPhoneNumberRequest<IAWS4DSNSFacadeVerifySMSSandboxPhoneNumber>;
+    function Send: IAWS4DSNSVerifySMSSandboxPhoneNumberRequest<IAWS4DSNSFacadeVerifySMSSandboxPhoneNumber>;
   end;
 
 function NewSNSFacade: IAWS4DSNSFacade;
