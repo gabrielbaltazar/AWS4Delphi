@@ -81,7 +81,7 @@ object Form1: TForm1
     Top = 91
     Width = 887
     Height = 387
-    ActivePage = tsCreateSMSSandboxPhoneNumber
+    ActivePage = tsCreateTopic
     Align = alClient
     TabOrder = 2
     object tsListSubscriptions: TTabSheet

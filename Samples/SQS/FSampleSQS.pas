@@ -7,7 +7,6 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.ValEdit,
   Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls,
   System.IniFiles,
-  AWS4D.Core.Model.Types,
   AWS4D.SQS.Facade.Interfaces,
   REST.Json,
   System.JSON;
@@ -278,7 +277,6 @@ begin
       .MaxNumberOfMessages(StrToIntDef(edtReceiveMessageMaxNumberMessages.Text, 0))
       .VisibilityTimeout(StrToIntDef(edtReceiveMessageVisibilityTimeout.Text, 0))
       .QueueUrl(edtQueueName.Text)
-      .AddMessageAttribute('aaa')
     .&End
     .Send;
 
