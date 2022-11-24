@@ -96,7 +96,7 @@ begin
   FACLType := aws4dPrivate;
   FOwnerStream := False;
   FMetaInfo := TStringList.Create;
-  FContentType := 'text/xml';
+  FContentType := 'binary/octet-stream';
 //  FMetaInfo.Values['Content-type'] := FContentType;
 end;
 
