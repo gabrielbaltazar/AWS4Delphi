@@ -21,8 +21,8 @@ uses
   System.StrUtils,
   System.SysUtils;
 
-type TAWS4DS3ServiceCloudAPI<I: IInterface> = class(TInterfacedObject, IAWS4DS3Service<I>)
-
+type
+  TAWS4DS3ServiceCloudAPI<I: IInterface> = class(TInterfacedObject, IAWS4DS3Service<I>)
   private
     [Weak]
     FParent: I;
@@ -40,6 +40,7 @@ type TAWS4DS3ServiceCloudAPI<I: IInterface> = class(TInterfacedObject, IAWS4DS3S
     procedure RaiseException;
     function FileBytes(AStream: TStream): TBytes;
 
+    function GetACLType(AACLType: TAWS4DACLType): TAmazonACLType;
     function GetAmazonRegion: {$IF CompilerVersion <= 33.0} TAmazonRegion; {$ELSE} String; {$ENDIF}
     function GetBucket(ABucketName: String; AParams: TStrings = nil): TAmazonBucketResult;
 
@@ -210,6 +211,21 @@ begin
   end;
 end;
 
+function TAWS4DS3ServiceCloudAPI<I>.GetACLType(AACLType: TAWS4DACLType): TAmazonACLType;
+begin
+  case AACLType of
+    aws4dNotSpecified: Result := amzbaNotSpecified;
+    aws4dPrivate: Result := amzbaPrivate;
+    aws4dPublicRead: Result := amzbaPublicRead;
+    aws4dPublicReadWrite: Result := amzbaPublicReadWrite;
+    aws4dAuthenticatedRead: Result := amzbaAuthenticatedRead;
+    aws4dBucketOwnerRead: Result := amzbaBucketOwnerRead;
+    aws4dBucketOwnerFullControl: Result := amzbaBucketOwnerFullControl;
+    aws4dAWSExecRead: Result := amzbaAWSExecRead;
+    aws4dLogDeliveryWrite: Result := amzbaLogDeliveryWrite;
+  end;
+end;
+
 function TAWS4DS3ServiceCloudAPI<I>.GetAmazonRegion: {$IF CompilerVersion <= 33.0} TAmazonRegion; {$ELSE} String; {$ENDIF}
 begin
   {$IF CompilerVersion <= 33.0}
@@ -249,7 +265,7 @@ begin
     then
       RaiseException;
 
-      result := TAWS4S3GetObjectPropertiesResponse<I>.New(FParent, properties, metaData);
+    result := TAWS4S3GetObjectPropertiesResponse<I>.New(FParent, properties, metaData);
   finally
     properties.Free;
     metaData.Free;
@@ -337,21 +353,30 @@ begin
 end;
 
 procedure TAWS4DS3ServiceCloudAPI<I>.ObjectCreate(Request: IAWS4DS3CreateObjectRequest<I>);
+var
+  LHeaders: TStrings;
 begin
-  AWSComponentsCreate;
-  Request.FileStream.Position := 0;
+  LHeaders := TStringList.Create;
+  try
+    AWSComponentsCreate;
+    Request.FileStream.Position := 0;
+    if Request.ContentType <> EmptyStr then
+      LHeaders.Values['Content-type'] := Request.ContentType;
 
-  if not FStorage.UploadObject(
-      Request.BucketName,
-      Request.ObjectName,
-      FileBytes(Request.FileStream),
-      False,
-      Request.MetaInfo,
-      nil,
-      amzbaPrivate,
-      FCloudResponse)
-  then
-    RaiseException;
+    if not FStorage.UploadObject(
+        Request.BucketName,
+        Request.ObjectName,
+        FileBytes(Request.FileStream),
+        False,
+        Request.MetaInfo,
+        LHeaders,
+        GetACLType(Request.ACLType),
+        FCloudResponse)
+    then
+      RaiseException;
+  finally
+    LHeaders.Free;
+  end;
 end;
 
 procedure TAWS4DS3ServiceCloudAPI<I>.ObjectDelete(Request: IAWS4DS3DeleteObjectRequest<I>);

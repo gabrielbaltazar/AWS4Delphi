@@ -21,15 +21,19 @@ type
   IAWS4DS3CreateObjectRequest<I: IInterface> = interface
     ['{A0B0C2B1-2FF8-4422-8CCF-0848061D6CB7}']
     function BucketName(Value: String): IAWS4DS3CreateObjectRequest<I>; overload;
+    function ContentType(Value: string): IAWS4DS3CreateObjectRequest<I>; overload;
     function FileName(Value: String): IAWS4DS3CreateObjectRequest<I>; overload;
     function FileStream(Value: TStream): IAWS4DS3CreateObjectRequest<I>; overload;
     function ObjectName(Value: String): IAWS4DS3CreateObjectRequest<I>; overload;
+    function ACLType(AValue: TAWS4DACLType): IAWS4DS3CreateObjectRequest<I>; overload;
 
     function AddMetaInfo(Key, Value: String): IAWS4DS3CreateObjectRequest<I>;
 
     function BucketName: string; overload;
+    function ContentType: string; overload;
     function FileName: string; overload;
     function ObjectName: String; overload;
+    function ACLType: TAWS4DACLType; overload;
     function FileStream: TStream; overload;
     function MetaInfo: TStrings;
 

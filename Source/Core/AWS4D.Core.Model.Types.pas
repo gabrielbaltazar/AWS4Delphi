@@ -27,20 +27,15 @@ type
     function Value(AValue: string): IAWS4DCoreModelAttribute; overload;
   end;
 
+  TAWS4DACLType = (aws4dNotSpecified, aws4dPrivate, aws4dPublicRead,
+    aws4dPublicReadWrite, aws4dAuthenticatedRead, aws4dBucketOwnerRead,
+    aws4dBucketOwnerFullControl, aws4dAWSExecRead, aws4dLogDeliveryWrite);
+
   /// <summary>Regions which can be used with Amazon Services.</summary>
-  TAWS4DRegion = (aws4dNotEspecified,
-                  aws4dEUWest1,
-                  aws4dEUCentral1,
-                  aws4dUSEast1,
-                  aws4dUSWest1,
-                  aws4dUSWest2,
-                  aws4dAPSoutheast1,
-                  aws4dAPSoutheast2,
-                  aws4dAPNortheast1,
-                  aws4dAPNortheast2,
-                  aws4dSAEast1,
-                  aws4dUSClassic,
-                  aws4dEU);
+  TAWS4DRegion = (aws4dNotEspecified, aws4dEUWest1, aws4dEUCentral1,
+    aws4dUSEast1, aws4dUSWest1, aws4dUSWest2, aws4dAPSoutheast1,
+    aws4dAPSoutheast2, aws4dAPNortheast1, aws4dAPNortheast2,
+    aws4dSAEast1, aws4dUSClassic, aws4dEU);
 
   TAWS4DRegionHelper = record helper for TAWS4DRegion
   public
