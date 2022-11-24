@@ -24,6 +24,7 @@ type TAWS4DS3CreateObjectRequest<I: IInterface> = class(TInterfacedObject, IAWS4
   protected
     function BucketName(Value: String): IAWS4DS3CreateObjectRequest<I>; overload;
     function ContentType(Value: string): IAWS4DS3CreateObjectRequest<I>; overload;
+    function FileContent(Value: String): IAWS4DS3CreateObjectRequest<I>; overload;
     function FileName(Value: String): IAWS4DS3CreateObjectRequest<I>; overload;
     function FileStream(Value: TStream): IAWS4DS3CreateObjectRequest<I>; overload;
     function ObjectName(Value: String): IAWS4DS3CreateObjectRequest<I>; overload;
@@ -124,6 +125,22 @@ begin
   FFileStream := TMemoryStream.Create;
   try
     TMemoryStream(FFileStream).LoadFromFile(Value);
+    FFileStream.Position := 0;
+  except
+    FFileStream.Free;
+    raise;
+  end;
+end;
+
+function TAWS4DS3CreateObjectRequest<I>.FileContent(Value: String): IAWS4DS3CreateObjectRequest<I>;
+begin
+  Result := Self;
+  if FOwnerStream then
+    FreeAndNil(FFileStream);
+
+  FOwnerStream := True;
+  FFileStream := TStringStream.Create(Value);
+  try
     FFileStream.Position := 0;
   except
     FFileStream.Free;
