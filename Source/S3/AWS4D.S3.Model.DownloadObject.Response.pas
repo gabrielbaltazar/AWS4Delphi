@@ -21,6 +21,7 @@ type TAWS4S3DownloadObjectResponse<I: IInterface> = class(TInterfacedObject, IAW
   protected
     function Stream: TMemoryStream;
     function Base64: string;
+    function Content: string;
     procedure SaveToFile(AFileName: String);
 
     function &End: I;
@@ -46,6 +47,20 @@ begin
                 .Replace(#$D, EmptyStr);
   finally
     stringStream.Free;
+  end;
+end;
+
+function TAWS4S3DownloadObjectResponse<I>.Content: string;
+var
+  LStringStream: TStringStream;
+begin
+  LStringStream := TStringStream.Create;
+  try
+    LStringStream.LoadFromStream(FStream);
+    LStringStream.Position := 0;
+    Result := LStringStream.DataString;
+  finally
+    LStringStream.Free;
   end;
 end;
 

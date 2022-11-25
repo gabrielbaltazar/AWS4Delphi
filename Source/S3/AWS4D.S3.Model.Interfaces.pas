@@ -75,6 +75,7 @@ type
     ['{5752D790-B36C-4D7A-A02F-F34585165260}']
     function Stream: TMemoryStream;
     function Base64: string;
+    function Content: string;
     procedure SaveToFile(AFileName: String);
   end;
 
