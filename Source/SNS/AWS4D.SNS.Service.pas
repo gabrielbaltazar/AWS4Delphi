@@ -410,9 +410,9 @@ begin
   while Request.Attributes.HasNext do
   begin
     Inc(LCount);
-    LRestRequest.Params.QueryAddOrSet(Format('MessageAttributes.%s.Name', [LCount.ToString]),
+    LRestRequest.Params.QueryAddOrSet(Format('Attributes.entry.%s.Name', [LCount.ToString]),
               Request.Attributes.Current.Key);
-    LRestRequest.Params.QueryAddOrSet(Format('MessageAttributes.%s.Value', [LCount.ToString]),
+    LRestRequest.Params.QueryAddOrSet(Format('Attributes.entry.%s.Value', [LCount.ToString]),
               Request.Attributes.Current.Value);
   end;
 

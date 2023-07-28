@@ -119,6 +119,7 @@ type
     procedure btnConfirmSubscriptionClick(Sender: TObject);
     procedure btnCreateSMSSandboxPhoneNumberClick(Sender: TObject);
     procedure btnDeleteSMSSandBoxPhoneNumberClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     FSNSFacade: IAWS4DSNSFacade;
 
@@ -283,6 +284,11 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   LoadConfig;
+end;
+
+procedure TForm1.FormDestroy(Sender: TObject);
+begin
+  SaveConfig;
 end;
 
 function TForm1.GetIniFile: TIniFile;
