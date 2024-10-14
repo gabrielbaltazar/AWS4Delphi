@@ -33,7 +33,8 @@ The available functions are:
 You need to use AWS4D.S3.Facade.Interfaces
 
 ```pascal
-uses AWS4D.S3.Facade.Interfaces;
+uses
+  AWS4D.S3.Facade.Interfaces;
 ```
 
 * **SET Credentials**
@@ -42,8 +43,7 @@ var
   FS3: IAWS4DS3Facade;
 begin
   FS3 := NewS3Facade;
-  FS3
-    .AccessKey('')
+  FS3.AccessKey('')
     .SecretKey('')
     .Region('us-east-1');
 end;
