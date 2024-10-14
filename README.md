@@ -148,7 +148,8 @@ The available functions are:
 You need to use AWS4D.SQS.Facade.Interfaces
 
 ```pascal
-uses AWS4D.SQS.Facade.Interfaces;
+uses
+  AWS4D.SQS.Facade.Interfaces;
 ```
 
 * **SET Credentials**
@@ -157,8 +158,7 @@ var
   FSQS: IAWS4DSQSFacade;
 begin
   FSQS := NewSQSFacade;
-  FSQS
-    .AccessKey('')
+  FSQS.AccessKey('')
     .SecretKey('')
     .Region('us-east-1');
 end;
