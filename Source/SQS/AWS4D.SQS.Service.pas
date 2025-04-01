@@ -318,7 +318,7 @@ begin
     LJSON.AddPair('AttributeNames', LJSONAttributes);
 
   if ARequest.MaxNumberOfMessages > 0 then
-    LJSON.AddPair('MaxNumberOfMessages', ARequest.MaxNumberOfMessages);
+    LJSON.AddPair('MaxNumberOfMessages', TJSONNumber.Create(ARequest.MaxNumberOfMessages));
 
   LJSONAttributes := nil;
   while ARequest.MessageAttributes.HasNext do
@@ -336,10 +336,10 @@ begin
     LJSON.AddPair('ReceiveRequestAttemptId', ARequest.ReceiveRequestAttemptId);
 
   if ARequest.VisibilityTimeout > 0 then
-    LJSON.AddPair('VisibilityTimeout', ARequest.VisibilityTimeout);
+    LJSON.AddPair('VisibilityTimeout', TJSONNumber.Create(ARequest.VisibilityTimeout));
 
   if ARequest.WaitTimeSeconds > 0 then
-    LJSON.AddPair('WaitTimeSeconds', ARequest.WaitTimeSeconds);
+    LJSON.AddPair('WaitTimeSeconds', TJSONNumber.Create(ARequest.WaitTimeSeconds));
 
   LRestRequest.Params.BodyAddOrSet(LJSON.ToJSON);
   FreeAndNil(LJSON);
@@ -374,7 +374,7 @@ begin
     .AddPair('MessageBody', ARequest.MessageBody);
 
   if ARequest.DelaySeconds > 0 then
-    LJSON.AddPair('DelaySeconds', ARequest.DelaySeconds);
+    LJSON.AddPair('DelaySeconds', TJSONNumber.Create(ARequest.DelaySeconds));
 
   if ARequest.MessageDeduplicationId <> EmptyStr then
     LJSON.AddPair('MessageDeduplicationId', ARequest.MessageDeduplicationId);
