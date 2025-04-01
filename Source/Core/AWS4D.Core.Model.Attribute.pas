@@ -9,93 +9,89 @@ uses
   System.Generics.Collections,
   System.JSON;
 
-type TAWS4DCoreModelAttribute = class(TInterfacedObject, IAWS4DCoreModelAttribute)
-
+type
+  TAWS4DCoreModelAttribute = class(TInterfacedObject, IAWS4DCoreModelAttribute)
   private
     FKey: string;
     FValue: string;
-
   protected
-    function Key: String; overload;
+    function Key: string; overload;
     function Value: string; overload;
 
-    function Key(Value: String): IAWS4DCoreModelAttribute; overload;
+    function Key(Value: string): IAWS4DCoreModelAttribute; overload;
     function Value(AValue: string): IAWS4DCoreModelAttribute; overload;
-
   public
     class function New: IAWS4DCoreModelAttribute;
-    class function NewIterator(JSONArray: TJSONArray): IAWS4DIterator<IAWS4DCoreModelAttribute>; overload;
-    class function NewIterator(Values: TDictionary<string, String>): IAWS4DIterator<IAWS4DCoreModelAttribute>; overload;
-end;
+    class function NewIterator(AJSONArray: TJSONArray): IAWS4DIterator<IAWS4DCoreModelAttribute>; overload;
+    class function NewIterator(AValues: TDictionary<string, string>): IAWS4DIterator<IAWS4DCoreModelAttribute>; overload;
+  end;
 
 implementation
 
 { TAWS4DCoreModelAttribute }
 
-function TAWS4DCoreModelAttribute.Key(Value: String): IAWS4DCoreModelAttribute;
+function TAWS4DCoreModelAttribute.Key(Value: string): IAWS4DCoreModelAttribute;
 begin
-  result := Self;
+  Result := Self;
   FKey := Value;
 end;
 
-function TAWS4DCoreModelAttribute.Key: String;
+function TAWS4DCoreModelAttribute.Key: string;
 begin
-  result := FKey;
+  Result := FKey;
 end;
 
 class function TAWS4DCoreModelAttribute.New: IAWS4DCoreModelAttribute;
 begin
-  result := Self.Create;
+  Result := Self.Create;
 end;
 
-class function TAWS4DCoreModelAttribute.NewIterator(Values: TDictionary<string, String>): IAWS4DIterator<IAWS4DCoreModelAttribute>;
+class function TAWS4DCoreModelAttribute.NewIterator(AValues: TDictionary<string, string>): IAWS4DIterator<IAWS4DCoreModelAttribute>;
 var
-  list: TList<IAWS4DCoreModelAttribute>;
-  key: string;
+  LList: TList<IAWS4DCoreModelAttribute>;
+  LKey: string;
 begin
-  list := TList<IAWS4DCoreModelAttribute>.create;
+  LList := TList<IAWS4DCoreModelAttribute>.create;
   try
-    result := TAWS4DCoreModelIterator<IAWS4DCoreModelAttribute>.New(list);
-    for key in Values.Keys do
+    Result := TAWS4DCoreModelIterator<IAWS4DCoreModelAttribute>.New(LList);
+    for LKey in AValues.Keys do
     begin
-      list.Add(TAWS4DCoreModelAttribute.New);
-      list.Last.Key(key);
-      list.Last.Value(Values.Items[key]);
+      LList.Add(TAWS4DCoreModelAttribute.New);
+      LList.Last.Key(LKey);
+      LList.Last.Value(AValues.Items[LKey]);
     end;
-
   except
-    list.Free;
+    LList.Free;
     raise;
   end;
 end;
 
-class function TAWS4DCoreModelAttribute.NewIterator(JSONArray: TJSONArray): IAWS4DIterator<IAWS4DCoreModelAttribute>;
+class function TAWS4DCoreModelAttribute.NewIterator(AJSONArray: TJSONArray): IAWS4DIterator<IAWS4DCoreModelAttribute>;
 var
-  list: TList<IAWS4DCoreModelAttribute>;
+  LList: TList<IAWS4DCoreModelAttribute>;
   I: Integer;
 begin
-  list := TList<IAWS4DCoreModelAttribute>.create;
+  LList := TList<IAWS4DCoreModelAttribute>.create;
   try
-    result := TAWS4DCoreModelIterator<IAWS4DCoreModelAttribute>.New(list);
-    if not Assigned(JSONArray) then
+    Result := TAWS4DCoreModelIterator<IAWS4DCoreModelAttribute>.New(LList);
+    if not Assigned(AJSONArray) then
       Exit;
 
-    for I := 0 to Pred(JSONArray.Count) do
+    for I := 0 to Pred(AJSONArray.Count) do
     begin
-      list.Add(TAWS4DCoreModelAttribute.New);
-      list.Last.Key(JSONArray.ItemAsString(i, 'Key'));
-      list.Last.Value(JSONArray.ItemAsString(i, 'Value'));
+      LList.Add(TAWS4DCoreModelAttribute.New);
+      LList.Last.Key(AJSONArray.ItemAsstring(i, 'Key'));
+      LList.Last.Value(AJSONArray.ItemAsstring(i, 'Value'));
     end;
-
   except
-    list.Free;
+    LList.Free;
     raise;
   end;
 end;
 
 function TAWS4DCoreModelAttribute.Value(AValue: string): IAWS4DCoreModelAttribute;
 begin
-  result := Self;
+  Result := Self;
   FValue := AValue;
 end;
 

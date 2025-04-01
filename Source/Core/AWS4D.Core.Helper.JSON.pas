@@ -3,9 +3,9 @@ unit AWS4D.Core.Helper.JSON;
 interface
 
 uses
-  {$IF CompilerVersion <= 34.0}
+{$IF CompilerVersion <= 34.0}
   REST.Json,
-  {$ENDIF}
+{$ENDIF}
   System.Generics.Collections,
   System.Classes,
   System.DateUtils,
@@ -14,186 +14,197 @@ uses
 
 type
   TAWS4DCoreHelperJSONObject = class helper for TJSONObject
-
   public
-    function ValueAsString   (Name: string; Default: string = ''): string;
-    function ValueAsInteger  (Name: string; Default: Integer = 0): Integer;
-    function ValueAsFloat    (Name: string; Default: Double = 0): Double;
-    function ValueAsDateTime (Name: string; AFormat: String = ''; Default: TDateTime = 0): TDateTime;
-    function ValueAsBoolean  (Name: string; Default: Boolean = True): Boolean;
+    function ValueAsString(AName: string; ADefault: string = ''): string;
+    function ValueAsInteger(AName: string; ADefault: Integer = 0): Integer;
+    function ValueAsFloat(AName: string; ADefault: Double = 0): Double;
+    function ValueAsDateTime(AName: string; AFormat: string = '';
+      ADefault: TDateTime = 0): TDateTime;
+    function ValueAsBoolean(AName: string; ADefault: Boolean = True): Boolean;
 
-    function ValueAsJSONObject(Name: String): TJSONObject;
-    function ValueAsJSONArray (Name: String): TJSONArray;
+    function ValueAsJSONObject(AName: string): TJSONObject;
+    function ValueAsJSONArray(AName: string): TJSONArray;
 
-    function SetValue(Name, Value: String): TJSONObject;
+    function SetValue(AName, AValue: string): TJSONObject;
   end;
 
   TAWS4DCoreHelperJSONArray = class helper for TJSONArray
   public
-    function ItemAsString(Index: Integer; Name: string; Default: string = ''): string;
-    function ItemAsInteger(Index: Integer; Name: string; Default: Integer = 0): Integer;
-    function ItemAsFloat  (Index: Integer; Name: string; Default: Double = 0): Double;
-    function ItemAsDateTime(Index: Integer; Name: string; AFormat: String = ''; Default: TDateTime = 0): TDateTime;
-    function ItemAsBoolean(Index: Integer; Name: string; Default: Boolean = True): Boolean;
+    function ItemAsString(AIndex: Integer; AName: string; ADefault: string = ''): string;
+    function ItemAsInteger(AIndex: Integer; AName: string; ADefault: Integer = 0): Integer;
+    function ItemAsFloat(AIndex: Integer; AName: string; ADefault: Double = 0): Double;
+    function ItemAsDateTime(AIndex: Integer; AName: string; AFormat: string = '';
+      ADefault: TDateTime = 0): TDateTime;
+    function ItemAsBoolean(AIndex: Integer; AName: string; ADefault: Boolean = True): Boolean;
 
-    function ItemAsJSONObject(Index: Integer): TJSONObject; overload;
-    function ItemAsJSONObject(Index: Integer; Name: String): TJSONObject; overload;
-    function ItemAsJSONArray(Index: Integer): TJSONArray; overload;
-    function ItemAsJSONArray(Index: Integer; Name: String): TJSONArray; overload;
+    function ItemAsJSONObject(AIndex: Integer): TJSONObject; overload;
+    function ItemAsJSONObject(AIndex: Integer; AName: string): TJSONObject; overload;
+    function ItemAsJSONArray(AIndex: Integer): TJSONArray; overload;
+    function ItemAsJSONArray(AIndex: Integer; AName: string): TJSONArray; overload;
 
-    function ToListString: TList<String>;
+    function ToListString: TList<string>;
   end;
 
 implementation
 
 { TAWS4DCoreHelperJSONObject }
 
-function TAWS4DCoreHelperJSONObject.SetValue(Name, Value: String): TJSONObject;
+function TAWS4DCoreHelperJSONObject.SetValue(AName, AValue: string): TJSONObject;
 begin
-  result := Self;
-  if GetValue(Name) <> nil then
-    Self.RemovePair(Name).Free;
+  Result := Self;
+  if GetValue(AName) <> nil then
+    Self.RemovePair(AName).Free;
 
-  Self.AddPair(Name, Value);
+  Self.AddPair(AName, AValue);
 end;
 
-function TAWS4DCoreHelperJSONObject.ValueAsBoolean(Name: string; Default: Boolean): Boolean;
+function TAWS4DCoreHelperJSONObject.ValueAsBoolean(AName: string; ADefault: Boolean): Boolean;
 var
-  strValue: string;
+  LStrValue: string;
 begin
-  result := Default;
-  if GetValue(Name) <> nil then
+  Result := ADefault;
+  if GetValue(AName) <> nil then
   begin
-    strValue := GetValue(Name).ToString;
-    result := not strValue.Equals('false');
+    LStrValue := GetValue(AName).ToString;
+    Result := not LStrValue.Equals('false');
   end;
 end;
 
-function TAWS4DCoreHelperJSONObject.ValueAsDateTime(Name, AFormat: String; Default: TDateTime): TDateTime;
+function TAWS4DCoreHelperJSONObject.ValueAsDateTime(AName, AFormat: string; ADefault: TDateTime): TDateTime;
 var
-  strValue: string;
+  LStrValue: string;
 begin
-  result := Default;
-  strValue := ValueAsString(Name, '0');
-  if strValue <> '0' then
-    result := ISO8601ToDate(strValue);
+  Result := ADefault;
+  LStrValue := ValueAsString(AName, '0');
+  if LStrValue <> '0' then
+    Result := ISO8601ToDate(LStrValue);
 end;
 
-function TAWS4DCoreHelperJSONObject.ValueAsFloat(Name: string; Default: Double): Double;
+function TAWS4DCoreHelperJSONObject.ValueAsFloat(AName: string; ADefault: Double): Double;
 var
-  strValue: string;
+  LStrValue: string;
 begin
-  strValue := ValueAsString(Name, Default.ToString);
-  result := StrToFloatDef(strValue, Default);
+  LStrValue := ValueAsString(AName, ADefault.ToString);
+  Result := StrToFloatDef(LStrValue, ADefault);
 end;
 
-function TAWS4DCoreHelperJSONObject.ValueAsInteger(Name: string; Default: Integer): Integer;
+function TAWS4DCoreHelperJSONObject.ValueAsInteger(AName: string; ADefault: Integer = 0): Integer;
 var
-  strValue: string;
+  LStrValue: string;
 begin
-  strValue := ValueAsString(Name, default.ToString);
-  result := StrToIntDef(strValue, Default);
+  LStrValue := ValueAsString(AName, ADefault.ToString);
+  Result := StrToIntDef(LStrValue, ADefault);
 end;
 
-function TAWS4DCoreHelperJSONObject.ValueAsJSONArray(Name: String): TJSONArray;
+function TAWS4DCoreHelperJSONObject.ValueAsJSONArray(AName: string): TJSONArray;
 begin
-  result := nil;
-  if GetValue(Name) is TJSONArray then
-    result := TJSONArray( GetValue(Name) );
+  Result := nil;
+  if GetValue(AName) is TJSONArray then
+    Result := TJSONArray(GetValue(AName));
 end;
 
-function TAWS4DCoreHelperJSONObject.ValueAsJSONObject(Name: String): TJSONObject;
+function TAWS4DCoreHelperJSONObject.ValueAsJSONObject(AName: string): TJSONObject;
 begin
-  result := nil;
-  if GetValue(Name) is TJSONObject then
-    result := TJSONObject( GetValue(Name) );
+  Result := nil;
+  if GetValue(AName) is TJSONObject then
+    Result := TJSONObject(GetValue(AName));
 end;
 
-function TAWS4DCoreHelperJSONObject.ValueAsString(Name, Default: string): string;
+function TAWS4DCoreHelperJSONObject.ValueAsString(AName, ADefault: string): string;
 begin
-  result := Default;
-  if GetValue(Name) <> nil then
-    result := GetValue(Name).Value;
+  Result := ADefault;
+  if GetValue(AName) <> nil then
+    Result := GetValue(AName).Value;
 end;
 
 { TAWS4DCoreHelperJSONArray }
 
-function TAWS4DCoreHelperJSONArray.ItemAsBoolean(Index: Integer; Name: string; Default: Boolean): Boolean;
+function TAWS4DCoreHelperJSONArray.ItemAsBoolean(AIndex: Integer; AName: string; ADefault: Boolean): Boolean;
 var
-  json: TJSONObject;
+  LJSON: TJSONObject;
 begin
-  json := ItemAsJSONObject(Index);
-  result := json.ValueAsBoolean(Name, Default);
+  LJSON := ItemAsJSONObject(AIndex);
+  Result := LJSON.ValueAsBoolean(AName, ADefault);
 end;
 
-function TAWS4DCoreHelperJSONArray.ItemAsDateTime(Index: Integer; Name, AFormat: String; Default: TDateTime): TDateTime;
+function TAWS4DCoreHelperJSONArray.ItemAsDateTime(AIndex: Integer; AName, AFormat: string; ADefault: TDateTime): TDateTime;
 var
-  json: TJSONObject;
+  LJSON: TJSONObject;
 begin
-  json := ItemAsJSONObject(Index);
-  result := json.ValueAsDateTime(Name, AFormat, Default);
+  LJSON := ItemAsJSONObject(AIndex);
+  Result := LJSON.ValueAsDateTime(AName, AFormat, ADefault);
 end;
 
-function TAWS4DCoreHelperJSONArray.ItemAsFloat(Index: Integer; Name: string; Default: Double): Double;
+function TAWS4DCoreHelperJSONArray.ItemAsFloat(AIndex: Integer; AName: string; ADefault: Double): Double;
 var
-  json: TJSONObject;
+  LJSON: TJSONObject;
 begin
-  json := ItemAsJSONObject(Index);
-  result := json.ValueAsFloat(Name, Default);
+  LJSON := ItemAsJSONObject(AIndex);
+  Result := LJSON.ValueAsFloat(AName, ADefault);
 end;
 
-function TAWS4DCoreHelperJSONArray.ItemAsInteger(Index: Integer; Name: string; Default: Integer): Integer;
+function TAWS4DCoreHelperJSONArray.ItemAsInteger(AIndex: Integer; AName: string; ADefault: Integer): Integer;
 var
-  json: TJSONObject;
+  LJSON: TJSONObject;
 begin
-  json := ItemAsJSONObject(Index);
-  result := json.ValueAsInteger(Name, Default);
+  LJSON := ItemAsJSONObject(AIndex);
+  Result := LJSON.ValueAsInteger(AName, ADefault);
 end;
 
-function TAWS4DCoreHelperJSONArray.ItemAsJSONArray(Index: Integer): TJSONArray;
+function TAWS4DCoreHelperJSONArray.ItemAsJSONArray(AIndex: Integer): TJSONArray;
 begin
-  result := {$IF CompilerVersion > 26.0} Items[Index] as TJSONArray; {$ELSE} Self.Get(Index) as TJSONArray; {$ENDIF}
+  Result :=
+{$IF CompilerVersion > 26.0}
+    Items[AIndex] as TJSONArray;
+{$ELSE}
+    Self.Get(Index) as TJSONArray;
+{$ENDIF}
 end;
 
-function TAWS4DCoreHelperJSONArray.ItemAsJSONArray(Index: Integer; Name: String): TJSONArray;
+function TAWS4DCoreHelperJSONArray.ItemAsJSONArray(AIndex: Integer; AName: string): TJSONArray;
 var
-  json: TJSONObject;
+  LJSON: TJSONObject;
 begin
-  json := ItemAsJSONObject(Index);
-  result := json.ValueAsJSONArray(Name);
+  LJSON := ItemAsJSONObject(AIndex);
+  Result := LJSON.ValueAsJSONArray(AName);
 end;
 
-function TAWS4DCoreHelperJSONArray.ItemAsJSONObject(Index: Integer): TJSONObject;
+function TAWS4DCoreHelperJSONArray.ItemAsJSONObject(AIndex: Integer): TJSONObject;
 begin
-  result := {$IF CompilerVersion > 26.0} Items[Index] as TJSONObject; {$ELSE} Self.Get(Index) as TJSONObject; {$ENDIF}
+  Result :=
+{$IF CompilerVersion > 26.0}
+    Items[AIndex] as TJSONObject;
+{$ELSE}
+    Self.Get(Index) as TJSONObject;
+{$ENDIF}
 end;
 
-function TAWS4DCoreHelperJSONArray.ItemAsJSONObject(Index: Integer; Name: String): TJSONObject;
+function TAWS4DCoreHelperJSONArray.ItemAsJSONObject(AIndex: Integer; AName: string): TJSONObject;
 var
-  json: TJSONObject;
+  LJSON: TJSONObject;
 begin
-  json := ItemAsJSONObject(Index);
-  result := json.ValueAsJSONObject(Name);
+  LJSON := ItemAsJSONObject(AIndex);
+  Result := LJSON.ValueAsJSONObject(AName);
 end;
 
-function TAWS4DCoreHelperJSONArray.ItemAsString(Index: Integer; Name, Default: string): string;
+function TAWS4DCoreHelperJSONArray.ItemAsString(AIndex: Integer; AName, ADefault: string): string;
 var
-  json: TJSONObject;
+  LJSON: TJSONObject;
 begin
-  json := ItemAsJSONObject(Index);
-  result := json.ValueAsString(Name, Default);
+  LJSON := ItemAsJSONObject(AIndex);
+  Result := LJSON.ValueAsString(AName, ADefault);
 end;
 
-function TAWS4DCoreHelperJSONArray.ToListString: TList<String>;
+function TAWS4DCoreHelperJSONArray.ToListString: TList<string>;
 var
-  i: Integer;
+  I: Integer;
 begin
-  result := TList<String>.create;
+  Result := TList<string>.create;
   try
-    for i := 0 to Pred(Self.Count) do
-      result.Add( Self.Items[i].Value );
+    for I := 0 to Pred(Self.Count) do
+      Result.Add( Self.Items[I].Value );
   except
-    result.Free;
+    Result.Free;
     raise;
   end;
 end;

@@ -17,47 +17,44 @@ uses
   System.JSON,
   System.SysUtils;
 
-type TAWS4DSQSService<I: IInterface> = class(TInterfacedObject, IAWS4DSQSService<I>)
-
+type
+  TAWS4DSQSService<I: IInterface> = class(TInterfacedObject, IAWS4DSQSService<I>)
   private
     [Weak]
     FParent: I;
-    FAccessKey: String;
-    FSecretKey: String;
+    FAccessKey: string;
+    FSecretKey: string;
     FRegion: TAWS4DRegion;
 
     function Host: string;
-    function NewGETRequest(Action: String): IGBClientRequest; overload;
-
+    function NewGETRequest(AAction: string): IGBClientRequest; overload;
+    function NewPOSTRequest(ATarget: string): IGBClientRequest; overload;
   protected
-    function AccessKey(Value: String): IAWS4DSQSService<I>;
-    function SecretKey(Value: String): IAWS4DSQSService<I>;
-    function Region(Value: String): IAWS4DSQSService<I>; overload;
-    function Region(Value: TAWS4DRegion): IAWS4DSQSService<I>; overload;
+    function AccessKey(AValue: string): IAWS4DSQSService<I>;
+    function SecretKey(AValue: string): IAWS4DSQSService<I>;
+    function Region(AValue: string): IAWS4DSQSService<I>; overload;
+    function Region(AValue: TAWS4DRegion): IAWS4DSQSService<I>; overload;
 
-    function CreateQueue(Request: IAWS4DSQSCreateQueueRequest<I>): IAWS4DSQSCreateQueueResponse<I>;
-    procedure DeleteMessage(Request: IAWS4DSQSDeleteMessageRequest<I>);
-    procedure DeleteMessageBatch(Request: IAWS4DSQSDeleteMessageBatchRequest<I>);
-    procedure DeleteQueue(Request: IAWS4DSQSDeleteQueueRequest<I>);
-    function GetQueueAttributes(Request: IAWS4DSQSGetQueueAttributesRequest<I>): IAWS4DSQSGetQueueAttributesResponse<I>;
-    function GetQueueUrl(Request: IAWS4DSQSGetQueueUrlRequest<I>): IAWS4DSQSGetQueueUrlResponse<I>;
-    function ListQueues(Request: IAWS4DSQSListQueuesRequest<I>): IAWS4DSQSListQueuesResponse<I>;
-    function ListQueueTags(Request: IAWS4DSQSListQueueTagsRequest<I>): IAWS4DSQSListQueueTagsResponse<I>;
-    procedure PurgeQueue(Request: IAWS4DSQSPurgeQueueRequest<I>);
-    function ReceiveMessage(Request: IAWS4DSQSReceiveMessageRequest<I>): IAWS4DSQSReceiveMessageResponse<I>;
-    function SendMessage(Request: IAWS4DSQSSendMessageRequest<I>): IAWS4DSQSSendMessageResponse<I>;
-    procedure TagQueue(Request: IAWS4DSQSTagQueueRequest<I>);
-    procedure UnTagQueue(Request: IAWS4DSQSUnTagQueueRequest<I>);
+    function CreateQueue(ARequest: IAWS4DSQSCreateQueueRequest<I>): IAWS4DSQSCreateQueueResponse<I>;
+    procedure DeleteMessage(ARequest: IAWS4DSQSDeleteMessageRequest<I>);
+    procedure DeleteMessageBatch(ARequest: IAWS4DSQSDeleteMessageBatchRequest<I>);
+    procedure DeleteQueue(ARequest: IAWS4DSQSDeleteQueueRequest<I>);
+    function GetQueueAttributes(ARequest: IAWS4DSQSGetQueueAttributesRequest<I>): IAWS4DSQSGetQueueAttributesResponse<I>;
+    function GetQueueUrl(ARequest: IAWS4DSQSGetQueueUrlRequest<I>): IAWS4DSQSGetQueueUrlResponse<I>;
+    function ListQueues(ARequest: IAWS4DSQSListQueuesRequest<I>): IAWS4DSQSListQueuesResponse<I>;
+    function ListQueueTags(ARequest: IAWS4DSQSListQueueTagsRequest<I>): IAWS4DSQSListQueueTagsResponse<I>;
+    procedure PurgeQueue(ARequest: IAWS4DSQSPurgeQueueRequest<I>);
+    function ReceiveMessage(ARequest: IAWS4DSQSReceiveMessageRequest<I>): IAWS4DSQSReceiveMessageResponse<I>;
+    function SendMessage(ARequest: IAWS4DSQSSendMessageRequest<I>): IAWS4DSQSSendMessageResponse<I>;
+    procedure TagQueue(ARequest: IAWS4DSQSTagQueueRequest<I>);
+    procedure UnTagQueue(ARequest: IAWS4DSQSUnTagQueueRequest<I>);
 
-    function Parent(Value: I): IAWS4DSQSService<I>;
+    function Parent(AValue: I): IAWS4DSQSService<I>;
     function &End: I;
-
   public
-    constructor create;
+    constructor Create;
     class function New: IAWS4DSQSService<I>;
-    destructor Destroy; override;
-
-end;
+  end;
 
 implementation
 
@@ -65,377 +62,386 @@ implementation
 
 function TAWS4DSQSService<I>.&End: I;
 begin
-  result := FParent;
+  Result := FParent;
 end;
 
-function TAWS4DSQSService<I>.GetQueueAttributes(Request: IAWS4DSQSGetQueueAttributesRequest<I>): IAWS4DSQSGetQueueAttributesResponse<I>;
+function TAWS4DSQSService<I>.GetQueueAttributes(ARequest: IAWS4DSQSGetQueueAttributesRequest<I>): IAWS4DSQSGetQueueAttributesResponse<I>;
 var
-  restRequest: IGBClientRequest;
-  json: TJSONObject;
-  index: String;
+  LRestRequest: IGBClientRequest;
+  LJSON: TJSONObject;
+  LIndex: string;
 begin
-  restRequest := NewGETRequest('GetQueueAttributes');
-  restRequest.Resource(Request.QueueUrl);
+  LRestRequest := NewGETRequest('GetQueueAttributes');
+  LRestRequest.Resource(ARequest.QueueUrl);
 
-  while Request.Attributtes.HasNext do
+  while ARequest.Attributtes.HasNext do
   begin
-    index := (Request.Attributtes.Index + 1).ToString;
-    restRequest.Params
-      .QueryAddOrSet(Format('AttributeName.%s', [index]),
-                     Request.Attributtes.Current);
+    LIndex := (ARequest.Attributtes.Index + 1).ToString;
+    LRestRequest.Params
+      .QueryAddOrSet(Format('AttributeName.%s', [LIndex]),
+        ARequest.Attributtes.Current);
   end;
 
-  json := restRequest.Send.GetJSONObject;
-  result := TAWS4SQSGetQueueAttributesResponse<I>.New(FParent, json);
+  LJSON := LRestRequest.Send.GetJSONObject;
+  Result := TAWS4SQSGetQueueAttributesResponse<I>.New(FParent, LJSON);
 end;
 
-function TAWS4DSQSService<I>.GetQueueUrl(Request: IAWS4DSQSGetQueueUrlRequest<I>): IAWS4DSQSGetQueueUrlResponse<I>;
+function TAWS4DSQSService<I>.GetQueueUrl(ARequest: IAWS4DSQSGetQueueUrlRequest<I>): IAWS4DSQSGetQueueUrlResponse<I>;
 var
-  restRequest: IGBClientRequest;
-  json: TJSONObject;
+  LRestRequest: IGBClientRequest;
+  LJSON: TJSONObject;
 begin
-  restRequest := NewGETRequest('GetQueueUrl');
-  restRequest.Params.QueryAddOrSet('QueueName', Request.QueueName);
+  LRestRequest := NewGETRequest('GetQueueUrl');
+  LRestRequest.Params.QueryAddOrSet('QueueName', ARequest.QueueName);
 
-  if Request.QueueOwnerAWSAccountId <> EmptyStr then
-    restRequest.Params
-      .QueryAddOrSet('QueueOwnerAWSAccountId', Request.QueueOwnerAWSAccountId);
+  if ARequest.QueueOwnerAWSAccountId <> EmptyStr then
+    LRestRequest.Params
+      .QueryAddOrSet('QueueOwnerAWSAccountId', ARequest.QueueOwnerAWSAccountId);
 
-  json := restRequest.Send.GetJSONObject;
-  result := TAWS4SQSGetQueueUrlResponse<I>.New(FParent, json);
+  LJSON := LRestRequest.Send.GetJSONObject;
+  Result := TAWS4SQSGetQueueUrlResponse<I>.New(FParent, LJSON);
 end;
 
-function TAWS4DSQSService<I>.AccessKey(Value: String): IAWS4DSQSService<I>;
+function TAWS4DSQSService<I>.AccessKey(AValue: string): IAWS4DSQSService<I>;
 begin
-  result := Self;
-  FAccessKey := Value;
+  Result := Self;
+  FAccessKey := AValue;
 end;
 
-constructor TAWS4DSQSService<I>.create;
+constructor TAWS4DSQSService<I>.Create;
 begin
   FRegion := aws4dUSEast1;
 end;
 
-function TAWS4DSQSService<I>.CreateQueue(Request: IAWS4DSQSCreateQueueRequest<I>): IAWS4DSQSCreateQueueResponse<I>;
+function TAWS4DSQSService<I>.CreateQueue(ARequest: IAWS4DSQSCreateQueueRequest<I>): IAWS4DSQSCreateQueueResponse<I>;
 var
-  restRequest: IGBClientRequest;
-  json: TJSONObject;
-  index: String;
+  LRestRequest: IGBClientRequest;
+  LJSON: TJSONObject;
+  LIndex: string;
 begin
-  restRequest := NewGETRequest('CreateQueue');
-  restRequest
-    .Params.QueryAddOrSet('QueueName', Request.QueueName);
+  LRestRequest := NewGETRequest('CreateQueue');
+  LRestRequest
+    .Params.QueryAddOrSet('QueueName', ARequest.QueueName);
 
-  while Request.Attributes.HasNext do
+  while ARequest.Attributes.HasNext do
   begin
-    index := (Request.Attributes.Index + 1).ToString;
-    restRequest.Params.QueryAddOrSet(
-      Format('Attribute.%s.Name', [index]),
-      Request.Attributes.Current.Key);
+    LIndex := (ARequest.Attributes.Index + 1).ToString;
+    LRestRequest.Params.QueryAddOrSet(
+      Format('Attribute.%s.Name', [LIndex]),
+      ARequest.Attributes.Current.Key);
 
-    restRequest.Params.QueryAddOrSet(
-      Format('Attribute.%s.Value ', [index]),
-      Request.Attributes.Current.Value);
+    LRestRequest.Params.QueryAddOrSet(
+      Format('Attribute.%s.Value ', [LIndex]),
+      ARequest.Attributes.Current.Value);
   end;
 
-  while Request.Tags.HasNext do
+  while ARequest.Tags.HasNext do
   begin
-    index := (Request.Tags.Index + 1).ToString;
-    restRequest.Params.QueryAddOrSet(
-      Format('Tag.%s.Name', [index]),
-      Request.Tags.Current.Key);
+    LIndex := (ARequest.Tags.Index + 1).ToString;
+    LRestRequest.Params.QueryAddOrSet(
+      Format('Tag.%s.Name', [LIndex]),
+      ARequest.Tags.Current.Key);
 
-    restRequest.Params.QueryAddOrSet(
-      Format('Tag.%s.Value ', [index]),
-      Request.Tags.Current.Value);
+    LRestRequest.Params.QueryAddOrSet(
+      Format('Tag.%s.Value ', [LIndex]),
+      ARequest.Tags.Current.Value);
   end;
 
-  json := restRequest.Send.GetJSONObject;
-  Result := TAWS4SQSCreateQueueResponse<I>.New(FParent, json);
+  LJSON := LRestRequest.Send.GetJSONObject;
+  Result := TAWS4SQSCreateQueueResponse<I>.New(FParent, LJSON);
 end;
 
-procedure TAWS4DSQSService<I>.DeleteMessage(Request: IAWS4DSQSDeleteMessageRequest<I>);
+procedure TAWS4DSQSService<I>.DeleteMessage(ARequest: IAWS4DSQSDeleteMessageRequest<I>);
 var
-  restRequest: IGBClientRequest;
+  LRestRequest: IGBClientRequest;
+  LPayload: string;
 begin
-  restRequest := NewGETRequest('DeleteMessage');
-  restRequest
-    .Resource(Request.QueueName)
-    .Params
-      .QueryAddOrSet('ReceiptHandle', Request.ReceiptHandle);
+  LPayload := Format('{"QueueUrl":"%s","ReceiptHandle":"%s"}', [ARequest.QueueName,
+    ARequest.ReceiptHandle]);
+  LRestRequest := NewPOSTRequest('AmazonSQS.DeleteMessage');
+  LRestRequest.Params
+      .BodyAddOrSet(LPayload);
 
-  restRequest.Send;
+  LRestRequest.Send;
 end;
 
-procedure TAWS4DSQSService<I>.DeleteMessageBatch(Request: IAWS4DSQSDeleteMessageBatchRequest<I>);
+procedure TAWS4DSQSService<I>.DeleteMessageBatch(ARequest: IAWS4DSQSDeleteMessageBatchRequest<I>);
 var
-  restRequest: IGBClientRequest;
-  index: String;
+  LRestRequest: IGBClientRequest;
+  LIndex: string;
 begin
-  restRequest := NewGETRequest('DeleteMessageBatch');
-  restRequest.Resource(Request.QueueUrl);
+  LRestRequest := NewGETRequest('DeleteMessageBatch');
+  LRestRequest.Resource(ARequest.QueueUrl);
 
-  while Request.Messages.HasNext do
+  while ARequest.Messages.HasNext do
   begin
-    index := (Request.Messages.Index + 1).ToString;
-    restRequest.Params.QueryAddOrSet(
-      Format('DeleteMessageBatchRequestEntry.%s.Id', [index]),
-      Request.Messages.Current.Key);
+    LIndex := (ARequest.Messages.Index + 1).ToString;
+    LRestRequest.Params.QueryAddOrSet(
+      Format('DeleteMessageBatchRequestEntry.%s.Id', [LIndex]),
+      ARequest.Messages.Current.Key);
 
-    restRequest.Params.QueryAddOrSet(
-      Format('DeleteMessageBatchRequestEntry.%s.ReceiptHandle', [index]),
-      Request.Messages.Current.Value);
+    LRestRequest.Params.QueryAddOrSet(
+      Format('DeleteMessageBatchRequestEntry.%s.ReceiptHandle', [LIndex]),
+      ARequest.Messages.Current.Value);
   end;
 
-  restRequest.Send;
+  LRestRequest.Send;
 end;
 
-procedure TAWS4DSQSService<I>.DeleteQueue(Request: IAWS4DSQSDeleteQueueRequest<I>);
+procedure TAWS4DSQSService<I>.DeleteQueue(ARequest: IAWS4DSQSDeleteQueueRequest<I>);
 var
-  restRequest: IGBClientRequest;
+  LRestRequest: IGBClientRequest;
 begin
-  restRequest := NewGETRequest('DeleteQueue');
-  restRequest
-    .Resource(Request.QueueUrl);
-
-  restRequest.Send;
-end;
-
-destructor TAWS4DSQSService<I>.Destroy;
-begin
-
-  inherited;
+  LRestRequest := NewGETRequest('DeleteQueue');
+  LRestRequest.Resource(ARequest.QueueUrl);
+  LRestRequest.Send;
 end;
 
 function TAWS4DSQSService<I>.Host: string;
 begin
-  Result := Format('https://sqs.%s.amazonaws.com', [FRegion.toString]);
+  Result := Format('https://sqs.%s.amazonaws.com', [FRegion.ToString]);
 end;
 
-function TAWS4DSQSService<I>.ListQueues(Request: IAWS4DSQSListQueuesRequest<I>): IAWS4DSQSListQueuesResponse<I>;
+function TAWS4DSQSService<I>.ListQueues(ARequest: IAWS4DSQSListQueuesRequest<I>): IAWS4DSQSListQueuesResponse<I>;
 var
-  restRequest: IGBClientRequest;
-  json: TJSONObject;
+  LRestRequest: IGBClientRequest;
+  LJSON: TJSONObject;
 begin
-  restRequest := NewGETRequest('ListQueues');
+  LRestRequest := NewGETRequest('ListQueues');
 
-  if Request.MaxResults > 0 then
-    restRequest.Params.QueryAddOrSet('MaxResults', Request.MaxResults);
+  if ARequest.MaxResults > 0 then
+    LRestRequest.Params.QueryAddOrSet('MaxResults', ARequest.MaxResults);
 
-  if Request.NextToken.Trim <> EmptyStr then
-    restRequest.Params.QueryAddOrSet('NextToken', Request.NextToken);
+  if ARequest.NextToken.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('NextToken', ARequest.NextToken);
 
-  if Request.QueueNamePrefix.Trim <> EmptyStr then
-    restRequest.Params.QueryAddOrSet('QueueNamePrefix', Request.NextToken);
+  if ARequest.QueueNamePrefix.Trim <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('QueueNamePrefix', ARequest.NextToken);
 
-  json := restRequest.Send.GetJSONObject;
-  result := TAWS4DSQSModelListQueuesResponse<I>.New(FParent, json);
+  LJSON := LRestRequest.Send.GetJSONObject;
+  Result := TAWS4DSQSModelListQueuesResponse<I>.New(FParent, LJSON);
 end;
 
-function TAWS4DSQSService<I>.ListQueueTags(Request: IAWS4DSQSListQueueTagsRequest<I>): IAWS4DSQSListQueueTagsResponse<I>;
+function TAWS4DSQSService<I>.ListQueueTags(ARequest: IAWS4DSQSListQueueTagsRequest<I>): IAWS4DSQSListQueueTagsResponse<I>;
 var
-  restRequest: IGBClientRequest;
-  json: TJSONObject;
+  LRestRequest: IGBClientRequest;
+  LJSON: TJSONObject;
 begin
-  restRequest := NewGETRequest('ListQueueTags');
-  restRequest
-    .Resource(Request.QueueUrl);
-
-  json := restRequest.Send.GetJSONObject;
-  result := TAWS4DSQSModelListQueueTagsResponse<I>.New(FParent, json);
+  LRestRequest := NewGETRequest('ListQueueTags');
+  LRestRequest.Resource(ARequest.QueueUrl);
+  LJSON := LRestRequest.Send.GetJSONObject;
+  Result := TAWS4DSQSModelListQueueTagsResponse<I>.New(FParent, LJSON);
 end;
 
 class function TAWS4DSQSService<I>.New: IAWS4DSQSService<I>;
 begin
-  result := Self.create;
+  Result := Self.Create;
 end;
 
-function TAWS4DSQSService<I>.NewGETRequest(Action: String): IGBClientRequest;
+function TAWS4DSQSService<I>.NewGETRequest(AAction: string): IGBClientRequest;
 begin
-  result := NewClientRequest;
-  result
-    .GET
+  Result := NewClientRequest;
+  Result.GET
     .BaseURL(Host)
     .Accept('application/json')
     .Authorization
       .AWSv4
         .AccessKey(FAccessKey)
         .SecretKey(FSecretKey)
-        .Region(FRegion.toString)
+        .Region(FRegion.ToString)
         .Service('sqs')
         .HTTPVerb('GET')
     .&End
     .Params
-      .QueryAddOrSet('Action', Action);
+      .QueryAddOrSet('Action', AAction);
 end;
 
-function TAWS4DSQSService<I>.Parent(Value: I): IAWS4DSQSService<I>;
+function TAWS4DSQSService<I>.NewPOSTRequest(ATarget: string): IGBClientRequest;
 begin
-  result := Self;
-  FParent := Value;
+  Result := NewClientRequest;
+  Result.POST
+    .BaseURL(Host)
+    .Accept('application/json')
+    .ContentType('application/x-amz-json-1.0')
+    .Authorization
+      .AWSv4
+        .AccessKey(FAccessKey)
+        .SecretKey(FSecretKey)
+        .Region(FRegion.ToString)
+        .Service('sqs')
+        .HTTPVerb('POST')
+    .&End
+    .Params
+      .HeaderAddOrSet('X-Amz-Target', ATarget, False);
 end;
 
-procedure TAWS4DSQSService<I>.PurgeQueue(Request: IAWS4DSQSPurgeQueueRequest<I>);
-var
-  restRequest: IGBClientRequest;
-begin
-  restRequest := Self.NewGETRequest('PurgeQueue');
-  restRequest.Resource(Request.QueueUrl).Send;
-end;
-
-function TAWS4DSQSService<I>.Region(Value: String): IAWS4DSQSService<I>;
-begin
-  result := Self;
-  FRegion.fromString(Value);
-end;
-
-function TAWS4DSQSService<I>.ReceiveMessage(Request: IAWS4DSQSReceiveMessageRequest<I>): IAWS4DSQSReceiveMessageResponse<I>;
-var
-  restRequest: IGBClientRequest;
-  json: TJSONObject;
-  LCount: Integer;
-begin
-  restRequest := Self.NewGETRequest('ReceiveMessage');
-  restRequest
-    .Resource(Request.QueueUrl);
-
-  LCount := 0;
-  while Request.Attributes.HasNext do
-  begin
-    Inc(LCount);
-    restRequest.Params
-      .QueryAddOrSet(Format('AttributeName.%s', [LCount.ToString]),
-                     Request.Attributes.Current);
-  end;
-
-  if Request.MaxNumberOfMessages > 0 then
-    restRequest.Params.QueryAddOrSet('MaxNumberOfMessages', Request.MaxNumberOfMessages);
-
-  LCount := 0;
-  while Request.MessageAttributes.HasNext do
-  begin
-    Inc(LCount);
-    restRequest.Params
-      .QueryAddOrSet(Format('MessageAttributeName.%s', [LCount.ToString]),
-                     Request.MessageAttributes.Current);
-  end;
-
-  if Request.ReceiveRequestAttemptId <> EmptyStr then
-    restRequest.Params.QueryAddOrSet('ReceiveRequestAttemptId', Request.ReceiveRequestAttemptId);
-
-  if Request.VisibilityTimeout > 0 then
-    restRequest.Params.QueryAddOrSet('VisibilityTimeout', Request.VisibilityTimeout);
-
-  if Request.WaitTimeSeconds > 0 then
-    restRequest.Params.QueryAddOrSet('WaitTimeSeconds', Request.WaitTimeSeconds);
-
-  json := restRequest.Send.GetJSONObject;
-  result := TAWS4SQSReceiveMessageResponse<I>.New(FParent, json);
-end;
-
-function TAWS4DSQSService<I>.Region(Value: TAWS4DRegion): IAWS4DSQSService<I>;
-begin
-  result := Self;
-  FRegion := Value;
-end;
-
-function TAWS4DSQSService<I>.SecretKey(Value: String): IAWS4DSQSService<I>;
+function TAWS4DSQSService<I>.Parent(AValue: I): IAWS4DSQSService<I>;
 begin
   Result := Self;
-  FSecretKey := Value;
+  FParent := AValue;
 end;
 
-function TAWS4DSQSService<I>.SendMessage(Request: IAWS4DSQSSendMessageRequest<I>): IAWS4DSQSSendMessageResponse<I>;
+procedure TAWS4DSQSService<I>.PurgeQueue(ARequest: IAWS4DSQSPurgeQueueRequest<I>);
 var
-  restRequest: IGBClientRequest;
-  json: TJSONObject;
+  LRestRequest: IGBClientRequest;
+begin
+  LRestRequest := Self.NewGETRequest('PurgeQueue');
+  LRestRequest.Resource(ARequest.QueueUrl).Send;
+end;
+
+function TAWS4DSQSService<I>.Region(AValue: string): IAWS4DSQSService<I>;
+begin
+  Result := Self;
+  FRegion.FromString(AValue);
+end;
+
+function TAWS4DSQSService<I>.ReceiveMessage(ARequest: IAWS4DSQSReceiveMessageRequest<I>): IAWS4DSQSReceiveMessageResponse<I>;
+var
+  LRestRequest: IGBClientRequest;
+  LJSON: TJSONObject;
   LCount: Integer;
 begin
-  restRequest := Self.NewGETRequest('SendMessage');
-  restRequest
-    .Resource(Request.QueueUrl)
+  LRestRequest := Self.NewGETRequest('ReceiveMessage');
+  LRestRequest
+    .Resource(ARequest.QueueUrl);
+
+  LCount := 0;
+  while ARequest.Attributes.HasNext do
+  begin
+    Inc(LCount);
+    LRestRequest.Params
+      .QueryAddOrSet(Format('AttributeName.%s', [LCount.ToString]),
+        ARequest.Attributes.Current);
+  end;
+
+  if ARequest.MaxNumberOfMessages > 0 then
+    LRestRequest.Params.QueryAddOrSet('MaxNumberOfMessages', ARequest.MaxNumberOfMessages);
+
+  LCount := 0;
+  while ARequest.MessageAttributes.HasNext do
+  begin
+    Inc(LCount);
+    LRestRequest.Params
+      .QueryAddOrSet(Format('MessageAttributeName.%s', [LCount.ToString]),
+        ARequest.MessageAttributes.Current);
+  end;
+
+  if ARequest.ReceiveRequestAttemptId <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('ReceiveRequestAttemptId', ARequest.ReceiveRequestAttemptId);
+
+  if ARequest.VisibilityTimeout > 0 then
+    LRestRequest.Params.QueryAddOrSet('VisibilityTimeout', ARequest.VisibilityTimeout);
+
+  if ARequest.WaitTimeSeconds > 0 then
+    LRestRequest.Params.QueryAddOrSet('WaitTimeSeconds', ARequest.WaitTimeSeconds);
+
+  LJSON := LRestRequest.Send.GetJSONObject;
+  Result := TAWS4SQSReceiveMessageResponse<I>.New(FParent, LJSON);
+end;
+
+function TAWS4DSQSService<I>.Region(AValue: TAWS4DRegion): IAWS4DSQSService<I>;
+begin
+  Result := Self;
+  FRegion := AValue;
+end;
+
+function TAWS4DSQSService<I>.SecretKey(AValue: string): IAWS4DSQSService<I>;
+begin
+  Result := Self;
+  FSecretKey := AValue;
+end;
+
+function TAWS4DSQSService<I>.SendMessage(ARequest: IAWS4DSQSSendMessageRequest<I>): IAWS4DSQSSendMessageResponse<I>;
+var
+  LRestRequest: IGBClientRequest;
+  LJSON: TJSONObject;
+  LCount: Integer;
+  LParamName: string;
+  LParamValue: string;
+begin
+  LRestRequest := Self.NewGETRequest('SendMessage');
+  LRestRequest.Resource(ARequest.QueueUrl)
     .Params
-      .QueryAddOrSet('MessageBody', Request.MessageBody);
+      .QueryAddOrSet('MessageBody', ARequest.MessageBody);
 
-  if Request.DelaySeconds > 0 then
-    restRequest.Params.QueryAddOrSet('DelaySeconds', Request.DelaySeconds);
+  if ARequest.DelaySeconds > 0 then
+    LRestRequest.Params.QueryAddOrSet('DelaySeconds', ARequest.DelaySeconds);
 
-  if Request.MessageDeduplicationId <> EmptyStr then
-    restRequest.Params.QueryAddOrSet('MessageDeduplicationId', Request.MessageDeduplicationId);
+  if ARequest.MessageDeduplicationId <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('MessageDeduplicationId', ARequest.MessageDeduplicationId);
 
-  if Request.MessageGroupId <> EmptyStr then
-    restRequest.Params.QueryAddOrSet('MessageGroupId', Request.MessageGroupId);
-
-  LCount := 0;
-  while Request.Attributes.HasNext do
-  begin
-    Inc(LCount);
-    restRequest.Params
-      .QueryAddOrSet(Format('MessageAttribute.%s.Name', [LCount.ToString]),
-                     Request.Attributes.Current.Key);
-    restRequest.Params
-      .QueryAddOrSet(Format('MessageAttribute.%s.Value.StringValue', [LCount.ToString]),
-                     Request.Attributes.Current.Value);
-    restRequest.Params
-      .QueryAddOrSet(Format('MessageAttribute.%s.Value.DataType', [LCount.ToString]),
-                     'String');
-  end;
+  if ARequest.MessageGroupId <> EmptyStr then
+    LRestRequest.Params.QueryAddOrSet('MessageGroupId', ARequest.MessageGroupId);
 
   LCount := 0;
-  while Request.MessageSystemAttributes.HasNext do
+  while ARequest.Attributes.HasNext do
   begin
     Inc(LCount);
-    restRequest.Params
-      .QueryAddOrSet(Format('MessageSystemAttribute.%s.Name', [LCount.ToString]),
-                     Request.MessageSystemAttributes.Current.Key);
-    restRequest.Params
-      .QueryAddOrSet(Format('MessageSystemAttribute.%s.Value.StringValue', [LCount.ToString]),
-                     Request.MessageSystemAttributes.Current.Value);
-    restRequest.Params
-      .QueryAddOrSet(Format('MessageAttribute.%s.Value.DataType', [LCount.ToString]),
-                     'String');
+    LParamName := ARequest.Attributes.Current.Key;
+    LParamValue := ARequest.Attributes.Current.Value;
+    LRestRequest.Params
+      .QueryAddOrSet(Format('MessageAttribute.%d.Name', [LCount]), LParamName);
+    LRestRequest.Params
+      .QueryAddOrSet(Format('MessageAttribute.%d.Value.StringValue', [LCount]), LParamValue);
+    LRestRequest.Params
+      .QueryAddOrSet(Format('MessageAttribute.%d.Value.DataType', [LCount]), 'String');
   end;
 
-  json := restRequest.Send.GetJSONObject;
-  result := TAWS4SQSSendMessageResponse<I>.New(FParent, json);
+  LCount := 0;
+  while ARequest.MessageSystemAttributes.HasNext do
+  begin
+    Inc(LCount);
+    LParamName := ARequest.MessageSystemAttributes.Current.Key;
+    LParamValue := ARequest.MessageSystemAttributes.Current.Value;
+    LRestRequest.Params
+      .QueryAddOrSet(Format('MessageSystemAttribute.%d.Name', [LCount]), LParamName);
+    LRestRequest.Params
+      .QueryAddOrSet(Format('MessageSystemAttribute.%d.Value.StringValue', [LCount]),
+        LParamValue);
+    LRestRequest.Params
+      .QueryAddOrSet(Format('MessageAttribute.%d.Value.DataType', [LCount]), 'String');
+  end;
+
+  LJSON := LRestRequest.Send.GetJSONObject;
+  Result := TAWS4SQSSendMessageResponse<I>.New(FParent, LJSON);
 end;
 
-procedure TAWS4DSQSService<I>.TagQueue(Request: IAWS4DSQSTagQueueRequest<I>);
+procedure TAWS4DSQSService<I>.TagQueue(ARequest: IAWS4DSQSTagQueueRequest<I>);
 var
-  restRequest: IGBClientRequest;
+  LRestRequest: IGBClientRequest;
 begin
-  restRequest := Self.NewGETRequest('TagQueue');
-  restRequest.Resource(Request.QueueUrl);
+  LRestRequest := Self.NewGETRequest('TagQueue');
+  LRestRequest.Resource(ARequest.QueueUrl);
 
-  while Request.Tags.HasNext do
+  while ARequest.Tags.HasNext do
   begin
-    restRequest.Params.QueryAddOrSet(
-      Format('Tag.%s.Key', [(Request.Tags.Index + 1).ToString]),
-      Request.Tags.Current.Key);
+    LRestRequest.Params.QueryAddOrSet(
+      Format('Tag.%s.Key', [(ARequest.Tags.Index + 1).ToString]),
+      ARequest.Tags.Current.Key);
 
-    restRequest.Params.QueryAddOrSet(
-      Format('Tag.%s.Value', [(Request.Tags.Index + 1).ToString]),
-      Request.Tags.Current.Value);
+    LRestRequest.Params.QueryAddOrSet(
+      Format('Tag.%s.Value', [(ARequest.Tags.Index + 1).ToString]),
+      ARequest.Tags.Current.Value);
   end;
 
-  restRequest.Send;
+  LRestRequest.Send;
 end;
 
-procedure TAWS4DSQSService<I>.UnTagQueue(Request: IAWS4DSQSUnTagQueueRequest<I>);
+procedure TAWS4DSQSService<I>.UnTagQueue(ARequest: IAWS4DSQSUnTagQueueRequest<I>);
 var
-  restRequest: IGBClientRequest;
+  LRestRequest: IGBClientRequest;
 begin
-  restRequest := Self.NewGETRequest('UntagQueue');
-  restRequest.Resource(Request.QueueUrl);
+  LRestRequest := Self.NewGETRequest('UntagQueue');
+  LRestRequest.Resource(ARequest.QueueUrl);
 
-  while Request.Tags.HasNext do
+  while ARequest.Tags.HasNext do
   begin
-    restRequest.Params.QueryAddOrSet(
-      Format('TagKey.%s', [(Request.Tags.Index + 1).ToString]),
-      Request.Tags.Current);
+    LRestRequest.Params.QueryAddOrSet(
+      Format('TagKey.%s', [(ARequest.Tags.Index + 1).ToString]),
+      ARequest.Tags.Current);
   end;
 
-  restRequest.Send;
+  LRestRequest.Send;
 end;
 
 end.
