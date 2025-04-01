@@ -11,6 +11,7 @@ object frmSampleS3: TfrmSampleS3
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  OldCreateOrder = True
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
@@ -83,7 +84,7 @@ object frmSampleS3: TfrmSampleS3
     Top = 97
     Width = 818
     Height = 280
-    ActivePage = tsListObjects
+    ActivePage = tsCreateObject
     Align = alClient
     TabOrder = 2
     object tsListBucket: TTabSheet

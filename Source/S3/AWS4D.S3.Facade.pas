@@ -3,6 +3,8 @@ unit AWS4D.S3.Facade;
 interface
 
 uses
+  System.SysUtils,
+  System.Classes,
   AWS4D.S3.Facade.Interfaces,
   AWS4D.S3.Facade.ExistBucket,
   AWS4D.S3.Facade.CreateBucket,
@@ -16,15 +18,13 @@ uses
   AWS4D.S3.Facade.DeleteObject,
   AWS4D.S3.Service.Interfaces,
   AWS4D.S3.Service.CloudAPI,
-  AWS4D.Core.Model.Types,
-  System.SysUtils,
-  System.Classes;
+  AWS4D.Core.Model.Types;
 
-type TAWS4DS3Facade = class(TInterfacedObject, IAWS4DS3Facade)
-
+type
+  TAWS4DS3Facade = class(TInterfacedObject, IAWS4DS3Facade)
   private
-    FAccessKey: String;
-    FSecretKey: String;
+    FAccessKey: string;
+    FSecretKey: string;
     FRegion: TAWS4DRegion;
 
     FCreateBucket: IAWS4DS3FacadeCreateBucket;
@@ -39,12 +39,11 @@ type TAWS4DS3Facade = class(TInterfacedObject, IAWS4DS3Facade)
     FListObjects: IAWS4DS3FacadeListObjects;
 
     function S3Service<I: IInterface>: IAWS4DS3Service<I>;
-
   protected
-    function AccessKey(Value: String): IAWS4DS3Facade;
-    function SecretKey(Value: String): IAWS4DS3Facade;
-    function Region(Value: String): IAWS4DS3Facade; overload;
-    function Region(Value: TAWS4DRegion): IAWS4DS3Facade; overload;
+    function AccessKey(AValue: string): IAWS4DS3Facade;
+    function SecretKey(AValue: string): IAWS4DS3Facade;
+    function Region(AValue: string): IAWS4DS3Facade; overload;
+    function Region(AValue: TAWS4DRegion): IAWS4DS3Facade; overload;
 
     function CreateBucket: IAWS4DS3FacadeCreateBucket;
     function CreateObject: IAWS4DS3FacadeCreateObject;
@@ -56,33 +55,31 @@ type TAWS4DS3Facade = class(TInterfacedObject, IAWS4DS3Facade)
     function GetObjectProperties: IAWS4DS3FacadeGetObjectProperties;
     function ListBuckets: IAWS4DS3FacadeListBuckets;
     function ListObjects: IAWS4DS3FacadeListObjects;
-
   public
-    constructor create;
+    constructor Create;
     class function New: IAWS4DS3Facade;
-end;
+  end;
 
 implementation
 
 { TAWS4DS3Facade }
 
-function TAWS4DS3Facade.AccessKey(Value: String): IAWS4DS3Facade;
+function TAWS4DS3Facade.AccessKey(AValue: string): IAWS4DS3Facade;
 begin
-  result := Self;
-  FAccessKey := Value;
+  Result := Self;
+  FAccessKey := AValue;
 end;
 
 function TAWS4DS3Facade.ExistBucket: IAWS4DS3FacadeExistBucket;
 var
-  service: IAWS4DS3Service<IAWS4DS3FacadeExistBucket>;
+  LService: IAWS4DS3Service<IAWS4DS3FacadeExistBucket>;
 begin
   if not Assigned(FExistBucket) then
   begin
-    service := Self.S3Service<IAWS4DS3FacadeExistBucket>;
-    FExistBucket := TAWS4DS3FacadeExistBucket.New(service);
+    LService := Self.S3Service<IAWS4DS3FacadeExistBucket>;
+    FExistBucket := TAWS4DS3FacadeExistBucket.New(LService);
   end;
-
-  result := FExistBucket;
+  Result := FExistBucket;
 end;
 
 function TAWS4DS3Facade.ExistObject: IAWS4DS3FacadeExistObject;
@@ -95,7 +92,7 @@ begin
     FExistObject := TAWS4DS3FacadeExistObject.New(service);
   end;
 
-  result := FExistObject;
+  Result := FExistObject;
 end;
 
 function TAWS4DS3Facade.GetObjectProperties: IAWS4DS3FacadeGetObjectProperties;
@@ -108,10 +105,10 @@ begin
     FGetObjectProperties := TAWS4DS3FacadeGetObjectProperties.New(service);
   end;
 
-  result := FGetObjectProperties;
+  Result := FGetObjectProperties;
 end;
 
-constructor TAWS4DS3Facade.create;
+constructor TAWS4DS3Facade.Create;
 begin
   FRegion := aws4dUSEast1;
 end;
@@ -126,7 +123,7 @@ begin
     FCreateBucket := TAWS4DS3FacadeCreateBucket.New(service);
   end;
 
-  result := FCreateBucket;
+  Result := FCreateBucket;
 end;
 
 function TAWS4DS3Facade.DeleteBucket: IAWS4DS3FacadeDeleteBucket;
@@ -139,7 +136,7 @@ begin
     FDeleteBucket := TAWS4DS3FacadeDeleteBucket.New(service);
   end;
 
-  result := FDeleteBucket;
+  Result := FDeleteBucket;
 end;
 
 function TAWS4DS3Facade.DownloadObject: IAWS4DS3FacadeDownloadObject;
@@ -152,7 +149,7 @@ begin
     FDownloadObject := TAWS4DS3FacadeDownloadObject.New(service);
   end;
 
-  result := FDownloadObject;
+  Result := FDownloadObject;
 end;
 
 function TAWS4DS3Facade.ListBuckets: IAWS4DS3FacadeListBuckets;
@@ -165,7 +162,7 @@ begin
     FListBuckets := TAWS4DS3FacadeListBuckets.New(service);
   end;
 
-  result := FListBuckets;
+  Result := FListBuckets;
 end;
 
 function TAWS4DS3Facade.ListObjects: IAWS4DS3FacadeListObjects;
@@ -178,12 +175,12 @@ begin
     FListObjects := TAWS4DS3FacadeListObjects.New(service);
   end;
 
-  result := FListObjects;
+  Result := FListObjects;
 end;
 
 class function TAWS4DS3Facade.New: IAWS4DS3Facade;
 begin
-  result := Self.create;
+  Result := Self.Create;
 end;
 
 function TAWS4DS3Facade.CreateObject: IAWS4DS3FacadeCreateObject;
@@ -196,7 +193,7 @@ begin
     FCreateObject := TAWS4DS3FacadeCreateObject.New(service);
   end;
 
-  result := FCreateObject;
+  Result := FCreateObject;
 end;
 
 function TAWS4DS3Facade.DeleteObject: IAWS4DS3FacadeDeleteObject;
@@ -209,34 +206,34 @@ begin
     FDeleteObject := TAWS4DS3FacadeDeleteObject.New(service);
   end;
 
-  result := FDeleteObject;
+  Result := FDeleteObject;
 end;
 
-function TAWS4DS3Facade.Region(Value: String): IAWS4DS3Facade;
+function TAWS4DS3Facade.Region(AValue: string): IAWS4DS3Facade;
 begin
-  result := Self;
-  FRegion.fromString(Value);
+  Result := Self;
+  FRegion.fromstring(AValue);
 end;
 
-function TAWS4DS3Facade.Region(Value: TAWS4DRegion): IAWS4DS3Facade;
+function TAWS4DS3Facade.Region(AValue: TAWS4DRegion): IAWS4DS3Facade;
 begin
-  result := Self;
-  FRegion := Value;
+  Result := Self;
+  FRegion := AValue;
 end;
 
 function TAWS4DS3Facade.S3Service<I>: IAWS4DS3Service<I>;
 begin
-  result := TAWS4DS3ServiceCloudAPI<I>.New;
-  result
+  Result := TAWS4DS3ServiceCloudAPI<I>.New;
+  Result
     .AccessKey(FAccessKey)
     .SecretKey(FSecretKey)
     .Region(FRegion);
 end;
 
-function TAWS4DS3Facade.SecretKey(Value: String): IAWS4DS3Facade;
+function TAWS4DS3Facade.SecretKey(AValue: string): IAWS4DS3Facade;
 begin
-  result := Self;
-  FSecretKey := Value;
+  Result := Self;
+  FSecretKey := AValue;
 end;
 
 end.
