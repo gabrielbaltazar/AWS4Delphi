@@ -299,42 +299,50 @@ function TAWS4DSQSService<I>.ReceiveMessage(ARequest: IAWS4DSQSReceiveMessageReq
 var
   LRestRequest: IGBClientRequest;
   LJSON: TJSONObject;
-  LCount: Integer;
+  LJSONAttributes: TJSONArray;
+  LAttribute: string;
 begin
-  LRestRequest := Self.NewGETRequest('ReceiveMessage');
-  LRestRequest
-    .Resource(ARequest.QueueUrl);
+  LRestRequest := Self.NewPOSTRequest('AmazonSQS.ReceiveMessage');
 
-  LCount := 0;
+  LJSON := TJSONObject.Create.AddPair('QueueUrl', ARequest.QueueUrl);
+  LJSONAttributes := nil;
   while ARequest.Attributes.HasNext do
   begin
-    Inc(LCount);
-    LRestRequest.Params
-      .QueryAddOrSet(Format('AttributeName.%s', [LCount.ToString]),
-        ARequest.Attributes.Current);
+    if not Assigned(LJSONAttributes) then
+      LJSONAttributes := TJSONArray.Create;
+
+    LAttribute := ARequest.Attributes.Current;
+    LJSONAttributes.Add(LAttribute);
   end;
+  if Assigned(LJSONAttributes) then
+    LJSON.AddPair('AttributeNames', LJSONAttributes);
 
   if ARequest.MaxNumberOfMessages > 0 then
-    LRestRequest.Params.QueryAddOrSet('MaxNumberOfMessages', ARequest.MaxNumberOfMessages);
+    LJSON.AddPair('MaxNumberOfMessages', ARequest.MaxNumberOfMessages);
 
-  LCount := 0;
+  LJSONAttributes := nil;
   while ARequest.MessageAttributes.HasNext do
   begin
-    Inc(LCount);
-    LRestRequest.Params
-      .QueryAddOrSet(Format('MessageAttributeName.%s', [LCount.ToString]),
-        ARequest.MessageAttributes.Current);
+    if not Assigned(LJSONAttributes) then
+      LJSONAttributes := TJSONArray.Create;
+
+    LAttribute := ARequest.MessageAttributes.Current;
+    LJSONAttributes.Add(LAttribute);
   end;
+  if Assigned(LJSONAttributes) then
+    LJSON.AddPair('MessageAttributeNames', LJSONAttributes);
 
   if ARequest.ReceiveRequestAttemptId <> EmptyStr then
-    LRestRequest.Params.QueryAddOrSet('ReceiveRequestAttemptId', ARequest.ReceiveRequestAttemptId);
+    LJSON.AddPair('ReceiveRequestAttemptId', ARequest.ReceiveRequestAttemptId);
 
   if ARequest.VisibilityTimeout > 0 then
-    LRestRequest.Params.QueryAddOrSet('VisibilityTimeout', ARequest.VisibilityTimeout);
+    LJSON.AddPair('VisibilityTimeout', ARequest.VisibilityTimeout);
 
   if ARequest.WaitTimeSeconds > 0 then
-    LRestRequest.Params.QueryAddOrSet('WaitTimeSeconds', ARequest.WaitTimeSeconds);
+    LJSON.AddPair('WaitTimeSeconds', ARequest.WaitTimeSeconds);
 
+  LRestRequest.Params.BodyAddOrSet(LJSON.ToJSON);
+  FreeAndNil(LJSON);
   LJSON := LRestRequest.Send.GetJSONObject;
   Result := TAWS4SQSReceiveMessageResponse<I>.New(FParent, LJSON);
 end;
@@ -355,53 +363,57 @@ function TAWS4DSQSService<I>.SendMessage(ARequest: IAWS4DSQSSendMessageRequest<I
 var
   LRestRequest: IGBClientRequest;
   LJSON: TJSONObject;
-  LCount: Integer;
+  LJSONAttributes: TJSONObject;
   LParamName: string;
   LParamValue: string;
 begin
-  LRestRequest := Self.NewGETRequest('SendMessage');
-  LRestRequest.Resource(ARequest.QueueUrl)
-    .Params
-      .QueryAddOrSet('MessageBody', ARequest.MessageBody);
+  LRestRequest := Self.NewPOSTRequest('AmazonSQS.SendMessage');
+
+  LJSON := TJSONObject.Create;
+  LJSON.AddPair('QueueUrl', ARequest.QueueUrl)
+    .AddPair('MessageBody', ARequest.MessageBody);
 
   if ARequest.DelaySeconds > 0 then
-    LRestRequest.Params.QueryAddOrSet('DelaySeconds', ARequest.DelaySeconds);
+    LJSON.AddPair('DelaySeconds', ARequest.DelaySeconds);
 
   if ARequest.MessageDeduplicationId <> EmptyStr then
-    LRestRequest.Params.QueryAddOrSet('MessageDeduplicationId', ARequest.MessageDeduplicationId);
+    LJSON.AddPair('MessageDeduplicationId', ARequest.MessageDeduplicationId);
 
   if ARequest.MessageGroupId <> EmptyStr then
-    LRestRequest.Params.QueryAddOrSet('MessageGroupId', ARequest.MessageGroupId);
+    LJSON.AddPair('MessageGroupId', ARequest.MessageGroupId);
 
-  LCount := 0;
+  LJSONAttributes := nil;
   while ARequest.Attributes.HasNext do
   begin
-    Inc(LCount);
+    if not Assigned(LJSONAttributes) then
+      LJSONAttributes := TJSONObject.Create;
+
     LParamName := ARequest.Attributes.Current.Key;
     LParamValue := ARequest.Attributes.Current.Value;
-    LRestRequest.Params
-      .QueryAddOrSet(Format('MessageAttribute.%d.Name', [LCount]), LParamName);
-    LRestRequest.Params
-      .QueryAddOrSet(Format('MessageAttribute.%d.Value.StringValue', [LCount]), LParamValue);
-    LRestRequest.Params
-      .QueryAddOrSet(Format('MessageAttribute.%d.Value.DataType', [LCount]), 'String');
+    LJSONAttributes.AddPair(LParamName, TJSONObject.Create
+      .AddPair('DataType', 'String')
+      .AddPair('StringValue', LParamValue));
   end;
+  if Assigned(LJSONAttributes) then
+    LJSON.AddPair('MessageAttributes', LJSONAttributes);
 
-  LCount := 0;
+  LJSONAttributes := nil;
   while ARequest.MessageSystemAttributes.HasNext do
   begin
-    Inc(LCount);
+    if not Assigned(LJSONAttributes) then
+      LJSONAttributes := TJSONObject.Create;
+
     LParamName := ARequest.MessageSystemAttributes.Current.Key;
     LParamValue := ARequest.MessageSystemAttributes.Current.Value;
-    LRestRequest.Params
-      .QueryAddOrSet(Format('MessageSystemAttribute.%d.Name', [LCount]), LParamName);
-    LRestRequest.Params
-      .QueryAddOrSet(Format('MessageSystemAttribute.%d.Value.StringValue', [LCount]),
-        LParamValue);
-    LRestRequest.Params
-      .QueryAddOrSet(Format('MessageAttribute.%d.Value.DataType', [LCount]), 'String');
+    LJSONAttributes.AddPair(LParamName, TJSONObject.Create
+      .AddPair('DataType', 'String')
+      .AddPair('StringValue', LParamValue));
   end;
+  if Assigned(LJSONAttributes) then
+    LJSON.AddPair('MessageSystemAttributes', LJSONAttributes);
 
+  LRestRequest.Params.BodyAddOrSet(LJSON.ToJSON);
+  FreeAndNil(LJSON);
   LJSON := LRestRequest.Send.GetJSONObject;
   Result := TAWS4SQSSendMessageResponse<I>.New(FParent, LJSON);
 end;

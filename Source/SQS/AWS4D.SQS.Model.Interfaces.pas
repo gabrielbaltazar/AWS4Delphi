@@ -197,10 +197,7 @@ type
     ['{2F9E34FB-3207-4EDF-A5F2-0A5E2DCFE1B2}']
     function MD5OfMessageAttributes: string;
     function MD5OfMessageBody: string;
-    function MD5OfMessageSystemAttributes: string;
     function MessageId: string;
-    function SequenceNumber: string;
-
     function &End: I;
   end;
 

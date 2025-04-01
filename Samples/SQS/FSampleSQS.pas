@@ -277,6 +277,8 @@ begin
       .MaxNumberOfMessages(StrToIntDef(edtReceiveMessageMaxNumberMessages.Text, 0))
       .VisibilityTimeout(StrToIntDef(edtReceiveMessageVisibilityTimeout.Text, 0))
       .QueueUrl(edtQueueName.Text)
+      .AddMessageAttribute('aaa')
+      .AddMessageAttribute('ccc')
     .&End
     .Send;
 
@@ -397,10 +399,12 @@ end;
 procedure TForm2.SQSInitialize;
 begin
   FSQS := NewSQSFacade;
-  FSQS
-    .AccessKey(edtAccessKey.Text)
+  FSQS.AccessKey(edtAccessKey.Text)
     .SecretKey(edtSecretKey.Text)
     .Region(edtRegion.Text);
 end;
+
+initialization
+  ReportMemoryLeaksOnShutdown := True;
 
 end.

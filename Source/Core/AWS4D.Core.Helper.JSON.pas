@@ -15,6 +15,7 @@ uses
 type
   TAWS4DCoreHelperJSONObject = class helper for TJSONObject
   public
+    function GetPair(AIndex: Integer): TJSONPair;
     function ValueAsString(AName: string; ADefault: string = ''): string;
     function ValueAsInteger(AName: string; ADefault: Integer = 0): Integer;
     function ValueAsFloat(AName: string; ADefault: Double = 0): Double;
@@ -48,6 +49,15 @@ type
 implementation
 
 { TAWS4DCoreHelperJSONObject }
+
+function TAWS4DCoreHelperJSONObject.GetPair(AIndex: Integer): TJSONPair;
+begin
+{$IF CompilerVersion <= 26.0}
+  Result := Self.Get(AIndex);
+{$ELSE}
+  Result := Self.Pairs[AIndex];
+{$ENDIF}
+end;
 
 function TAWS4DCoreHelperJSONObject.SetValue(AName, AValue: string): TJSONObject;
 begin
