@@ -1,0 +1,11 @@
+{
+	"name": "SQS",
+	"description": "",
+	"version": "1.0.0",
+	"homepage": "",
+	"mainsrc": "./src",
+	"projects": [],
+	"dependencies": {
+		"github.com/gabrielbaltazar/gbclient": "2.0.1"
+	}
+}
