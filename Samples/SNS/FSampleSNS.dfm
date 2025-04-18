@@ -13,7 +13,7 @@ object Form1: TForm1
   Font.Style = []
   Position = poScreenCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
+  OnDestroy = FormDestroy
   TextHeight = 13
   object pnlTop: TPanel
     Left = 0
